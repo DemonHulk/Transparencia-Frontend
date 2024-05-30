@@ -78,33 +78,33 @@ Las contribuciones son bienvenidas. Para contribuir, por favor sigue estos pasos
 
 #Roles
 
-Branko Jaziel Lomelí Ríos
+Branko Jaziel Lomelí Ríos:
 Frontend (Principal)
 FullStack (Apoyo)
 UI
 
-Marco Fabián Gómez Bautista
+Marco Fabián Gómez Bautista:
 Frontend (Principal)
 FullStack (Apoyo)
 UI
 
-Alexis Guadalupe Rivera Cabrera
+Alexis Guadalupe Rivera Cabrera:
 Tester (Principal)
 Quality Assurance
 UX
 
-Daniel Contreras Zamarripa
+Daniel Contreras Zamarripa:
 Backend (Principal)
 Analista
 DBA
 UX
 
-Ernesto Ibarra Villanueva
+Ernesto Ibarra Villanueva:
 Backend (Principal)
 Analista
 DBA
 
-Marco Antonio Núñez Andrade
+Marco Antonio Núñez Andrade:
 Scrum Master
 
 
