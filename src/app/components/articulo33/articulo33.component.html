@@ -1,0 +1,105 @@
+<section class="container-per">
+  <div class="flex flex-col sm:flex-row mb-3 mx-0">
+    <div class="w-full lg:w-5/12">
+      <h1 class="text-3xl">ARTICULO 33</h1>
+      <hr class="border-t primary-color mb-8 mx-2" />
+    </div>
+
+    <div class="w-full lg:w-7/12">
+      <!-- SearchBox -->
+      <div class="relative w-full">
+        <div class="relative w-full">
+          <div class="absolute inset-y-0 start-0 flex items-center pointer-events-none z-20 ps-3.5">
+            <svg class="flex-shrink-0 size-4 text-gray-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+              viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <path d="m21 21-4.3-4.3"></path>
+            </svg>
+          </div>
+          <input
+            class="py-3 ps-10 pe-4 w-full border-gray-200 rounded-lg text-sm focus:border-primary-color focus:ring-primary-color disabled:opacity-50 disabled:pointer-events-none"
+            type="text" placeholder="Escribe tu busqueda" value="" data-hs-combo-box-input="" />
+        </div>
+
+        <!-- SearchBox Dropdown -->
+        <div class="absolute z-50 w-full bg-white border border-gray-200 rounded-lg" style="display: none"
+          data-hs-combo-box-output="">
+          <div
+            class="max-h-72 rounded-b-lg overflow-hidden overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300"
+            data-hs-combo-box-output-items-wrapper=""></div>
+        </div>
+        <!-- End SearchBox Dropdown -->
+      </div>
+      <!-- End SearchBox -->
+    </div>
+
+  </div>
+  <div class="w-full flex justify-end">
+    <button type="button"
+      class="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-primary-color-90 text-white hover:bg-primary-color btn-puntos disabled:opacity-50 disabled:pointer-events-none"
+      data-hs-overlay="#offcanvas-puntos">
+      Mostrar puntos
+    </button>
+  </div>
+
+  <div class="flex flex-col sm:flex-row">
+    <div class="w-full sm:w-4 md:w-3/12 lg:w-3/12 my-2 lista-puntos max-h-[85vh] overflow-y-auto">
+      <div class="flex flex-col">
+        <button type="button" title="1.- Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad,
+          suscipit illum."
+          class="inline-flex text-elipsis active  h-[50px] hover:h-full p-3  text-white items-center gap-x-2 py-3 px-4 text-sm text-start font-medium border border-gray-200 -mt-px first:rounded-t-lg first:mt-0 last:rounded-b-lg focus:z-10 disabled:opacity-50 disabled:pointer-events-none">
+          <p>1.- Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad,
+            suscipit illum.</p>
+        </button>
+        <button *ngFor="let number of getNumbers()" type="button" title="{{ number + 1 }}.- Lorem ipsum dolor sit amet consectetur adipisicing
+          elit. Ad, suscipit illum."
+          class="inline-flex text-elipsis h-[50px] items-center gap-x-2 py-3 px-4 text-sm text-start font-medium border border-gray-200 text-gray-800 hover:text-primary-color -mt-px first:rounded-t-lg first:mt-0 last:rounded-b-lg focus:z-10 disabled:opacity-50 disabled:pointer-events-none">
+
+          <p >{{ number + 1 }}.- Lorem ipsum dolor sit amet consectetur adipisicing
+            elit. Ad, suscipit illum.</p>
+        </button>
+      </div>
+    </div>
+
+    <div class="w-full sm:9/12 lg:w-12/12 mx-0 my-2 max-h-[85vh] overflow-y-auto border-2 pb-5 border-gray-200 border-dashed rounded-lg" >
+      <!-- Navigation Toggle -->
+        <app-contenido-punto ></app-contenido-punto>
+    </div>
+  </div>
+</section>
+
+<div id="offcanvas-puntos"
+  class="hs-overlay hs-overlay-open:translate-x-0 hidden -translate-x-full fixed top-0 start-0 transition-all duration-300 transform h-full max-w-xs w-full z-[80] bg-white border-e"
+  tabindex="-1">
+  <div class="flex justify-between items-center py-3 px-4 border-b">
+    <h3 class="font-bold text-gray-800">ARTICULO 33</h3>
+    <button type="button"
+      class="flex justify-center items-center size-7 text-sm font-semibold rounded-full border border-transparent text-gray-800 hover:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none"
+      data-hs-overlay="#offcanvas-puntos">
+      <span class="sr-only">Close modal</span>
+      <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M18 6 6 18"></path>
+        <path d="m6 6 12 12"></path>
+      </svg>
+    </button>
+  </div>
+  <div class="w-full 12/12 my-2 overflow-y-auto max-h-[85vh]">
+    <div class="flex flex-col">
+      <button type="button" title="1.- Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad,
+        suscipit illum."
+        class="inline-flex text-elipsis active  h-[50px] hover:h-full p-3  text-white items-center gap-x-2 py-3 px-4 text-sm text-start font-medium border border-gray-200 -mt-px first:rounded-t-lg first:mt-0 last:rounded-b-lg focus:z-10 disabled:opacity-50 disabled:pointer-events-none">
+        <p>1.- Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad,
+          suscipit illum.</p>
+      </button>
+      <button *ngFor="let number of getNumbers()" type="button" title="{{ number + 1 }}.- Lorem ipsum dolor sit amet consectetur adipisicing
+        elit. Ad, suscipit illum."
+        class="inline-flex text-elipsis h-[50px] items-center gap-x-2 py-3 px-4 text-sm text-start font-medium border border-gray-200 text-gray-800 hover:text-primary-color -mt-px first:rounded-t-lg first:mt-0 last:rounded-b-lg focus:z-10 disabled:opacity-50 disabled:pointer-events-none">
+
+        <p >{{ number + 1 }}.- Lorem ipsum dolor sit amet consectetur adipisicing
+          elit. Ad, suscipit illum.</p>
+      </button>
+    </div>
+  </div>
+</div>

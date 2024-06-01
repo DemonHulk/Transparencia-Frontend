@@ -1,0 +1,77 @@
+@media (min-width: 639px) {
+  .hs-dropdown-menu {
+    width: 100vw;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .btn-puntos{
+    display: none;
+  }
+
+  .lista-puntos{
+    display: block;
+  }
+
+}
+
+@media (max-width: 768px) {
+
+  .lista-puntos{
+    display: none;
+  }
+  .btn-puntos{
+    display: block;
+  }
+
+}
+
+@media (max-width: 1023px) {
+  .btn-sidebar{
+    display: block;
+  }
+
+
+}
+
+#docs-sidebar{
+  min-height: 90vh;
+}
+
+
+.text-elipsis >p{
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  text-wrap: nowrap !important;
+}
+
+.text-elipsis.active >p{
+  text-wrap: wrap !important;
+  width: 100%;
+  height: auto !important;
+  padding: 10px !important;
+  z-index: 5 !important;
+}
+
+.text-elipsis.active {
+  background-color: #077c01e6;
+  text-wrap: wrap !important;
+  width: 100%;
+  height: auto !important;
+  padding: 10px !important;
+  z-index: 5 !important;
+}
+
+.text-elipsis:hover {
+  text-wrap: wrap !important;
+  width: 100%;
+  height: auto !important;
+  padding: 10px !important;
+  z-index: 5 !important;
+}
+.text-elipsis:hover > p{
+  text-wrap: wrap !important;
+  width: 100%;
+  height: auto !important;
+  padding: 10px !important;
+  z-index: 5 !important;
+}
