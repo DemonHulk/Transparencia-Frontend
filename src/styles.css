@@ -37,3 +37,47 @@ h1, h2, h3, h4, h5, h6 {
 *:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6) {
   font-family: "texto", sans-serif;
 }
+
+/* Altura del html */
+html{
+  min-height: 100vh;
+}
+
+/*Body*/
+body {
+  min-height: 70vh;
+}
+
+/*Footer*/
+footer{
+  bottom: 0px;
+  width: 100%;
+}
+
+.container-per{
+  margin-left: 8px;
+  margin-right: 8px;
+  margin-top: 10px;
+}
+
+.text-elipsis{
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  text-wrap: nowrap !important;
+}
+
+.text-elipsis.active{
+  text-wrap: wrap !important;
+  width: 100%;
+  height: auto !important;
+  padding: 10px !important;
+  z-index: 5 !important;
+}
+
+.text-elipsis:hover{
+  text-wrap: wrap !important;
+  width: 100%;
+  height: auto !important;
+  padding: 10px !important;
+  z-index: 5 !important;
+}
