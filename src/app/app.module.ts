@@ -8,6 +8,7 @@ import { FooterComponent } from './partials/footer/footer.component';
 import { LoginComponent } from './components/login/login.component';
 import { Articulo33Component } from './components/articulo33/articulo33.component';
 import { ContenidoPuntoComponent } from './components/articulo33/contenido-punto/contenido-punto.component';
+import { TituloComponent } from './partials/titulo/titulo.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { ContenidoPuntoComponent } from './components/articulo33/contenido-punto
     FooterComponent,
     LoginComponent,
     Articulo33Component,
-    ContenidoPuntoComponent
+    ContenidoPuntoComponent,
+    TituloComponent
   ],
   imports: [
     BrowserModule,
