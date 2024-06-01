@@ -37,7 +37,14 @@
             "styles": [
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/preline/dist/accordion.js",
+              "node_modules/preline/dist/carousel.js",
+              "node_modules/preline/dist/collapse.js",
+              "node_modules/preline/dist/combobox.js",
+              "node_modules/preline/dist/dropdown.js",
+              "node_modules/preline/dist/preline.js"
+            ]
           },
           "configurations": {
             "production": {

@@ -1,4 +1,39 @@
-/* You can add global styles to this file, and also import other style files */
+/*
+Este archivo CSS se utiliza para aplicar estilos globales y importar otros archivos de estilos.
+También incluye declaraciones personalizadas de @font-face para las fuentes 'texto' y 'titulo'.
+*/
+
+/* Importa los estilos base de Tailwind CSS */
 @tailwind base;
+
+/* Importa los estilos de componentes de Tailwind CSS */
 @tailwind components;
+
+/* Importa los estilos utilitarios de Tailwind CSS */
 @tailwind utilities;
+
+/* Declaración personalizada de @font-face para la fuente 'texto' */
+@font-face {
+  font-family: 'texto';
+  src: url('/assets/fonts/Poppins-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Declaración personalizada de @font-face para la fuente 'titulo' */
+@font-face {
+  font-family: 'titulo';
+  src: url('/assets/fonts/Roboto-Bold.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Aplica la fuente 'titulo' a todos los elementos de encabezado (h1 a h6) */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'titulo', sans-serif !important;
+}
+
+/* Aplica la fuente 'texto' a todos los elementos excepto los encabezados (h1 a h6) */
+*:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6) {
+  font-family: "texto", sans-serif;
+}
