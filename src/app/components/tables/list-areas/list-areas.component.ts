@@ -2,11 +2,12 @@ import { Component } from '@angular/core';
 import { SharedValuesService } from '../../../services/shared-values.service';
 
 @Component({
-  selector: 'app-new-punto',
-  templateUrl: './new-punto.component.html',
-  styleUrl: './new-punto.component.css'
+  selector: 'app-list-areas',
+  templateUrl: './list-areas.component.html',
+  styleUrl: './list-areas.component.css'
 })
-export class NewPuntoComponent {
+export class ListAreasComponent {
+
   constructor(private sharedService: SharedValuesService) { }
 
   /**
@@ -21,6 +22,13 @@ ngOnInit(): void {
      * @param {string} newTitle - El nuevo título a establecer.
      * @memberof SharedValuesService
      */
-    this.sharedService.changeTitle('Registrar un nuevo punto');
+    this.sharedService.changeTitle('Áreas registradas en el sistema');
 }
+  getNumbers(): number[] {
+    const numbers: number[] = [];
+    for (let i = 1; i <= 6; i++) {
+      numbers.push(i);
+    }
+    return numbers;
+  }
 }
