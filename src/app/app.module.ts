@@ -16,6 +16,9 @@ import { ListAreasComponent } from './components/tables/list-areas/list-areas.co
 import { NewAreaComponent } from './components/forms/new-area/new-area.component';
 import { EditAreaComponent } from './components/forms/edit-area/edit-area.component';
 import { DetailsAreaComponent } from './components/tables/list-areas/details-area/details-area.component';
+import { ListTrimestresComponent } from './components/tables/list-trimestres/list-trimestres.component';
+import { NewTrimestreComponent } from './components/forms/new-trimestre/new-trimestre.component';
+import { EditTrimestreComponent } from './components/forms/edit-trimestre/edit-trimestre.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +35,10 @@ import { DetailsAreaComponent } from './components/tables/list-areas/details-are
     ListAreasComponent,
     NewAreaComponent,
     EditAreaComponent,
-    DetailsAreaComponent
+    DetailsAreaComponent,
+    ListTrimestresComponent,
+    NewTrimestreComponent,
+    EditTrimestreComponent
   ],
   imports: [
     BrowserModule,

@@ -9,6 +9,9 @@ import { ListAreasComponent } from './components/tables/list-areas/list-areas.co
 import { NewAreaComponent } from './components/forms/new-area/new-area.component';
 import { EditAreaComponent } from './components/forms/edit-area/edit-area.component';
 import { DetailsAreaComponent } from './components/tables/list-areas/details-area/details-area.component';
+import { ListTrimestresComponent } from './components/tables/list-trimestres/list-trimestres.component';
+import { NewTrimestreComponent } from './components/forms/new-trimestre/new-trimestre.component';
+import { EditTrimestreComponent } from './components/forms/edit-trimestre/edit-trimestre.component';
 
 const routes: Routes = [
   {path: '', component:Articulo33Component},
@@ -17,8 +20,11 @@ const routes: Routes = [
   {path: 'new-pdf', component:NewPdfComponent},
   {path: 'new-punto', component:NewPuntoComponent},
   {path: 'new-area', component:NewAreaComponent},
+  {path: 'new-trimestre', component:NewTrimestreComponent},
   {path: 'edit-area/:id', component:EditAreaComponent},
+  {path: 'edit-trimestre/:id', component:EditTrimestreComponent},
   {path: 'areas', component:ListAreasComponent},
+  {path: 'trimestres', component:ListTrimestresComponent},
   {path: 'details-area/:id', component:DetailsAreaComponent},
   {path: '**', component:PageNotFoundComponent},
 ];
