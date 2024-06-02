@@ -9,6 +9,7 @@ import { LoginComponent } from './components/login/login.component';
 import { Articulo33Component } from './components/articulo33/articulo33.component';
 import { ContenidoPuntoComponent } from './components/articulo33/contenido-punto/contenido-punto.component';
 import { TituloComponent } from './partials/titulo/titulo.component';
+import { NewPdfComponent } from './components/forms/new-pdf/new-pdf.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { TituloComponent } from './partials/titulo/titulo.component';
     LoginComponent,
     Articulo33Component,
     ContenidoPuntoComponent,
-    TituloComponent
+    TituloComponent,
+    NewPdfComponent
   ],
   imports: [
     BrowserModule,
