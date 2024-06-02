@@ -12,6 +12,10 @@ import { TituloComponent } from './partials/titulo/titulo.component';
 import { NewPdfComponent } from './components/forms/new-pdf/new-pdf.component';
 import { PageNotFoundComponent } from './partials/page-not-found/page-not-found.component';
 import { NewPuntoComponent } from './components/forms/new-punto/new-punto.component';
+import { ListAreasComponent } from './components/tables/list-areas/list-areas.component';
+import { NewAreaComponent } from './components/forms/new-area/new-area.component';
+import { EditAreaComponent } from './components/forms/edit-area/edit-area.component';
+import { DetailsAreaComponent } from './components/tables/list-areas/details-area/details-area.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +28,11 @@ import { NewPuntoComponent } from './components/forms/new-punto/new-punto.compon
     TituloComponent,
     NewPdfComponent,
     PageNotFoundComponent,
-    NewPuntoComponent
+    NewPuntoComponent,
+    ListAreasComponent,
+    NewAreaComponent,
+    EditAreaComponent,
+    DetailsAreaComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,46 @@
+<div class="12/12 text-right" >
+  <button routerLink="/areas" type="button" class="py-3 my-2  px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-primary-color text-white hover:bg-primary-color-90 disabled:opacity-50 disabled:pointer-events-none">
+    <i class="fa-solid fa-arrow-left-long"></i>
+    Volver
+  </button>
+</div>
+<div class="bg-white p-8 border border-gray-200 rounded-lg shadow-lg max-w-2xl mx-auto my-10">
+  <h1 class="text-3xl text-center my-2">Nueva área</h1>
+  <form class="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-2">
+    <!-- Input para el nombre interno del documento -->
+    <div class="sm:col-span-2">
+      <label for="nombreArea" class="font-poppins">Nombre del área</label>
+      <div
+        class="flex items-center bg-gray-100 py-3 px-4 border-gray-200 rounded-lg focus-within:border-primary-color focus-within:ring-primary-color">
+        <input type="text" id="nombreArea"
+          class="bg-gray-100 flex-grow border-none focus:ring-0 focus:outline-none text-sm text-dark"
+          placeholder="Nombre del área">
+        <div class="hs-tooltip [--trigger:hover] sm:[--placement:right] inline-block ml-2">
+          <!-- lo del simbolo de interrogacion -->
+          <i class="fa-solid fa-question text-gray-500"></i>
+          <div
+            class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible hidden opacity-0 transition-opacity absolute invisible z-10 max-w-xs w-full bg-white border border-gray-100 text-start rounded-xl shadow-md after:absolute after:top-0 after:-start-4 after:w-4 after:h-full"
+            role="tooltip">
+            <ul class="py-3 px-4 space-y-1">
+              <li>
+                <div class="inline-flex items-center gap-x-3 text-sm text-gray-800">
+                  <p>Este campo te permite ingresar un nombre para el <strong>área</strong> que será visible para acceder.
+                    Puedes proporcionar un nombre descriptivo que ayude a identificar el propósito. Asegúrate de
+                    elegir un nombre claro y significativo para facilitar su identificación y acceso por parte de los
+                    usuarios.</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Botón de enviar -->
+    <div class="sm:col-span-2 flex justify-end">
+      <button type="submit"
+        class="items-center inline-flex justify-center py-2 px-6 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:bg-primary-color">
+        <i class="fas fa-save mx-1"></i> Guardar
+      </button>
+    </div>
+  </form>
+</div>

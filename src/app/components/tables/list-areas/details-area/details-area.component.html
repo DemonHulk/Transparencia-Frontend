@@ -1,0 +1,214 @@
+<div class="12/12 text-right" >
+  <button routerLink="/areas" type="button" class="py-3 my-2  px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-primary-color text-white hover:bg-primary-color-90 disabled:opacity-50 disabled:pointer-events-none">
+    <i class="fa-solid fa-arrow-left-long"></i>
+    Volver
+  </button>
+</div>
+<div class="w-12/12">
+  <h3 class="text-2xl">Información general</h3>
+</div>
+<div class="w-12/12 my-2 flex flex-wrap mx-4">
+  <div class="flex flex-col bg-white border shadow-sm rounded-xl lg:w-3/12 sm:w-12/12 md:w-12/12  w-full my-2 mx-auto">
+    <div class="bg-gray-100 border-b rounded-t-xl py-3 px-4 md:py-4 md:px-5">
+      <p class="mt-1 text-sm text-gray-500">
+        Nombre del área
+      </p>
+    </div>
+    <div class="p-4 md:p-5">
+      <h3 class="text-lg font-bold text-gray-800">
+        Área de salud
+      </h3>
+    </div>
+  </div>
+
+  <div class="flex flex-col bg-white border shadow-sm rounded-xl lg:w-3/12 sm:w-12/12 md:w-12/12  w-full my-2 mx-auto ">
+    <div class="bg-gray-100 border-b rounded-t-xl py-3 px-4 md:py-4 md:px-5">
+      <p class="mt-1 text-sm text-gray-500">
+        Fecha de creación
+      </p>
+    </div>
+    <div class="p-4 md:p-5">
+      <h3 class="text-lg font-bold text-gray-800">
+        Enero 15, 2023
+      </h3>
+    </div>
+  </div>
+
+  <div class="flex flex-col bg-white border shadow-sm rounded-xl lg:w-3/12 sm:w-12/12 md:w-12/12  w-full my-2 mx-auto ">
+    <div class="bg-gray-100 border-b rounded-t-xl py-3 px-4 md:py-4 md:px-5">
+      <p class="mt-1 text-sm text-gray-500">
+        Última actualización
+      </p>
+    </div>
+    <div class="p-4 md:p-5">
+      <h3 class="text-lg font-bold text-gray-800">
+        Mayo 28, 2024
+      </h3>
+    </div>
+  </div>
+</div>
+
+<div class="w-12/12 my-4">
+  <h3 class="text-2xl">Puntos a los que tiene acceso</h3>
+</div>
+<div class="rounded-sm border border-stroke bg-white px-5 pb-2.5 pt-6 shadow-default   sm:px-7.5 xl:pb-1">
+  <div class="max-w-full overflow-x-auto">
+    <table class="w-full table-auto">
+      <thead>
+        <tr class="bg-primary-color-90 text-left ">
+          <th class="min-w-[220px] px-4 py-4 font-medium text-white  xl:pl-11">
+           Nombre punto
+          </th>
+          <th class="min-w-[120px] px-4 py-4 font-medium text-white ">
+            Acceso
+          </th>
+          <th class="px-4 py-4 font-medium text-white ">
+            Actions
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let Punto of getNumbers()">
+          <td class="border-b border-[#eee] px-4 py-5 pl-9  xl:pl-11">
+            <p class="font-medium text-black ">Punto {{Punto}}</p>
+          </td>
+          <td class="border-b border-[#eee] px-4 py-5 ">
+            <p class="inline-flex rounded-full bg-green-500 bg-opacity-10 px-3 py-1 text-sm font-medium text-green-500">
+              Activo
+            </p>
+            <p class="inline-flex rounded-full bg-red-500 bg-opacity-10 px-3 py-1 text-sm font-medium text-red-500">
+              Inactivo
+            </p>
+          </td>
+          <td class="border-b border-[#eee] px-4 py-5 ">
+            <div class="flex items-center space-x-3.5">
+              <button class="hover:text-primary">
+
+                <!-- User -->
+                <div class="hs-tooltip [--trigger:hover] sm:[--placement:right] inline-block">
+                  <div
+                    class="hs-tooltip-toggle max-w-xs p-3 flex items-center gap-x-3 bg-white border border-gray-200 rounded-xl shadow-sm">
+
+                    <i class="fa fa-trash" aria-hidden="true"></i>
+                    <!-- Popover Content -->
+                    <div
+                      class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible hidden opacity-0 transition-opacity absolute invisible z-10 max-w-xs w-full bg-white border border-gray-100 text-start rounded-xl shadow-md after:absolute after:top-0 after:-start-4 after:w-4 after:h-full"
+                      role="tooltip">
+                      <!-- Header -->
+                      <div class="py-3 px-4 border-b border-gray-200">
+                        <div class="flex items-center gap-x-3">
+                          <div class="grow">
+                            <h4 class="font-semibold text-gray-800">
+                              Eliminar
+                            </h4>
+                          </div>
+                        </div>
+                      </div>
+                      <ul class="py-3 px-4 space-y-1">
+                        <li>
+                          <div class="inline-flex items-center gap-x-3 text-sm text-gray-800">
+                            Eliminar el acceso a este punto.
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+                    <!-- End Popover Content -->
+                  </div>
+                </div>
+              </button>
+              <button class="hover:text-primary">
+
+                <!-- User -->
+                <div class="hs-tooltip [--trigger:hover] sm:[--placement:right] inline-block">
+                  <div
+                    class="hs-tooltip-toggle max-w-xs p-3 flex items-center gap-x-3 bg-white border border-gray-200 rounded-xl shadow-sm">
+
+                    <i class="fa-solid fa-arrow-rotate-left"></i>
+                    <!-- Popover Content -->
+                    <div
+                      class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible hidden opacity-0 transition-opacity absolute invisible z-10 max-w-xs w-full bg-white border border-gray-100 text-start rounded-xl shadow-md after:absolute after:top-0 after:-start-4 after:w-4 after:h-full"
+                      role="tooltip">
+                      <!-- Header -->
+                      <div class="py-3 px-4 border-b border-gray-200">
+                        <div class="flex items-center gap-x-3">
+                          <div class="grow">
+                            <h4 class="font-semibold text-gray-800">
+                              Reactivar
+                            </h4>
+                          </div>
+                        </div>
+                      </div>
+                      <ul class="py-3 px-4 space-y-1">
+                        <li>
+                          <div class="inline-flex items-center gap-x-3 text-sm text-gray-800">
+                            Reactivar el acceso a este punto.
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+                    <!-- End Popover Content -->
+                  </div>
+                </div>
+              </button>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="4">
+            <div class="mt-2 bg-blue-600 text-sm text-white rounded-lg p-4" role="alert">
+              <span class="font-bold">Info</span> no se ha registrado ningún punto relacionado a esta área.
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="w-12/12 my-4">
+  <h3 class="text-2xl">Usuarios con acceso al área</h3>
+</div>
+<div class="rounded-sm border border-stroke bg-white px-5 pb-2.5 pt-6 shadow-default   sm:px-7.5 xl:pb-1">
+  <div class="max-w-full overflow-x-auto">
+    <table class="w-full table-auto">
+      <thead>
+        <tr class="bg-primary-color-90 text-left ">
+          <th class="min-w-[220px] px-4 py-4 font-medium text-white  xl:pl-11">
+           Nombre del usuario
+          </th>
+          <th class="min-w-[120px] px-4 py-4 font-medium text-white ">
+            Correo
+          </th>
+          <th class="px-4 py-4 font-medium text-white ">
+            Estado
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let Punto of getNumbers()">
+          <td class="border-b border-[#eee] px-4 py-5 pl-9  xl:pl-11">
+            <p class="font-medium text-black ">Nombre completo</p>
+          </td>
+          <td class="border-b border-[#eee] px-4 py-5 pl-9  xl:pl-11">
+            <p class="font-medium text-black ">Correo institucional</p>
+          </td>
+          <td class="border-b border-[#eee] px-4 py-5 ">
+            <p class="inline-flex rounded-full bg-green-500 bg-opacity-10 px-3 py-1 text-sm font-medium text-green-500">
+              Activo
+            </p>
+            <p class="inline-flex rounded-full bg-red-500 bg-opacity-10 px-3 py-1 text-sm font-medium text-red-500">
+              Inactivo
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="4">
+            <div class="mt-2 bg-blue-600 text-sm text-white rounded-lg p-4" role="alert">
+              <span class="font-bold">Info</span> no se encontro ningún usuario con acceso al área.
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
