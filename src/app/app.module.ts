@@ -10,6 +10,7 @@ import { Articulo33Component } from './components/articulo33/articulo33.componen
 import { ContenidoPuntoComponent } from './components/articulo33/contenido-punto/contenido-punto.component';
 import { TituloComponent } from './partials/titulo/titulo.component';
 import { NewPdfComponent } from './components/forms/new-pdf/new-pdf.component';
+import { PageNotFoundComponent } from './partials/page-not-found/page-not-found.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { NewPdfComponent } from './components/forms/new-pdf/new-pdf.component';
     Articulo33Component,
     ContenidoPuntoComponent,
     TituloComponent,
-    NewPdfComponent
+    NewPdfComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
