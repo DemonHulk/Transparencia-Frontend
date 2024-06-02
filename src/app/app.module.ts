@@ -11,6 +11,7 @@ import { ContenidoPuntoComponent } from './components/articulo33/contenido-punto
 import { TituloComponent } from './partials/titulo/titulo.component';
 import { NewPdfComponent } from './components/forms/new-pdf/new-pdf.component';
 import { PageNotFoundComponent } from './partials/page-not-found/page-not-found.component';
+import { NewPuntoComponent } from './components/forms/new-punto/new-punto.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { PageNotFoundComponent } from './partials/page-not-found/page-not-found.
     ContenidoPuntoComponent,
     TituloComponent,
     NewPdfComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    NewPuntoComponent
   ],
   imports: [
     BrowserModule,
