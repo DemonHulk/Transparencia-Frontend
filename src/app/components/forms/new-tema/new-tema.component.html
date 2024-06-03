@@ -1,0 +1,104 @@
+<div class="12/12 text-right">
+  <button routerLink="/details-punto/1" type="button"
+    class="py-3 my-2  px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-primary-color text-white hover:bg-primary-color-90 disabled:opacity-50 disabled:pointer-events-none">
+    <i class="fa-solid fa-arrow-left-long"></i>
+    Volver
+  </button>
+</div>
+<div class="bg-white p-8 border border-gray-200 rounded-lg shadow-lg max-w-2xl mx-auto my-10">
+  <h1 class="text-3xl text-center">Nuevo Tema</h1>
+  <form class="grid grid-cols-1 gap-y-6 gap-x-4">
+    <!-- Input para el nombre interno del documento -->
+    <div class="sm:col-span-2">
+      <label for="titulo" class="font-poppins">Titulo</label>
+      <div
+        class="flex items-center bg-gray-100 py-3 px-4 border-gray-200 rounded-lg focus-within:border-primary-color focus-within:ring-primary-color">
+        <input type="text" id="titulo"
+          class="bg-gray-100 flex-grow border-none focus:ring-0 focus:outline-none text-sm text-dark"
+          placeholder="Titulo del tema">
+        <div class="hs-tooltip [--trigger:hover] sm:[--placement:right] inline-block ml-2">
+          <!-- lo del simbolo de interrogacion -->
+          <i class="fa-solid fa-question text-gray-500"></i>
+          <div
+            class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible hidden opacity-0 transition-opacity absolute invisible z-10 max-w-xs w-full bg-white border border-gray-100 text-start rounded-xl shadow-md after:absolute after:top-0 after:-start-4 after:w-4 after:h-full"
+            role="tooltip">
+            <ul class="py-3 px-4 space-y-1">
+              <li>
+                <div class="inline-flex items-center gap-x-3 text-sm text-gray-800">
+                  <p>Este campo permite ingresar el nombre del tema</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Es link -->
+    <div class="sm:col-span-2">
+      <label for="trimestre" class="font-poppins flex items-center">
+        Es link
+        <div class="hs-tooltip [--trigger:hover] sm:[--placement:right] inline-block ml-2">
+          <i class="fa-solid fa-question text-gray-500"></i>
+          <div
+            class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible hidden opacity-0 transition-opacity absolute invisible z-10 max-w-xs w-full bg-white border border-gray-100 text-start rounded-xl shadow-md after:absolute after:top-0 after:-start-4 after:w-4 after:h-full"
+            role="tooltip">
+            <ul class="py-3 px-4 space-y-1">
+              <li>
+                <div class="inline-flex items-center gap-x-3 text-sm text-gray-800">
+                  <p>Este campo habilita la opción por medio de un click en el nombre te manda a otra pantalla con el
+                    contenido del tema.</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </label>
+      <div
+        class="flex items-start  py-3 px-4 border-gray-200 rounded-lg focus-within:border-primary-color focus-within:ring-primary-color">
+        <div class="flex items-center">
+          <label for="hs-basic-with-description" class="text-sm text-gray-500 me-3">No</label>
+          <input type="checkbox" id="hs-basic-with-description"
+            class="border relative w-[3.25rem] h-7 p-px bg-gray-100 border-transparent text-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:ring-primary-color disabled:opacity-50 disabled:pointer-events-none checked:bg-none checked:text-primary-color checked:border-primary-color focus:checked:border-primary-color
+
+      before:inline-block before:size-6 before:bg-white checked:before:bg-white before:translate-x-0 checked:before:translate-x-full before:rounded-full before:shadow before:transform before:ring-0 before:transition before:ease-in-out before:duration-200">
+          <label for="hs-basic-with-description" class="text-sm text-gray-500 ms-3">Si</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Select para seleccionar el trimestre -->
+    <div>
+      <label for="trimestre" class="font-poppins flex items-center">
+        Tipo de contenido
+        <div class="hs-tooltip [--trigger:hover] sm:[--placement:right] inline-block ml-2">
+          <i class="fa-solid fa-question text-gray-500"></i>
+          <div
+            class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible hidden opacity-0 transition-opacity absolute invisible z-10 max-w-xs w-full bg-white border border-gray-100 text-start rounded-xl shadow-md after:absolute after:top-0 after:-start-4 after:w-4 after:h-full"
+            role="tooltip">
+            <ul class="py-3 px-4 space-y-1">
+              <li>
+                <div class="inline-flex items-center gap-x-3 text-sm text-gray-800">
+                  <p>Tipo de contenido que va manejar el tema.</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </label>
+      <select id="trimestre"
+        class="bg-gray-100 py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-primary-color focus:ring-primary-color  mt-2">
+        <option value="1">Estático</option>
+        <option value="2">Dinámico</option>
+      </select>
+    </div>
+
+    <!-- Botón de enviar -->
+    <div class="sm:col-span-2 flex justify-end">
+      <button type="submit"
+        class="items-center inline-flex justify-center py-2 px-6 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:bg-primary-color">
+        <i class="fas fa-save mx-1"></i> Guardar
+      </button>
+    </div>
+  </form>
+</div>

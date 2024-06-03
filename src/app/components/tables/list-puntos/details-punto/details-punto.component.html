@@ -1,0 +1,584 @@
+<div class="12/12 text-right">
+  <button routerLink="/puntos" type="button"
+    class="py-3 my-2  px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-primary-color text-white hover:bg-primary-color-90 disabled:opacity-50 disabled:pointer-events-none">
+    <i class="fa-solid fa-arrow-left-long"></i>
+    Volver
+  </button>
+</div>
+<div class="w-12/12">
+  <h3 class="text-2xl">Información general</h3>
+</div>
+<div class="w-12/12 my-2 flex flex-wrap mx-4">
+  <div class="flex flex-col bg-white border shadow-sm rounded-xl lg:w-3/12 sm:w-12/12 md:w-12/12  w-full my-2 mx-auto">
+    <div class="bg-gray-100 border-b rounded-t-xl py-3 px-4 md:py-4 md:px-5">
+      <p class="mt-1 text-sm text-gray-500">
+        Nombre del punto
+      </p>
+    </div>
+    <div class="p-4 md:p-5">
+      <h3 class="text-lg font-bold text-gray-800">
+        Normativas de la institución
+      </h3>
+    </div>
+  </div>
+
+  <div class="flex flex-col bg-white border shadow-sm rounded-xl lg:w-3/12 sm:w-12/12 md:w-12/12  w-full my-2 mx-auto ">
+    <div class="bg-gray-100 border-b rounded-t-xl py-3 px-4 md:py-4 md:px-5">
+      <p class="mt-1 text-sm text-gray-500">
+        Fecha de creación
+      </p>
+    </div>
+    <div class="p-4 md:p-5">
+      <h3 class="text-lg font-bold text-gray-800">
+        Enero 15, 2023
+      </h3>
+    </div>
+  </div>
+
+  <div class="flex flex-col bg-white border shadow-sm rounded-xl lg:w-3/12 sm:w-12/12 md:w-12/12  w-full my-2 mx-auto ">
+    <div class="bg-gray-100 border-b rounded-t-xl py-3 px-4 md:py-4 md:px-5">
+      <p class="mt-1 text-sm text-gray-500">
+        Última actualización
+      </p>
+    </div>
+    <div class="p-4 md:p-5">
+      <h3 class="text-lg font-bold text-gray-800">
+        Mayo 28, 2024
+      </h3>
+    </div>
+  </div>
+</div>
+
+<div class="w-12/12">
+  <h3 class="text-2xl">Contenido del punto</h3>
+</div>
+<div class="12/12 text-right">
+  <button type="button" routerLink="/new-tema/1"
+    class="py-3 my-2  px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-primary-color text-white hover:bg-primary-color-90 disabled:opacity-50 disabled:pointer-events-none">
+    <i class="fa fa-plus" aria-hidden="true"></i>
+    Agregar tema
+  </button>
+</div>
+<nav class="relative z-0 flex border rounded-xl overflow-hidden" aria-label="Tabs" role="tablist">
+  <button *ngFor="let tema of getNumbers();let i = index" [ngClass]="{' active': i === 0}" type="button"
+    class="hs-tab-active:border-b-primary-color hs-tab-active:text-gray-900 relative min-w-0 flex-1 bg-white first:border-s-0 border-s border-b-2 py-4 px-4 text-gray-500 hover:text-gray-700 text-sm font-medium text-center overflow-hidden hover:bg-gray-50 focus:z-10 focus:outline-none focus:text-primary-color disabled:opacity-50 disabled:pointer-events-none "
+    id="bar-with-underline-item-1" [attr.data-hs-tab]="'#bar-with-underline-' + tema"
+    [attr.aria-controls]="'bar-with-underline-' + tema" role="tab">
+    Tema {{tema}}
+  </button>
+</nav>
+<div class="mt-3">
+  <div *ngFor="let tema of getNumbers();let i = index" id="bar-with-underline-{{tema}}" [ngClass]="{'hidden': i !== 0}"
+    role="tabpanel" aria-labelledby="bar-with-underline-item-1">
+    <div class="12/12 text-right">
+
+      <button type="button" routerLink="/new-subtema/1"
+        class="py-3 my-2 mx-2 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-primary-color text-white hover:bg-primary-color-90 disabled:opacity-50 disabled:pointer-events-none">
+        <i class="fa fa-plus" aria-hidden="true"></i>
+        Agregar subtema
+      </button>
+
+      <button type="button" routerLink="/edit-tema/1"
+        class="py-3 my-2 mx-2 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-primary-color text-white hover:bg-primary-color-90 disabled:opacity-50 disabled:pointer-events-none">
+        <i class="fas fa-edit"></i>
+        Modificar tema
+      </button>
+
+      <button type="button"
+        class="py-3 my-2 mx-2 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-primary-color text-white hover:bg-primary-color-90 disabled:opacity-50 disabled:pointer-events-none">
+        <i class="fa fa-trash" aria-hidden="true"></i>
+        Desactivar tema
+      </button>
+
+    </div>
+    <ng-container *ngIf="tema % 2 != 0">
+      <div class="w-12/12">
+        <div class="flex flex-col">
+          <div class="-m-1.5 overflow-x-auto">
+            <div class="p-1.5 min-w-full inline-block align-middle">
+              <div class="border overflow-hidden">
+                <table class="min-w-full divide-y divide-gray-200 ">
+                  <thead>
+                    <tr>
+                      <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Tipo de contenido</th>
+                      <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Ultima actualización</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-gray-200">
+                    <tr>
+                      <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">
+                        <label for="trimestre" class="font-poppins flex items-center">
+                          Dinámico
+                          <div class="hs-tooltip [--trigger:hover] sm:[--placement:right] inline-block ml-2">
+                            <i class="fa-solid fa-question text-gray-500"></i>
+                            <div class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible hidden opacity-0 transition-opacity absolute invisible z-10 max-w-xs w-full bg-white border border-gray-100 text-start rounded-xl shadow-md after:absolute after:top-0 after:-start-4 after:w-4 after:h-full" role="tooltip">
+                              <ul class="py-3 px-4 space-y-1">
+                                <li>
+                                  <div class="inline-flex items-center gap-x-3 text-sm text-gray-800 text-wrap">
+                                    <p>En nuestro sistema, esto sucede cuando los usuarios suben archivos PDF. Cada vez que alguien sube un nuevo archivo, este se añade y aparece automáticamente en el sistema, sin que tú tengas que hacer nada para que esto ocurra.</p>
+                                  </div>
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+                        </label>
+                      </td>
+                      <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">
+                        Enero 13, 2023
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="w-12/12 my-4">
+                <h4 class="text-xl">Contenido del tema</h4>
+              </div>
+              <div class="border border-2 pb-5 p-3 mb-5 border-gray-200 border-dashed rounded-lg">
+                <div class="12/12 text-right">
+                  <button routerLink="/new-pdf/1/1" type="button"
+                    class="py-3 my-2  px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-primary-color text-white hover:bg-primary-color-90 disabled:opacity-50 disabled:pointer-events-none">
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                    Registrar pdf
+                  </button>
+                </div>
+                <div class="rounded-sm border border-stroke bg-white px-5 pb-2.5 pt-6 shadow-default   sm:px-7.5 xl:pb-1">
+                  <div class="max-w-full overflow-x-auto">
+                    <table class="w-full table-auto">
+                      <thead>
+                        <tr class="bg-primary-color-90 text-left ">
+                          <th class="min-w-[220px] px-4 py-4 font-medium text-white  xl:pl-11">
+                            Nombres del archivo
+                          </th>
+                          <th class="min-w-[150px] px-4 py-4 font-medium text-white ">
+                            Descripción
+                          </th>
+                          <th class="min-w-[150px] px-4 py-4 font-medium text-white ">
+                            Trimestre
+                          </th>
+                          <th class="min-w-[150px] px-4 py-4 font-medium text-white ">
+                            Ultima modificación
+                          </th>
+                          <th class="min-w-[120px] px-4 py-4 font-medium text-white ">
+                            Estado
+                          </th>
+                          <th class="px-4 py-4 font-medium text-white ">
+                            Acciones
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let pdf of getNumbers()">
+                          <td class="border-b border-[#eee] px-4 py-5 pl-9  xl:pl-11">
+                            <p class="font-medium text-black ">
+                              <label for="trimestre" class="font-poppins flex items-center ">
+                                <span class="font-bold">13. Declaración de impuestos</span>
+                                <div class="hs-tooltip [--trigger:hover] sm:[--placement:right] inline-block ml-2">
+                                  <i class="fa-solid fa-question text-gray-500"></i>
+                                  <div class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible hidden opacity-0 transition-opacity absolute invisible z-10 max-w-xs w-full bg-white border border-gray-100 text-start rounded-xl shadow-md after:absolute after:top-0 after:-start-4 after:w-4 after:h-full" role="tooltip">
+                                    <ul class="py-3 px-4 space-y-1">
+                                      <li>
+                                        <div class="inline-flex items-center gap-x-3 text-sm text-gray-800 text-wrap">
+                                          <p>Este es el nombre externo el cuál se mostrara en la aplicación para acceder al archivo. </p>
+                                        </div>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </div>
+                              </label>
+                            </p>
+                            <p class="text-sm">
+                              <label for="trimestre" class="font-poppins flex items-center">
+                                13_declaracion_impuestos_2024.pdf
+                                <div class="hs-tooltip [--trigger:hover] sm:[--placement:right] inline-block ml-2">
+                                  <i class="fa-solid fa-question text-gray-500"></i>
+                                  <div class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible hidden opacity-0 transition-opacity absolute invisible z-10 max-w-xs w-full bg-white border border-gray-100 text-start rounded-xl shadow-md after:absolute after:top-0 after:-start-4 after:w-4 after:h-full" role="tooltip">
+                                    <ul class="py-3 px-4 space-y-1">
+                                      <li>
+                                        <div class="inline-flex items-center gap-x-3 text-sm text-gray-800 text-wrap">
+                                          <p>Este es el nombre interno, es el nombre del archivo que tendra el archivo cuando se descargue. </p>
+                                        </div>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </div>
+                              </label>
+                            </p>
+                          </td>
+                          <td class="border-b border-[#eee] px-4 py-5 ">
+                            <label for="trimestre" class="font-poppins flex items-center  text-ellipsis">
+                              <div class="hs-tooltip [--trigger:hover] sm:[--placement:right] inline-block ml-2 text-ellipsis">
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sit accusamus laborum facilis, iusto sunt id maxime harum nihil, officiis ex ab itaque sint quidem. Adipisci incidunt officiis rerum necessitatibus? Id.
+                                <div class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible hidden opacity-0 transition-opacity absolute invisible z-10 max-w-xs w-full bg-white border border-gray-100 text-start rounded-xl shadow-md after:absolute after:top-0 after:-start-4 after:w-4 after:h-full" role="tooltip">
+                                  <ul class="py-3 px-4 space-y-1">
+                                    <li>
+                                      <div class="inline-flex items-center gap-x-3 text-sm text-gray-800 text-wrap">
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sit accusamus laborum facilis, iusto sunt id maxime harum nihil, officiis ex ab itaque sint quidem. Adipisci incidunt officiis rerum necessitatibus? Id. </p>
+                                      </div>
+                                    </li>
+                                  </ul>
+                                </div>
+                              </div>
+                            </label>
+                          </td>
+                          <td class="border-b border-[#eee] px-4 py-5 ">
+                            <p class="text-black ">ENERO-MARZO 2024</p>
+                          </td>
+                          <td class="border-b border-[#eee] px-4 py-5 ">
+                            <p class="text-black ">Enero 13,2023</p>
+                          </td>
+                          <td class="border-b border-[#eee] px-4 py-5 ">
+                            <p class="inline-flex rounded-full bg-green-500 bg-opacity-10 px-3 py-1 text-sm font-medium text-green-500">
+                              Activo
+                            </p>
+                            <p class="inline-flex rounded-full bg-red-500 bg-opacity-10 px-3 py-1 text-sm font-medium text-red-500">
+                              Inactivo
+                            </p>
+                          </td>
+                          <td class="border-b border-[#eee] px-4 py-5 ">
+                            <div class="flex items-center space-x-3.5">
+                              <button class="hover:text-primary" routerLink="/details-pdf/{{pdf}}">
+
+                                <!-- User -->
+                                <div class="hs-tooltip [--trigger:hover] sm:[--placement:right] inline-block">
+                                  <div
+                                    class="hs-tooltip-toggle max-w-xs p-3 flex items-center gap-x-3 bg-white border border-gray-200 rounded-xl shadow-sm">
+
+                                    <i class="fa fa-eye" aria-hidden="true"></i>
+                                    <!-- Popover Content -->
+                                    <div
+                                      class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible hidden opacity-0 transition-opacity absolute invisible z-10 max-w-xs w-full bg-white border border-gray-100 text-start rounded-xl shadow-md after:absolute after:top-0 after:-start-4 after:w-4 after:h-full"
+                                      role="tooltip">
+                                      <!-- Header -->
+                                      <div class="py-3 px-4 border-b border-gray-200">
+                                        <div class="flex items-center gap-x-3">
+                                          <div class="grow">
+                                            <h4 class="font-semibold text-gray-800">
+                                              Detalles
+                                            </h4>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <ul class="py-3 px-4 space-y-1">
+                                        <li>
+                                          <div class="inline-flex items-center gap-x-3 text-sm text-gray-800">
+                                            Mostrar el PDF
+                                          </div>
+                                        </li>
+                                      </ul>
+                                    </div>
+                                    <!-- End Popover Content -->
+                                  </div>
+                                </div>
+                              </button>
+                              <button class="hover:text-primary" routerLink="/edit-pdf/1/{{pdf}}">
+                                <!-- User -->
+                                <div class="hs-tooltip [--trigger:hover] sm:[--placement:right] inline-block">
+                                  <div
+                                    class="hs-tooltip-toggle max-w-xs p-3 flex items-center gap-x-3 bg-white border border-gray-200 rounded-xl shadow-sm">
+
+                                    <i class="fas fa-edit    "></i>
+                                    <!-- Popover Content -->
+                                    <div
+                                      class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible hidden opacity-0 transition-opacity absolute invisible z-10 max-w-xs w-full bg-white border border-gray-100 text-start rounded-xl shadow-md after:absolute after:top-0 after:-start-4 after:w-4 after:h-full"
+                                      role="tooltip">
+                                      <!-- Header -->
+                                      <div class="py-3 px-4 border-b border-gray-200">
+                                        <div class="flex items-center gap-x-3">
+                                          <div class="grow">
+                                            <h4 class="font-semibold text-gray-800">
+                                              Editar
+                                            </h4>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <ul class="py-3 px-4 space-y-1">
+                                        <li>
+                                          <div class="inline-flex items-center gap-x-3 text-sm text-gray-800">
+                                            Actualizar la información del registro actual.
+                                          </div>
+                                        </li>
+                                      </ul>
+                                    </div>
+                                    <!-- End Popover Content -->
+                                  </div>
+                                </div>
+                              </button>
+                              <button class="hover:text-primary">
+
+                                <!-- User -->
+                                <div class="hs-tooltip [--trigger:hover] sm:[--placement:right] inline-block">
+                                  <div
+                                    class="hs-tooltip-toggle max-w-xs p-3 flex items-center gap-x-3 bg-white border border-gray-200 rounded-xl shadow-sm">
+
+                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                    <!-- Popover Content -->
+                                    <div
+                                      class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible hidden opacity-0 transition-opacity absolute invisible z-10 max-w-xs w-full bg-white border border-gray-100 text-start rounded-xl shadow-md after:absolute after:top-0 after:-start-4 after:w-4 after:h-full"
+                                      role="tooltip">
+                                      <!-- Header -->
+                                      <div class="py-3 px-4 border-b border-gray-200">
+                                        <div class="flex items-center gap-x-3">
+                                          <div class="grow">
+                                            <h4 class="font-semibold text-gray-800">
+                                              Eliminar
+                                            </h4>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <ul class="py-3 px-4 space-y-1">
+                                        <li>
+                                          <div class="inline-flex items-center gap-x-3 text-sm text-gray-800">
+                                            Eliminar el registro indica desaparecer la información relacionado a este archivo.
+                                          </div>
+                                        </li>
+                                      </ul>
+                                    </div>
+                                    <!-- End Popover Content -->
+                                  </div>
+                                </div>
+                              </button>
+                              <button class="hover:text-primary">
+
+                                <!-- User -->
+                                <div class="hs-tooltip [--trigger:hover] sm:[--placement:right] inline-block">
+                                  <div
+                                    class="hs-tooltip-toggle max-w-xs p-3 flex items-center gap-x-3 bg-white border border-gray-200 rounded-xl shadow-sm">
+
+                                    <i class="fa-solid fa-arrow-rotate-left"></i>
+                                    <!-- Popover Content -->
+                                    <div
+                                      class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible hidden opacity-0 transition-opacity absolute invisible z-10 max-w-xs w-full bg-white border border-gray-100 text-start rounded-xl shadow-md after:absolute after:top-0 after:-start-4 after:w-4 after:h-full"
+                                      role="tooltip">
+                                      <!-- Header -->
+                                      <div class="py-3 px-4 border-b border-gray-200">
+                                        <div class="flex items-center gap-x-3">
+                                          <div class="grow">
+                                            <h4 class="font-semibold text-gray-800">
+                                              Reactivar
+                                            </h4>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <ul class="py-3 px-4 space-y-1">
+                                        <li>
+                                          <div class="inline-flex items-center gap-x-3 text-sm text-gray-800">
+                                            Volver a activar el registro regresando con este toda la información relacionada.
+                                          </div>
+                                        </li>
+                                      </ul>
+                                    </div>
+                                    <!-- End Popover Content -->
+                                  </div>
+                                </div>
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td colspan="6">
+                            <div class="mt-2 bg-blue-700 text-sm text-white rounded-lg p-4" role="alert">
+                              <span class="font-bold">Info</span> no se ha registrado ningún archivo.
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="tema % 2 == 0">
+      <div class="w-12/12">
+        <div class="flex flex-col">
+          <div class="-m-1.5 overflow-x-auto">
+            <div class="p-1.5 min-w-full inline-block align-middle">
+              <div class="border overflow-hidden">
+                <table class="min-w-full divide-y divide-gray-200">
+                  <thead>
+                    <tr>
+                      <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Tipo de contenido</th>
+                      <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Ultima actualización</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-gray-200">
+                    <tr>
+                      <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">
+                        <label for="trimestre" class="font-poppins flex items-center">
+                          Estático
+                          <div class="hs-tooltip [--trigger:hover] sm:[--placement:right] inline-block ml-2">
+                            <i class="fa-solid fa-question text-gray-500"></i>
+                            <div class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible hidden opacity-0 transition-opacity absolute invisible z-10 max-w-xs w-full bg-white border border-gray-100 text-start rounded-xl shadow-md after:absolute after:top-0 after:-start-4 after:w-4 after:h-full" role="tooltip">
+                              <ul class="py-3 px-4 space-y-1">
+                                <li>
+                                  <div class="inline-flex items-center gap-x-3 text-sm text-gray-800 text-wrap">
+                                    <p>El contenido estático es el que tú mismo puedes crear y modificar manualmente en el sistema. Piensa en él como si estuvieras usando un programa parecido a Word. Puedes añadir texto, imágenes y otros elementos a tu documento. Una vez que lo guardas, el contenido no cambiará a menos que tú decidas editarlo nuevamente.</p>
+                                  </div>
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+                        </label>
+                      </td>
+                      <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">
+                        Febrero 18, 2024
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="w-12/12 my-4">
+                <h4 class="text-xl">Contenido del tema</h4>
+              </div>
+              <div class="border border-2 pb-5 p-3 mb-5 border-gray-200 border-dashed rounded-lg">
+                <div class="12/12 text-right">
+                  <button routerLink="/new-pdf/1/1" type="button"
+                    class="py-3 my-2 mx-2  px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-primary-color text-white hover:bg-primary-color-90 disabled:opacity-50 disabled:pointer-events-none">
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                    Agregar contenido
+                  </button>
+                </div>
+                <div class="flex flex-auto flex-col justify-center items-center p-4 md:p-5">
+                  <svg class="size-10 text-gray-500 dark:text-neutral-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="22" x2="2" y1="12" y2="12"></line>
+                    <path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"></path>
+                    <line x1="6" x2="6.01" y1="16" y2="16"></line>
+                    <line x1="10" x2="10.01" y1="16" y2="16"></line>
+                  </svg>
+                  <p class="mt-2 text-sm text-gray-800 dark:text-neutral-300">
+                    Sin contenido para mostrar
+                  </p>
+                </div>
+              </div>
+
+              <div class="border border-2 pb-5 p-3 mb-5 border-gray-200 border-dashed rounded-lg">
+                <div class="12/12 text-right">
+                  <button routerLink="/new-pdf/1/1" type="button"
+                    class="py-3 my-2 mx-2  px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-primary-color text-white hover:bg-primary-color-90 disabled:opacity-50 disabled:pointer-events-none">
+                    <i class="fas fa-edit    "></i>
+                    Modificar contenido
+                  </button>
+                </div>
+                <div class="flex flex-col">
+                  <div class="-m-1.5 overflow-x-auto">
+                    <div class="p-1.5 min-w-full inline-block align-middle">
+                      <div class="border overflow-hidden">
+                        <table class="min-w-full divide-y divide-gray-200">
+                          <thead class="bg-primary-color-90">
+                            <tr>
+                              <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-white uppercase">Name</th>
+                              <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-white uppercase">Age</th>
+                              <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-white uppercase">Address</th>
+                            </tr>
+                          </thead>
+                          <tbody class="divide-y divide-gray-200">
+                            <tr>
+                              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">John Brown</td>
+                              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">45</td>
+                              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">New York No. 1 Lake Park</td>
+                            </tr>
+                            <tr>
+                              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">Jim Green</td>
+                              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">27</td>
+                              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">London No. 1 Lake Park</td>
+                            </tr>
+                            <tr>
+                              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">Joe Black</td>
+                              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">31</td>
+                              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">Sidney No. 1 Lake Park</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <div class="w-12/12 my-4">
+      <h4 class="text-xl">Subtemas del tema</h4>
+    </div>
+    <div class="border border-2 pb-5 p-3 mb-5 border-gray-200 border-dashed rounded-lg">
+      <div class="hs-accordion-group">
+        <div class="hs-accordion active" id="hs-basic-with-arrow-heading-one">
+          <button class="hs-accordion-toggle hs-accordion-active:text-primary-color-90 py-3 inline-flex items-center gap-x-3 w-full font-semibold text-start text-gray-800 hover:text-gray-500 rounded-lg disabled:opacity-50 disabled:pointer-events-none" aria-controls="hs-basic-with-arrow-collapse-one">
+            <svg class="hs-accordion-active:hidden block size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m6 9 6 6 6-6"></path>
+            </svg>
+            <svg class="hs-accordion-active:block hidden size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m18 15-6-6-6 6"></path>
+            </svg>
+            Subtema 1
+          </button>
+          <div id="hs-basic-with-arrow-collapse-one" class="hs-accordion-content w-full overflow-hidden transition-[height] duration-300" aria-labelledby="hs-basic-with-arrow-heading-one">
+            <div class="12/12 text-right">
+
+              <button type="button"
+                class="py-3 my-2 mx-2 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-primary-color text-white hover:bg-primary-color-90 disabled:opacity-50 disabled:pointer-events-none">
+                <i class="fa fa-plus" aria-hidden="true"></i>
+                Agregar subtema
+              </button>
+
+              <button type="button"
+              routerLink="/edit-subtema/1/1"
+                class="py-3 my-2 mx-2 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-primary-color text-white hover:bg-primary-color-90 disabled:opacity-50 disabled:pointer-events-none">
+                <i class="fas fa-edit"></i>
+                Modificar subtema
+              </button>
+
+              <button type="button"
+                class="py-3 my-2 mx-2 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-primary-color text-white hover:bg-primary-color-90 disabled:opacity-50 disabled:pointer-events-none">
+                <i class="fa fa-trash" aria-hidden="true"></i>
+                Desactivar subtema
+              </button>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="hs-accordion" id="hs-basic-with-arrow-heading-two">
+          <button class="hs-accordion-toggle hs-accordion-active:text-primary-color-90 py-3 inline-flex items-center gap-x-3 w-full font-semibold text-start text-gray-800 hover:text-gray-500 rounded-lg disabled:opacity-50 disabled:pointer-events-none" aria-controls="hs-basic-with-arrow-collapse-two">
+            <svg class="hs-accordion-active:hidden block size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m6 9 6 6 6-6"></path>
+            </svg>
+            <svg class="hs-accordion-active:block hidden size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m18 15-6-6-6 6"></path>
+            </svg>
+            Subtema 2
+          </button>
+          <div id="hs-basic-with-arrow-collapse-two" class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300" aria-labelledby="hs-basic-with-arrow-heading-two">
+            <p class="text-gray-800">
+              <em>This is the third item's accordion body.</em> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions.
+            </p>
+          </div>
+        </div>
+
+        <div class="hs-accordion" id="hs-basic-with-arrow-heading-three">
+          <button class="hs-accordion-toggle hs-accordion-active:text-primary-color-90 py-3 inline-flex items-center gap-x-3 w-full font-semibold text-start text-gray-800 hover:text-gray-500 rounded-lg disabled:opacity-50 disabled:pointer-events-none" aria-controls="hs-basic-with-arrow-collapse-three">
+            <svg class="hs-accordion-active:hidden block size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m6 9 6 6 6-6"></path>
+            </svg>
+            <svg class="hs-accordion-active:block hidden size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m18 15-6-6-6 6"></path>
+            </svg>
+            Subtema 3
+          </button>
+          <div id="hs-basic-with-arrow-collapse-three" class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300" aria-labelledby="hs-basic-with-arrow-heading-three">
+            <p class="text-gray-800">
+              <em>This is the third item's accordion body.</em> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

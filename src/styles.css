@@ -66,3 +66,15 @@ footer{
   -moz-box-shadow: 1px 12px 30px -6px rgba(0,0,0,0.65);
   box-shadow: 1px 12px 30px -6px rgba(0,0,0,0.65);
 }
+
+td > label .text-ellipsis {
+  max-width: 500px;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+.hs-tooltip{
+  cursor:help;
+}
