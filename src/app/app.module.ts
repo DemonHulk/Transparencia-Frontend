@@ -19,6 +19,14 @@ import { DetailsAreaComponent } from './components/tables/list-areas/details-are
 import { ListTrimestresComponent } from './components/tables/list-trimestres/list-trimestres.component';
 import { NewTrimestreComponent } from './components/forms/new-trimestre/new-trimestre.component';
 import { EditTrimestreComponent } from './components/forms/edit-trimestre/edit-trimestre.component';
+import { ListPuntosComponent } from './components/tables/list-puntos/list-puntos.component';
+import { DetailsPuntoComponent } from './components/tables/list-puntos/details-punto/details-punto.component';
+import { EditPuntoComponent } from './components/forms/edit-punto/edit-punto.component';
+import { EditPdfComponent } from './components/forms/edit-pdf/edit-pdf.component';
+import { NewTemaComponent } from './components/forms/new-tema/new-tema.component';
+import { EditTemaComponent } from './components/forms/edit-tema/edit-tema.component';
+import { NewSubtemaComponent } from './components/forms/new-subtema/new-subtema.component';
+import { EditSubtemaComponent } from './components/forms/edit-subtema/edit-subtema.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +46,15 @@ import { EditTrimestreComponent } from './components/forms/edit-trimestre/edit-t
     DetailsAreaComponent,
     ListTrimestresComponent,
     NewTrimestreComponent,
-    EditTrimestreComponent
+    EditTrimestreComponent,
+    ListPuntosComponent,
+    DetailsPuntoComponent,
+    EditPuntoComponent,
+    EditPdfComponent,
+    NewTemaComponent,
+    EditTemaComponent,
+    NewSubtemaComponent,
+    EditSubtemaComponent
   ],
   imports: [
     BrowserModule,
