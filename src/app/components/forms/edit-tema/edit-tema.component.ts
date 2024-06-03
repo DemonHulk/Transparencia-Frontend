@@ -2,11 +2,11 @@ import { Component } from '@angular/core';
 import { SharedValuesService } from '../../../services/shared-values.service';
 
 @Component({
-  selector: 'app-new-punto',
-  templateUrl: './new-punto.component.html',
-  styleUrl: './new-punto.component.css'
+  selector: 'app-edit-tema',
+  templateUrl: './edit-tema.component.html',
+  styleUrl: './edit-tema.component.css'
 })
-export class NewPuntoComponent {
+export class EditTemaComponent {
   constructor(private sharedService: SharedValuesService) { }
 
   /**
@@ -14,21 +14,13 @@ export class NewPuntoComponent {
  *
  * @returns {void}
  */
-ngOnInit(): void {
+  ngOnInit(): void {
     /**
      * Llama al método changeTitle del servicio de valores compartidos para actualizar el título.
      *
      * @param {string} newTitle - El nuevo título a establecer.
      * @memberof SharedValuesService
      */
-    this.sharedService.changeTitle('Registrar un nuevo punto');
-}
-
-getNumbers(): number[] {
-  const numbers: number[] = [];
-  for (let i = 1; i <= 6; i++) {
-    numbers.push(i);
+    this.sharedService.changeTitle('Modificar tema: Nombre tema');
   }
-  return numbers;
-}
 }
