@@ -12,6 +12,8 @@ import { DetailsAreaComponent } from './components/tables/list-areas/details-are
 import { ListTrimestresComponent } from './components/tables/list-trimestres/list-trimestres.component';
 import { NewTrimestreComponent } from './components/forms/new-trimestre/new-trimestre.component';
 import { EditTrimestreComponent } from './components/forms/edit-trimestre/edit-trimestre.component';
+import { ListUsuariosComponent } from './components/tables/list-usuarios/list-usuarios.component';
+import { InfoUsuariosComponent } from './components/tables/info-usuarios/info-usuarios.component';
 
 const routes: Routes = [
   {path: '', component:Articulo33Component},
@@ -26,6 +28,8 @@ const routes: Routes = [
   {path: 'areas', component:ListAreasComponent},
   {path: 'trimestres', component:ListTrimestresComponent},
   {path: 'details-area/:id', component:DetailsAreaComponent},
+  {path: 'usuarios', component:ListUsuariosComponent},
+  {path: 'info-usuarios', component:InfoUsuariosComponent},
   {path: '**', component:PageNotFoundComponent},
 ];
 
