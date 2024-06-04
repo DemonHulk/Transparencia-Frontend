@@ -26,6 +26,7 @@ import { ListUsuariosComponent } from './components/tables/list-usuarios/list-us
 import { DetailsUsuarioComponent } from './components/tables/list-usuarios/details-usuario/details-usuario.component';
 import { NewUsuarioComponent } from './components/forms/new-usuario/new-usuario.component';
 import { EditUsuarioComponent } from './components/forms/edit-usuario/edit-usuario.component';
+import { NewWordComponent } from './components/forms/new-word/new-word.component';
 
 const routes: Routes = [
   {path: '', component:Articulo33Component},
@@ -54,6 +55,7 @@ const routes: Routes = [
   {path: 'details-area/:id', component:DetailsAreaComponent},
   {path: 'details-punto/:id', component:DetailsPuntoComponent},
   {path: 'details-usuario/:id', component:DetailsUsuarioComponent},
+  {path: 'new-word/:punto/:tema', component:NewWordComponent},
   {path: '**', component:PageNotFoundComponent},
 ];
 
