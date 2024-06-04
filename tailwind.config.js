@@ -10,6 +10,7 @@ module.exports = {
         'primary-color': '#003C3D',
         'primary-color-50': '#003C3D',
         'primary-color-90': '#003C3D',
+        'table-header-color': '#077c01',
         'color': '#003C3D',
         'secondary-color': '#008779',
         'secondary-color-90': '#008779e6',

@@ -22,6 +22,10 @@ import { NewSubtemaComponent } from './components/forms/new-subtema/new-subtema.
 import { EditSubtemaComponent } from './components/forms/edit-subtema/edit-subtema.component';
 import { MiPerfilComponent } from './components/mi-perfil/mi-perfil.component';
 import { EditPerfilComponent } from './components/forms/edit-perfil/edit-perfil.component';
+import { ListUsuariosComponent } from './components/tables/list-usuarios/list-usuarios.component';
+import { DetailsUsuarioComponent } from './components/tables/list-usuarios/details-usuario/details-usuario.component';
+import { NewUsuarioComponent } from './components/forms/new-usuario/new-usuario.component';
+import { EditUsuarioComponent } from './components/forms/edit-usuario/edit-usuario.component';
 
 const routes: Routes = [
   {path: '', component:Articulo33Component},
@@ -34,6 +38,7 @@ const routes: Routes = [
   {path: 'new-trimestre', component:NewTrimestreComponent},
   {path: 'new-tema/:punto', component:NewTemaComponent},
   {path: 'new-subtema/:tema', component:NewSubtemaComponent},
+  {path: 'new-usuario', component:NewUsuarioComponent},
   {path: 'edit-area/:id', component:EditAreaComponent},
   {path: 'edit-trimestre/:id', component:EditTrimestreComponent},
   {path: 'edit-punto/:id', component:EditPuntoComponent},
@@ -41,11 +46,14 @@ const routes: Routes = [
   {path: 'edit-pdf/:punto/:contenido', component:EditPdfComponent},
   {path: 'edit-subtema/:tema/:id', component:EditSubtemaComponent},
   {path: 'edit-perfil', component:EditPerfilComponent},
+  {path: 'edit-usuario/:id', component:EditUsuarioComponent},
   {path: 'areas', component:ListAreasComponent},
   {path: 'trimestres', component:ListTrimestresComponent},
   {path: 'puntos', component:ListPuntosComponent},
+  {path: 'usuarios', component:ListUsuariosComponent},
   {path: 'details-area/:id', component:DetailsAreaComponent},
   {path: 'details-punto/:id', component:DetailsPuntoComponent},
+  {path: 'details-usuario/:id', component:DetailsUsuarioComponent},
   {path: '**', component:PageNotFoundComponent},
 ];
 

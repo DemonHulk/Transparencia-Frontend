@@ -29,6 +29,10 @@ import { NewSubtemaComponent } from './components/forms/new-subtema/new-subtema.
 import { EditSubtemaComponent } from './components/forms/edit-subtema/edit-subtema.component';
 import { MiPerfilComponent } from './components/mi-perfil/mi-perfil.component';
 import { EditPerfilComponent } from './components/forms/edit-perfil/edit-perfil.component';
+import { ListUsuariosComponent } from './components/tables/list-usuarios/list-usuarios.component';
+import { DetailsUsuarioComponent } from './components/tables/list-usuarios/details-usuario/details-usuario.component';
+import { NewUsuarioComponent } from './components/forms/new-usuario/new-usuario.component';
+import { EditUsuarioComponent } from './components/forms/edit-usuario/edit-usuario.component';
 
 @NgModule({
   declarations: [
@@ -58,7 +62,11 @@ import { EditPerfilComponent } from './components/forms/edit-perfil/edit-perfil.
     NewSubtemaComponent,
     EditSubtemaComponent,
     MiPerfilComponent,
-    EditPerfilComponent
+    EditPerfilComponent,
+    ListUsuariosComponent,
+    DetailsUsuarioComponent,
+    NewUsuarioComponent,
+    EditUsuarioComponent
   ],
   imports: [
     BrowserModule,
