@@ -205,3 +205,11 @@ input[type="checkbox"]:focus{
   color: #003C3D!important; /* Green 600 */
 
 }
+
+
+
+.contenido-prev {
+  word-wrap: break-word; /* Permite que las palabras se rompan automáticamente */
+  max-width: auto; /* Establece el ancho máximo automáticamente */
+  flex-wrap: wrap; /* Permite que el contenido se ajuste al contenedor */
+}

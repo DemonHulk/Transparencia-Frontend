@@ -1,0 +1,36 @@
+<div class="12/12 text-right">
+    <button routerLink="/details-punto/1" type="button"
+      class="py-3 my-2 button-back px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-primary-color text-white hover:bg-primary-color-90 disabled:opacity-50 disabled:pointer-events-none">
+      <i class="fa-solid fa-arrow-left-long"></i>
+    </button>
+  </div>
+
+<editor apiKey="d83mhcjyadvqq1juq5fieuemnemagcsj2dbz5v6vls8oah8e"
+        [init]="{
+          language: 'es',
+          plugins: 'link table code',
+          toolbar: 'undo redo | bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat',
+          menubar: 'insert table',
+          table_toolbar: 'tabledelete | tableinsertrowbefore tableinsertrowafter tabledeleterow | tableinsertcolbefore tableinsertcolafter tabledeletecol',
+          style_formats: [
+            { title: 'Tabla sin bordes', selector: 'table', styles: { 'border-style': 'none' } },
+            { title: 'Celda sin fondo', selector: 'td', styles: { 'background-color': 'transparent' } }
+          ]
+        }">
+</editor>
+
+
+ <!-- Botón de enviar -->
+ <div class="sm:col-span-2 flex justify-end py-2">
+    <button type="submit" (click)="printHTML()"
+      class="items-center button-save inline-flex justify-center py-2 px-6 border border-transparent shadow-sm text-sm font-medium rounded-md  ">
+      <i class="fas fa-save mx-1"></i>
+    </button>
+  </div>
+
+  <div class="w-12/12">
+    <h4>Previsualización de contenido</h4>
+  </div>
+  <div class="contenido-prev sm:9/12 lg:w-12/12 p-4 mx-0 my-2 max-h-[85vh] text-wrap border-2 pb-5 border-gray-200 border-dashed rounded-lg"  [innerHtml]="htmlContent">
+  </div>
+

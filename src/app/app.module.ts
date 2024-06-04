@@ -1,5 +1,7 @@
-import { NgModule } from '@angular/core';
+import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { EditorModule } from '@tinymce/tinymce-angular';
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -33,6 +35,7 @@ import { ListUsuariosComponent } from './components/tables/list-usuarios/list-us
 import { DetailsUsuarioComponent } from './components/tables/list-usuarios/details-usuario/details-usuario.component';
 import { NewUsuarioComponent } from './components/forms/new-usuario/new-usuario.component';
 import { EditUsuarioComponent } from './components/forms/edit-usuario/edit-usuario.component';
+import { NewWordComponent } from './components/forms/new-word/new-word.component';
 
 @NgModule({
   declarations: [
@@ -66,13 +69,17 @@ import { EditUsuarioComponent } from './components/forms/edit-usuario/edit-usuar
     ListUsuariosComponent,
     DetailsUsuarioComponent,
     NewUsuarioComponent,
-    EditUsuarioComponent
+    EditUsuarioComponent,
+    NewWordComponent,
+    
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    EditorModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas: [NO_ERRORS_SCHEMA]
 })
 export class AppModule { }
