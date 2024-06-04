@@ -163,5 +163,45 @@ h6 {
 
 input[type="checkbox"] {
   border-color: #ededed !important;
-  color: #000 !important;
+  color: #14b8a6 !important;
+}
+input[type="checkbox"]:focus{
+  --tw-ring-opacity: 1;
+  --tw-ring-color: #0d9488;
+}
+
+.hs-tooltip-toggle > .fas.fa-edit{
+  color: #3b82f6 !important; /* Blue 500 */
+}
+
+.hs-tooltip-toggle > .fas.fa-edit:hover{
+  color: #2563eb !important; /* Blue 600 */
+}
+
+
+.hs-tooltip-toggle > .fa.fa-trash{
+  color: #ef4444 !important; /* Red 500 */
+}
+
+.hs-tooltip-toggle > .fa.fa-trash:hover{
+  color: #dc2626 !important; /* Red 600 */
+}
+
+.hs-tooltip-toggle > .fa-solid.fa-arrow-rotate-left{
+  color: #22c55e !important; /* Green 500 */
+}
+
+.hs-tooltip-toggle > .fa-solid.fa-arrow-rotate-left:hover{
+  color: #16a34a !important; /* Green 600 */
+
+}
+
+
+.hs-tooltip-toggle > .fa.fa-eye{
+  color: #008779 !important;
+}
+
+.hs-tooltip-toggle > .fa.fa-eye:hover{
+  color: #003C3D!important; /* Green 600 */
+
 }
