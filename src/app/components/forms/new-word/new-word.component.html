@@ -27,6 +27,10 @@
       <i class="fas fa-save mx-1"></i>
     </button>
   </div>
-  <div [innerHtml]="htmlContent"></div>
 
-  
+  <div class="w-12/12">
+    <h4>Previsualización de contenido</h4>
+  </div>
+  <div class="contenido-prev sm:9/12 lg:w-12/12 p-4 mx-0 my-2 max-h-[85vh] text-wrap border-2 pb-5 border-gray-200 border-dashed rounded-lg"  [innerHtml]="htmlContent">
+  </div>
+
