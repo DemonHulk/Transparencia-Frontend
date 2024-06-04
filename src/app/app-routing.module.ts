@@ -20,11 +20,14 @@ import { NewTemaComponent } from './components/forms/new-tema/new-tema.component
 import { EditTemaComponent } from './components/forms/edit-tema/edit-tema.component';
 import { NewSubtemaComponent } from './components/forms/new-subtema/new-subtema.component';
 import { EditSubtemaComponent } from './components/forms/edit-subtema/edit-subtema.component';
+import { MiPerfilComponent } from './components/mi-perfil/mi-perfil.component';
+import { EditPerfilComponent } from './components/forms/edit-perfil/edit-perfil.component';
 
 const routes: Routes = [
   {path: '', component:Articulo33Component},
   {path: 'login', component:LoginComponent},
   {path: 'articulo33', component:Articulo33Component},
+  {path: 'myprofile', component:MiPerfilComponent},
   {path: 'new-pdf/:punto/:tema', component:NewPdfComponent},
   {path: 'new-punto', component:NewPuntoComponent},
   {path: 'new-area', component:NewAreaComponent},
@@ -37,6 +40,7 @@ const routes: Routes = [
   {path: 'edit-tema/:id', component:EditTemaComponent},
   {path: 'edit-pdf/:punto/:contenido', component:EditPdfComponent},
   {path: 'edit-subtema/:tema/:id', component:EditSubtemaComponent},
+  {path: 'edit-perfil', component:EditPerfilComponent},
   {path: 'areas', component:ListAreasComponent},
   {path: 'trimestres', component:ListTrimestresComponent},
   {path: 'puntos', component:ListPuntosComponent},
