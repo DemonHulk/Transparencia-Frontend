@@ -5,23 +5,31 @@
   </button>
 </div>
 <div class="bg-white p-8 border border-gray-200 rounded-lg shadow-lg max-w-2xl mx-auto my-10">
-  <h1 class="text-3xl text-center">Nuevo Documento</h1>
+  <h3 class="my-2 text-left">Nuevo Documento</h3>
+  <hr class="w-full mb-2">
   <form class="grid grid-cols-1 gap-y-6 gap-x-4">
     <!-- Input para el nombre interno del documento -->
     <div class="sm:col-span-2">
-      <label for="nombreInternoDocumento" class="font-poppins">Nombre Externo del Documento</label>
-      <div class="flex items-center bg-gray-100 py-3 px-4 border-gray-200 rounded-lg focus-within:border-primary-color focus-within:ring-primary-color">
-        <input type="text" id="nombreInternoDocumento"
-          class="bg-gray-100 flex-grow border-none focus:ring-0 focus:outline-none text-sm text-dark"
+      <label for="nombreExterno" class="font-poppins">Nombre Externo del Documento</label>
+      <div
+        class="flex items-center border border-input-bord-color py-3 px-4 rounded-lg focus-within:border-input-focus-color focus-within:ring-input-focus-color">
+        <input type="text" id="nombreExterno"
+          class=" flex-grow border-none focus:ring-0 focus:outline-none text-sm text-dark"
           placeholder="Nombre con el cual se mostrara para acceder">
         <div class="hs-tooltip [--trigger:hover] sm:[--placement:right] inline-block ml-2">
           <!-- lo del simbolo de interrogacion -->
           <i class="fa-solid fa-question text-gray-500"></i>
-          <div class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible hidden opacity-0 transition-opacity absolute invisible z-10 max-w-xs w-full bg-white border border-gray-100 text-start rounded-xl shadow-md after:absolute after:top-0 after:-start-4 after:w-4 after:h-full" role="tooltip">
+          <div
+            class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible hidden opacity-0 transition-opacity absolute invisible z-10 max-w-xs w-full bg-white border border-gray-100 text-start rounded-xl shadow-md after:absolute after:top-0 after:-start-4 after:w-4 after:h-full"
+            role="tooltip">
             <ul class="py-3 px-4 space-y-1">
               <li>
                 <div class="inline-flex items-center gap-x-3 text-sm text-gray-800">
-                  <p>Este campo te permite ingresar un nombre para el documento que será visible para acceder a él. Puedes proporcionar un nombre descriptivo que ayude a identificar el contenido del documento. Por ejemplo, podrías utilizar un nombre que refleje el tema o el propósito del documento. Asegúrate de elegir un nombre claro y significativo para facilitar su identificación y acceso por parte de los usuarios.</p>
+                  <p>Este campo te permite ingresar un nombre para el documento que será visible para acceder a él.
+                    Puedes proporcionar un nombre descriptivo que ayude a identificar el contenido del documento. Por
+                    ejemplo, podrías utilizar un nombre que refleje el tema o el propósito del documento. Asegúrate de
+                    elegir un nombre claro y significativo para facilitar su identificación y acceso por parte de los
+                    usuarios.</p>
                 </div>
               </li>
             </ul>
@@ -32,19 +40,25 @@
 
     <!-- Input para el nombre interno del documento -->
     <div class="sm:col-span-2">
-      <label for="nombreInternoDocumento" class="font-poppins">Nombre Interno del Documento</label>
-      <div class="flex items-center bg-gray-100 py-3 px-4 border-gray-200 rounded-lg focus-within:border-primary-color focus-within:ring-primary-color">
-        <input type="text" id="nombreInternoDocumento"
-          class="bg-gray-100 flex-grow border-none focus:ring-0 focus:outline-none text-sm "
+      <label for="nombreInterno" class="font-poppins">Nombre Interno del Documento</label>
+      <div
+        class="flex items-center border border-input-bord-color py-3 px-4 rounded-lg focus-within:border-input-focus-color focus-within:ring-input-focus-color">
+        <input type="text" id="nombreInterno" class=" flex-grow border-none focus:ring-0 focus:outline-none text-sm "
           placeholder="Nombre de descarga del documento">
         <div class="hs-tooltip [--trigger:hover] sm:[--placement:right] inline-block ml-2">
           <!-- lo del simbolo de interrogacion -->
           <i class="fa-solid fa-question text-gray-500"></i>
-          <div class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible hidden opacity-0 transition-opacity absolute invisible z-10 max-w-xs w-full bg-white border border-gray-100 text-start rounded-xl shadow-md after:absolute after:top-0 after:-start-4 after:w-4 after:h-full" role="tooltip">
+          <div
+            class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible hidden opacity-0 transition-opacity absolute invisible z-10 max-w-xs w-full bg-white border border-gray-100 text-start rounded-xl shadow-md after:absolute after:top-0 after:-start-4 after:w-4 after:h-full"
+            role="tooltip">
             <ul class="py-3 px-4 space-y-1">
               <li>
                 <div class="inline-flex items-center gap-x-3 text-sm text-gray-800">
-                  <p>Este campo te permite ingresar un nombre interno para el documento. Este nombre se utilizará para identificar el documento dentro del sistema, pero no será visible para los usuarios finales. Puedes utilizar un nombre descriptivo que refleje el contenido o el propósito del documento. Asegúrate de elegir un nombre claro y significativo para facilitar su gestión y organización dentro del sistema.</p>
+                  <p>Este campo te permite ingresar un nombre interno para el documento. Este nombre se utilizará para
+                    identificar el documento dentro del sistema, pero no será visible para los usuarios finales. Puedes
+                    utilizar un nombre descriptivo que refleje el contenido o el propósito del documento. Asegúrate de
+                    elegir un nombre claro y significativo para facilitar su gestión y organización dentro del sistema.
+                  </p>
                 </div>
               </li>
             </ul>
@@ -53,57 +67,57 @@
       </div>
     </div>
 
-
-
-
-
-<!-- Descripción -->
-<div class="sm:col-span-2">
-  <label for="descripcion" class="font-poppins">Descripción</label>
-  <div class="flex items-start bg-gray-100 py-3 px-4 border-gray-200 rounded-lg focus-within:border-primary-color focus-within:ring-primary-color">
-    <textarea id="descripcion"
-      class="bg-gray-100 flex-grow border-none focus:ring-0 focus:outline-none text-sm "
-      rows="3" placeholder="Descripción del documento"></textarea>
-    <div class="hs-tooltip [--trigger:hover] sm:[--placement:right] inline-block ml-2">
-      <i class="fa-solid fa-question text-gray-500"></i>
-      <div class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible hidden opacity-0 transition-opacity absolute invisible z-10 max-w-xs w-full bg-white border border-gray-100 text-start rounded-xl shadow-md after:absolute after:top-0 after:-start-4 after:w-4 after:h-full" role="tooltip">
-        <ul class="py-3 px-4 space-y-1">
-          <li>
-            <div class="inline-flex items-center gap-x-3 text-sm text-gray-800">
-              <p>Ingrese una descripción detallada del documento.</p>
-            </div>
-          </li>
-        </ul>
+    <!-- Descripción -->
+    <div class="sm:col-span-2">
+      <label for="descripcion" class="font-poppins">Descripción</label>
+      <div
+        class="flex items-center border border-input-bord-color py-3 px-4 rounded-lg focus-within:border-input-focus-color focus-within:ring-input-focus-color">
+        <textarea id="descripcion" class=" flex-grow border-none focus:ring-0 focus:outline-none text-sm " rows="3"
+          placeholder="Descripción del documento"></textarea>
+        <div class="hs-tooltip [--trigger:hover] sm:[--placement:right] inline-block ml-2">
+          <i class="fa-solid fa-question text-gray-500"></i>
+          <div
+            class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible hidden opacity-0 transition-opacity absolute invisible z-10 max-w-xs w-full bg-white border border-gray-100 text-start rounded-xl shadow-md after:absolute after:top-0 after:-start-4 after:w-4 after:h-full"
+            role="tooltip">
+            <ul class="py-3 px-4 space-y-1">
+              <li>
+                <div class="inline-flex items-center gap-x-3 text-sm text-gray-800">
+                  <p>Ingrese una descripción detallada del documento.</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</div>
 
-<!-- Input para el PDF -->
-<div class="sm:col-span-2">
-  <label for="pdf" class="font-poppins flex items-center">
-    PDF
-    <div class="hs-tooltip [--trigger:hover] sm:[--placement:right] inline-block ml-2">
-      <i class="fa-solid fa-question text-gray-500"></i>
-      <div class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible hidden opacity-0 transition-opacity absolute invisible z-10 max-w-xs w-full bg-white border border-gray-100 text-start rounded-xl shadow-md after:absolute after:top-0 after:-start-4 after:w-4 after:h-full" role="tooltip">
-        <ul class="py-3 px-4 space-y-1">
-          <li>
-            <div class="inline-flex items-center gap-x-3 text-sm text-gray-800">
-              <p>Elige un archivo PDF para subir.</p>
-            </div>
-          </li>
-        </ul>
+    <!-- Input para el PDF -->
+    <div class="sm:col-span-2">
+      <label for="pdf" class="font-poppins flex items-center">
+        PDF
+        <div class="hs-tooltip [--trigger:hover] sm:[--placement:right] inline-block ml-2">
+          <i class="fa-solid fa-question text-gray-500"></i>
+          <div
+            class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible hidden opacity-0 transition-opacity absolute invisible z-10 max-w-xs w-full bg-white border border-gray-100 text-start rounded-xl shadow-md after:absolute after:top-0 after:-start-4 after:w-4 after:h-full"
+            role="tooltip">
+            <ul class="py-3 px-4 space-y-1">
+              <li>
+                <div class="inline-flex items-center gap-x-3 text-sm text-gray-800">
+                  <p>Elige un archivo PDF para subir.</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </label>
+      <div class="flex items-center mt-2">
+        <label class="flex-grow">
+          <span class="sr-only">Elige un archivo PDF</span>
+          <input type="file" id="pdf"
+            class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-secondary-color file:text-white hover:file:bg-secondary-color-90">
+        </label>
       </div>
     </div>
-  </label>
-  <div class="flex items-center mt-2">
-    <label class="flex-grow">
-      <span class="sr-only">Elige un archivo PDF</span>
-      <input type="file" id="pdf"
-        class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-secondary-color file:text-white hover:file:bg-secondary-color-90">
-    </label>
-  </div>
-</div>
     <div class="sm:col-span-2">
       <!-- File Uploading Progress Form -->
       <div>
@@ -145,29 +159,31 @@
       <!-- End File Uploading Progress Form -->
     </div>
 
-<!-- Select para seleccionar el trimestre -->
-<div class="sm:col-span-2">
-  <label for="trimestre" class="font-poppins flex items-center">
-    Trimestre
-    <div class="hs-tooltip [--trigger:hover] sm:[--placement:right] inline-block ml-2">
-      <i class="fa-solid fa-question text-gray-500"></i>
-      <div class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible hidden opacity-0 transition-opacity absolute invisible z-10 max-w-xs w-full bg-white border border-gray-100 text-start rounded-xl shadow-md after:absolute after:top-0 after:-start-4 after:w-4 after:h-full" role="tooltip">
-        <ul class="py-3 px-4 space-y-1">
-          <li>
-            <div class="inline-flex items-center gap-x-3 text-sm text-gray-800">
-              <p>Seleccione el trimestre correspondiente.</p>
-            </div>
-          </li>
-        </ul>
-      </div>
+    <!-- Select para seleccionar el trimestre -->
+    <div class="sm:col-span-2">
+      <label for="trimestre" class="font-poppins flex items-center">
+        Trimestre
+        <div class="hs-tooltip [--trigger:hover] sm:[--placement:right] inline-block ml-2">
+          <i class="fa-solid fa-question text-gray-500"></i>
+          <div
+            class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible hidden opacity-0 transition-opacity absolute invisible z-10 max-w-xs w-full bg-white border border-gray-100 text-start rounded-xl shadow-md after:absolute after:top-0 after:-start-4 after:w-4 after:h-full"
+            role="tooltip">
+            <ul class="py-3 px-4 space-y-1">
+              <li>
+                <div class="inline-flex items-center gap-x-3 text-sm text-gray-800">
+                  <p>Seleccione el trimestre correspondiente.</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </label>
+      <select id="trimestre"
+      class="sm:p-5 p-4 pe-9 block w-full border-input-bord-color rounded-lg text-sm focus:border-input-focus-color focus:ring-input-focus-color disabled:opacity-50 disabled:pointer-events-none ">
+        <option value="1">ENERO-MARZO 2023</option>
+        <option value="2">ENERO-MARZO 2024</option>
+      </select>
     </div>
-  </label>
-  <select id="trimestre"
-    class="bg-gray-100 py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-primary-color focus:ring-primary-color  mt-2">
-    <option value="1">ENERO-MARZO 2023</option>
-    <option value="2">ENERO-MARZO 2024</option>
-  </select>
-</div>
 
     <!-- Botón de enviar -->
     <div class="sm:col-span-2 flex justify-end">
