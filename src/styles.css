@@ -14,32 +14,45 @@ También incluye declaraciones personalizadas de @font-face para las fuentes 'te
 
 /* Declaración personalizada de @font-face para la fuente 'texto' */
 @font-face {
-  font-family: 'texto';
-  src: url('/assets/fonts/Poppins-Regular.ttf') format('truetype');
+  font-family: "texto";
+  src: url("/assets/fonts/Poppins-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Declaración personalizada de @font-face para la fuente 'texto' */
+@font-face {
+  font-family: "texto-medium";
+  src: url("/assets/fonts/Poppins-Medium.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
 }
 
 /* Declaración personalizada de @font-face para la fuente 'titulo' */
 @font-face {
-  font-family: 'titulo';
-  src: url('/assets/fonts/Roboto-Bold.ttf') format('truetype');
+  font-family: "titulo";
+  src: url("/assets/fonts/Roboto-Bold.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
 }
 
 /* Aplica la fuente 'titulo' a todos los elementos de encabezado (h1 a h6) */
-h1, h2, h3, h4, h5, h6 {
-  font-family: 'titulo', sans-serif !important;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "titulo", sans-serif !important;
 }
 
 /* Aplica la fuente 'texto' a todos los elementos excepto los encabezados (h1 a h6) */
 *:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6) {
-  font-family: "texto", sans-serif ;
+  font-family: "texto", sans-serif;
 }
 
 /* Altura del html */
-html{
+html {
   min-height: 100vh;
 }
 
@@ -49,22 +62,15 @@ body {
 }
 
 /*Footer*/
-footer{
+footer {
   bottom: 0px;
   width: 100%;
 }
 
-.container-per{
+.container-per {
   margin-left: 8px;
   margin-right: 8px;
   margin-top: 10px;
-}
-
-.bg-color{
-  background: linear-gradient(to bottom, #077c01, #075c01);
-  -webkit-box-shadow: 1px 12px 30px -6px rgba(0,0,0,0.65);
-  -moz-box-shadow: 1px 12px 30px -6px rgba(0,0,0,0.65);
-  box-shadow: 1px 12px 30px -6px rgba(0,0,0,0.65);
 }
 
 td > label .text-ellipsis {
@@ -75,6 +81,87 @@ td > label .text-ellipsis {
   overflow: hidden;
 }
 
-.hs-tooltip{
-  cursor:help;
+.hs-tooltip {
+  cursor: help;
+}
+
+/* Requerimientos del equipo principal */
+h1 {
+  font-size: 2.25rem !important;
+  line-height: 2.5rem !important;
+}
+
+h2 {
+  font-size: 1.875rem !important;
+  line-height: 2.25rem !important;
+}
+
+h3 {
+  font-size: 1.5rem !important;
+  line-height: 2rem !important;
+}
+
+h4 {
+  font-size: 1.25rem !important;
+  line-height: 1.75rem !important;
+}
+
+h5 {
+  font-size: 1.125rem !important;
+  line-height: 1.75rem !important;
+}
+
+h6 {
+  font-size: 1rem !important;
+  line-height: 1.5rem !important;
+}
+
+.button-secondary,  .button-back  {
+  background-color: #008779 !important;
+  border-radius: 10px !important ;
+  color: #fff !important;
+  transition: ease 0.3s !important;
+  padding: 10px !important;
+  font-family: "texto-medium", sans-serif !important;
+}
+
+.button-secondary:hover, .button-back:hover  {
+  background-color: #008779e6 !important;
+  transition: ease 0.3s !important;
+  font-family: "texto-medium", sans-serif !important;
+}
+
+.button-save,.button-update{
+  background-color: #14b8a6 !important;
+  border-radius: 10px !important ;
+  color: #fff !important;
+  transition: ease 0.3s !important;
+  padding: 10px !important;
+  font-family: "texto-medium", sans-serif !important;
+}
+
+.button-save:hover, .button-update:hover  {
+  background-color: #0d9488 !important;
+  transition: ease 0.3s !important;
+  font-family: "texto-medium", sans-serif !important;
+}
+
+.button-save::after {
+  content: "Guardar" !important; /* Texto añadido */
+  position: sticky !important; /* Posición absoluta */
+}
+
+.button-update::after {
+  content: "Actualizar" !important; /* Texto añadido */
+  position: sticky !important; /* Posición absoluta */
+}
+
+.button-back::after {
+  content: "Volver" !important; /* Texto añadido */
+  position: sticky !important; /* Posición absoluta */
+}
+
+input[type="checkbox"] {
+  border-color: #ededed !important;
+  color: #000 !important;
 }

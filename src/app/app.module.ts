@@ -27,6 +27,8 @@ import { NewTemaComponent } from './components/forms/new-tema/new-tema.component
 import { EditTemaComponent } from './components/forms/edit-tema/edit-tema.component';
 import { NewSubtemaComponent } from './components/forms/new-subtema/new-subtema.component';
 import { EditSubtemaComponent } from './components/forms/edit-subtema/edit-subtema.component';
+import { MiPerfilComponent } from './components/mi-perfil/mi-perfil.component';
+import { EditPerfilComponent } from './components/forms/edit-perfil/edit-perfil.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +56,9 @@ import { EditSubtemaComponent } from './components/forms/edit-subtema/edit-subte
     NewTemaComponent,
     EditTemaComponent,
     NewSubtemaComponent,
-    EditSubtemaComponent
+    EditSubtemaComponent,
+    MiPerfilComponent,
+    EditPerfilComponent
   ],
   imports: [
     BrowserModule,
