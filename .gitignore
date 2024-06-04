@@ -1,3 +1,6 @@
 # Miscellaneous
 /.angular/cache
 .sass-cache/
+/node_modules
+node_modules/.package-lock.json
+*.json
