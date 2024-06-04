@@ -12,6 +12,8 @@ module.exports = {
         'primary-color-90': '#003C3D',
         'table-header-color': '#077c01',
         'color': '#003C3D',
+        'input-bord-color': '#EDEDED',
+        'input-focus-color': '#000',
         'secondary-color': '#008779',
         'secondary-color-90': '#008779e6',
       },
