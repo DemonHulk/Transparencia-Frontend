@@ -1,11 +1,11 @@
 <div class="12/12 text-right">
-  <button routerLink="/myprofile" type="button"
+  <button routerLink="/usuarios" type="button"
     class="py-3 my-2 button-back px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-primary-color text-white hover:bg-primary-color-90 disabled:opacity-50 disabled:pointer-events-none">
     <i class="fa-solid fa-arrow-left-long"></i>
   </button>
 </div>
 <div class="bg-white p-8 border border-gray-200 rounded-lg shadow-lg max-w-2xl mx-auto my-10">
-  <h1 class="text-3xl text-center ">Modificar información</h1>
+  <h1 class="text-3xl text-center ">Nuevo usuario</h1>
   <form class="grid grid-cols-1 gap-y-6 gap-x-4">
     <div class="sm:col-span-2">
       <label for="nombre" class="font-poppins">Nombre(s)</label>
@@ -151,11 +151,34 @@
       </div>
     </div>
 
+    <div class="sm:col-span-2">
+      <label for="trimestre" class="font-poppins flex items-center">
+        Área
+        <div class="hs-tooltip [--trigger:hover] sm:[--placement:right] inline-block ml-2">
+          <i class="fa-solid fa-question text-gray-500"></i>
+          <div class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible hidden opacity-0 transition-opacity absolute invisible z-10 max-w-xs w-full bg-white border border-gray-100 text-start rounded-xl shadow-md after:absolute after:top-0 after:-start-4 after:w-4 after:h-full" role="tooltip">
+            <ul class="py-3 px-4 space-y-1">
+              <li>
+                <div class="inline-flex items-center gap-x-3 text-sm text-gray-800">
+                  <p>El área al que el usuario tendra acceso.</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </label>
+      <select id="trimestre"
+        class="bg-gray-100 py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-primary-color focus:ring-primary-color  mt-2">
+        <option value="1">Área 1</option>
+        <option value="2">Área 2</option>
+      </select>
+    </div>
+
 
     <!-- Botón de enviar -->
     <div class="sm:col-span-2 flex justify-end">
       <button type="submit"
-        class="items-center inline-flex justify-center py-2 px-6 border border-transparent shadow-sm text-sm font-medium rounded-md button-update">
+        class="items-center inline-flex justify-center py-2 px-6 border border-transparent shadow-sm text-sm font-medium rounded-md button-save">
         <i class="fas fa-save mx-1"></i>
       </button>
     </div>
