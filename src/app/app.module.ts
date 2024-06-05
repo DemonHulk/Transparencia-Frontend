@@ -36,6 +36,8 @@ import { DetailsUsuarioComponent } from './components/tables/list-usuarios/detai
 import { NewUsuarioComponent } from './components/forms/new-usuario/new-usuario.component';
 import { EditUsuarioComponent } from './components/forms/edit-usuario/edit-usuario.component';
 import { NewWordComponent } from './components/forms/new-word/new-word.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -76,7 +78,10 @@ import { NewWordComponent } from './components/forms/new-word/new-word.component
   imports: [
     BrowserModule,
     AppRoutingModule,
-    EditorModule
+    EditorModule,
+    FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent],
