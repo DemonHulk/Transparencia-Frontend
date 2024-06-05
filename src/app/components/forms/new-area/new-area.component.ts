@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { SharedValuesService } from '../../../services/shared-values.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { AreaCrudService } from '../../../services/crud/area.service';
 import { Router } from '@angular/router';
 import flasher from "@flasher/flasher";
+import { AreaCrudService } from '../../../services/crud/areacrud.service';
 
 
 @Component({
