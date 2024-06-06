@@ -45,7 +45,6 @@ export class DetailsAreaComponent {
        * @param {string} newTitle - El nuevo título a establecer.
        * @memberof SharedValuesService
        */
-      this.sharedService.changeTitle('Información detallada del área: Área de salud');
 
       this.GetOneAreaService(this.id);
       this.GetPuntosAccesoArea(this.id);
@@ -58,6 +57,7 @@ export class DetailsAreaComponent {
     this.AreaCrudService.GetOneAreaService(id).subscribe(
       respuesta => {
         this.data_area = respuesta;
+        this.sharedService.changeTitle('Información detallada del área: ' + this.data_area?.resultado?.data?.nombre_area);
       },
       error => {
         console.error('Ocurrió un error al obtener el área:', error);
