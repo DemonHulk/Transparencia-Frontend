@@ -45,21 +45,19 @@ export class NewAreaComponent {
 
 
   SaveArea(): any {
-    console.log(this.FormAltaArea.value);
     this.AreaCrudService.InsertAreaService(this.FormAltaArea.value).subscribe(
       respuesta => {
-        console.log(respuesta);
+        console.log(respuesta)
         if (respuesta.resultado.res) {
-          flasher.success(respuesta.resultado.message);
+          flasher.success(respuesta.resultado.data);
           this.router.navigate(['/areas']); 
         }else{
-          flasher.error(respuesta.resultado.message);
+          flasher.error(respuesta.resultado.data);
         }
       },
       error => {
         console.log(error);
         flasher.error("Hubo un error, Intente más tarde o notifique al soporte técnico.");
-
       }
     );
   }
