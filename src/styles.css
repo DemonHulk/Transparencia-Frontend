@@ -1,17 +1,50 @@
+
+
+/**
+ * @layer tailwind-base, primeng, tailwind-utilities;
+ * Esta línea se utiliza para definir los niveles de CSS. Indica que las siguientes reglas de CSS pertenecen a los niveles tailwind-base, primeng y tailwind-utilities.
+ */
+
+/**
+ * @layer tailwind-base;
+ * Esta línea se utiliza para definir el nivel tailwind-base. Indica que las siguientes reglas de CSS pertenecen al nivel tailwind-base.
+ */
+
+/**
+ * @tailwind base;
+ * Esta línea se utiliza para importar las reglas base de CSS desde el marco Tailwind CSS. Asegura que las reglas básicas para elementos como fuentes, colores y espaciado se apliquen de manera consistente a lo largo del proyecto.
+ */
+
+/**
+ * @layer tailwind-utilities;
+ * Esta línea se utiliza para definir el nivel tailwind-utilities. Indica que las siguientes reglas de CSS pertenecen al nivel tailwind-utilities.
+ */
+
+/**
+ * @tailwind components;
+ * Esta línea se utiliza para importar las reglas de estilo de componentes desde el marco Tailwind CSS. Asegura que las reglas de estilo para componentes específicos como botones, inputs y tarjetas se apliquen de manera consistente a lo largo del proyecto.
+ */
+
+/**
+ * @tailwind utilities;
+ * Esta línea se utiliza para importar las reglas de utilidad de CSS desde el marco Tailwind CSS. Asegura que las reglas de utilidad como flex, grid y margin se apliquen de manera consistente a lo largo del proyecto.
+ */
+@layer tailwind-base, primeng, tailwind-utilities;
+
+@layer tailwind-base {
+    @tailwind base;
+}
+
+@layer tailwind-utilities {
+    @tailwind components;
+    @tailwind utilities;
+}
+
+
 /*
 Este archivo CSS se utiliza para aplicar estilos globales y importar otros archivos de estilos.
 También incluye declaraciones personalizadas de @font-face para las fuentes 'texto' y 'titulo'.
 */
-
-/* Importa los estilos base de Tailwind CSS */
-@tailwind base;
-
-/* Importa los estilos de componentes de Tailwind CSS */
-@tailwind components;
-
-/* Importa los estilos utilitarios de Tailwind CSS */
-@tailwind utilities;
-
 /* Declaración personalizada de @font-face para la fuente 'texto' */
 @font-face {
   font-family: "texto";
@@ -206,10 +239,12 @@ input[type="checkbox"]:focus{
 
 }
 
-
-
 .contenido-prev {
   word-wrap: break-word; /* Permite que las palabras se rompan automáticamente */
   max-width: auto; /* Establece el ancho máximo automáticamente */
   flex-wrap: wrap; /* Permite que el contenido se ajuste al contenedor */
+}
+
+tr > .p-element svg{
+  color: white !important;
 }

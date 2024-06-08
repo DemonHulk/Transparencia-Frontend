@@ -1,8 +1,6 @@
 import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { EditorModule } from '@tinymce/tinymce-angular';
-
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './partials/header/header.component';
@@ -39,6 +37,13 @@ import { NewWordComponent } from './components/forms/new-word/new-word.component
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
+import { ButtonModule } from 'primeng/button';
+import { TableModule } from 'primeng/table';
+import { InputTextModule } from 'primeng/inputtext';
+import { PaginatorModule } from 'primeng/paginator';
+import { OverlayModule } from 'primeng/overlay';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -73,7 +78,7 @@ import { HttpClientModule } from '@angular/common/http';
     NewUsuarioComponent,
     EditUsuarioComponent,
     NewWordComponent,
-    
+
   ],
   imports: [
     BrowserModule,
@@ -81,7 +86,13 @@ import { HttpClientModule } from '@angular/common/http';
     EditorModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    ButtonModule,
+    TableModule,
+    InputTextModule,
+    PaginatorModule,
+    OverlayModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent],
