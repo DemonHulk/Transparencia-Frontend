@@ -34,7 +34,7 @@ import { authGuardGuard } from './auth-guard.guard';
 // allowedAreas 1 = administrador (en caso de tener mas de una agregar el id del area correspondiente)
 const routes: Routes = [
   {path: '', component:Articulo33Component},
-  {path: 'login', component:LoginComponent},
+  {path: 'login', component:LoginComponent, canActivate: [authGuardGuard]},
   {path: 'articulo33', component:Articulo33Component},
   {path: 'myprofile', component:MiPerfilComponent, canActivate: [authGuardGuard], data: { openToAll: true } },
   {path: 'new-pdf/:punto/:tema', component:NewPdfComponent, canActivate: [authGuardGuard], data: { openToAll: true } },

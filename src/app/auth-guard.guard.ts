@@ -6,39 +6,35 @@ import { CryptoServiceService } from './services/cryptoService/crypto-service.se
   providedIn: 'root'
 })
 export class AuthGuardGuard {
-  constructor(private cryptoService: CryptoServiceService) {}
+  constructor(private cryptoService: CryptoServiceService, private router: Router) {} // Añadir el Router como dependencia
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    // Pedimos los datos del usuario en el servicio para desencriptar los datos del localStorage
     const datosUsuarioJSON = this.cryptoService.desencriptarDatosUsuario();
     
-    // Si hay datos
     if (datosUsuarioJSON) {
       const userArea = datosUsuarioJSON.id_area;
 
-      // Recibimos los permisos de los modulos del routing Modules
       const allowedAreas = route.data['allowedAreas'] || [];
       const openToAll = route.data['openToAll'] || false;
 
-      // Si tiene el area necesaria permite el renderizado del modulo
       if (openToAll || allowedAreas.includes(userArea)) {
         return true;
       } else {
-        // Redireccionamos a la página inicial
-        const router = new Router();
-        router.navigate(['/articulo33']);
+        this.router.navigateByUrl('/articulo33', { skipLocationChange: true });
         return false;
       }
     } else {
-      // Si no hay una sesión activa, redirigir a la página principal
-      const router = new Router();
-      router.navigate(['/articulo33']);
-      return false;
+      if (route.routeConfig?.path === 'login') { // Verificar si la ruta es 'login'
+        return true; // Permitir acceso a la página de login si no hay sesión activa
+      } else {
+        this.router.navigateByUrl('/articulo33', { skipLocationChange: true });
+        return false;
+      }
     }
   }
 }
 
 export const authGuardGuard: CanActivateFn = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) => {
-  const guard = new AuthGuardGuard(new CryptoServiceService());
+  const guard = new AuthGuardGuard(new CryptoServiceService(), new Router()); // Pasar el Router en la instancia
   return guard.canActivate(route, state);
 };

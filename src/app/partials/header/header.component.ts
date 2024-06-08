@@ -25,6 +25,7 @@ export class HeaderComponent implements OnInit{
     this.sharedService.isLoggedIn$.subscribe(isLoggedIn => {
       this.verificarSesion();
     });
+
   }
 
 
@@ -51,8 +52,15 @@ export class HeaderComponent implements OnInit{
 
   // Función para cerrar sesión
   cerrarSesion() {
-    this.usuarioService.cerrarSesion();
-    // volvemos a verificar si hay sesión
-    this.verificarSesion();
+    // Eliminar los datos del usuario del localStorage
+    localStorage.removeItem('user');
+  
+    // Actualizar el estado de la sesión
+    this.sesionActiva = false;
+    this.administrador = false;
+
+  
+    // Reiniciar las variables de sesión después de un ciclo de cambios
+    this.cdr.markForCheck();
   }
 }
