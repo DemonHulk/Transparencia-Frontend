@@ -10,14 +10,15 @@ export class AuthGuardGuard {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     const datosUsuarioJSON = this.cryptoService.desencriptarDatosUsuario();
-    
+
     if (datosUsuarioJSON) {
       const userArea = datosUsuarioJSON.id_area;
+      console.log(userArea);
 
       const allowedAreas = route.data['allowedAreas'] || [];
       const openToAll = route.data['openToAll'] || false;
 
-      if (openToAll || allowedAreas.includes(userArea)) {
+      if (openToAll || allowedAreas.includes(userArea.toString())) {
         return true;
       } else {
         this.router.navigateByUrl('/articulo33', { skipLocationChange: true });
