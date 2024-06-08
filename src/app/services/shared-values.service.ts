@@ -14,4 +14,18 @@ export class SharedValuesService {
   changeTitle(title: string) {
     this.titleSource.next(title);
   }
+
+  private loggedIn = new BehaviorSubject<boolean>(false);
+  isLoggedIn$ = this.loggedIn.asObservable();
+
+  login(): void {
+    // Lógica de inicio de sesión
+    this.loggedIn.next(true);
+  }
+
+  logout(): void {
+    // Lógica de cierre de sesión
+    this.loggedIn.next(false);
+  }
+
 }

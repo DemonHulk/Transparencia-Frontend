@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { LoginService } from '../../services/login/login.service';
 import { CryptoServiceService } from '../../services/cryptoService/crypto-service.service';
+import { SharedValuesService } from '../../services/shared-values.service';
 
 @Component({
   selector: 'app-header',
@@ -14,11 +15,16 @@ export class HeaderComponent implements OnInit{
   constructor(
     private CryptoServiceService: CryptoServiceService,
     private usuarioService: LoginService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private sharedService: SharedValuesService
   ){}
 
   ngOnInit(): void {
     this.verificarSesion();
+
+    this.sharedService.isLoggedIn$.subscribe(isLoggedIn => {
+      this.verificarSesion();
+    });
   }
 
 

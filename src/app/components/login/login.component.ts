@@ -43,8 +43,8 @@ ngOnInit(): void {
      */
     this.sharedService.changeTitle('Ingresar al sistema');
 }
- 
-  
+
+
 VerificarUser(): any {
   // Validación que solo entra en vigor si se llegara a eliminar un required del input
   if (this.formularioLogin.invalid && Object.values(this.formularioLogin.controls).some(control => control.errors?.['required'])) {
@@ -63,10 +63,8 @@ VerificarUser(): any {
         localStorage.setItem('user', encryptedUser);
         flasher.success(resultado.message);
 
-        // Agregamos un delay de 2 segundos antes de redirigir (2000 milisegundos)
-        setTimeout(() => {
-          window.location.href = '/articulo33';
-        }, 2000);  // Cambié a 2000 ms
+        this.sharedService.login();
+        this.router.navigateByUrl('/articulo33');
       } else {
         flasher.error(resultado.message);
       }
