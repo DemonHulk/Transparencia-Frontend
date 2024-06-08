@@ -2,10 +2,10 @@ import { Component } from '@angular/core';
 import { SharedValuesService } from '../../services/shared-values.service';
 // Importamos el servicio y librerias para el formulario
 import { LoginService } from '../../services/login/login.service';
-import { FormGroup, FormBuilder } from '@angular/forms';
-import { Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { tap } from 'rxjs';
+import flasher from "@flasher/flasher";
+import * as CryptoJS from 'crypto-js';
 
 @Component({
   selector: 'app-login',
@@ -20,10 +20,9 @@ export class LoginComponent {
     public formulario: FormBuilder,
     private loginService: LoginService,
     private router: Router
-  ) {
-    
+  ){
     const validarCorreo = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    
+
     this.formularioLogin = this.formulario.group({
       correo: ['', [Validators.required, Validators.pattern(validarCorreo), Validators.maxLength(50)]],
       contrasenia: ['', [Validators.required,  Validators.maxLength(50)]]
@@ -44,27 +43,41 @@ ngOnInit(): void {
      */
     this.sharedService.changeTitle('Ingresar al sistema');
 }
-
-// Metodo para enviar los dato al servicio de enviar los datos al servicio
-VerificarUser(): any {
+ 
   
-  // verificarUser es el metodo creado en el servicio, que es donde enviaremos los datos del formulario
-  this.loginService.VerificarUser(this.formularioLogin.value).pipe(
-    tap((respuesta) => {
-      if (respuesta.res) {
-        localStorage.setItem('user', JSON.stringify(respuesta.user));
+VerificarUser(): any {
+  // Validación que solo entra en vigor si se llegara a eliminar un required del input
+  if (this.formularioLogin.invalid && Object.values(this.formularioLogin.controls).some(control => control.errors?.['required'])) {
+    flasher.error("Error Datos Faltantes");
+    return;
+  }
+
+  // verificarUser es el metodo creado en el servicio, que es donde enviaremos los datos del formulario y conectarnos al backend
+  this.loginService.VerificarUser(this.formularioLogin.value).subscribe(
+    (response) => {
+      // Asumiendo que response.resultado ya es un objeto
+      const resultado = response.resultado;
+      if (resultado.res) {
+        // Pasamos los datos a json y encriptamos los datos
+        const encryptedUser = CryptoJS.AES.encrypt(JSON.stringify(resultado.user), 'UZ4"(fa$P9g4ñ').toString();
+        localStorage.setItem('user', encryptedUser);
+        flasher.success(resultado.message);
+
+        // Agregamos un delay de 2 segundos antes de redirigir (2000 milisegundos)
+        setTimeout(() => {
+          window.location.href = '/articulo33';
+        }, 2000);  // Cambié a 2000 ms
+      } else {
+        flasher.error(resultado.message);
       }
-    })
-  ).subscribe(
-    (respuesta) => {
-      // Aquí los credenciales del usuario está guardado, aqui redirigimos y colocamos un mensaje indicando que el inicio de sesion fue exitoso
-      window.location.href = '/articulo33';
     },
     (error) => {
-      // Manejar el error
-      // console.log("Mensaje de error recibido:", error.message);
-      alert('Credenciales incorrectas: ' + error.message);
+      // Manejar el error critico
+      console.log(error);
+      flasher.error("Hubo un error, Intente más tarde o notifique al soporte técnico.");
     }
   );
 }
+
+
 }

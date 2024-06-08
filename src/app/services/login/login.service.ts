@@ -7,10 +7,18 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class LoginService {
-  private apiUrl = 'http://localhost/transpariencia/Transparencia-Backend/index.php';
+
   constructor(private clientHttp:HttpClient) { }
 
-  VerificarUser(datos: any): Observable<any> {
-    return this.clientHttp.post<any>(`${this.apiUrl}/verificarUser`, datos);
+  // Función para el formulario de inicio de sesion
+  VerificarUser(formulario: any): Observable<any> {
+    return this.clientHttp.post(API_URL + "verificarUser", formulario);
   }
+  
+  // Función para cerrar sesión
+  cerrarSesion() {
+    localStorage.removeItem('user');
+  }
+
+  
 }

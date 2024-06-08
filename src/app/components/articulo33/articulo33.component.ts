@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { SharedValuesService } from '../../services/shared-values.service';
+import * as CryptoJS from 'crypto-js';
 
 @Component({
   selector: 'app-articulo33',
@@ -37,6 +38,5 @@ ngOnInit(): void {
   toggleButtonList() {
     this.isButtonListHidden = !this.isButtonListHidden;
   }
-
 
 }

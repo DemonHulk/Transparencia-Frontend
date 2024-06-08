@@ -1,4 +1,4 @@
-<form [formGroup]="formularioLogin" (ngSubmit)="VerificarUser()">
+
 <div class="py-6">
   <div class="flex bg-white rounded-lg shadow-lg overflow-hidden mx-auto max-w-sm lg:max-w-4xl">
     <div class="hidden lg:block lg:w-1/2 bg-cover" style="background-image: url('assets/img/UTC.jpg')"></div>
@@ -9,14 +9,14 @@
         <div class="flex items-center">
           <!-- Nuevo contenedor para la imagen y el enlace -->
           <!-- Imagen que solo se muestra en dispositivos móviles y tabletas -->
-          <img class="inline-block w-[62px] h-[62px] rounded-full block lg:hidden mr-2" src="assets/img/UTC.jpg"
+          <img class="inline-block w-[62px] h-[62px] rounded-full lg:hidden mr-2" src="assets/img/UTC.jpg"
             alt="Image Description" />
 
           <h1 class="text-2xl text-center uppercase">Iniciar Sesión</h1>
         </div>
         <span class="border-b border-primary-color w-1/7 lg:w-1/6"></span>
       </div>
-
+    <form [formGroup]="formularioLogin" (ngSubmit)="VerificarUser()">
       <div class="mt-4">
         <div class="max-w-sm">
           <label for="input-email" class="block text-sm font-medium mb-2 ">Correo Electrónico</label>
@@ -62,7 +62,7 @@
         <span class="border-b border-primary-color w-1/5 lg:w-1/6"></span>
         <span class="border-b border-primary-color w-1/5 lg:w-1/6"></span>
       </div>
+    </form>
     </div>
   </div>
 </div>
-</form>
