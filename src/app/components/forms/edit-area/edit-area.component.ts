@@ -3,7 +3,8 @@ import { SharedValuesService } from '../../../services/shared-values.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { AreaCrudService } from '../../../services/crud/areacrud.service';
-import flasher from "@flasher/flasher";
+import { AlertsServiceService } from '../../../services/alerts/alerts-service.service';
+import { CryptoServiceService } from '../../../services/cryptoService/crypto-service.service';
 
 @Component({
   selector: 'app-edit-area',
@@ -20,17 +21,28 @@ export class EditAreaComponent implements OnInit {
     private activateRoute: ActivatedRoute,
     public formulario: FormBuilder,
     private AreaCrudService: AreaCrudService,
-    private router: Router
-  ) { 
+    private router: Router,
+    private flasher: AlertsServiceService,
+    private encodeService: CryptoServiceService
+  ) {
     this.FormAltaArea = this.formulario.group({
-      nombreArea: [''] 
+      nombreArea: ['']
     });
   }
 
   ngOnInit(): void {
+    //Tomas la id de la URL
     this.id = this.activateRoute.snapshot.paramMap.get("id");
+
+    //Desencriptar la ID
+    this.id = this.encodeService.decodeID(this.id);
+
+    //Verificar si la ID es null, si es así, redirige a la página de áreas
+    if (this.id === null) {
+      this.router.navigateByUrl("/areas");
+    }
     this.sharedService.changeTitle('Modificar área');
-    
+
     this.GetOneAreaService(this.id);
 
   }
@@ -46,11 +58,11 @@ export class EditAreaComponent implements OnInit {
         });
       } else {
         console.error('La respuesta es undefined');
-        
+
       }
     }, error => {
       console.error('Ocurrió un error al obtener el área:', error);
-      
+
     });
   }
 
@@ -60,15 +72,15 @@ export class EditAreaComponent implements OnInit {
       respuesta => {
         console.log(respuesta);
         if (respuesta?.resultado?.res) { // Verificar si respuesta.resultado.res no es undefined
-          flasher.success(respuesta.resultado.data);
-          this.router.navigate(['/areas']); 
+          this.flasher.success(respuesta.resultado.data);
+          this.router.navigate(['/areas']);
         } else {
-          flasher.error(respuesta?.resultado?.data || 'No se recibió una respuesta válida');
+          this.flasher.error(respuesta?.resultado?.data || 'No se recibió una respuesta válida');
         }
       },
       error => {
         console.log(error);
-        flasher.error("Hubo un error, Intente más tarde o notifique al soporte técnico.");
+        this.flasher.error("Hubo un error, Intente más tarde o notifique al soporte técnico.");
       }
     );
   }

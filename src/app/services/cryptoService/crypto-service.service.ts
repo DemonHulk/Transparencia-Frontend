@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import * as CryptoJS from 'crypto-js';
+import Hashids from 'hashids';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CryptoServiceService {
 
-  constructor() { 
-    this.desencriptarDatosUsuario(); 
+  constructor() {
+    this.desencriptarDatosUsuario();
   }
 
   // Función para desencriptar los datos del localStorage
@@ -28,4 +29,20 @@ export class CryptoServiceService {
     }
     return null;
   }
+
+  // La sal y la longitud mínima del hash
+   hashids: Hashids = new Hashids('chichantastico', 5);
+
+  encodeID(id: number): string {
+    return this.hashids.encode(id);
+  }
+
+  decodeID(encodedID: string): any | null {
+    const decoded = this.hashids.decode(encodedID);
+    if (decoded.length === 0) {
+      return null;
+    }
+    return decoded[0];
+  }
+
 }

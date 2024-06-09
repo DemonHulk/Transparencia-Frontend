@@ -13,6 +13,8 @@ module.exports = {
         'input-bord-color': '#E5E7EB',
         'input-focus-color': '#000',
         'secondary-color': '#04847C',
+        'color-active':'#47B0A4',
+        'hr-color':'#47B0A4'
       },
     },
   },

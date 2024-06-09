@@ -282,3 +282,17 @@ tr > .p-element svg{
 table{
   font-family: "texto-tabla", sans-serif !important;
 }
+
+
+/*Alertas*/
+.swal2-toast > h2.swal2-title{
+  font-size: 1em !important;
+  line-height: 1em !important;
+}
+
+
+.table-satic :not(tr:first-child) > td{
+  border: 1px solid #e5e7eb !important;
+  border-radius: 0.5rem !important;
+
+}
