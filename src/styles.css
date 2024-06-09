@@ -41,6 +41,19 @@
 }
 
 
+/* Colores */
+:root {
+  --primary-color: 4, 61, 61;
+  --secondary-color: 4, 132, 124;
+  --guardar-color: 4, 61, 61;
+  --editar-color: 4, 132, 124;
+  --ver-color: 71, 176, 164;
+  --cerrar-color: 229, 231, 235;
+  --eliminar-color: 239, 68, 68;
+  --reactivar-color: 34, 197, 94;
+}
+
+
 /*
 Este archivo CSS se utiliza para aplicar estilos globales y importar otros archivos de estilos.
 También incluye declaraciones personalizadas de @font-face para las fuentes 'texto' y 'titulo'.
@@ -65,6 +78,14 @@ También incluye declaraciones personalizadas de @font-face para las fuentes 'te
 @font-face {
   font-family: "titulo";
   src: url("/assets/fonts/Roboto-Bold.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Declaración personalizada de @font-face para la fuente 'texto-tabla' */
+@font-face {
+  font-family: "texto-tabla";
+  src: url("/assets/fonts/Poppins-Light.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
 }
@@ -150,7 +171,7 @@ h6 {
 }
 
 .button-secondary,  .button-back  {
-  background-color: #008779 !important;
+  background-color: rgba(var(--secondary-color),1) !important;
   border-radius: 10px !important ;
   color: #fff !important;
   transition: ease 0.3s !important;
@@ -159,13 +180,13 @@ h6 {
 }
 
 .button-secondary:hover, .button-back:hover  {
-  background-color: #008779e6 !important;
+  background-color: rgba(var(--secondary-color),0.8) !important;
   transition: ease 0.3s !important;
   font-family: "texto-medium", sans-serif !important;
 }
 
-.button-save,.button-update{
-  background-color: #14b8a6 !important;
+.button-save{
+  background-color: rgba(var(--guardar-color),1) !important;
   border-radius: 10px !important ;
   color: #fff !important;
   transition: ease 0.3s !important;
@@ -173,8 +194,23 @@ h6 {
   font-family: "texto-medium", sans-serif !important;
 }
 
-.button-save:hover, .button-update:hover  {
-  background-color: #0d9488 !important;
+.button-save:hover  {
+  background-color: rgba(var(--guardar-color),0.8) !important;
+  transition: ease 0.3s !important;
+  font-family: "texto-medium", sans-serif !important;
+}
+
+.button-update{
+  background-color: rgba(var(--editar-color),1) !important;
+  border-radius: 10px !important ;
+  color: #fff !important;
+  transition: ease 0.3s !important;
+  padding: 10px !important;
+  font-family: "texto-medium", sans-serif !important;
+}
+
+.button-update:hover  {
+  background-color: rgba(var(--editar-color),0.8) !important;
   transition: ease 0.3s !important;
   font-family: "texto-medium", sans-serif !important;
 }
@@ -195,47 +231,41 @@ h6 {
 }
 
 input[type="checkbox"] {
-  border-color: #ededed !important;
-  color: #14b8a6 !important;
-}
-input[type="checkbox"]:focus{
-  --tw-ring-opacity: 1;
-  --tw-ring-color: #0d9488;
+  color: #000 !important;
+  background-color: #008779 !important;
+  border-color: #E5E7EB !important;
 }
 
+
 .hs-tooltip-toggle > .fas.fa-edit{
-  color: #3b82f6 !important; /* Blue 500 */
+  color: rgba(var(--editar-color),1) !important;
 }
 
 .hs-tooltip-toggle > .fas.fa-edit:hover{
-  color: #2563eb !important; /* Blue 600 */
+  color: rgba(var(--editar-color),0.8) !important;
 }
-
-
 .hs-tooltip-toggle > .fa.fa-trash{
-  color: #ef4444 !important; /* Red 500 */
+  color: rgba(var(--eliminar-color),1) !important;
 }
 
 .hs-tooltip-toggle > .fa.fa-trash:hover{
-  color: #dc2626 !important; /* Red 600 */
+  color: rgba(var(--eliminar-color),0.8) !important;
 }
 
 .hs-tooltip-toggle > .fa-solid.fa-arrow-rotate-left{
-  color: #22c55e !important; /* Green 500 */
+  color: rgba(var(--reactivar-color),1) !important;
 }
 
 .hs-tooltip-toggle > .fa-solid.fa-arrow-rotate-left:hover{
-  color: #16a34a !important; /* Green 600 */
+  color: rgba(var(--reactivar-color),0.8) !important;
 
 }
-
-
 .hs-tooltip-toggle > .fa.fa-eye{
-  color: #008779 !important;
+  color: rgba(var(--ver-color),1) !important;
 }
 
 .hs-tooltip-toggle > .fa.fa-eye:hover{
-  color: #003C3D!important; /* Green 600 */
+  color: rgba(var(--ver-color),0.8) !important;
 
 }
 
@@ -247,4 +277,8 @@ input[type="checkbox"]:focus{
 
 tr > .p-element svg{
   color: white !important;
+}
+
+table{
+  font-family: "texto-tabla", sans-serif !important;
 }
