@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { SharedValuesService } from '../../../services/shared-values.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import flasher from "@flasher/flasher";
 import { AreaCrudService } from '../../../services/crud/areacrud.service';
+import { AlertsServiceService } from '../../../services/alerts/alerts-service.service';
 
 
 @Component({
@@ -19,7 +19,8 @@ export class NewAreaComponent {
     private sharedService: SharedValuesService,
     public formulario: FormBuilder,
     private AreaCrudService: AreaCrudService,
-    private router: Router // Inyecta el Router
+    private router: Router, // Inyecta el Router
+    private flasher: AlertsServiceService
   ) {
     this.FormAltaArea = this.formulario.group({
       nombreArea: [''],
@@ -49,15 +50,14 @@ export class NewAreaComponent {
       respuesta => {
         console.log(respuesta)
         if (respuesta.resultado.res) {
-          flasher.success(respuesta.resultado.data);
-          this.router.navigate(['/areas']); 
+          this.flasher.success(respuesta.resultado.data);
+          this.router.navigate(['/areas']);
         }else{
-          flasher.error(respuesta.resultado.data);
+          this.flasher.error(respuesta.resultado.data);
         }
       },
       error => {
-        console.log(error);
-        flasher.error("Hubo un error, Intente más tarde o notifique al soporte técnico.");
+        this.flasher.error("Hubo un error, Intente más tarde o notifique al soporte técnico.");
       }
     );
   }

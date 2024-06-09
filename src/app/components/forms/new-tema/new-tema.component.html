@@ -1,12 +1,28 @@
-<div class="12/12 text-right">
-  <button routerLink="/details-punto/1" type="button"
-    class="py-3 my-2 button-back  px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-primary-color text-white hover:bg-primary-color-90 disabled:opacity-50 disabled:pointer-events-none">
-    <i class="fa-solid fa-arrow-left-long"></i>
-  </button>
+<div class="12/12 text-right my-5">
+  <ol class="flex items-center whitespace-nowrap">
+    <li class="inline-flex items-center">
+      <a class="flex items-center text-sm text-gray-500 hover:text-color-active focus:outline-none focus:text-color-active" routerLink="/puntos">
+        Puntos
+        <svg class="flex-shrink-0 mx-2 overflow-visible size-4 text-gray-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m9 18 6-6-6-6"></path>
+        </svg>
+      </a>
+    </li>
+    <li class="inline-flex items-center">
+      <a class="flex items-center text-sm text-gray-500 hover:text-color-active focus:outline-none focus:text-color-active" routerLink="/details-punto/1">
+        Detalles punto
+        <svg class="flex-shrink-0 mx-2 overflow-visible size-4 text-gray-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m9 18 6-6-6-6"></path>
+        </svg>
+      </a>
+    </li>
+    <li class="inline-flex items-center text-sm font-semibold text-gray-800 truncate" aria-current="page">
+      Nuevo tema
+    </li>  </ol>
 </div>
 <div class="bg-white p-8 border border-gray-200 rounded-lg shadow-lg max-w-2xl mx-auto my-10">
   <h3 class="my-2 text-left">Nuevo Tema</h3>
-  <hr class="w-full mb-2">
+  <hr class="w-full mb-2 border-hr-color">
   <form class="grid grid-cols-1 gap-y-6 gap-x-4">
 
     <div class="sm:col-span-2">

@@ -4,8 +4,9 @@ import { SharedValuesService } from '../../services/shared-values.service';
 import { LoginService } from '../../services/login/login.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import flasher from "@flasher/flasher";
 import * as CryptoJS from 'crypto-js';
+import { AlertsServiceService } from '../../services/alerts/alerts-service.service';
+
 
 @Component({
   selector: 'app-login',
@@ -19,7 +20,8 @@ export class LoginComponent {
     private sharedService: SharedValuesService,
     public formulario: FormBuilder,
     private loginService: LoginService,
-    private router: Router
+    private router: Router,
+    private flasher: AlertsServiceService
   ){
     const validarCorreo = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -48,7 +50,7 @@ ngOnInit(): void {
 VerificarUser(): any {
   // Validación que solo entra en vigor si se llegara a eliminar un required del input
   if (this.formularioLogin.invalid && Object.values(this.formularioLogin.controls).some(control => control.errors?.['required'])) {
-    flasher.error("Error Datos Faltantes");
+    this.flasher.error("Error Datos Faltantes");
     return;
   }
 
@@ -61,18 +63,18 @@ VerificarUser(): any {
         // Pasamos los datos a json y encriptamos los datos
         const encryptedUser = CryptoJS.AES.encrypt(JSON.stringify(resultado.user), 'UZ4"(fa$P9g4ñ').toString();
         localStorage.setItem('user', encryptedUser);
-        flasher.success(resultado.message);
+        this.flasher.success(resultado.message);
 
         this.sharedService.login();
         this.router.navigateByUrl('/articulo33');
       } else {
-        flasher.error(resultado.message);
+        this.flasher.error(resultado.message);
       }
     },
     (error) => {
       // Manejar el error critico
       console.log(error);
-      flasher.error("Hubo un error, Intente más tarde o notifique al soporte técnico.");
+      this.flasher.error("Hubo un error, Intente más tarde o notifique al soporte técnico.");
     }
   );
 }

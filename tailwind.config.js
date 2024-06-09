@@ -7,15 +7,14 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'primary-color': '#003C3D',
-        'primary-color-50': '#003C3D',
-        'primary-color-90': '#003C3D',
-        'table-header-color': '#077c01',
-        'color': '#003C3D',
-        'input-bord-color': '#EDEDED',
+        'primary-color': '#043D3D',
+        'table-header-color': '#04847c',
+        'color': '#043D3D',
+        'input-bord-color': '#E5E7EB',
         'input-focus-color': '#000',
-        'secondary-color': '#008779',
-        'secondary-color-90': '#008779e6',
+        'secondary-color': '#04847C',
+        'color-active':'#47B0A4',
+        'hr-color':'#47B0A4'
       },
     },
   },
