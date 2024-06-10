@@ -24,6 +24,7 @@ export class DetailsAreaComponent {
   listPuntosAcceso: Punto[] = [];
   listUsuariosAcceso: Usuario[] = [];
   data_usuariosacceso: any;
+  isLoading: boolean = true;
 
   constructor(
     private sharedService: SharedValuesService,
@@ -107,6 +108,8 @@ export class DetailsAreaComponent {
           data.activo
         )
       );
+
+      this.isLoading = false;
     });
   }
 

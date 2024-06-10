@@ -20,6 +20,7 @@ export class ListAreasComponent {
   ListAreas: (Area & { fecha_string: string })[] = [];
   ListActiveAreas: (Area & { fecha_string: string })[] = [];
   ListInactiveAreas: (Area & { fecha_string: string })[] = [];
+  isLoading: boolean = true;
 
   constructor(
     private sharedService: SharedValuesService,
@@ -63,6 +64,10 @@ export class ListAreasComponent {
 
       // Filtrar las áreas inactivas
       this.ListInactiveAreas = this.ListAreas.filter(area => area.activo == false);
+
+      //Indicar que todos los datos se han cargado
+      this.isLoading = false;
+
     });
   }
   private addFormattedDate(area: Area): Area & { fecha_string: string } {
