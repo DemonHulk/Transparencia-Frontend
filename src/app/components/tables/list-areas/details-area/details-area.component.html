@@ -1,4 +1,4 @@
-<ng-container  *ngIf="!isLoading">
+<ng-template  #content>
 <div class="12/12 text-right my-5">
   <ol class="flex items-center whitespace-nowrap">
     <li class="inline-flex items-center">
@@ -337,9 +337,9 @@
     </div>
   </div>
 </div>
-</ng-container>
+</ng-template>
 
-<ng-container *ngIf="isLoading">
+<ng-container *ngIf="sharedService.loading$ | async; else content">
   <div class="container-per">
     <div class="12/12 text-right my-5 pointer-events-none mb-3">
       <ol class="flex items-center whitespace-nowrap animate-pulse">

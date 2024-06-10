@@ -28,4 +28,11 @@ export class SharedValuesService {
     this.loggedIn.next(false);
   }
 
+  private loadingSubject = new BehaviorSubject<boolean>(false);
+  public loading$ = this.loadingSubject.asObservable();
+
+  setLoading(isLoading: boolean): void {
+    this.loadingSubject.next(isLoading);
+  }
+
 }

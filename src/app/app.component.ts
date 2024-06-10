@@ -1,6 +1,6 @@
 import { Component} from '@angular/core';
 import { Router, Event, NavigationEnd } from '@angular/router';
-import { IStaticMethods } from 'preline/preline';
+import { IStaticMethods } from 'preline';
 declare global {
   interface Window {
     HSStaticMethods: IStaticMethods;
@@ -20,7 +20,7 @@ export class AppComponent {
       if (event instanceof NavigationEnd) {
         setTimeout(() => {
           window.HSStaticMethods.autoInit();
-        }, 100);
+        }, 1000);
       }
     });
   }

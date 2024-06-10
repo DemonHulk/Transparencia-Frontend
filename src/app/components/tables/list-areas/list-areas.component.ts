@@ -23,12 +23,14 @@ export class ListAreasComponent {
   isLoading: boolean = true;
 
   constructor(
-    private sharedService: SharedValuesService,
+    public sharedService: SharedValuesService,
     private AreaCrudService: AreaCrudService,
     private FechaService: FechaService,
     private flasher: AlertsServiceService,
     private encondeService: CryptoServiceService
-  ) { }
+  ) {
+    this.isLoading= true;
+  }
 
   /**
  * Inicializa el componente y establece el título en el servicio de valores compartidos.
@@ -43,11 +45,13 @@ export class ListAreasComponent {
      * @memberof SharedValuesService
      */
     this.sharedService.changeTitle('Áreas registradas en el sistema');
-
+    this.sharedService.setLoading(true);
     /**
      * Llama al Servicio AreaCrudService y ejecutar la funcion para extraer areas.
      */
     this.GetAllAreaService();
+
+
 
   }
 
@@ -66,7 +70,11 @@ export class ListAreasComponent {
       this.ListInactiveAreas = this.ListAreas.filter(area => area.activo == false);
 
       //Indicar que todos los datos se han cargado
-      this.isLoading = false;
+      setTimeout(() => {
+
+        this.sharedService.setLoading(false);
+        window.HSStaticMethods.autoInit();
+      }, 500);
 
     });
   }

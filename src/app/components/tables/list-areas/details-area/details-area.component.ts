@@ -24,10 +24,9 @@ export class DetailsAreaComponent {
   listPuntosAcceso: Punto[] = [];
   listUsuariosAcceso: Usuario[] = [];
   data_usuariosacceso: any;
-  isLoading: boolean = true;
 
   constructor(
-    private sharedService: SharedValuesService,
+    public sharedService: SharedValuesService,
     private AreaCrudService: AreaCrudService,
     private PuntosAreasCrudService: PuntosAreasCrudService,
     private UsuariocrudService: UsuariocrudService,
@@ -50,6 +49,9 @@ export class DetailsAreaComponent {
     if (this.id === null) {
       this.router.navigateByUrl("/areas");
     }
+
+    this.sharedService.setLoading(true);
+
 
   }
 
@@ -109,7 +111,8 @@ export class DetailsAreaComponent {
         )
       );
 
-      this.isLoading = false;
+      this.sharedService.setLoading(false);
+
     });
   }
 
