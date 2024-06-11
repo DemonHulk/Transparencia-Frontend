@@ -42,6 +42,8 @@ export class EditAreaComponent implements OnInit {
       this.router.navigateByUrl("/areas");
     }
     this.sharedService.changeTitle('Modificar área');
+    this.sharedService.loadScript("/assets/js/validations.js");
+
 
     this.GetOneAreaService(this.id);
 

@@ -23,6 +23,8 @@ ngOnInit(): void {
      * @memberof SharedValuesService
      */
     this.sharedService.changeTitle('Registrar un nuevo trimestre');
+    this.sharedService.loadScript("/assets/js/validations.js");
+
     this.generateYears();
 }
 

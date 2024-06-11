@@ -24,6 +24,7 @@ ngOnInit(): void {
      * @memberof SharedValuesService
      */
     this.sharedService.changeTitle('Articulo 33');
+    this.sharedService.loadScript("/assets/js/validations.js");
 }
   getNumbers(): number[] {
     const numbers: number[] = [];

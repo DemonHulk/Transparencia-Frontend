@@ -23,7 +23,7 @@ export class LoginComponent {
     private router: Router,
     private flasher: AlertsServiceService
   ){
-    const validarCorreo = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const validarCorreo = /^[^\s@]+@utdelacosta\.edu\.mx$/;
 
     this.formularioLogin = this.formulario.group({
       correo: ['', [Validators.required, Validators.pattern(validarCorreo), Validators.maxLength(50)]],
@@ -44,6 +44,7 @@ ngOnInit(): void {
      * @memberof SharedValuesService
      */
     this.sharedService.changeTitle('Ingresar al sistema');
+    this.sharedService.loadScript("/assets/js/validations.js");
 }
 
 

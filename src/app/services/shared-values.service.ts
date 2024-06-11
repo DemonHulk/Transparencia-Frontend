@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { Inject, Injectable, PLATFORM_ID, Renderer2, RendererFactory2 } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
@@ -9,7 +10,35 @@ export class SharedValuesService {
   private titleSource = new BehaviorSubject<string>('UNIVERSIDAD TECNOLÓGICA DE LA COSTA');
   currentTitle = this.titleSource.asObservable();
 
-  constructor() { }
+  private renderer: Renderer2;
+
+  constructor(
+    private rendererFactory: RendererFactory2,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {
+    this.renderer = this.rendererFactory.createRenderer(null, null);
+  }
+
+  public loadScript(scriptUrl: string): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+      if (isPlatformBrowser(this.platformId)) {
+        const scriptElement = document.createElement('script');
+        scriptElement.src = scriptUrl;
+        scriptElement.onload = () => {
+          resolve();
+        };
+        scriptElement.onerror = (error) => {
+          reject(error);
+        };
+        document.head.appendChild(scriptElement);
+      } else {
+        // Manejo de la carga de scripts en el servidor
+        // Aquí puedes realizar una acción alternativa, como enviar una advertencia al servidor de que no se puede cargar el script
+        console.warn('No se puede cargar el script en el servidor.');
+        resolve();
+      }
+    });
+  }
 
   changeTitle(title: string) {
     this.titleSource.next(title);

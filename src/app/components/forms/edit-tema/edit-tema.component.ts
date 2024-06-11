@@ -22,5 +22,6 @@ export class EditTemaComponent {
      * @memberof SharedValuesService
      */
     this.sharedService.changeTitle('Modificar tema: Nombre tema');
+    this.sharedService.loadScript("/assets/js/validations.js");
   }
 }

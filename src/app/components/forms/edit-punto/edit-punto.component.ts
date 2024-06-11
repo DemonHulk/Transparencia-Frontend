@@ -22,6 +22,8 @@ export class EditPuntoComponent {
      * @memberof SharedValuesService
      */
     this.sharedService.changeTitle('Modificar punto');
+    this.sharedService.loadScript("/assets/js/validations.js");
+
   }
 
   getNumbers(): number[] {
