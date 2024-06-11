@@ -22,5 +22,6 @@ export class EditPdfComponent {
      * @memberof SharedValuesService
      */
     this.sharedService.changeTitle('Modificar archivo');
+    this.sharedService.loadScript("/assets/js/validations.js");
   }
 }

@@ -22,6 +22,8 @@ ngOnInit(): void {
      * @memberof SharedValuesService
      */
     this.sharedService.changeTitle('Registrar un nuevo usuario');
+    this.sharedService.loadScript("/assets/js/validations.js");
+
 }
 
 }

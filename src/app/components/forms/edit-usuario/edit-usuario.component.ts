@@ -22,6 +22,8 @@ ngOnInit(): void {
      * @memberof SharedValuesService
      */
     this.sharedService.changeTitle('Modificar usuario: Nombre completo');
+    this.sharedService.loadScript("/assets/js/validations.js");
+
 }
 
 }

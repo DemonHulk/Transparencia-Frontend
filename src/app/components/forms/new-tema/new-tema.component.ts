@@ -22,5 +22,6 @@ ngOnInit(): void {
      * @memberof SharedValuesService
      */
     this.sharedService.changeTitle('Registrar un nuevo tema para el punto: Nombre punto');
+    this.sharedService.loadScript("/assets/js/validations.js");
 }
 }

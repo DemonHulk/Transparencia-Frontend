@@ -22,6 +22,7 @@ ngOnInit(): void {
      * @memberof SharedValuesService
      */
     this.sharedService.changeTitle('Registrar un nuevo punto');
+    this.sharedService.loadScript("/assets/js/validations.js");
 }
 
 getNumbers(): number[] {

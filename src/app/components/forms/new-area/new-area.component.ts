@@ -41,6 +41,8 @@ export class NewAreaComponent {
        * @memberof SharedValuesService
        */
       this.sharedService.changeTitle('Registrar una nueva área');
+    this.sharedService.loadScript("/assets/js/validations.js");
+
 
   }
 

@@ -24,6 +24,8 @@ ngOnInit(): void {
      * @memberof SharedValuesService
      */
     this.sharedService.changeTitle('Modificar trimestre');
+    this.sharedService.loadScript("/assets/js/validations.js");
+
     this.generateYears();
 }
 

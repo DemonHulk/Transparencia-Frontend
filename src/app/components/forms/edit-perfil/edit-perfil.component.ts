@@ -22,5 +22,7 @@ export class EditPerfilComponent {
      * @memberof SharedValuesService
      */
     this.sharedService.changeTitle('Modificar mi información');
+    this.sharedService.loadScript("/assets/js/validations.js");
+
   }
 }
