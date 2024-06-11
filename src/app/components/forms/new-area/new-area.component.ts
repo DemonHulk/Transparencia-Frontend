@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { SharedValuesService } from '../../../services/shared-values.service';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AreaCrudService } from '../../../services/crud/areacrud.service';
 import { AlertsServiceService } from '../../../services/alerts/alerts-service.service';
+import {  validarTextoNormal } from '../../../services/api-config';
 
 
 @Component({
@@ -23,7 +24,14 @@ export class NewAreaComponent {
     private flasher: AlertsServiceService
   ) {
     this.FormAltaArea = this.formulario.group({
-      nombreArea: [''],
+      nombreArea: ['',
+        [
+          Validators.required,
+          Validators.minLength(5),
+          Validators.maxLength(100)
+        ],
+        [validarTextoNormal()] // Aplica el validador personalizado
+      ]
     });
   }
 
@@ -41,27 +49,32 @@ export class NewAreaComponent {
        * @memberof SharedValuesService
        */
       this.sharedService.changeTitle('Registrar una nueva área');
-    this.sharedService.loadScript("/assets/js/validations.js");
+      this.sharedService.loadScript("/assets/js/validations.js");
 
 
   }
 
 
   SaveArea(): any {
-    this.AreaCrudService.InsertAreaService(this.FormAltaArea.value).subscribe(
-      respuesta => {
-        console.log(respuesta)
-        if (respuesta.resultado.res) {
-          this.flasher.success(respuesta.resultado.data);
-          this.router.navigate(['/areas']);
-        }else{
-          this.flasher.error(respuesta.resultado.data);
+    if (this.FormAltaArea.valid) {
+      this.AreaCrudService.InsertAreaService(this.FormAltaArea.value).subscribe(
+        respuesta => {
+          console.log(respuesta)
+          if (respuesta.resultado.res) {
+            this.flasher.success(respuesta.resultado.data);
+            this.router.navigate(['/areas']);
+          } else {
+            this.flasher.error(respuesta.resultado.data);
+          }
+        },
+        error => {
+          this.flasher.error("Hubo un error, Intente más tarde o notifique al soporte técnico.");
         }
-      },
-      error => {
-        this.flasher.error("Hubo un error, Intente más tarde o notifique al soporte técnico.");
-      }
-    );
+      );
+    } else {
+      this.flasher.error("El formulario no es válido. Por favor, complete todos los campos requeridos correctamente.");
+    }
   }
+
 
 }

@@ -14,7 +14,8 @@ module.exports = {
         'input-focus-color': '#000',
         'secondary-color': '#04847C',
         'color-active':'#47B0A4',
-        'hr-color':'#47B0A4'
+        'hr-color':'#47B0A4',
+        'validator-error':'#EF4444'
       },
     },
   },

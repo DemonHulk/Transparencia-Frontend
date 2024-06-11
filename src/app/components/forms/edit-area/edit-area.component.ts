@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { SharedValuesService } from '../../../services/shared-values.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AreaCrudService } from '../../../services/crud/areacrud.service';
 import { AlertsServiceService } from '../../../services/alerts/alerts-service.service';
 import { CryptoServiceService } from '../../../services/cryptoService/crypto-service.service';
+import { validarTextoNormal } from '../../../services/api-config';
 
 @Component({
   selector: 'app-edit-area',
@@ -26,7 +27,14 @@ export class EditAreaComponent implements OnInit {
     private encodeService: CryptoServiceService
   ) {
     this.FormAltaArea = this.formulario.group({
-      nombreArea: ['']
+      nombreArea: ['',
+        [
+          Validators.required,
+          Validators.minLength(5),
+          Validators.maxLength(100)
+        ],
+        [validarTextoNormal()] // Aplica el validador personalizado
+      ]
     });
   }
 
@@ -69,7 +77,7 @@ export class EditAreaComponent implements OnInit {
   }
 
   UpdateAreaService(): void {
-    console.log(this.FormAltaArea.value);
+    if (this.FormAltaArea.valid) {
     this.AreaCrudService.UpdateAreaService(this.FormAltaArea.value, this.id).subscribe(
       respuesta => {
         console.log(respuesta);
@@ -85,5 +93,8 @@ export class EditAreaComponent implements OnInit {
         this.flasher.error("Hubo un error, Intente más tarde o notifique al soporte técnico.");
       }
     );
+  } else {
+    this.flasher.error("El formulario no es válido. Por favor, complete todos los campos requeridos correctamente.");
+  }
   }
 }
