@@ -10,7 +10,7 @@ function limpiarTexto(input) {
 }
 
 // Aplicar la limpieza de texto a todos los inputs de tipo text, search y textarea
-document.querySelectorAll('input[type="text"]:not(.name):not(.telefono):not(.pdf), input[type="search"], textarea').forEach(input => {
+document.querySelectorAll('input[type="text"]:not(.name):not(.telefono):not(.pdf):not(.tema):not(.trimestre), input[type="search"], textarea').forEach(input => {
   input.addEventListener('input', function() {
     limpiarTexto(this);
   });
@@ -51,6 +51,39 @@ document.querySelectorAll('input[type="text"].pdf').forEach(input => {
     limpiarTextoPDF(this);
   });
 });
+
+function limpiarTextoTema(input) {
+  const textoOriginal = input.value;
+  const textoNuevo = textoOriginal
+      .replace(/ {2,}/g, " ") // Reemplazar varios espacios en blanco seguidos por un solo espacio en blanco
+      .replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ0-9()\-,. ]+/g, "") // Permitir letras, números, y algunos símbolos específicos
+      .replace(/^[^a-zA-ZáéíóúÁÉÍÓÚñÑ0-9()\-,. ]+|[^a-zA-ZáéíóúÁÉÍÓÚñÑ0-9()\-,. ]+$/g, ""); // Eliminar cualquier caracter que no sea una letra, número, símbolo específico o espacio en blanco al principio o al final del texto
+
+  input.value = textoNuevo;
+}
+
+document.querySelectorAll('input[type="text"].tema').forEach(input => {
+  input.addEventListener('input', function() {
+    limpiarTextoTema(this);
+  });
+});
+
+function limpiarTextoTrimestre(input) {
+  const textoOriginal = input.value;
+  const textoNuevo = textoOriginal
+      .replace(/ {2,}/g, " ") // Reemplazar varios espacios en blanco seguidos por un solo espacio en blanco
+      .replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ0-9 \-]+/g, "") // Permitir letras, números, espacios en blanco y guion medio
+      .replace(/^[^a-zA-ZáéíóúÁÉÍÓÚñÑ0-9 \-]+|[^a-zA-ZáéíóúÁÉÍÓÚñÑ0-9 \-]+$/g, "") // Eliminar cualquier caracter que no sea una letra, número, espacio en blanco o guion medio al principio o al final del texto
+      .toUpperCase();
+  input.value = textoNuevo;
+}
+
+document.querySelectorAll('input[type="text"].trimestre').forEach(input => {
+  input.addEventListener('input', function() {
+    limpiarTextoTrimestre(this);
+  });
+});
+
 
 
 document.querySelectorAll('input[type="email"]').forEach(input => {
