@@ -89,3 +89,27 @@ export class Usuario {
 }
 
 
+
+import { AbstractControl, ValidatorFn } from '@angular/forms';
+
+export function validarTextoNormal(): ValidatorFn {
+  return (control: AbstractControl): Promise<{ [key: string]: any }> | null => {
+    return new Promise((resolve) => {
+        if (!control.value) {
+          resolve({ 'textoVacio': true });
+        } else {
+          const textoValidado = control.value
+            .replace(/ {2,}/g, " ")
+            .replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ0-9 \-]+/g, "")
+            .replace(/^[^a-zA-ZáéíóúÁÉÍÓÚñÑ0-9 \-]+|[^a-zA-ZáéíóúÁÉÍÓÚñÑ0-9 \-]+$/g, "");
+
+          if (textoValidado !== control.value) {
+            resolve({ 'textoInvalido': true });
+          } else {
+            resolve({});
+          }
+        }
+    });
+  };
+}
+

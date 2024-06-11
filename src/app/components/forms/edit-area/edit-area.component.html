@@ -20,7 +20,11 @@
     <div class="sm:col-span-2">
       <label for="nombreArea" class="font-poppins">Nombre del área</label>
       <div
-      class="flex items-center border border-input-bord-color py-3 px-4 rounded-lg focus-within:border-input-focus-color focus-within:ring-input-focus-color">
+      class="flex items-center border border-input-bord-color py-3 px-4 rounded-lg focus-within:border-input-focus-color focus-within:ring-input-focus-color"
+        [ngClass]="{
+        'border-validator-error focus-within:border-validator-error focus-within:ring-validator-error': FormAltaArea.get('nombreArea')?.invalid && (FormAltaArea.get('nombreArea')?.dirty || FormAltaArea.get('nombreArea')?.touched)
+        }"
+      >
         <input type="text" id="nombreArea" formControlName="nombreArea"
           class=" flex-grow border-none focus:ring-0 focus:outline-none text-sm text-dark"
           placeholder="Nombre del área">
@@ -42,6 +46,12 @@
             </ul>
           </div>
         </div>
+      </div>
+      <div *ngIf="FormAltaArea.get('nombreArea')?.invalid && (FormAltaArea.get('nombreArea')?.dirty || FormAltaArea.get('nombreArea')?.touched)">
+        <div *ngIf="FormAltaArea.get('nombreArea')?.errors?.['required']" class="text-sm text-validator-error mt-1">Este campo es requerido.</div>
+        <div *ngIf="FormAltaArea.get('nombreArea')?.errors?.['minlength']" class="text-sm text-validator-error mt-1">El campo debe tener al menos 5 caracteres.</div>
+        <div *ngIf="FormAltaArea.get('nombreArea')?.errors?.['maxlength']" class="text-sm text-validator-error mt-1">El campo no puede exceder los 100 caracteres.</div>
+        <div *ngIf="FormAltaArea.get('nombreArea')?.errors?.['textoInvalido']" class="text-sm text-validator-error mt-1" title="No intentes ingresar caracteres especiales.">El campo no puede contener caracteres no permitidos.</div>
       </div>
     </div>
     <!-- Botón de enviar -->
