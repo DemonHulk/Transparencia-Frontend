@@ -86,27 +86,6 @@ document.querySelectorAll('input[type="text"].trimestre').forEach(input => {
 
 
 
-document.querySelectorAll('input[type="email"]').forEach(input => {
-  input.addEventListener('input', function() {
-    const emailOriginal = this.value;
-    let partes = emailOriginal.split('@');
-
-    if (partes.length > 1) {
-        // Parte después del @: permitir solo utdelacosta.edu.mx
-        partes[1] = partes[1].replace(/[^a-zA-Z0-9.]+/g, ""); // Eliminar caracteres no permitidos
-        if (partes[1] !== "utdelacosta.edu.mx") {
-            partes[1] = "utdelacosta.edu.mx";
-        }
-    }
-
-    const emailValidado = partes.join('@')
-        .replace(/[^a-zA-Z0-9@._-]+/g, "") // Permitir solo letras, números y los caracteres @, ., _, y -
-        .replace(/\.{2,}/g, ".") // Reemplazar puntos consecutivos con un solo punto
-        .replace(/\.@|@\./g, "@"); // Evitar punto inmediatamente antes o después de @
-
-    this.value = emailValidado;
-  });
-});
 
 document.querySelectorAll('input[type="text"].telefono').forEach(input => {
   input.addEventListener('input', function() {

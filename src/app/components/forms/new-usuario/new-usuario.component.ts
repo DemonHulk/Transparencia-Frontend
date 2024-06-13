@@ -23,7 +23,7 @@ export class NewUsuarioComponent {
     private router: Router, // Inyecta el Router
     private flasher: AlertsServiceService,
     private AreaCrudService : AreaCrudService
-  ) { 
+  ) {
     this.FormAltaUsuario = this.formulario.group({
       nombre: ['',
         [
@@ -50,12 +50,14 @@ export class NewUsuarioComponent {
         [validarTextoNormal()] // Aplica el validador personalizado
       ],
       correo: ['',
+
         [
           Validators.required,
           Validators.minLength(4),
-          Validators.maxLength(100)
+          Validators.maxLength(100),
+          validarCorreoUTDelacosta()
         ],
-        [validarCorreoUTDelacosta()] // Aplica el validador personalizado
+
       ],
       telefono: ['',
         [
@@ -132,6 +134,12 @@ loadArea(): void {
   );
 }
 
-
+verificarValidezEmail() {
+  const emailControl = this.FormAltaUsuario.get('correo');
+  if (emailControl) {
+    emailControl.updateValueAndValidity();
+    console.log("si");
+  }
+}
 
 }

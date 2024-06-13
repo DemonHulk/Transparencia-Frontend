@@ -49,7 +49,7 @@
         <div *ngIf="FormAltaUsuario.get('nombre')?.errors?.['textoInvalido']" class="text-sm text-validator-error mt-1" title="No intentes ingresar caracteres especiales.">El campo no puede contener caracteres no permitidos.</div>
       </div>
     </div>
-    
+
 
     <div class="sm:col-span-2">
       <label for="primerApellido" class="font-poppins">Primer apellido</label>
@@ -122,6 +122,7 @@
     <div class="sm:col-span-2">
       <label for="correo" class="font-poppins">Correo</label>
       <div
+
         class="flex items-center border border-input-bord-color py-3 px-4 rounded-lg focus-within:border-input-focus-color focus-within:ring-input-focus-color"
         [ngClass]="{
           'border-validator-error focus-within:border-validator-error focus-within:ring-validator-error': FormAltaUsuario.get('correo')?.invalid && (FormAltaUsuario.get('correo')?.dirty || FormAltaUsuario.get('correo')?.touched)
@@ -129,7 +130,8 @@
         <input type="email" id="correo" formControlName="correo"
           class="flex-grow border-none focus:ring-0 focus:outline-none text-sm text-dark"
           placeholder="Correo"
-          (blur)="FormAltaUsuario.get('correo')?.updateValueAndValidity()">
+
+          >
         <div class="hs-tooltip [--trigger:hover] sm:[--placement:right] inline-block ml-2">
           <!-- lo del simbolo de interrogacion -->
           <i class="fa-solid fa-question text-gray-500"></i>
@@ -236,7 +238,7 @@
       [ngClass]="{
         'border-validator-error focus:border-validator-error focus:ring-validator-error': FormAltaUsuario.get('id_area')?.invalid && (FormAltaUsuario.get('id_area')?.dirty || FormAltaUsuario.get('id_area')?.touched)
         }">
-        <option value="" selected>Selecciona una área</option>  
+        <option value="" selected>Selecciona una área</option>
         <option *ngFor="let area of area" [value]="area.id_area">
             {{ area.nombre_area }}
           </option>

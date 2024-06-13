@@ -90,7 +90,7 @@ export class Usuario {
 
 
 
-import { AbstractControl, ValidatorFn } from '@angular/forms';
+import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 
 export function validarTextoNormal(): ValidatorFn {
   return (control: AbstractControl): Promise<{ [key: string]: any }> | null => {
@@ -114,20 +114,39 @@ export function validarTextoNormal(): ValidatorFn {
 }
 
 export function validarCorreoUTDelacosta(): ValidatorFn {
-  return (control: AbstractControl): Promise<{ [key: string]: any } | null> => {
-    return new Promise((resolve) => {
-      const valor = control.value;
-      if (!valor) {
-        resolve({ 'correoVacio': true });
-      } else {
-        const regex = /^[a-zA-Z0-9._%+-]+@utdelacosta.edu.mx$/;
-        if (!regex.test(valor)) {
-          resolve({ 'correoInvalido': true });
-        } else {
-          resolve(null);
-        }
+  return (control: AbstractControl): ValidationErrors | null => {
+    const valor = control.value;
+
+    if (!valor) {
+      return { 'correoVacio': true };
+    }
+
+
+    // Formatear el correo electrónico según las reglas necesarias
+    let partes = valor.split('@');
+    if (partes.length > 1) {
+      partes[1] = partes[1].replace(/[^a-zA-Z0-9.-]+/g, ""); // Eliminar caracteres no permitidos
+      if (partes[1] !== "utdelacosta.edu.mx") {
+        partes[1] = "utdelacosta.edu.mx";
       }
-    });
+    }
+
+    const emailFormateado = partes.join('@')
+      .replace(/[^a-zA-Z0-9@._-]+/g, "") // Permitir solo letras, números y los caracteres @, ._, y -
+      .replace(/\.{2,}/g, ".") // Reemplazar puntos consecutivos con un solo punto
+      .replace(/\.@|@\./g, "@"); // Evitar punto inmediatamente antes o después de @
+
+    if (emailFormateado !== valor) {
+      control.setValue(emailFormateado); // Actualizar el valor del control con el correo formateado
+      control.markAsDirty(); // Marcar el control como modificado para que Angular actualice la vista
+    }
+
+    // Validar el formato del correo electrónico
+    const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!regex.test(emailFormateado)) {
+      return { 'correoInvalido': true };
+    }
+
+    return null; // No hay errores, el correo es válido y está formateado correctamente
   };
 }
-
