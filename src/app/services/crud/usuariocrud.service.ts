@@ -15,6 +15,9 @@ export class UsuariocrudService {
       return this.clientHttp.get(API_URL+"usuario/usuariosaccesoarea/" + id)
     }
     
+    InsertUsuarioService(formulario: any): Observable<any> {
+      return this.clientHttp.post(API_URL + "usuario", formulario);
+    }
     
     
 }

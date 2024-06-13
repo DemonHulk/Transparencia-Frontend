@@ -113,3 +113,21 @@ export function validarTextoNormal(): ValidatorFn {
   };
 }
 
+export function validarCorreoUTDelacosta(): ValidatorFn {
+  return (control: AbstractControl): Promise<{ [key: string]: any } | null> => {
+    return new Promise((resolve) => {
+      const valor = control.value;
+      if (!valor) {
+        resolve({ 'correoVacio': true });
+      } else {
+        const regex = /^[a-zA-Z0-9._%+-]+@utdelacosta.edu.mx$/;
+        if (!regex.test(valor)) {
+          resolve({ 'correoInvalido': true });
+        } else {
+          resolve(null);
+        }
+      }
+    });
+  };
+}
+
