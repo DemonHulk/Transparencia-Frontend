@@ -3,7 +3,7 @@ import { SharedValuesService } from '../../../services/shared-values.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CryptoServiceService } from '../../../services/cryptoService/crypto-service.service';
 import { AlertsServiceService } from '../../../services/alerts/alerts-service.service';
-import { validarCorreoUTDelacosta, validarTextoNormal } from '../../../services/api-config';
+import { validarCorreoUTDelacosta, validarNombre, validarPassword, validarTelefono } from '../../../services/api-config';
 import { UsuariocrudService } from '../../../services/crud/usuariocrud.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AreaCrudService } from '../../../services/crud/areacrud.service';
@@ -33,47 +33,49 @@ export class EditUsuarioComponent implements OnInit {
       nombre: ['',
         [
           Validators.required,
+          validarNombre(true), // Aplica el validador personalizado, el true significa que no debe estar vacio
           Validators.minLength(4),
           Validators.maxLength(100)
         ],
-        [validarTextoNormal()] // Aplica el validador personalizado
       ],
       primerApellido: ['',
         [
           Validators.required,
+          validarNombre(true), // Aplica el validador personalizado, el true significa que no debe estar vacio
           Validators.minLength(4),
           Validators.maxLength(100)
         ],
-        [validarTextoNormal()] // Aplica el validador personalizado
       ],
       segundoApellido: ['',
         [
           Validators.required,
+          validarNombre(false), // Aplica el validador personalizado, el false significa que puede estar vacio
           Validators.minLength(4),
           Validators.maxLength(100)
         ],
-        [validarTextoNormal()] // Aplica el validador personalizado
       ],
       correo: ['',
 
         [
           Validators.required,
+          validarCorreoUTDelacosta(), // Aplica el validador personalizado
           Validators.minLength(4),
           Validators.maxLength(100),
-          validarCorreoUTDelacosta()
         ],
 
       ],
       telefono: ['',
         [
           Validators.required,
+          validarTelefono(), // Aplica el validador personalizado
           Validators.minLength(10),
           Validators.maxLength(10)
         ]
       ],
       password: ['',
         [
-          Validators.minLength(4),
+          validarPassword(false), // Aplica el validador personalizado, el false significa que la contraseña puede estar vacia
+          Validators.minLength(6),
           Validators.maxLength(100)
         ]
       ],

@@ -44,7 +44,7 @@
       </div>
       <div *ngIf="FormAltaUsuario.get('nombre')?.invalid && (FormAltaUsuario.get('nombre')?.dirty || FormAltaUsuario.get('nombre')?.touched)">
         <div *ngIf="FormAltaUsuario.get('nombre')?.errors?.['required']" class="text-sm text-validator-error mt-1">Este campo es requerido.</div>
-        <div *ngIf="FormAltaUsuario.get('nombre')?.errors?.['minlength']" class="text-sm text-validator-error mt-1">El campo debe tener al menos 5 caracteres.</div>
+        <div *ngIf="FormAltaUsuario.get('nombre')?.errors?.['minlength']" class="text-sm text-validator-error mt-1">El campo debe tener al menos 4 caracteres.</div>
         <div *ngIf="FormAltaUsuario.get('nombre')?.errors?.['maxlength']" class="text-sm text-validator-error mt-1">El campo no puede exceder los 100 caracteres.</div>
         <div *ngIf="FormAltaUsuario.get('nombre')?.errors?.['textoInvalido']" class="text-sm text-validator-error mt-1" title="No intentes ingresar caracteres especiales.">El campo no puede contener caracteres no permitidos.</div>
       </div>
@@ -79,7 +79,7 @@
       </div>
       <div *ngIf="FormAltaUsuario.get('primerApellido')?.invalid && (FormAltaUsuario.get('primerApellido')?.dirty || FormAltaUsuario.get('primerApellido')?.touched)">
         <div *ngIf="FormAltaUsuario.get('primerApellido')?.errors?.['required']" class="text-sm text-validator-error mt-1">Este campo es requerido.</div>
-        <div *ngIf="FormAltaUsuario.get('primerApellido')?.errors?.['minlength']" class="text-sm text-validator-error mt-1">El campo debe tener al menos 5 caracteres.</div>
+        <div *ngIf="FormAltaUsuario.get('primerApellido')?.errors?.['minlength']" class="text-sm text-validator-error mt-1">El campo debe tener al menos 4 caracteres.</div>
         <div *ngIf="FormAltaUsuario.get('primerApellido')?.errors?.['maxlength']" class="text-sm text-validator-error mt-1">El campo no puede exceder los 100 caracteres.</div>
         <div *ngIf="FormAltaUsuario.get('primerApellido')?.errors?.['textoInvalido']" class="text-sm text-validator-error mt-1" title="No intentes ingresar caracteres especiales.">El campo no puede contener caracteres no permitidos.</div>
       </div>
@@ -112,8 +112,7 @@
         </div>
       </div>
       <div *ngIf="FormAltaUsuario.get('segundoApellido')?.invalid && (FormAltaUsuario.get('segundoApellido')?.dirty || FormAltaUsuario.get('segundoApellido')?.touched)">
-        <div *ngIf="FormAltaUsuario.get('segundoApellido')?.errors?.['required']" class="text-sm text-validator-error mt-1">Este campo es requerido.</div>
-        <div *ngIf="FormAltaUsuario.get('segundoApellido')?.errors?.['minlength']" class="text-sm text-validator-error mt-1">El campo debe tener al menos 5 caracteres.</div>
+        <div *ngIf="FormAltaUsuario.get('segundoApellido')?.errors?.['minlength']" class="text-sm text-validator-error mt-1">El campo debe tener al menos 4 caracteres.</div>
         <div *ngIf="FormAltaUsuario.get('segundoApellido')?.errors?.['maxlength']" class="text-sm text-validator-error mt-1">El campo no puede exceder los 100 caracteres.</div>
         <div *ngIf="FormAltaUsuario.get('segundoApellido')?.errors?.['textoInvalido']" class="text-sm text-validator-error mt-1" title="No intentes ingresar caracteres especiales.">El campo no puede contener caracteres no permitidos.</div>
       </div>
@@ -150,7 +149,7 @@
       </div>
       <div *ngIf="FormAltaUsuario.get('correo')?.invalid && (FormAltaUsuario.get('correo')?.dirty || FormAltaUsuario.get('correo')?.touched)">
         <div *ngIf="FormAltaUsuario.get('correo')?.errors?.['required']" class="text-sm text-validator-error mt-1">Este campo es requerido.</div>
-        <div *ngIf="FormAltaUsuario.get('correo')?.errors?.['minlength']" class="text-sm text-validator-error mt-1">El campo debe tener al menos 5 caracteres.</div>
+        <div *ngIf="FormAltaUsuario.get('correo')?.errors?.['minlength']" class="text-sm text-validator-error mt-1">El campo debe tener al menos 4 caracteres.</div>
         <div *ngIf="FormAltaUsuario.get('correo')?.errors?.['maxlength']" class="text-sm text-validator-error mt-1">El campo no puede exceder los 100 caracteres.</div>
         <div *ngIf="FormAltaUsuario.get('correo')?.errors?.['correoInvalido']"  class="text-sm text-validator-error mt-1">El correo electrónico debe ser del dominio utdelacosta.edu.mx.</div>
       </div>
@@ -211,7 +210,7 @@
       </div>
       <div *ngIf="FormAltaUsuario.get('password')?.invalid && (FormAltaUsuario.get('password')?.dirty || FormAltaUsuario.get('password')?.touched)">
         <div *ngIf="FormAltaUsuario.get('password')?.errors?.['required']" class="text-sm text-validator-error mt-1">Este campo es requerido.</div>
-        <div *ngIf="FormAltaUsuario.get('password')?.errors?.['minlength']" class="text-sm text-validator-error mt-1">El campo debe tener al menos 5 caracteres.</div>
+        <div *ngIf="FormAltaUsuario.get('password')?.errors?.['minlength']" class="text-sm text-validator-error mt-1">El campo debe tener al menos 6 caracteres.</div>
         <div *ngIf="FormAltaUsuario.get('password')?.errors?.['maxlength']" class="text-sm text-validator-error mt-1">El campo no puede exceder los 100 caracteres.</div>
       </div>
     </div>

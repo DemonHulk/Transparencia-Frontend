@@ -6,6 +6,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import * as CryptoJS from 'crypto-js';
 import { AlertsServiceService } from '../../services/alerts/alerts-service.service';
+import { validarCorreoUTDelacosta, validarPassword } from '../../services/api-config';
 
 
 @Component({
@@ -23,11 +24,20 @@ export class LoginComponent {
     private router: Router,
     private flasher: AlertsServiceService
   ){
-    const validarCorreo = /^[^\s@]+@utdelacosta\.edu\.mx$/;
 
     this.formularioLogin = this.formulario.group({
-      correo: ['', [Validators.required, Validators.pattern(validarCorreo), Validators.maxLength(50)]],
-      contrasenia: ['', [Validators.required,  Validators.maxLength(50)]]
+      correo: ['', [
+        Validators.required,
+        Validators.minLength(4),
+        validarCorreoUTDelacosta(), //Aplica el validador personalizado
+        Validators.maxLength(100),
+      ]],
+      contrasenia: ['', [
+        Validators.required,
+          validarPassword(true), // Aplica el validador personalizado, el true significa que require que la contraseña no este vacía
+          Validators.minLength(6),
+          Validators.maxLength(100)
+      ]]
     });
    }
 

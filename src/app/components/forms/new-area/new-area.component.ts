@@ -27,10 +27,10 @@ export class NewAreaComponent {
       nombreArea: ['',
         [
           Validators.required,
+          validarTextoNormal(), //Validación personalizada
           Validators.minLength(5),
           Validators.maxLength(100)
         ],
-        [validarTextoNormal()] // Aplica el validador personalizado
       ]
     });
   }
@@ -49,7 +49,6 @@ export class NewAreaComponent {
        * @memberof SharedValuesService
        */
       this.sharedService.changeTitle('Registrar una nueva área');
-      this.sharedService.loadScript("/assets/js/validations.js");
 
 
   }
