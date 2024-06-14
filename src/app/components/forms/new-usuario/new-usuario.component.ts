@@ -3,7 +3,7 @@ import { SharedValuesService } from '../../../services/shared-values.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertsServiceService } from '../../../services/alerts/alerts-service.service';
-import { validarCorreoUTDelacosta, validarNombre, validarPassword, validarTelefono } from '../../../services/api-config';
+import { markFormGroupTouched, validarCorreoUTDelacosta, validarNombre, validarPassword, validarTelefono } from '../../../services/api-config';
 import { UsuariocrudService } from '../../../services/crud/usuariocrud.service';
 import { AreaCrudService } from '../../../services/crud/areacrud.service';
 import { delay } from 'rxjs/operators';
@@ -24,21 +24,21 @@ export class NewUsuarioComponent {
     private router: Router, // Inyecta el Router
     private flasher: AlertsServiceService,
     private AreaCrudService : AreaCrudService,
-    
+
   ) {
     this.FormAltaUsuario = this.formulario.group({
       nombre: ['',
         [
-          Validators.required,
           validarNombre(true), // Aplica el validador personalizado, el true significa que no debe estar vacio
+          Validators.required,
           Validators.minLength(4),
           Validators.maxLength(100)
         ],
       ],
       primerApellido: ['',
         [
-          Validators.required,
           validarNombre(true), // Aplica el validador personalizado, el true significa que no debe estar vacio
+          Validators.required,
           Validators.minLength(4),
           Validators.maxLength(100)
         ],
@@ -52,8 +52,8 @@ export class NewUsuarioComponent {
       ],
       correo: ['',
         [
-          Validators.required,
           validarCorreoUTDelacosta(), //Aplica el validador personalizado
+          Validators.required,
           Validators.minLength(4),
           Validators.maxLength(100),
         ],
@@ -61,16 +61,16 @@ export class NewUsuarioComponent {
       ],
       telefono: ['',
         [
-          Validators.required,
           validarTelefono(),// Aplica el validador personalizado
+          Validators.required,
           Validators.minLength(10),
           Validators.maxLength(10)
         ]
       ],
       password: ['',
         [
-          Validators.required,
           validarPassword(true), // Aplica el validador personalizado, el true significa que require que la contraseña no este vacía
+          Validators.required,
           Validators.minLength(6),
           Validators.maxLength(100)
         ]
@@ -100,6 +100,7 @@ ngOnInit(): void {
 }
 
 SaveUsuario(): any {
+  markFormGroupTouched(this.FormAltaUsuario);
   if (this.FormAltaUsuario.valid) {
     if (this.isSubmitting) {
       console.log('Ya hay una petición en curso. Espera a que se complete.');

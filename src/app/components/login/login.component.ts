@@ -27,14 +27,14 @@ export class LoginComponent {
 
     this.formularioLogin = this.formulario.group({
       correo: ['', [
+        validarCorreoUTDelacosta(), //Aplica el validador personalizado
         Validators.required,
         Validators.minLength(4),
-        validarCorreoUTDelacosta(), //Aplica el validador personalizado
         Validators.maxLength(100),
       ]],
       contrasenia: ['', [
+        validarPassword(true), // Aplica el validador personalizado, el true significa que require que la contraseña no este vacía
         Validators.required,
-          validarPassword(true), // Aplica el validador personalizado, el true significa que require que la contraseña no este vacía
           Validators.minLength(6),
           Validators.maxLength(100)
       ]]

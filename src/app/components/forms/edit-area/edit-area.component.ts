@@ -29,8 +29,8 @@ export class EditAreaComponent implements OnInit {
     this.FormAltaArea = this.formulario.group({
       nombreArea: ['',
         [
-          Validators.required,
           validarTextoNormal(), //Validación personalizada
+          Validators.required,
           Validators.minLength(5),
           Validators.maxLength(100)
         ],

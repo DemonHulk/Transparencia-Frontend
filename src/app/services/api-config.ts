@@ -90,7 +90,7 @@ export class Usuario {
 
 
 
-import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
+import { AbstractControl, FormGroup, ValidationErrors, ValidatorFn } from '@angular/forms';
 
 export function validarTextoNormal(): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
@@ -107,7 +107,7 @@ export function validarTextoNormal(): ValidatorFn {
       textoLimpiado = capitalizeWords(textoLimpiado);
 
     if (textoLimpiado !== valor) {
-      control.setValue(textoLimpiado); // Actualizar el valor del control con el texto limpiado
+      control.setValue(textoLimpiado.trim()); // Actualizar el valor del control con el texto limpiado
       control.markAsDirty(); // Marcar el control como modificado para que Angular actualice la vista
     }
     return null; // No hay errores, el texto es válido y está limpiado correctamente
@@ -138,7 +138,7 @@ export function validarCorreoUTDelacosta(): ValidatorFn {
       .replace(/\.@|@\./g, "@"); // Evitar punto inmediatamente antes o después de @
 
     if (emailFormateado !== valor) {
-      control.setValue(emailFormateado); // Actualizar el valor del control con el correo formateado
+      control.setValue(emailFormateado.trim()); // Actualizar el valor del control con el correo formateado
       control.markAsDirty(); // Marcar el control como modificado para que Angular actualice la vista
     }
 
@@ -216,7 +216,7 @@ export function validarTitulo(): ValidatorFn {
       textoFormateado = capitalizeWords(textoFormateado);
 
     if (textoFormateado !== valor) {
-      control.setValue(textoFormateado); // Actualizar el valor del control con el texto formateado
+      control.setValue(textoFormateado.trim()); // Actualizar el valor del control con el texto formateado
       control.markAsDirty(); // Marcar el control como modificado para que Angular actualice la vista
     }
 
@@ -249,7 +249,7 @@ export function validarNombreArchivo(): ValidatorFn {
 
     // Actualizar el valor del control con el nombre de archivo formateado
     if (nombreFormateado !== valor) {
-      control.setValue(nombreFormateado); // Actualizar el valor del control con el nombre de archivo formateado
+      control.setValue(nombreFormateado.trim()); // Actualizar el valor del control con el nombre de archivo formateado
       control.markAsDirty(); // Marcar el control como modificado para que Angular actualice la vista
     }
 
@@ -262,11 +262,10 @@ export function validarNombre(requiereNoVacio: boolean): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
     const valor = control.value;
 
-    if ( requiereNoVacio && !valor) {
+    if ( requiereNoVacio && !valor || requiereNoVacio && valor.length === 0) {
+
       return { 'textoVacio': true };
     }
-
-
 
     // Limpiar y formatear el texto según las reglas necesarias
     let textoFormateado = valor
@@ -276,10 +275,9 @@ export function validarNombre(requiereNoVacio: boolean): ValidatorFn {
       textoFormateado = capitalizeWords(textoFormateado);
     // Actualizar el valor del control con el texto formateado
     if (textoFormateado !== valor) {
-      control.setValue(textoFormateado); // Actualizar el valor del control con el texto formateado
+      control.setValue(textoFormateado.trim()); // Actualizar el valor del control con el texto formateado
       control.markAsDirty(); // Marcar el control como modificado para que Angular actualice la vista
     }
-
     return null; // No hay errores, el texto es válido y está formateado correctamente
   };
 }
@@ -301,7 +299,7 @@ export function validarTrimestre(): ValidatorFn {
 
     // Actualizar el valor del control con el texto formateado
     if (textoFormateado !== valor) {
-      control.setValue(textoFormateado); // Actualizar el valor del control con el texto formateado
+      control.setValue(textoFormateado.trim()); // Actualizar el valor del control con el texto formateado
       control.markAsDirty(); // Marcar el control como modificado para que Angular actualice la vista
     }
 
@@ -314,4 +312,23 @@ function capitalizeWords(text: string): string {
   return text.split(' ').map(word =>
     word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
   ).join(' ');
+}
+
+export function markFormGroupTouched(formGroup: FormGroup): void {
+  Object.values(formGroup.controls).forEach(control => {
+    if (control instanceof FormGroup) {
+      markFormGroupTouched(control);
+    } else {
+      // Trim the value of the control if it is a string
+      if (typeof control.value === 'string') {
+        const trimmedValue = control.value.trim();
+        if (trimmedValue !== control.value) {
+          control.setValue(trimmedValue);
+          control.markAsDirty();
+        }
+      }
+
+      control.markAsTouched();
+    }
+  });
 }

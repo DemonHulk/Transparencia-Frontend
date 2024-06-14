@@ -34,16 +34,16 @@ export class EditUsuarioComponent implements OnInit {
     this.FormAltaUsuario = this.formulario.group({
       nombre: ['',
         [
-          Validators.required,
           validarNombre(true), // Aplica el validador personalizado, el true significa que no debe estar vacio
+          Validators.required,
           Validators.minLength(4),
           Validators.maxLength(100)
         ],
       ],
       primerApellido: ['',
         [
-          Validators.required,
           validarNombre(true), // Aplica el validador personalizado, el true significa que no debe estar vacio
+          Validators.required,
           Validators.minLength(4),
           Validators.maxLength(100)
         ],
@@ -57,8 +57,8 @@ export class EditUsuarioComponent implements OnInit {
       ],
       correo: ['',
         [
-          Validators.required,
           validarCorreoUTDelacosta(), // Aplica el validador personalizado
+          Validators.required,
           Validators.minLength(4),
           Validators.maxLength(100),
         ],
@@ -66,8 +66,8 @@ export class EditUsuarioComponent implements OnInit {
       ],
       telefono: ['',
         [
-          Validators.required,
           validarTelefono(), // Aplica el validador personalizado
+          Validators.required,
           Validators.minLength(10),
           Validators.maxLength(10)
         ]
@@ -147,9 +147,9 @@ ngOnInit(): void {
         console.log('Ya hay una petición en curso. Espera a que se complete.');
         return;
       }
-  
+
       this.isSubmitting = true; // Deshabilitar el botón
-  
+
       this.UsuariocrudService.UpdateUserService(this.FormAltaUsuario.value, this.id).pipe(
         delay(1000) // Agregar un retraso de 1 segundo (1000 ms)
       ).subscribe(
