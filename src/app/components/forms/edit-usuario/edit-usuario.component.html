@@ -186,6 +186,18 @@
 
     <div class="sm:col-span-2">
       <label for="password" class="font-poppins">Contraseña</label>
+      <div class="hs-tooltip [--trigger:hover] sm:[--placement:right] inline-block ml-2">
+        <i class="fa-solid fa-question text-gray-500"></i>
+        <div class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible hidden opacity-0 transition-opacity absolute invisible z-10 max-w-xs w-full bg-white border border-gray-100 text-start rounded-xl shadow-md after:absolute after:top-0 after:-start-4 after:w-4 after:h-full" role="tooltip">
+          <ul class="py-3 px-4 space-y-1">
+            <li>
+              <div class="inline-flex items-center gap-x-3 text-sm text-gray-800">
+                <p>La contraseña puede quedar vacía en caso de no necesitar modificarla.</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
       <div class="flex items-center border border-input-bord-color py-3 px-4 rounded-lg focus-within:border-input-focus-color focus-within:ring-input-focus-color"
       [ngClass]="{
         'border-validator-error focus-within:border-validator-error focus-within:ring-validator-error': FormAltaUsuario.get('password')?.invalid && (FormAltaUsuario.get('password')?.dirty || FormAltaUsuario.get('password')?.touched)
