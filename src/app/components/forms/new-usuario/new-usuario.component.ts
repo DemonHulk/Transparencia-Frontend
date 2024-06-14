@@ -6,6 +6,7 @@ import { AlertsServiceService } from '../../../services/alerts/alerts-service.se
 import { validarCorreoUTDelacosta, validarNombre, validarPassword, validarTelefono } from '../../../services/api-config';
 import { UsuariocrudService } from '../../../services/crud/usuariocrud.service';
 import { AreaCrudService } from '../../../services/crud/areacrud.service';
+import { delay } from 'rxjs/operators';
 
 @Component({
   selector: 'app-new-usuario',
@@ -15,14 +16,15 @@ import { AreaCrudService } from '../../../services/crud/areacrud.service';
 export class NewUsuarioComponent {
 
   FormAltaUsuario:FormGroup;
-
+  isSubmitting = false;
   constructor(
     private sharedService: SharedValuesService,
     public formulario: FormBuilder,
     private UsuariocrudService: UsuariocrudService,
     private router: Router, // Inyecta el Router
     private flasher: AlertsServiceService,
-    private AreaCrudService : AreaCrudService
+    private AreaCrudService : AreaCrudService,
+    
   ) {
     this.FormAltaUsuario = this.formulario.group({
       nombre: ['',
@@ -99,21 +101,34 @@ ngOnInit(): void {
 
 SaveUsuario(): any {
   if (this.FormAltaUsuario.valid) {
-    this.UsuariocrudService.InsertUsuarioService(this.FormAltaUsuario.value).subscribe(
+    if (this.isSubmitting) {
+      console.log('Ya hay una petición en curso. Espera a que se complete.');
+      return;
+    }
+
+    this.isSubmitting = true; // Deshabilitar el botón
+
+    this.UsuariocrudService.InsertUsuarioService(this.FormAltaUsuario.value).pipe(
+      delay(1000) // Agregar un retraso de 1 segundo (1000 ms)
+    ).subscribe(
       respuesta => {
-        console.log(respuesta)
-        if (respuesta.resultado.res) {
-          this.flasher.success(respuesta.resultado.data.data);
+        this.isSubmitting = false; // Habilitar el botón
+
+        if (respuesta?.resultado?.data?.res) {
+          this.flasher.success(respuesta?.resultado?.data?.data);
           this.router.navigate(['/usuarios']);
         } else {
-          this.flasher.error(respuesta.resultado.data);
+          console.log('isSubmitting:', this.isSubmitting);
+          this.flasher.error(respuesta?.resultado?.data?.data);
         }
       },
       error => {
+        this.isSubmitting = false; // Habilitar el botón
         this.flasher.error("Hubo un error, Intente más tarde o notifique al soporte técnico.");
       }
     );
   } else {
+    this.isSubmitting = false; // Habilitar el botón
     this.flasher.error("El formulario no es válido. Por favor, complete todos los campos requeridos correctamente.");
   }
 }
@@ -122,7 +137,7 @@ area: any[] = [];
 loadArea(): void {
   this.AreaCrudService.GetAllAreaService().subscribe(
     (resultado: any) => {
-      this.area = resultado.resultado.data;
+      this.area = resultado?.resultado?.data;
     },
     (error: any) => {
       console.error('Error al cargar datos:', error);

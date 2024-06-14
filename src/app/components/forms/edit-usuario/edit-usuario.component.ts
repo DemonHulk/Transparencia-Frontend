@@ -7,6 +7,7 @@ import { validarCorreoUTDelacosta, validarNombre, validarPassword, validarTelefo
 import { UsuariocrudService } from '../../../services/crud/usuariocrud.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AreaCrudService } from '../../../services/crud/areacrud.service';
+import { delay } from 'rxjs/operators';
 
 @Component({
   selector: 'app-edit-usuario',
@@ -18,6 +19,7 @@ export class EditUsuarioComponent implements OnInit {
   id: any;
   FormAltaUsuario: FormGroup;
   data_user: any;
+  isSubmitting: boolean = false;
 
   constructor(
     private sharedService: SharedValuesService,
@@ -48,14 +50,12 @@ export class EditUsuarioComponent implements OnInit {
       ],
       segundoApellido: ['',
         [
-          Validators.required,
           validarNombre(false), // Aplica el validador personalizado, el false significa que puede estar vacio
           Validators.minLength(4),
           Validators.maxLength(100)
         ],
       ],
       correo: ['',
-
         [
           Validators.required,
           validarCorreoUTDelacosta(), // Aplica el validador personalizado
@@ -117,23 +117,22 @@ ngOnInit(): void {
     this.loadArea();
 }
 
-  /* Extraer los datos del usuario mediante su id*/
+  /* Extraer los datos del usuario mediante su id e ingresarlos en su respectivo campo*/
   GetOneUserService(id: any) {
     this.UsuariocrudService.GetOneUserService(id).subscribe(
       (respuesta: any) => {
-        this.data_user = respuesta.resultado.data[0];
+        this.data_user = respuesta?.resultado?.data[0];
         this.sharedService.changeTitle('Modificar usuario: ' + this.data_user?.nombre);
-        console.log(this.data_user);
 
         this.FormAltaUsuario.patchValue({
-          id_usuario: this.data_user.id_usuario,
-          nombre: this.data_user.nombre,
-          primerApellido: this.data_user.apellido1,
-          segundoApellido: this.data_user.apellido2,
-          telefono: this.data_user.telefono,
-          correo: this.data_user.correo,
-          id_area: this.data_user.id_area,
-          nombre_area: this.data_user.nombre_area
+          id_usuario: this.data_user?.id_usuario,
+          nombre: this.data_user?.nombre,
+          primerApellido: this.data_user?.apellido1,
+          segundoApellido: this.data_user?.apellido2,
+          telefono: this.data_user?.telefono,
+          correo: this.data_user?.correo,
+          id_area: this.data_user?.id_area,
+          nombre_area: this.data_user?.nombre_area
         });
       },
       error => {
@@ -144,31 +143,42 @@ ngOnInit(): void {
 
   UpdateUserService(): void {
     if (this.FormAltaUsuario.valid) {
-    this.UsuariocrudService.UpdateUserService(this.FormAltaUsuario.value, this.id).subscribe(
-      respuesta => {
-        console.log(respuesta);
-        if (respuesta?.resultado?.res) { // Verificar si respuesta.resultado.res no es undefined
-          this.flasher.success(respuesta.resultado.data.data);
-          this.router.navigate(['/usuarios']);
-        } else {
-          this.flasher.error(respuesta?.resultado?.data || 'No se recibió una respuesta válida');
-        }
-      },
-      error => {
-        console.log(error);
-        this.flasher.error("Hubo un error, Intente más tarde o notifique al soporte técnico.");
+      if (this.isSubmitting) {
+        console.log('Ya hay una petición en curso. Espera a que se complete.');
+        return;
       }
-    );
-  } else {
-    this.flasher.error("El formulario no es válido. Por favor, complete todos los campos requeridos correctamente.");
-  }
+  
+      this.isSubmitting = true; // Deshabilitar el botón
+  
+      this.UsuariocrudService.UpdateUserService(this.FormAltaUsuario.value, this.id).pipe(
+        delay(1000) // Agregar un retraso de 1 segundo (1000 ms)
+      ).subscribe(
+        respuesta => {
+          if (respuesta?.resultado?.data?.res) {
+            this.isSubmitting = false; // Habilitar el botón
+            this.flasher.success(respuesta?.resultado?.data?.data);
+            this.router.navigate(['/usuarios']);
+          } else {
+            this.isSubmitting = false; // Habilitar el botón en caso de error
+            this.flasher.error(respuesta?.resultado?.data?.data || 'No se recibió una respuesta válida');
+          }
+        },
+        error => {
+          console.log(error);
+          this.isSubmitting = false; // Habilitar el botón en caso de error
+          this.flasher.error("Hubo un error, Intente más tarde o notifique al soporte técnico.");
+        }
+      );
+    } else {
+      this.flasher.error("El formulario no es válido. Por favor, complete todos los campos requeridos correctamente.");
+    }
   }
 
   area: any[] = [];
   loadArea(): void {
     this.AreaCrudService.GetAllAreaService().subscribe(
       (resultado: any) => {
-        this.area = resultado.resultado.data;
+        this.area = resultado?.resultado?.data;
       },
       (error: any) => {
         console.error('Error al cargar datos:', error);

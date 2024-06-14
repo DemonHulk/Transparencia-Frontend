@@ -4,7 +4,7 @@ import { UsuariocrudService } from '../../../../services/crud/usuariocrud.servic
 import { Table } from 'primeng/table';
 import { CryptoServiceService } from '../../../../services/cryptoService/crypto-service.service';
 import { AlertsServiceService } from '../../../../services/alerts/alerts-service.service';
-import { TooltipManager, Usuario } from '../../../../services/api-config';
+import { Usuario } from '../../../../services/api-config';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FechaService } from '../../../../services/format/fecha.service';
 
@@ -20,7 +20,7 @@ export class DetailsUsuarioComponent {
   listUsuarios: Usuario[] = [];
 
   constructor(
-    private sharedService: SharedValuesService,
+    public sharedService: SharedValuesService,
     private UsuariocrudService: UsuariocrudService,
     private FechaService: FechaService,
     private activateRoute: ActivatedRoute,
@@ -63,10 +63,12 @@ export class DetailsUsuarioComponent {
    GetOneUserService(id: any) {
     this.UsuariocrudService.GetOneUserService(id).subscribe(
       (respuesta: any) => {
-        this.data_user = respuesta.resultado.data[0];
-        this.listUsuarios = [respuesta.resultado.data[0]];
+        this.data_user = respuesta?.resultado?.data[0];
+        this.listUsuarios = [respuesta?.resultado?.data[0]];
         this.sharedService.changeTitle('Información detallada del usuario: ' + this.data_user?.nombre);
-        console.log(this.data_user);
+
+        //Indicar que todos los datos se han cargado
+        this.sharedService.setLoading(false);
       },
       error => {
         console.error('Ocurrió un error al obtener el usuario:', error);

@@ -60,12 +60,12 @@ export class Punto {
 }
 
 export class Usuario {
-  id_punto: string;
-  nombre: string;
-  apellido1: string;
-  apellido2: string;
-  correo: string;
-  activo: boolean;
+  id_punto!: string;
+  nombre!: string;
+  apellido1!: string;
+  apellido2!: string;
+  correo!: string;
+  activo!: boolean;
 
   constructor(
     id_punto: string,

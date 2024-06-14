@@ -1,228 +1,391 @@
-<div class="12/12 text-right my-5">
-  <ol class="flex items-center whitespace-nowrap">
-    <li class="inline-flex items-center">
-      <a class="flex items-center text-sm text-gray-500 hover:text-color-active focus:outline-none focus:text-color-active" routerLink="/usuarios">
-        Usuarios
-        <svg class="flex-shrink-0 mx-2 overflow-visible size-4 text-gray-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="m9 18 6-6-6-6"></path>
-        </svg>
-      </a>
-    </li>
-    <li class="inline-flex items-center text-sm font-semibold text-gray-800 truncate" aria-current="page">
-      Detalles usuario
-    </li>  </ol>
-</div>
-<div class="w-12/12">
-  <h3 class="my-2">Información completa</h3>
-</div>
-<div class="w-12/12 my-2 flex flex-wrap mx-4">
-  <div class="flex flex-col bg-white border shadow-sm rounded-xl lg:w-3/12 sm:w-12/12 md:w-12/12  w-full my-2 mx-auto">
-    <div class="bg-gray-100 border-b rounded-t-xl py-3 px-4 md:py-4 md:px-5">
-      <p class="mt-1 text-sm text-gray-500">
-        Área asignada
-      </p>
-    </div>
-    <div class="p-4 md:p-5">
-      <h3 class="text-lg font-bold text-gray-800">
-        {{ data_user?.nombre_area }}
-      </h3>
-    </div>
+<ng-container *ngIf="sharedService.loading$ | async; else content">
+  <!-- Skeleton BreadCrum -->
+  <div class="12/12 text-right my-5">
+    <ol class="flex items-center whitespace-nowrap">
+      <li class="inline-flex items-center">
+        <div class="flex items-center">
+          <div class="h-4 bg-gray-200 rounded-full w-24 animate-pulse"></div>
+          <svg class="flex-shrink-0 mx-2 overflow-visible size-4 text-gray-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m9 18 6-6-6-6"></path>
+          </svg>
+        </div>
+      </li>
+      <li class="inline-flex items-center">
+        <div class="h-4 bg-gray-200 rounded-full w-24 animate-pulse"></div>
+      </li>
+    </ol>
   </div>
 
-  <div class="flex flex-col bg-white border shadow-sm rounded-xl lg:w-3/12 sm:w-12/12 md:w-12/12  w-full my-2 mx-auto ">
-    <div class="bg-gray-100 border-b rounded-t-xl py-3 px-4 md:py-4 md:px-5">
-      <p class="mt-1 text-sm text-gray-500">
-        Fecha de creación
-      </p>
+  <!-- Skeleton Informacion de Usuario -->
+  <div>
+    <div class="w-12/12">
+      <div class="h-6 bg-gray-200 rounded-full w-32 animate-pulse"></div>
     </div>
-    <div class="p-4 md:p-5">
-      <h3 class="text-lg font-bold text-gray-800">
-        {{FormatearDate(data_user?.fecha_creacion)}}
-      </h3>
-    </div>
+    <div class="w-12/12 my-2 flex flex-wrap mx-4">
+      <!-- Esqueleto de carga -->
+      <div class="flex flex-col bg-white border shadow-sm rounded-xl lg:w-3/12 sm:w-12/12 md:w-12/12 w-full my-2 mx-auto">
+        <div class="bg-gray-100 border-b rounded-t-xl py-3 px-4 md:py-4 md:px-5">
+          <div class="h-6 bg-gray-200 rounded-full w-32 animate-pulse"></div>
+        </div>
+        <div class="p-4 md:p-5">
+          <div class="h-6 bg-gray-200 rounded-full w-32 animate-pulse"></div>
+        </div>
+      </div>
+    
+      <div class="flex flex-col bg-white border shadow-sm rounded-xl lg:w-3/12 sm:w-12/12 md:w-12/12 w-full my-2 mx-auto">
+        <div class="bg-gray-100 border-b rounded-t-xl py-3 px-4 md:py-4 md:px-5">
+          <div class="h-6 bg-gray-200 rounded-full w-32 animate-pulse"></div>
+        </div>
+        <div class="p-4 md:p-5">
+          <div class="h-6 bg-gray-200 rounded-full w-32 animate-pulse"></div>
+        </div>
+      </div>
+    
+      <div class="flex flex-col bg-white border shadow-sm rounded-xl lg:w-3/12 sm:w-12/12 md:w-12/12 w-full my-2 mx-auto">
+        <div class="bg-gray-100 border-b rounded-t-xl py-3 px-4 md:py-4 md:px-5">
+          <div class="h-6 bg-gray-200 rounded-full w-32 animate-pulse"></div>
+        </div>
+        <div class="p-4 md:p-5">
+          <div class="h-6 bg-gray-200 rounded-full w-32 animate-pulse"></div>
+        </div>
+      </div>
+  </div>
   </div>
 
-  <div class="flex flex-col bg-white border shadow-sm rounded-xl lg:w-3/12 sm:w-12/12 md:w-12/12  w-full my-2 mx-auto ">
-    <div class="bg-gray-100 border-b rounded-t-xl py-3 px-4 md:py-4 md:px-5">
-      <p class="mt-1 text-sm text-gray-500">
-        Última actualización
-      </p>
+  <!-- Skeleton Tabla -->
+  <div class="flex flex-col mb-5">
+    <div class="w-12/12 p-1">
+      <div class="h-6 bg-gray-200 rounded-full w-32 animate-pulse"></div>
     </div>
-    <div class="p-4 md:p-5">
-      <h3 class="text-lg font-bold text-gray-800">
-        {{FormatearDate(data_user?.fecha_actualizado)}}
-      </h3>
-    </div>
-  </div>
-</div>
-
-
-<div class="w-12/12">
-  <h3 class="text-2xl">Información personal</h3>
-</div>
-<div class="rounded-sm border border-stroke bg-white px-5 pb-2.5 pt-6 shadow-default sm:px-7.5 xl:pb-1 overflow-x-auto">
-  <div class="max-w-full">
-    <div class="flex flex-col mb-5" *ngIf="listUsuarios.length > 0">
-      <div class="-m-1.5 overflow-x-auto">
-        <div class="p-1.5 min-w-full inline-block align-middle">
-          <div class="border rounded-lg overflow-hidden my-2">
-            <p-table
-              [value]="listUsuarios"
-              [showCurrentPageReport]="true"
-              [globalFilterFields]="['nombre', 'apellido1', 'apellido2']"
-              [tableStyleClass]="'min-w-full divide-y'"
-              [resizableColumns]="true"
-            >
-              <ng-template pTemplate="header">
-                <tr class="divide-x divide-gray-200 bg-table-header-color rounded-lg">
-                  <th
-                    scope="col"
-                    class="px-6 py-3 text-start text-xs text-white uppercase bg-table-header-color"
-                    pSortableColumn="nombre"
-                  >
-                    <div class="flex">
-                      Nombre <p-sortIcon field="nombre"></p-sortIcon>
-                    </div>
-                  </th>
-                  <th
-                    scope="col"
-                    class="px-6 py-3 text-start text-xs text-white uppercase bg-table-header-color"
-                    pSortableColumn="apellido1"
-                  >
-                    <div class="flex">
-                      Apellido Paterno <p-sortIcon field="apellido1"></p-sortIcon>
-                    </div>
-                  </th>
-                  <th
-                    scope="col"
-                    class="px-6 py-3 text-start text-xs text-white uppercase bg-table-header-color"
-                    pSortableColumn="apellido2"
-                  >
-                    <div class="flex">
-                      Apellido Materno <p-sortIcon field="apellido2"></p-sortIcon>
-                    </div>
-                  </th>
-                </tr>
-              </ng-template>
-              <ng-template pTemplate="body" let-usuario>
-                <tr class="divide-x divide-gray-200">
-                  <td class="px-3 py-2 text-sm text-gray-800">
-                    {{ usuario.nombre }}
-                  </td>
-                  <td class="px-3 py-2 text-sm text-gray-800">
-                    {{ usuario.apellido1 }}
-                  </td>
-                  <td class="px-3 py-2 text-sm text-gray-800">
-                    {{ usuario.apellido2 }}
-                  </td>
-                </tr>
-              </ng-template>
-              <ng-template pTemplate="emptymessage">
-                <tr>
-                  <td colspan="3">No se encontraron resultados.</td>
-                </tr>
-              </ng-template>
-            </p-table>
+    <!-- Esqueleto de carga -->
+    <div class="rounded-sm border border-stroke bg-white px-5 pb-2.5 pt-6 shadow-default sm:px-7.5 xl:pb-1 overflow-x-auto">
+      <div class="max-w-full">
+        <div class="-m-1.5 overflow-x-auto">
+          <div class="p-1.5 min-w-full inline-block align-middle">
+            <div class="border rounded-lg overflow-hidden my-2">
+              <table class="min-w-full divide-y">
+                <thead>
+                  <tr class="divide-x divide-gray-200 bg-table-header-color rounded-lg">
+                    <th scope="col" class="px-6 py-3 text-start text-xs text-white uppercase bg-table-header-color">
+                      <div class="flex">
+                        <div class="h-3 bg-gray-200 rounded-full w-48 animate-pulse"></div>
+                      </div>
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-start text-xs text-white uppercase bg-table-header-color">
+                      <div class="flex">
+                        <div class="h-3 bg-gray-200 rounded-full w-48 animate-pulse"></div>
+                      </div>
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-start text-xs text-white uppercase bg-table-header-color">
+                      <div class="flex">
+                        <div class="h-3 bg-gray-200 rounded-full w-48 animate-pulse"></div>
+                      </div>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="divide-x divide-gray-200">
+                    <td class="px-3 py-2 text-sm">
+                      <div class="h-3 bg-gray-200 rounded-full w-48 animate-pulse"></div>
+                    </td>
+                    <td class="px-3 py-2 text-sm">
+                      <div class="h-3 bg-gray-200 rounded-full w-48 animate-pulse"></div>
+                    </td>
+                    <td class="px-3 py-2 text-sm">
+                      <div class="h-3 bg-gray-200 rounded-full w-48 animate-pulse"></div>
+                    </td>
+                  </tr>
+                  <tr class="divide-x divide-gray-200">
+                    <td class="px-3 py-2 text-sm">
+                      <div class="h-3 bg-gray-200 rounded-full w-48 animate-pulse"></div>
+                    </td>
+                    <td class="px-3 py-2 text-sm">
+                      <div class="h-3 bg-gray-200 rounded-full w-48 animate-pulse"></div>
+                    </td>
+                    <td class="px-3 py-2 text-sm">
+                      <div class="h-3 bg-gray-200 rounded-full w-48 animate-pulse"></div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="min-h-60 flex flex-col bg-white rounded-xl" *ngIf="listUsuarios.length === 0">
-      <div class="flex flex-auto flex-col justify-center items-center p-4 md:p-5">
-        <svg class="size-10 text-gray-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-          viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round"
-          stroke-linejoin="round">
-          <line x1="22" x2="2" y1="12" y2="12"></line>
-          <path
-            d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z">
-          </path>
-          <line x1="6" x2="6.01" y1="16" y2="16"></line>
-          <line x1="10" x2="10.01" y1="16" y2="16"></line>
-        </svg>
-        <p class="mt-2 text-sm text-gray-800">
-          No hay información disponible.
-        </p>
-      </div>
-    </div>
   </div>
-</div>
 
-
-<div class="w-12/12">
-  <h3 class="my-2">Información de contacto</h3>
-</div>
-<div class="rounded-sm border border-stroke bg-white px-5 pb-2.5 pt-6 shadow-default sm:px-7.5 xl:pb-1 overflow-x-auto">
-  <div class="max-w-full">
-    <div class="flex flex-col mb-5" *ngIf="listUsuarios.length > 0">
+  <!-- Skeleton Información de Contacto -->
+  <div class="flex flex-col mb-5">
+    <div class="w-12/12 p-1">
+      <div class="h-6 bg-gray-200 rounded-full w-32 animate-pulse"></div>
+    </div>
+    <div class="rounded-sm border border-stroke bg-white px-5 pb-2.5 pt-6 shadow-default sm:px-7.5 xl:pb-1 overflow-x-auto">
       <div class="-m-1.5 overflow-x-auto">
         <div class="p-1.5 min-w-full inline-block align-middle">
           <div class="border rounded-lg overflow-hidden my-2">
-            <p-table
-              [value]="listUsuarios"
-              [showCurrentPageReport]="true"
-              [globalFilterFields]="['correo', 'telefono']"
-              [tableStyleClass]="'min-w-full divide-y'"
-              [resizableColumns]="true"
-            >
-              <ng-template pTemplate="header">
+            <table class="min-w-full divide-y">
+              <thead>
                 <tr class="divide-x divide-gray-200 bg-table-header-color rounded-lg">
-                  <th
-                    scope="col"
-                    class="px-6 py-3 text-start text-xs text-white uppercase bg-table-header-color"
-                    pSortableColumn="correo"
-                  >
+                  <th scope="col" class="px-6 py-3 text-start text-xs text-white uppercase bg-table-header-color">
                     <div class="flex">
-                      Correo <p-sortIcon field="correo"></p-sortIcon>
+                      <div class="h-3 bg-gray-200 rounded-full w-48 animate-pulse"></div>
                     </div>
                   </th>
-                  <th
-                    scope="col"
-                    class="px-6 py-3 text-start text-xs text-white uppercase bg-table-header-color"
-                    pSortableColumn="telefono"
-                  >
+                  <th scope="col" class="px-6 py-3 text-start text-xs text-white uppercase bg-table-header-color">
                     <div class="flex">
-                      Teléfono <p-sortIcon field="telefono"></p-sortIcon>
+                      <div class="h-3 bg-gray-200 rounded-full w-48 animate-pulse"></div>
                     </div>
                   </th>
                 </tr>
-              </ng-template>
-              <ng-template pTemplate="body" let-usuario>
+              </thead>
+              <tbody>
                 <tr class="divide-x divide-gray-200">
-                  <td class="px-3 py-2 text-sm text-gray-800">
-                    {{ usuario.correo }}
+                  <td class="px-3 py-2 text-sm">
+                    <div class="h-3 bg-gray-200 rounded-full w-48 animate-pulse"></div>
                   </td>
-                  <td class="px-3 py-2 text-sm text-gray-800">
-                    {{ usuario.telefono }}
+                  <td class="px-3 py-2 text-sm">
+                    <div class="h-3 bg-gray-200 rounded-full w-48 animate-pulse"></div>
                   </td>
                 </tr>
-              </ng-template>
-              <ng-template pTemplate="emptymessage">
-                <tr>
-                  <td colspan="2">No se encontraron resultados.</td>
-                </tr>
-              </ng-template>
-            </p-table>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
     </div>
-    <div class="min-h-60 flex flex-col bg-white rounded-xl" *ngIf="listUsuarios.length === 0">
-      <div class="flex flex-auto flex-col justify-center items-center p-4 md:p-5">
-        <svg class="size-10 text-gray-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-          viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round"
-          stroke-linejoin="round">
-          <line x1="22" x2="2" y1="12" y2="12"></line>
-          <path
-            d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z">
-          </path>
-          <line x1="6" x2="6.01" y1="16" y2="16"></line>
-          <line x1="10" x2="10.01" y1="16" y2="16"></line>
-        </svg>
-        <p class="mt-2 text-sm text-gray-800">
-          No hay información disponible.
-        </p>
+  </div>
+
+</ng-container>
+
+<ng-template #content>
+  <!-- BreadCrum -->
+  <div class="12/12 text-right my-5">
+    <ol class="flex items-center whitespace-nowrap">
+      <li class="inline-flex items-center">
+        <a class="flex items-center text-sm text-gray-500 hover:text-color-active focus:outline-none focus:text-color-active" routerLink="/usuarios">
+          Usuarios
+          <svg class="flex-shrink-0 mx-2 overflow-visible size-4 text-gray-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m9 18 6-6-6-6"></path>
+          </svg>
+        </a>
+      </li>
+      <li class="inline-flex items-center text-sm font-semibold text-gray-800 truncate" aria-current="page">
+        Detalles usuario
+      </li>  
+    </ol>
+  </div>
+
+  <!-- Información de Usuario -->
+    <div class="w-12/12">
+      <h3 class="my-2">Información completa</h3>
+    </div>
+    <div class="w-12/12 my-2 flex flex-wrap mx-4">
+      <div class="flex flex-col bg-white border shadow-sm rounded-xl lg:w-3/12 sm:w-12/12 md:w-12/12 w-full my-2 mx-auto">
+        <div class="bg-gray-100 border-b rounded-t-xl py-3 px-4 md:py-4 md:px-5">
+          <p class="mt-1 text-sm text-gray-500">
+            Área asignada
+          </p>
+        </div>
+        <div class="p-4 md:p-5">
+          <h3 class="text-lg font-bold text-gray-800">
+            {{ data_user?.nombre_area }}
+          </h3>
+        </div>
+      </div>
+
+      <div class="flex flex-col bg-white border shadow-sm rounded-xl lg:w-3/12 sm:w-12/12 md:w-12/12 w-full my-2 mx-auto">
+        <div class="bg-gray-100 border-b rounded-t-xl py-3 px-4 md:py-4 md:px-5">
+          <p class="mt-1 text-sm text-gray-500">
+            Fecha de creación
+          </p>
+        </div>
+        <div class="p-4 md:p-5">
+          <h3 class="text-lg font-bold text-gray-800">
+            {{FormatearDate(data_user?.fecha_creacion)}}
+          </h3>
+        </div>
+      </div>
+
+      <div class="flex flex-col bg-white border shadow-sm rounded-xl lg:w-3/12 sm:w-12/12 md:w-12/12 w-full my-2 mx-auto">
+        <div class="bg-gray-100 border-b rounded-t-xl py-3 px-4 md:py-4 md:px-5">
+          <p class="mt-1 text-sm text-gray-500">
+            Última actualización
+          </p>
+        </div>
+        <div class="p-4 md:p-5">
+          <h3 class="text-lg font-bold text-gray-800">
+            {{FormatearDate(data_user?.fecha_actualizado)}}
+          </h3>
+        </div>
       </div>
     </div>
-  </div>
-</div>
+
+  <!-- Tabla de Usuario -->
+    <div class="w-12/12">
+      <h3 class="text-2xl">Información personal</h3>
+    </div>
+    <div class="rounded-sm border border-stroke bg-white px-5 pb-2.5 pt-6 shadow-default sm:px-7.5 xl:pb-1 overflow-x-auto">
+      <div class="max-w-full">
+        <div class="flex flex-col mb-5" *ngIf="listUsuarios.length > 0">
+          <div class="-m-1.5 overflow-x-auto">
+            <div class="p-1.5 min-w-full inline-block align-middle">
+              <div class="border rounded-lg overflow-hidden my-2">
+                <p-table
+                  [value]="listUsuarios"
+                  [showCurrentPageReport]="true"
+                  [globalFilterFields]="['nombre', 'apellido1', 'apellido2']"
+                  [tableStyleClass]="'min-w-full divide-y'"
+                  [resizableColumns]="true"
+                >
+                  <ng-template pTemplate="header">
+                    <tr class="divide-x divide-gray-200 bg-table-header-color rounded-lg">
+                      <th
+                        scope="col"
+                        class="px-6 py-3 text-start text-xs text-white uppercase bg-table-header-color"
+                        pSortableColumn="nombre"
+                      >
+                        <div class="flex">
+                          Nombre
+                        </div>
+                      </th>
+                      <th
+                        scope="col"
+                        class="px-6 py-3 text-start text-xs text-white uppercase bg-table-header-color"
+                        pSortableColumn="apellido1"
+                      >
+                        <div class="flex">
+                          Apellido Paterno
+                        </div>
+                      </th>
+                      <th
+                        scope="col"
+                        class="px-6 py-3 text-start text-xs text-white uppercase bg-table-header-color"
+                        pSortableColumn="apellido2"
+                      >
+                        <div class="flex">
+                          Apellido Materno
+                        </div>
+                      </th>
+                    </tr>
+                  </ng-template>
+                  <ng-template pTemplate="body" let-usuario>
+                    <tr class="divide-x divide-gray-200">
+                      <td class="px-3 py-2 text-sm text-gray-800">
+                        {{ usuario.nombre }}
+                      </td>
+                      <td class="px-3 py-2 text-sm text-gray-800">
+                        {{ usuario.apellido1 }}
+                      </td>
+                      <td class="px-3 py-2 text-sm text-gray-800">
+                        {{ usuario.apellido2 }}
+                      </td>
+                    </tr>
+                  </ng-template>
+                  <ng-template pTemplate="emptymessage">
+                    <tr>
+                      <td colspan="3">No se encontraron resultados.</td>
+                    </tr>
+                  </ng-template>
+                </p-table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="min-h-60 flex flex-col bg-white rounded-xl" *ngIf="listUsuarios.length === 0">
+          <div class="flex flex-auto flex-col justify-center items-center p-4 md:p-5">
+            <svg class="size-10 text-gray-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="22" x2="2" y1="12" y2="12"></line>
+              <path
+                d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z">
+              </path>
+              <line x1="6" x2="6.01" y1="16" y2="16"></line>
+              <line x1="10" x2="10.01" y1="16" y2="16"></line>
+            </svg>
+            <p class="mt-2 text-sm text-gray-800">
+              No hay información disponible.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  <!-- Información de Contacto -->
+    <div class="w-12/12">
+      <h3 class="my-2">Información de contacto</h3>
+    </div>
+    <div class="rounded-sm border border-stroke bg-white px-5 pb-2.5 pt-6 shadow-default sm:px-7.5 xl:pb-1 overflow-x-auto">
+      <div class="max-w-full">
+        <div class="flex flex-col mb-5" *ngIf="listUsuarios.length > 0">
+          <div class="-m-1.5 overflow-x-auto">
+            <div class="p-1.5 min-w-full inline-block align-middle">
+              <div class="border rounded-lg overflow-hidden my-2">
+                <p-table
+                  [value]="listUsuarios"
+                  [showCurrentPageReport]="true"
+                  [globalFilterFields]="['correo', 'telefono']"
+                  [tableStyleClass]="'min-w-full divide-y'"
+                  [resizableColumns]="true"
+                >
+                  <ng-template pTemplate="header">
+                    <tr class="divide-x divide-gray-200 bg-table-header-color rounded-lg">
+                      <th
+                        scope="col"
+                        class="px-6 py-3 text-start text-xs text-white uppercase bg-table-header-color"
+                        pSortableColumn="correo"
+                      >
+                        <div class="flex">
+                          Correo
+                        </div>
+                      </th>
+                      <th
+                        scope="col"
+                        class="px-6 py-3 text-start text-xs text-white uppercase bg-table-header-color"
+                        pSortableColumn="telefono"
+                      >
+                        <div class="flex">
+                          Teléfono 
+                        </div>
+                      </th>
+                    </tr>
+                  </ng-template>
+                  <ng-template pTemplate="body" let-usuario>
+                    <tr class="divide-x divide-gray-200">
+                      <td class="px-3 py-2 text-sm text-gray-800">
+                        {{ usuario?.correo }}
+                      </td>
+                      <td class="px-3 py-2 text-sm text-gray-800">
+                        {{ usuario?.telefono }}
+                      </td>
+                    </tr>
+                  </ng-template>
+                  <ng-template pTemplate="emptymessage">
+                    <tr>
+                      <td colspan="2">No se encontraron resultados.</td>
+                    </tr>
+                  </ng-template>
+                </p-table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="min-h-60 flex flex-col bg-white rounded-xl" *ngIf="listUsuarios.length === 0">
+          <div class="flex flex-auto flex-col justify-center items-center p-4 md:p-5">
+            <svg class="size-10 text-gray-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="22" x2="2" y1="12" y2="12"></line>
+              <path
+                d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z">
+              </path>
+              <line x1="6" x2="6.01" y1="16" y2="16"></line>
+              <line x1="10" x2="10.01" y1="16" y2="16"></line>
+            </svg>
+            <p class="mt-2 text-sm text-gray-800">
+              No hay información disponible.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+</ng-template>
 

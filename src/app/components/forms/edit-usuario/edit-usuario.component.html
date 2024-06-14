@@ -233,7 +233,7 @@
         'border-validator-error focus:border-validator-error focus:ring-validator-error': FormAltaUsuario.get('id_area')?.invalid && (FormAltaUsuario.get('id_area')?.dirty || FormAltaUsuario.get('id_area')?.touched)
         }">
         <option value="" selected>Selecciona una área</option>
-        <option *ngFor="let area of area" [value]="area.id_area">
+        <option *ngFor="let area of area" [value]="area?.id_area">
             {{ area.nombre_area }}
           </option>
       </select>
@@ -245,7 +245,7 @@
 
     <!-- Botón de enviar -->
     <div class="sm:col-span-2 flex justify-end">
-      <button type="submit"
+      <button type="submit" [disabled]="isSubmitting"
         class="items-center inline-flex justify-center py-2 px-6 border border-transparent shadow-sm text-sm font-medium rounded-md button-update">
         <i class="fas fa-save mx-1"></i>
       </button>
