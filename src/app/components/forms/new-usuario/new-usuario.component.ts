@@ -105,7 +105,7 @@ SaveUsuario(): any {
       respuesta => {
         console.log(respuesta)
         if (respuesta.resultado.res) {
-          this.flasher.success(respuesta.resultado.data);
+          this.flasher.success(respuesta.resultado.data.data);
           this.router.navigate(['/usuarios']);
         } else {
           this.flasher.error(respuesta.resultado.data);
@@ -125,7 +125,6 @@ loadArea(): void {
   this.AreaCrudService.GetAllAreaService().subscribe(
     (resultado: any) => {
       this.area = resultado.resultado.data;
-      console.log(this.area);
     },
     (error: any) => {
       console.error('Error al cargar datos:', error);
