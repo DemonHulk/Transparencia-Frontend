@@ -29,11 +29,11 @@ export class EditAreaComponent implements OnInit {
     this.FormAltaArea = this.formulario.group({
       nombreArea: ['',
         [
+          validarTextoNormal(), //Validación personalizada
           Validators.required,
           Validators.minLength(5),
           Validators.maxLength(100)
         ],
-        [validarTextoNormal()] // Aplica el validador personalizado
       ]
     });
   }
@@ -50,9 +50,6 @@ export class EditAreaComponent implements OnInit {
       this.router.navigateByUrl("/areas");
     }
     this.sharedService.changeTitle('Modificar área');
-    this.sharedService.loadScript("/assets/js/validations.js");
-
-
     this.GetOneAreaService(this.id);
 
   }

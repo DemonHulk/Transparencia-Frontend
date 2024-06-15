@@ -51,7 +51,7 @@ export class ListAreasComponent {
      */
     this.GetAllAreaService();
 
-
+ 
 
   }
 

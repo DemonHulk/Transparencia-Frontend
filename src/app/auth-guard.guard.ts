@@ -13,7 +13,6 @@ export class AuthGuardGuard {
 
     if (datosUsuarioJSON) {
       const userArea = datosUsuarioJSON.id_area;
-      console.log(userArea);
 
       const allowedAreas = route.data['allowedAreas'] || [];
       const openToAll = route.data['openToAll'] || false;

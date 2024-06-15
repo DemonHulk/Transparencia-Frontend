@@ -15,6 +15,27 @@ export class UsuariocrudService {
       return this.clientHttp.get(API_URL+"usuario/usuariosaccesoarea/" + id)
     }
     
-    
-    
+    InsertUsuarioService(formulario: any): Observable<any> {
+      return this.clientHttp.post(API_URL + "usuario", formulario);
+    }
+
+    GetUsuariosArea(){
+      return this.clientHttp.get(API_URL+"usuario")
+    }
+
+    DeleteUserService(id: any): Observable<any> {
+      return this.clientHttp.delete(API_URL + "usuario/" + id);
+    }
+  
+    ActivateUserService(id: any): Observable<any> {
+      return this.clientHttp.get(API_URL + "usuario/activar/" + id);
+    }
+
+    GetOneUserService(id:any){
+      return this.clientHttp.get(API_URL+"usuario/"+id);
+    }
+
+    UpdateUserService(formulario: any, id: any): Observable<any> {
+      return this.clientHttp.put(API_URL + "usuario/"+ id, formulario);
+    }
 }

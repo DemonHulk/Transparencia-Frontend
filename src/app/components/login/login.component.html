@@ -24,6 +24,12 @@
             class="py-3 border px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-primary-color focus:ring-primary-color disabled:opacity-50 disabled:pointer-events-none "
             placeholder="al05-033-0321@utdelacosta.edu.mx" />
         </div>
+        <div *ngIf="formularioLogin.get('correo')?.invalid && (formularioLogin.get('correo')?.dirty || formularioLogin.get('correo')?.touched)">
+          <div *ngIf="formularioLogin.get('correo')?.errors?.['required']" class="text-sm text-validator-error mt-1">Este campo es requerido.</div>
+          <div *ngIf="formularioLogin.get('correo')?.errors?.['minlength']" class="text-sm text-validator-error mt-1">El campo debe tener al menos 4 caracteres.</div>
+          <div *ngIf="formularioLogin.get('correo')?.errors?.['maxlength']" class="text-sm text-validator-error mt-1">El campo no puede exceder los 100 caracteres.</div>
+          <div *ngIf="formularioLogin.get('correo')?.errors?.['correoInvalido'] && !formularioLogin.get('correo')?.errors?.['minlength']"  class="text-sm text-validator-error mt-1">El dominio es utdelacosta.edu.mx.</div>
+        </div>
       </div>
       <div class="mt-4">
         <!-- Form Group -->
@@ -49,6 +55,11 @@
               </svg>
             </button>
           </div>
+        </div>
+        <div *ngIf="formularioLogin.get('contrasenia')?.invalid && (formularioLogin.get('contrasenia')?.dirty || formularioLogin.get('contrasenia')?.touched)">
+          <div *ngIf="formularioLogin.get('contrasenia')?.errors?.['required']" class="text-sm text-validator-error mt-1">Este campo es requerido.</div>
+          <div *ngIf="formularioLogin.get('contrasenia')?.errors?.['minlength']" class="text-sm text-validator-error mt-1">El campo debe tener al menos 6 caracteres.</div>
+          <div *ngIf="formularioLogin.get('contrasenia')?.errors?.['maxlength']" class="text-sm text-validator-error mt-1">El campo no puede exceder los 100 caracteres.</div>
         </div>
         <!-- End Form Group -->
       </div>

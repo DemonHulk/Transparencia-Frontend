@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AreaCrudService } from '../../../services/crud/areacrud.service';
 import { AlertsServiceService } from '../../../services/alerts/alerts-service.service';
-import {  validarTextoNormal } from '../../../services/api-config';
+import {  markFormGroupTouched, validarTextoNormal } from '../../../services/api-config';
 
 
 @Component({
@@ -26,11 +26,11 @@ export class NewAreaComponent {
     this.FormAltaArea = this.formulario.group({
       nombreArea: ['',
         [
+          validarTextoNormal(), //Validación personalizada
           Validators.required,
           Validators.minLength(5),
           Validators.maxLength(100)
         ],
-        [validarTextoNormal()] // Aplica el validador personalizado
       ]
     });
   }
@@ -49,13 +49,13 @@ export class NewAreaComponent {
        * @memberof SharedValuesService
        */
       this.sharedService.changeTitle('Registrar una nueva área');
-      this.sharedService.loadScript("/assets/js/validations.js");
 
 
   }
 
 
   SaveArea(): any {
+    markFormGroupTouched(this.FormAltaArea);
     if (this.FormAltaArea.valid) {
       this.AreaCrudService.InsertAreaService(this.FormAltaArea.value).subscribe(
         respuesta => {
