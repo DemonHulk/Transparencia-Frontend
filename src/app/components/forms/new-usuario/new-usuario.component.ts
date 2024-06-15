@@ -7,6 +7,7 @@ import { markFormGroupTouched, validarCorreoUTDelacosta, validarNombre, validarP
 import { UsuariocrudService } from '../../../services/crud/usuariocrud.service';
 import { AreaCrudService } from '../../../services/crud/areacrud.service';
 import { delay } from 'rxjs/operators';
+import { CryptoServiceService } from '../../../services/cryptoService/crypto-service.service';
 
 @Component({
   selector: 'app-new-usuario',
@@ -24,7 +25,7 @@ export class NewUsuarioComponent {
     private router: Router, // Inyecta el Router
     private flasher: AlertsServiceService,
     private AreaCrudService : AreaCrudService,
-
+    private CryptoServiceService: CryptoServiceService
   ) {
     this.FormAltaUsuario = this.formulario.group({
       nombre: ['',
@@ -99,6 +100,7 @@ ngOnInit(): void {
     this.loadArea();
 }
 
+
 SaveUsuario(): any {
   markFormGroupTouched(this.FormAltaUsuario);
   if (this.FormAltaUsuario.valid) {
@@ -106,15 +108,18 @@ SaveUsuario(): any {
       console.log('Ya hay una petición en curso. Espera a que se complete.');
       return;
     }
-
     this.isSubmitting = true; // Deshabilitar el botón
+    const encryptedData = this.CryptoServiceService.encryptData(JSON.stringify(this.FormAltaUsuario.value));
 
-    this.UsuariocrudService.InsertUsuarioService(this.FormAltaUsuario.value).pipe(
+    const data = {
+      data: encryptedData
+    };
+
+    this.UsuariocrudService.InsertUsuarioService(data).pipe(
       delay(1000) // Agregar un retraso de 1 segundo (1000 ms)
     ).subscribe(
       respuesta => {
         this.isSubmitting = false; // Habilitar el botón
-
         if (respuesta?.resultado?.data?.res) {
           this.flasher.success(respuesta?.resultado?.data?.data);
           this.router.navigate(['/usuarios']);
