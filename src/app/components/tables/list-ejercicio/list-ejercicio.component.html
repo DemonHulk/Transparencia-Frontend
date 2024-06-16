@@ -1,152 +1,689 @@
-<div class="12/12 text-right">
-  <button routerLink="/new-ejercicio" type="button"
-    class="py-3 my-2  px-4 inline-flex items-center button-secondary gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-primary-color text-white hover:bg-primary-color-90 disabled:opacity-50 disabled:pointer-events-none">
-    <i class="fa fa-plus" aria-hidden="true"></i>
-    Registrar Ejercicio
-  </button>
-</div>
-<div class="rounded-sm border border-stroke bg-white px-5 pb-2.5 pt-6 shadow-default   sm:px-7.5 xl:pb-1">
-  <div class="max-w-full overflow-x-auto">
-    <table class="w-full table-auto">
-      <thead>
-        <tr class="bg-table-header-color text-left ">
-          <th class="min-w-[220px] px-4 py-4 font-medium text-white  xl:pl-11">
-            Ejercicio
-          </th>
-          <th class="min-w-[150px] px-4 py-4 font-medium text-white ">
-            Fecha de creación
-          </th>
-          <th class="min-w-[120px] px-4 py-4 font-medium text-white ">
-            Estado
-          </th>
-          <th class="px-4 py-4 font-medium text-white ">
-            Acciones
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let punto of getNumbers()">
-          <td class="border-b border-[#eee] px-4 py-5 pl-9  xl:pl-11">
-            <p class="font-medium text-black ">202{{punto}}</p>
-          </td>
-          <td class="border-b border-[#eee] px-4 py-5 ">
-            <p class="text-black ">Enero 13,2023</p>
-          </td>
-          <td class="border-b border-[#eee] px-4 py-5 ">
-            <p class="inline-flex rounded-full bg-green-500 bg-opacity-10 px-3 py-1 text-sm font-medium text-green-500">
-              Activo
-            </p>
-            <p class="inline-flex rounded-full bg-red-500 bg-opacity-10 px-3 py-1 text-sm font-medium text-red-500">
-              Inactivo
-            </p>
-          </td>
-          <td class="border-b border-[#eee] px-4 py-5 ">
-            <div class="flex items-center space-x-3.5">
-              <button class="hover:text-primary" routerLink="/edit-ejercicio/{{punto}}">
-                <!-- User -->
-                <div class="hs-tooltip [--trigger:hover] sm:[--placement:right] inline-block">
-                  <div
-                    class="hs-tooltip-toggle max-w-xs p-3 flex items-center gap-x-3 bg-white border border-gray-200 rounded-xl shadow-sm">
+<div class="rounded-lg border border-stroke bg-white px-5 pb-2.5 pt-6 shadow-default   sm:px-7.5 xl:pb-1 mb-3 pointer-events-none" *ngIf="sharedService.loading$ | async; else content">
+  <div class="max-w-full ">
+    <div class="border-b border-gray-200 animate-pulse">
+      <nav class="flex space-x-1">
+        <button type="button" class="font-semibold border-color-active text-color-active py-4 px-1 inline-flex items-center gap-x-2 border-b-2 border-transparent text-sm whitespace-nowrap  hover:text-color-active focus:outline-none focus:text-color-active disabled:opacity-50 disabled:pointer-events-none active" >
+          <p class="h-2.5 bg-gray-200 rounded-full  w-20"></p>
 
-                    <i class="fas fa-edit    "></i>
-                    <!-- Popover Content -->
-                    <div
-                      class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible hidden opacity-0 transition-opacity absolute invisible z-10 max-w-xs w-full bg-white border border-gray-100 text-start rounded-xl shadow-md after:absolute after:top-0 after:-start-4 after:w-4 after:h-full"
-                      role="tooltip">
-                      <!-- Header -->
-                      <div class="py-3 px-4 border-b border-gray-200">
-                        <div class="flex items-center gap-x-3">
-                          <div class="grow">
-                            <h4 class="font-semibold text-gray-800">
-                              Editar
-                            </h4>
-                          </div>
-                        </div>
-                      </div>
-                      <ul class="py-3 px-4 space-y-1">
-                        <li>
-                          <div class="inline-flex items-center gap-x-3 text-sm text-gray-800">
-                            Actualizar la información del registro actual.
-                          </div>
-                        </li>
-                      </ul>
-                    </div>
-                    <!-- End Popover Content -->
+        </button>
+        <button type="button" class="py-4 px-1 inline-flex items-center gap-x-2 border-b-2 border-transparent text-sm whitespace-nowrap text-gray-500 hover:text-primary-color focus:outline-none focus:text-primary-color disabled:opacity-50 disabled:pointer-events-none">
+          <p class="h-2.5 bg-gray-200 rounded-full  w-20"></p>
+        </button>
+      </nav>
+    </div>
+    <div class="mt-3">
+      <div  >
+        <div class="flex flex-wrap  items-center">
+          <div class="flex flex-col lg:w-7/12 sm:w-12/12 md:w-12/12  w-full">
+            <div class="w-full">
+              <!-- SearchBox -->
+              <div class="relative w-full">
+                <div class="relative w-full animate-pulse">
+                  <div class="absolute inset-y-0 start-0 flex items-center pointer-events-none z-20 ps-3.5 w-full">
+                    <svg class="flex-shrink-0 size-4 text-gray-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="11" cy="11" r="8"></circle>
+                      <path d="m21 21-4.3-4.3"></path>
+                    </svg>
                   </div>
+                  <input class="py-3 animate-pulse ps-10 pe-4 block w-full border-input-bord-color rounded-lg text-sm focus:border-input-focus-color focus:ring-input-focus-color disabled:opacity-50 disabled:pointer-events-none" type="text" value="" data-hs-combo-box-input="">
                 </div>
-              </button>
-              <button class="hover:text-primary">
 
-                <!-- User -->
-                <div class="hs-tooltip [--trigger:hover] sm:[--placement:right] inline-block">
-                  <div
-                    class="hs-tooltip-toggle max-w-xs p-3 flex items-center gap-x-3 bg-white border border-gray-200 rounded-xl shadow-sm">
-
-                    <i class="fa fa-trash" aria-hidden="true"></i>
-                    <!-- Popover Content -->
-                    <div
-                      class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible hidden opacity-0 transition-opacity absolute invisible z-10 max-w-xs w-full bg-white border border-gray-100 text-start rounded-xl shadow-md after:absolute after:top-0 after:-start-4 after:w-4 after:h-full"
-                      role="tooltip">
-                      <!-- Header -->
-                      <div class="py-3 px-4 border-b border-gray-200">
-                        <div class="flex items-center gap-x-3">
-                          <div class="grow">
-                            <h4 class="font-semibold text-gray-800">
-                              Eliminar
-                            </h4>
-                          </div>
-                        </div>
-                      </div>
-                      <ul class="py-3 px-4 space-y-1">
-                        <li>
-                          <div class="inline-flex items-center gap-x-3 text-sm text-gray-800">
-                            Eliminar el registro indica desaparecer la información relacionada a este registro.
-                          </div>
-                        </li>
-                      </ul>
-                    </div>
-                    <!-- End Popover Content -->
-                  </div>
+                <!-- SearchBox Dropdown -->
+                <div class="absolute z-50 w-full bg-white border border-gray-200 rounded-lg" style="display: none;" data-hs-combo-box-output="">
+                  <div class="max-h-72 rounded-b-lg overflow-hidden overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300" data-hs-combo-box-output-items-wrapper=""></div>
                 </div>
-              </button>
-              <button class="hover:text-primary">
-
-                <!-- User -->
-                <div class="hs-tooltip [--trigger:hover] sm:[--placement:right] inline-block">
-                  <div
-                    class="hs-tooltip-toggle max-w-xs p-3 flex items-center gap-x-3 bg-white border border-gray-200 rounded-xl shadow-sm">
-
-                    <i class="fa-solid fa-arrow-rotate-left"></i>
-                    <!-- Popover Content -->
-                    <div
-                      class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible hidden opacity-0 transition-opacity absolute invisible z-10 max-w-xs w-full bg-white border border-gray-100 text-start rounded-xl shadow-md after:absolute after:top-0 after:-start-4 after:w-4 after:h-full"
-                      role="tooltip">
-                      <!-- Header -->
-                      <div class="py-3 px-4 border-b border-gray-200">
-                        <div class="flex items-center gap-x-3">
-                          <div class="grow">
-                            <h4 class="font-semibold text-gray-800">
-                              Reactivar
-                            </h4>
-                          </div>
-                        </div>
-                      </div>
-                      <ul class="py-3 px-4 space-y-1">
-                        <li>
-                          <div class="inline-flex items-center gap-x-3 text-sm text-gray-800">
-                            Volver a activar el registro regresando con este toda la información relacionada.
-                          </div>
-                        </li>
-                      </ul>
-                    </div>
-                    <!-- End Popover Content -->
-                  </div>
-                </div>
-              </button>
+                <!-- End SearchBox Dropdown -->
+              </div>
+              <!-- End SearchBox -->
             </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+          </div>
+          <div class="flex flex-col lg:w-5/12 sm:w-12/12 md:w-5/12 text-right w-full">
+            <div class="w-full">
+              <button type="button"
+            class="py-3 my-2  px-4 inline-flex  button-secondary items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-primary-color text-white hover:bg-primary-color-90 disabled:opacity-50 disabled:pointer-events-none">
+            <i class="fa fa-plus animate-pulse" aria-hidden="true"></i>
+            <p class="h-2.5 bg-gray-200 rounded-full  w-28 animate-pulse"></p>
+          </button>
+            </div>
+          </div>
+        </div>
+        <div class="flex flex-col mb-5">
+          <div class="-m-1.5 overflow-x-auto">
+            <div class="p-1.5 min-w-full inline-block align-middle">
+              <div class="border rounded-lg overflow-hidden my-2">
+                <table class="min-w-full divide-y table-bordered">
+                  <thead class="bg-table-header-color ">
+                    <tr class="divide-x divide-gray-200 animate-pulse">
+                      <th scope="col" class="px-6 py-3 text-start text-xs text-white uppercase">
+                        <p class="h-2.5 bg-gray-200 rounded-full  w-48"></p>
+                      </th>
+                      <th scope="col" class="px-6 py-3 text-start text-xs text-white uppercase">
+                        <p class="h-2.5 bg-gray-200 rounded-full  w-48"></p>
+                      </th>
+                      <th scope="col" class="px-6 py-3 text-start text-xs text-white uppercase">
+                        <p class="h-2.5 bg-gray-200 rounded-full  w-48"></p>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-gray-200 animate-pulse" >
+                    <tr class="divide-x divide-gray-200">
+                      <td class="px-3 py-2 whitespace-nowrap text-sm font-medium text-gray-800 items-center">
+                        <p class="h-2.5 bg-gray-200 rounded-full  w-48"></p>
+                      </td>
+                      <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-800">
+                        <p class="h-2 bg-gray-200 rounded-full  max-w-[360px] mb-2.5"></p>
+                      </td>
+                      <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-800">
+                        <p class="h-2 bg-gray-200 rounded-full  max-w-[360px] mb-2.5"></p>
+                      </td>
+                    </tr>
+                    <tr class="divide-x divide-gray-200">
+                      <td class="px-3 py-2 whitespace-nowrap text-sm font-medium text-gray-800 items-center">
+                        <p class="h-2.5 bg-gray-200 rounded-full  w-48"></p>
+                      </td>
+                      <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-800">
+                        <p class="h-2 bg-gray-200 rounded-full  max-w-[360px] mb-2.5"></p>
+                      </td>
+                      <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-800">
+                        <p class="h-2 bg-gray-200 rounded-full  max-w-[360px] mb-2.5"></p>
+                      </td>
+                    </tr>
+                    <tr class="divide-x divide-gray-200">
+                      <td class="px-3 py-2 whitespace-nowrap text-sm font-medium text-gray-800 items-center">
+                        <p class="h-2.5 bg-gray-200 rounded-full  w-48"></p>
+                      </td>
+                      <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-800">
+                        <p class="h-2 bg-gray-200 rounded-full  max-w-[360px] mb-2.5"></p>
+                      </td>
+                      <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-800">
+                        <p class="h-2 bg-gray-200 rounded-full  max-w-[360px] mb-2.5"></p>
+                      </td>
+                    </tr>
+                    <tr class="divide-x divide-gray-200">
+                      <td class="px-3 py-2 whitespace-nowrap text-sm font-medium text-gray-800 items-center">
+                        <p class="h-2.5 bg-gray-200 rounded-full  w-48"></p>
+                      </td>
+                      <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-800">
+                        <p class="h-2 bg-gray-200 rounded-full  max-w-[360px] mb-2.5"></p>
+                      </td>
+                      <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-800">
+                        <p class="h-2 bg-gray-200 rounded-full  max-w-[360px] mb-2.5"></p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
+<ng-template #content>
+  <div
+  class="rounded-lg border border-stroke bg-white px-5 pb-2.5 pt-6 shadow-default sm:px-7.5 xl:pb-1 my-2"
+
+>
+  <div class="max-w-full">
+    <div class="border-b border-gray-200">
+      <nav class="flex space-x-1" aria-label="Tabs" role="tablist">
+        <button
+          type="button"
+          class="hs-tab-active:font-semibold hs-tab-active:border-color-active hs-tab-active:text-color-active py-4 px-1 inline-flex items-center gap-x-2 border-b-2 border-transparent text-sm whitespace-nowrap text-gray-500 hover:text-color-active focus:outline-none focus:text-color-active disabled:opacity-50 disabled:pointer-events-none active"
+          id="tabs-with-icons-item-1"
+          data-hs-tab="#tabs-with-icons-1"
+          aria-controls="tabs-with-icons-1"
+          role="tab"
+        >
+          Todos
+        </button>
+        <button
+          type="button"
+          class="hs-tab-active:font-semibold hs-tab-active:border-color-active hs-tab-active:text-color-active py-4 px-1 inline-flex items-center gap-x-2 border-b-2 border-transparent text-sm whitespace-nowrap text-gray-500 hover:text-color-active focus:outline-none focus:text-color-active disabled:opacity-50 disabled:pointer-events-none"
+          id="tabs-with-icons-item-2"
+          data-hs-tab="#tabs-with-icons-2"
+          aria-controls="tabs-with-icons-2"
+          role="tab"
+        >
+          Papelera
+        </button>
+      </nav>
+    </div>
+
+    <div class="mt-3">
+      <div
+        id="tabs-with-icons-1"
+        role="tabpanel"
+        aria-labelledby="tabs-with-icons-item-1"
+      >
+      <ng-container *ngIf="ListActiveEjercicios?.length === 0">
+        <div class="min-h-60 flex flex-col bg-white rounded-xl">
+          <div
+            class="flex flex-auto flex-col justify-center items-center p-4 md:p-5"
+          >
+            <svg
+              class="size-10 text-gray-500"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <line x1="22" x2="2" y1="12" y2="12"></line>
+              <path
+                d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"
+              ></path>
+              <line x1="6" x2="6.01" y1="16" y2="16"></line>
+              <line x1="10" x2="10.01" y1="16" y2="16"></line>
+            </svg>
+            <p class="mt-2 text-sm text-gray-800">
+              No hay información disponible.
+            </p>
+          </div>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="ListActiveEjercicios?.length! > 0">
+        <div class="flex flex-wrap items-center">
+          <div class="flex flex-col lg:w-7/12 sm:w-12/12 md:w-7/12 w-full">
+            <div class="w-full">
+              <!-- SearchBox -->
+              <div class="relative w-full">
+                <div class="relative w-full">
+                  <div
+                    class="absolute inset-y-0 start-0 flex items-center pointer-events-none z-20 ps-3.5 w-full"
+                  >
+                    <svg
+                      class="flex-shrink-0 size-4 text-gray-400"
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <circle cx="11" cy="11" r="8"></circle>
+                      <path d="m21 21-4.3-4.3"></path>
+                    </svg>
+                  </div>
+                  <input
+                    (input)="filterGlobalActive($event)"
+                    class="py-3 ps-10 pe-4 block w-full border-input-bord-color rounded-lg text-sm focus:border-input-focus-color focus:ring-input-focus-color disabled:opacity-50 disabled:pointer-events-none"
+                    type="text"
+                    placeholder="Ingresa tu busqueda"
+                    value=""
+                    data-hs-combo-box-input=""
+                  />
+                </div>
+
+                <!-- SearchBox Dropdown -->
+                <div
+                  class="absolute z-50 w-full bg-white border border-gray-200 rounded-lg"
+                  style="display: none"
+                  data-hs-combo-box-output=""
+                >
+                  <div
+                    class="max-h-72 rounded-b-lg overflow-hidden overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300"
+                    data-hs-combo-box-output-items-wrapper=""
+                  ></div>
+                </div>
+                <!-- End SearchBox Dropdown -->
+              </div>
+              <!-- End SearchBox -->
+            </div>
+          </div>
+          <div
+            class="flex flex-col lg:w-5/12 sm:w-12/12 md:w-5/12 text-right w-full"
+          >
+            <div class="w-full">
+              <button
+                routerLink="/new-ejercicio"
+                type="button"
+                class="py-3 my-2 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent button-secondary text-white hover:bg-primary-color-90 disabled:opacity-50 disabled:pointer-events-none"
+              >
+                <i class="fa fa-plus" aria-hidden="true"></i>
+                Registrar Ejercicio
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="flex flex-col mb-5">
+          <div class="-m-1.5 overflow-x-auto">
+            <div class="p-1.5 min-w-full inline-block align-middle">
+              <div class="border rounded-lg overflow-hidden my-2">
+                <p-table
+                  #dtActive
+                  [value]="ListActiveEjercicios"
+                  [paginator]="true"
+                  [rows]="5"
+                  currentPageReportTemplate="Mostrando {first} al {last} de {totalRecords} registros"
+                  [showCurrentPageReport]="true"
+                  [globalFilterFields]="['ejercicio', 'fecha_string']"
+                  [tableStyleClass]="'min-w-full divide-y'"
+                  [resizableColumns]="true"
+                >
+                  <ng-template pTemplate="header">
+                    <tr
+                      class="divide-x divide-gray-200 bg-table-header-color rounded-lg"
+                    >
+                      <th
+                        scope="col"
+                        class="px-6 py-3 text-start text-xs text-white uppercase bg-table-header-color"
+                        pSortableColumn="ejercicio"
+                      >
+                        <div class="flex">
+                          Ejercicio <p-sortIcon field="ejercicio"></p-sortIcon>
+                        </div>
+                      </th>
+                      <th
+                        scope="col"
+                        class="px-6 py-3 text-start text-xs text-white uppercase bg-table-header-color"
+                        pSortableColumn="fecha_string"
+                      >
+                        <div class="flex text-white">
+                          Fecha de creación
+                          <p-sortIcon field="fecha_string"></p-sortIcon>
+                        </div>
+                      </th>
+                      <th
+                        scope="col"
+                        class="px-6 py-3 text-start text-xs text-white uppercase bg-table-header-color"
+                      >
+                        <div class="flex">Acciones</div>
+                      </th>
+                    </tr>
+                  </ng-template>
+                  <ng-template pTemplate="body" let-ejercicio>
+                    <tr class="divide-x divide-gray-200">
+                      <td class="px-3 py-2 text-sm text-gray-800">
+                        <p class="font-medium text-black">
+                          {{ ejercicio.ejercicio }}
+                        </p>
+                      </td>
+                      <td class="px-3 py-2 text-sm text-gray-800">
+                        {{ ejercicio.fecha_string }}
+                      </td>
+                      <td class="px-3 py-2 text-sm text-gray-800">
+                        <div class="flex items-center space-x-3.5">
+                          <button
+                            routerLink="/edit-ejercicio/{{ encriptarId(ejercicio.id_ejercicio) }}"
+                            (mouseenter)="mostrar($event.target)"
+                            (mouseleave)="mostrar($event.target)"
+                            class="hover:text-primary"
+                          >
+                            <!-- User -->
+                            <div
+                              class="hs-tooltip [--trigger:hover] sm:[--placement:top] inline-block"
+                            >
+                              <div
+                                class="hs-tooltip-toggle max-w-xs p-3 flex items-center gap-x-3 bg-white border border-gray-200 rounded-xl shadow-sm"
+                              >
+                                <i class="fas fa-edit"></i>
+                                <!-- Popover Content -->
+                                <div
+                                  class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible hidden opacity-0 transition-opacity absolute invisible z-10 max-w-xs w-full bg-white border border-gray-100 text-start rounded-xl shadow-md after:absolute after:top-0 after:-start-4 after:w-4 after:h-full"
+                                  role="tooltip"
+                                >
+                                  <!-- Header -->
+                                  <div
+                                    class="py-3 px-4 border-b border-gray-200"
+                                  >
+                                    <div class="flex items-center gap-x-3">
+                                      <div class="grow">
+                                        <h4 class="font-semibold text-gray-800">
+                                          Modificar
+                                        </h4>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <ul class="py-3 px-4 space-y-1">
+                                    <li>
+                                      <div
+                                        class="inline-flex items-center gap-x-3 text-sm text-gray-800 text-wrap"
+                                      >
+                                        Actualizar la información del registro
+                                        actual.
+                                      </div>
+                                    </li>
+                                  </ul>
+                                </div>
+                                <!-- End Popover Content -->
+                              </div>
+                            </div>
+                          </button>
+                          <button
+                            (click)="DeleteEjercicio(ejercicio.id_ejercicio)"
+                            *ngIf="ejercicio.activo"
+                            (mouseenter)="mostrar($event.target)"
+                            (mouseleave)="mostrar($event.target)"
+                            class="hover:text-primary"
+                          >
+                            <!-- User -->
+                            <div
+                              class="hs-tooltip [--trigger:hover] sm:[--placement:top] inline-block"
+                            >
+                              <div
+                                class="hs-tooltip-toggle max-w-xs p-3 flex items-center gap-x-3 bg-white border border-gray-200 rounded-xl shadow-sm"
+                              >
+                                <i class="fa fa-trash" aria-hidden="true"></i>
+                                <!-- Popover Content -->
+                                <div
+                                  class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible hidden opacity-0 transition-opacity absolute invisible z-10 max-w-xs w-full bg-white border border-gray-100 text-start rounded-xl shadow-md after:absolute after:top-0 after:-start-4 after:w-4 after:h-full"
+                                  role="tooltip"
+                                >
+                                  <!-- Header -->
+                                  <div
+                                    class="py-3 px-4 border-b border-gray-200"
+                                  >
+                                    <div class="flex items-center gap-x-3">
+                                      <div class="grow">
+                                        <h4 class="font-semibold text-gray-800">
+                                          Eliminar
+                                        </h4>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <ul class="py-3 px-4 space-y-1">
+                                    <li>
+                                      <div
+                                        class="inline-flex items-center gap-x-3 text-sm text-gray-800 text-wrap"
+                                      >
+                                        Eliminar el registro indica desaparecer
+                                        la información relacionada a este
+                                        registro.
+                                      </div>
+                                    </li>
+                                  </ul>
+                                </div>
+                                <!-- End Popover Content -->
+                              </div>
+                            </div>
+                          </button>
+                          <button
+                            *ngIf="!ejercicio.activo"
+                            (click)="ActivateEjercicio(ejercicio.id_ejercicio)"
+                            (mouseenter)="mostrar($event.target)"
+                            (mouseleave)="mostrar($event.target)"
+                            class="hover:text-primary"
+                          >
+                            <!-- User -->
+                            <div
+                              class="hs-tooltip [--trigger:hover] sm:[--placement:top] inline-block"
+                            >
+                              <div
+                                class="hs-tooltip-toggle max-w-xs p-3 flex items-center gap-x-3 bg-white border border-gray-200 rounded-xl shadow-sm"
+                              >
+                                <i class="fa-solid fa-arrow-rotate-left"></i>
+                                <!-- Popover Content -->
+                                <div
+                                  class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible hidden opacity-0 transition-opacity absolute invisible z-10 max-w-xs w-full bg-white border border-gray-100 text-start rounded-xl shadow-md after:absolute after:top-0 after:-start-4 after:w-4 after:h-full"
+                                  role="tooltip"
+                                >
+                                  <!-- Header -->
+                                  <div
+                                    class="py-3 px-4 border-b border-gray-200"
+                                  >
+                                    <div class="flex items-center gap-x-3">
+                                      <div class="grow">
+                                        <h4 class="font-semibold text-gray-800">
+                                          Reactivar
+                                        </h4>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <ul class="py-3 px-4 space-y-1">
+                                    <li>
+                                      <div
+                                        class="inline-flex items-center gap-x-3 text-sm text-gray-800 text-wrap"
+                                      >
+                                        Volver a activar el registro regresando
+                                        con este toda la información
+                                        relacionada.
+                                      </div>
+                                    </li>
+                                  </ul>
+                                </div>
+                                <!-- End Popover Content -->
+                              </div>
+                            </div>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  </ng-template>
+                  <ng-template pTemplate="emptymessage">
+                    <tr>
+                      <td colspan="4">No se encontraron resultados.</td>
+                    </tr>
+                  </ng-template>
+                </p-table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+      </div>
+      <div
+        id="tabs-with-icons-2"
+        class="hidden"
+        role="tabpanel"
+        aria-labelledby="tabs-with-icons-item-2"
+      >
+      <ng-container *ngIf="ListInactiveEjercicios?.length === 0">
+        <div class="min-h-60 flex flex-col bg-white rounded-xl">
+          <div
+            class="flex flex-auto flex-col justify-center items-center p-4 md:p-5"
+          >
+            <svg
+              class="size-10 text-gray-500"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <line x1="22" x2="2" y1="12" y2="12"></line>
+              <path
+                d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"
+              ></path>
+              <line x1="6" x2="6.01" y1="16" y2="16"></line>
+              <line x1="10" x2="10.01" y1="16" y2="16"></line>
+            </svg>
+            <p class="mt-2 text-sm text-gray-800">
+              No hay información disponible.
+            </p>
+          </div>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="ListInactiveEjercicios?.length! > 0">
+        <div class="flex flex-wrap items-center">
+          <div class="flex flex-col lg:w-7/12 sm:w-12/12 md:w-7/12 w-full">
+            <div class="w-full">
+              <!-- SearchBox -->
+              <div class="relative w-full">
+                <div class="relative w-full">
+                  <div
+                    class="absolute inset-y-0 start-0 flex items-center pointer-events-none z-20 ps-3.5 w-full"
+                  >
+                    <svg
+                      class="flex-shrink-0 size-4 text-gray-400"
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <circle cx="11" cy="11" r="8"></circle>
+                      <path d="m21 21-4.3-4.3"></path>
+                    </svg>
+                  </div>
+                  <input
+                    (input)="filterGlobalInactive($event)"
+                    class="py-3 ps-10 pe-4 block w-full border-input-bord-color rounded-lg text-sm focus:border-input-focus-color focus:ring-input-focus-color disabled:opacity-50 disabled:pointer-events-none"
+                    type="text"
+                    placeholder="Ingresa tu busqueda"
+                    value=""
+                    data-hs-combo-box-input=""
+                  />
+                </div>
+
+                <!-- SearchBox Dropdown -->
+                <div
+                  class="absolute z-50 w-full bg-white border border-gray-200 rounded-lg"
+                  style="display: none"
+                  data-hs-combo-box-output=""
+                >
+                  <div
+                    class="max-h-72 rounded-b-lg overflow-hidden overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300"
+                    data-hs-combo-box-output-items-wrapper=""
+                  ></div>
+                </div>
+                <!-- End SearchBox Dropdown -->
+              </div>
+              <!-- End SearchBox -->
+            </div>
+          </div>
+        </div>
+        <div class="flex flex-col mb-5">
+          <div class="-m-1.5 overflow-x-auto">
+            <div class="p-1.5 min-w-full inline-block align-middle">
+              <div class="border rounded-lg overflow-hidden my-2">
+                <p-table
+                  #dtInactive
+                  [value]="ListInactiveEjercicios"
+                  [paginator]="true"
+                  [rows]="5"
+                  currentPageReportTemplate="Mostrando {first} al {last} de {totalRecords} registros"
+                  [showCurrentPageReport]="true"
+                  [globalFilterFields]="['ejercicio', 'fecha_string']"
+                  [tableStyleClass]="'min-w-full divide-y'"
+                  [resizableColumns]="true"
+                >
+                  <ng-template pTemplate="header">
+                    <tr
+                      class="divide-x divide-gray-200 bg-table-header-color rounded-lg"
+                    >
+                      <th
+                        scope="col"
+                        class="px-6 py-3 text-start text-xs text-white uppercase bg-table-header-color"
+                        pSortableColumn="ejercicio"
+                      >
+                        <div class="flex">
+                          Ejercicio <p-sortIcon field="ejercicio"></p-sortIcon>
+                        </div>
+                      </th>
+                      <th
+                        scope="col"
+                        class="px-6 py-3 text-start text-xs text-white uppercase bg-table-header-color"
+                        pSortableColumn="fecha_string"
+                      >
+                        <div class="flex text-white">
+                          Fecha de creación
+                          <p-sortIcon field="fecha_string"></p-sortIcon>
+                        </div>
+                      </th>
+                      <th
+                        scope="col"
+                        class="px-6 py-3 text-start text-xs text-white uppercase bg-table-header-color"
+                      >
+                        <div class="flex">Acciones</div>
+                      </th>
+                    </tr>
+                  </ng-template>
+                  <ng-template pTemplate="body" let-ejercicio>
+                    <tr class="divide-x divide-gray-200">
+                      <td class="px-3 py-2 text-sm text-gray-800">
+                        <p class="font-medium text-black">
+                          {{ ejercicio.ejercicio }}
+                        </p>
+                      </td>
+                      <td class="px-3 py-2 text-sm text-gray-800">
+                        {{ ejercicio.fecha_string }}
+                      </td>
+                      <td class="px-3 py-2 text-sm text-gray-800">
+                        <div class="flex items-center space-x-3.5">
+                          <button
+                            *ngIf="!ejercicio.activo"
+                            (click)="ActivateEjercicio(ejercicio.id_ejercicio)"
+                            (mouseenter)="mostrar($event.target)"
+                            (mouseleave)="mostrar($event.target)"
+                            class="hover:text-primary"
+                          >
+                            <!-- User -->
+                            <div
+                              class="hs-tooltip [--trigger:hover] sm:[--placement:top] inline-block"
+                            >
+                              <div
+                                class="hs-tooltip-toggle max-w-xs p-3 flex items-center gap-x-3 bg-white border border-gray-200 rounded-xl shadow-sm"
+                              >
+                                <i class="fa-solid fa-arrow-rotate-left"></i>
+                                <!-- Popover Content -->
+                                <div
+                                  class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible hidden opacity-0 transition-opacity absolute invisible z-10 max-w-xs w-full bg-white border border-gray-100 text-start rounded-xl shadow-md after:absolute after:top-0 after:-start-4 after:w-4 after:h-full"
+                                  role="tooltip"
+                                >
+                                  <!-- Header -->
+                                  <div
+                                    class="py-3 px-4 border-b border-gray-200"
+                                  >
+                                    <div class="flex items-center gap-x-3">
+                                      <div class="grow">
+                                        <h4 class="font-semibold text-gray-800">
+                                          Reactivar
+                                        </h4>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <ul class="py-3 px-4 space-y-1">
+                                    <li>
+                                      <div
+                                        class="inline-flex items-center gap-x-3 text-sm text-gray-800 text-wrap"
+                                      >
+                                        Volver a activar el registro regresando
+                                        con este toda la información
+                                        relacionada.
+                                      </div>
+                                    </li>
+                                  </ul>
+                                </div>
+                                <!-- End Popover Content -->
+                              </div>
+                            </div>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  </ng-template>
+                  <ng-template pTemplate="emptymessage">
+                    <tr>
+                      <td colspan="4">No se encontraron resultados.</td>
+                    </tr>
+                  </ng-template>
+                </p-table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+      </div>
+    </div>
+  </div>
+</div>
+</ng-template>
+
+

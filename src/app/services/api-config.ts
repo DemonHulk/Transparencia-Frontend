@@ -88,6 +88,14 @@ export class Usuario {
   }
 }
 
+export class Ejercicio {
+  id_ejercicio!:string;
+  ejercicio!: string;
+  fecha_creacion!: string;
+  fecha_actualizado!: string;
+  activo!: boolean;
+}
+
 
 
 import { AbstractControl, FormGroup, ValidationErrors, ValidatorFn } from '@angular/forms';
