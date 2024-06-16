@@ -43,6 +43,9 @@ import { InputTextModule } from 'primeng/inputtext';
 import { PaginatorModule } from 'primeng/paginator';
 import { OverlayModule } from 'primeng/overlay';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ListEjercicioComponent } from './components/tables/list-ejercicio/list-ejercicio.component';
+import { NewEjercicioComponent } from './components/forms/new-ejercicio/new-ejercicio.component';
+import { EditEjercicioComponent } from './components/forms/edit-ejercicio/edit-ejercicio.component';
 
 @NgModule({
   declarations: [
@@ -78,6 +81,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     NewUsuarioComponent,
     EditUsuarioComponent,
     NewWordComponent,
+    ListEjercicioComponent,
+    NewEjercicioComponent,
+    EditEjercicioComponent,
 
   ],
   imports: [
