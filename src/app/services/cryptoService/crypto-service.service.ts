@@ -48,8 +48,6 @@ export class CryptoServiceService {
     return decoded[0];
   }
 
-  
-
   // Metodo de encriptacion de prueba
   encryptData(data: string): string {
     const iv = CryptoJS.lib.WordArray.random(16); // Genera un IV aleatorio
@@ -63,50 +61,25 @@ export class CryptoServiceService {
     const encryptedBase64 = encrypted.ciphertext.toString(CryptoJS.enc.Base64);
     return ivBase64 + ':' + encryptedBase64; // Usa ':' como delimitador
   }
+  
+  decryptData(encryptedData: string): any {
+    const [ivBase64, encryptedBase64] = encryptedData.split(':'); // Separa el IV y los datos cifrados
+    const iv = CryptoJS.enc.Base64.parse(ivBase64); // Convierte el IV de base64 a WordArray
+    const encrypted = CryptoJS.lib.CipherParams.create({
+      ciphertext: CryptoJS.enc.Base64.parse(encryptedBase64) // Convierte los datos cifrados de base64 a WordArray
+    });
 
-  // decryptData(encryptedData: string): any {
-  //   const [ivBase64, encryptedBase64] = encryptedData.split(':');
-  //   const iv = CryptoJS.enc.Base64.parse(ivBase64);
-  //   const encrypted = CryptoJS.enc.Base64.parse(encryptedBase64);
-  
-  //   // Convertir la clave secreta a WordArray desde hexadecimal
-  //   const keyHex = CryptoJS.enc.Hex.parse(this.secretKey);
-  
-  //   // Desencriptar
-  //   const decrypted = CryptoJS.AES.decrypt(
-  //     { ciphertext: encrypted, iv: iv },
-  //     keyHex,
-  //     { mode: CryptoJS.mode.CBC, padding: CryptoJS.pad.Pkcs7 }
-  //   );
-  
-  //   const decryptedData = decrypted.toString(CryptoJS.enc.Utf8);
-  //   return JSON.parse(decryptedData);
-  // }
+    const decrypted = CryptoJS.AES.decrypt(
+      encrypted,
+      CryptoJS.enc.Utf8.parse(this.secretKey),
+      {
+        iv: iv,
+        mode: CryptoJS.mode.CBC,
+        padding: CryptoJS.pad.Pkcs7
+      }
+    );
 
-  decryptData(encryptedResponse: string): string {
-    try {
-      const [ivBase64, encryptedDataBase64] = encryptedResponse.split(':');
-      const iv = CryptoJS.enc.Base64.parse(ivBase64); // Convertir IV a WordArray
-      const encryptedData = CryptoJS.enc.Base64.parse(encryptedDataBase64); // Convertir datos encriptados a WordArray
-      
-      const decrypted = CryptoJS.AES.decrypt(
-        { ciphertext: encryptedData } as any,
-        CryptoJS.enc.Hex.parse(this.secretKey), // Convertir clave a WordArray desde hexadecimal
-        {
-          iv: iv,
-          mode: CryptoJS.mode.CBC,
-          padding: CryptoJS.pad.Pkcs7
-        }
-      );
-      
-      const decryptedData = decrypted.toString(CryptoJS.enc.Utf8);
-      return JSON.parse(decryptedData);
-    } catch (error) {
-      console.error('Error during decryption:', error);
-      throw new Error('Failed to decrypt data');
-    }
+    return JSON.parse(decrypted.toString(CryptoJS.enc.Utf8)); // Devuelve los datos descifrados como string
   }
-  
-  
 
 }

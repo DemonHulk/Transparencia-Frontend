@@ -57,7 +57,7 @@ export class EditAreaComponent implements OnInit {
   GetOneAreaService(id: any) {
     this.AreaCrudService.GetOneAreaService(id).subscribe(respuesta => {
       if (respuesta) { // Verificar si respuesta no es undefined
-        this.NombreArea = respuesta;
+        this.NombreArea = this.encodeService.decryptData(respuesta);
         console.log(this.NombreArea);
         // Asigna el valor al FormControl nombreArea
         this.FormAltaArea.patchValue({
@@ -75,11 +75,15 @@ export class EditAreaComponent implements OnInit {
 
   UpdateAreaService(): void {
     if (this.FormAltaArea.valid) {
-    this.AreaCrudService.UpdateAreaService(this.FormAltaArea.value, this.id).subscribe(
+      const encryptedData = this.encodeService.encryptData(JSON.stringify(this.FormAltaArea.value));
+
+      const data = {
+        data: encryptedData
+      };
+    this.AreaCrudService.UpdateAreaService(data, this.id).subscribe(
       respuesta => {
-        console.log(respuesta);
-        if (respuesta?.resultado?.res) { // Verificar si respuesta.resultado.res no es undefined
-          this.flasher.success(respuesta.resultado.data);
+        if (this.encodeService.decryptData(respuesta)?.resultado?.res) { // Verificar si respuesta.resultado.res no es undefined
+          this.flasher.success(this.encodeService.decryptData(respuesta)?.resultado?.data);
           this.router.navigate(['/areas']);
         } else {
           this.flasher.error(respuesta?.resultado?.data || 'No se recibió una respuesta válida');

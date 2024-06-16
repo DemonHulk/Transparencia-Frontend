@@ -27,7 +27,7 @@ export class ListAreasComponent {
     private AreaCrudService: AreaCrudService,
     private FechaService: FechaService,
     private flasher: AlertsServiceService,
-    private encondeService: CryptoServiceService
+    private encodeService: CryptoServiceService
   ) {
     this.isLoading= true;
   }
@@ -56,13 +56,14 @@ export class ListAreasComponent {
   }
 
   encriptarId(id:any){
-    return this.encondeService.encodeID(id);
+    return this.encodeService.encodeID(id);
   }
 
 
   GetAllAreaService() {
     this.AreaCrudService.GetAllAreaService().subscribe((respuesta: any) => {
-      this.ListAreas = respuesta.resultado.data.map((area: Area) => this.addFormattedDate(area));
+
+      this.ListAreas = this.encodeService.decryptData(respuesta).resultado.data.map((area: Area) => this.addFormattedDate(area));
       // Filtrar las áreas activas
       this.ListActiveAreas = this.ListAreas.filter(area => area.activo == true);
 
@@ -90,7 +91,7 @@ export class ListAreasComponent {
       if (confirmado) {
         this.AreaCrudService.DeleteAreaService(id).subscribe(respuesta => {
           this.GetAllAreaService();
-          this.flasher.success(respuesta.resultado.data);
+          this.flasher.success(this.encodeService.decryptData(respuesta).resultado.data);
         });
       }
     });
@@ -101,7 +102,7 @@ export class ListAreasComponent {
       if (confirmado) {
         this.AreaCrudService.ActivateAreaService(id).subscribe(respuesta => {
           this.GetAllAreaService();
-          this.flasher.success(respuesta.resultado.data);
+          this.flasher.success(this.encodeService.decryptData(respuesta).resultado.data);
         });
       }
     });

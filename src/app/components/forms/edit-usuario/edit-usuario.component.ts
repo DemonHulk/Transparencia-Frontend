@@ -20,7 +20,7 @@ export class EditUsuarioComponent implements OnInit {
   FormAltaUsuario: FormGroup;
   data_user: any;
   isSubmitting: boolean = false;
-
+  response: any;
   constructor(
     private sharedService: SharedValuesService,
     private activateRoute: ActivatedRoute,
@@ -121,7 +121,7 @@ ngOnInit(): void {
   GetOneUserService(id: any) {
     this.UsuariocrudService.GetOneUserService(id).subscribe(
       (respuesta: any) => {
-        this.data_user = respuesta?.resultado?.data[0];
+        this.data_user = this.encodeService.decryptData(respuesta).resultado.data[0];
         this.sharedService.changeTitle('Modificar usuario: ' + this.data_user?.nombre);
 
         this.FormAltaUsuario.patchValue({
@@ -150,17 +150,23 @@ ngOnInit(): void {
 
       this.isSubmitting = true; // Deshabilitar el botón
 
-      this.UsuariocrudService.UpdateUserService(this.FormAltaUsuario.value, this.id).pipe(
+      const encryptedData = this.encodeService.encryptData(JSON.stringify(this.FormAltaUsuario.value));
+
+      const data = {
+        data: encryptedData
+      };
+
+      this.UsuariocrudService.UpdateUserService(data, this.id).pipe(
         delay(1000) // Agregar un retraso de 1 segundo (1000 ms)
       ).subscribe(
         respuesta => {
-          if (respuesta?.resultado?.data?.res) {
+          if (this.encodeService.decryptData(respuesta)?.resultado?.res) {
             this.isSubmitting = false; // Habilitar el botón
-            this.flasher.success(respuesta?.resultado?.data?.data);
+            this.flasher.success(this.encodeService.decryptData(respuesta)?.resultado?.data);
             this.router.navigate(['/usuarios']);
           } else {
             this.isSubmitting = false; // Habilitar el botón en caso de error
-            this.flasher.error(respuesta?.resultado?.data?.data || 'No se recibió una respuesta válida');
+            this.flasher.error(this.encodeService.decryptData(respuesta)?.resultado?.data?.data || 'No se recibió una respuesta válida');
           }
         },
         error => {
@@ -178,7 +184,7 @@ ngOnInit(): void {
   loadArea(): void {
     this.AreaCrudService.GetAllAreaService().subscribe(
       (resultado: any) => {
-        this.area = resultado?.resultado?.data;
+        this.area = this.encodeService.decryptData(resultado).resultado?.data;
       },
       (error: any) => {
         console.error('Error al cargar datos:', error);

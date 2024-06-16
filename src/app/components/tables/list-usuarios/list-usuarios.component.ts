@@ -23,7 +23,7 @@ export class ListUsuariosComponent {
 
   constructor(
     public sharedService: SharedValuesService,
-    private encondeService: CryptoServiceService,
+    private encodeService: CryptoServiceService,
     private UsuariocrudService : UsuariocrudService,
     private flasher: AlertsServiceService
   ) {
@@ -48,19 +48,22 @@ export class ListUsuariosComponent {
   }
 
   encriptarId(id:any){
-    return this.encondeService.encodeID(id);
+    return this.encodeService.encodeID(id);
   }
+
 
   GetAllUserArea() {
     this.UsuariocrudService.GetUsuariosArea().subscribe((respuesta: any) => {
-      this.ListUser = respuesta.resultado.data
-  
-      // Filtrar los usuarios activas
-      this.ListActiveUser = this.ListUser.filter(usuario => usuario.activo == true);
-  
-      // Filtrar los usuarios inactivas
-      this.ListInactiveUser = this.ListUser.filter(usuario => usuario.activo == false);
-  
+      
+      /* Enviamos los datos de la respuesta al servicio de desencriptar*/ 
+      this.ListUser = this.encodeService.decryptData(respuesta).resultado.data;
+
+      // // Filtrar los usuarios activas
+       this.ListActiveUser = this.ListUser.filter(usuario => usuario.activo == true);
+
+      // // Filtrar los usuarios inactivas
+       this.ListInactiveUser = this.ListUser.filter(usuario => usuario.activo == false);
+
       //Indicar que todos los datos se han cargado
       setTimeout(() => {
         this.sharedService.setLoading(false);
@@ -68,6 +71,8 @@ export class ListUsuariosComponent {
       }, 500);
     });
   }
+
+  
   
   getNombreCompleto(usuario: any): string {
     return `${usuario.nombre} ${usuario.apellido1} ${usuario.apellido2}`;
@@ -110,7 +115,7 @@ export class ListUsuariosComponent {
       if (confirmado) {
         this.UsuariocrudService.DeleteUserService(id).subscribe(respuesta => {
           this.GetAllUserArea();
-          this.flasher.success(respuesta.resultado.data);
+          this.flasher.success(this.encodeService.decryptData(respuesta).resultado.data);
         });
       }
     });
@@ -121,7 +126,7 @@ export class ListUsuariosComponent {
       if (confirmado) {
         this.UsuariocrudService.ActivateUserService(id).subscribe(respuesta => {
           this.GetAllUserArea();
-          this.flasher.success(respuesta.resultado.data);
+          this.flasher.success(this.encodeService.decryptData(respuesta).resultado.data);
         });
       }
     });

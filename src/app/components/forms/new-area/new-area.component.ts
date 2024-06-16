@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { AreaCrudService } from '../../../services/crud/areacrud.service';
 import { AlertsServiceService } from '../../../services/alerts/alerts-service.service';
 import {  markFormGroupTouched, validarTextoNormal } from '../../../services/api-config';
-
+import { CryptoServiceService } from '../../../services/cryptoService/crypto-service.service';
 
 @Component({
   selector: 'app-new-area',
@@ -21,7 +21,8 @@ export class NewAreaComponent {
     public formulario: FormBuilder,
     private AreaCrudService: AreaCrudService,
     private router: Router, // Inyecta el Router
-    private flasher: AlertsServiceService
+    private flasher: AlertsServiceService,
+    private CryptoServiceService: CryptoServiceService
   ) {
     this.FormAltaArea = this.formulario.group({
       nombreArea: ['',
@@ -57,14 +58,19 @@ export class NewAreaComponent {
   SaveArea(): any {
     markFormGroupTouched(this.FormAltaArea);
     if (this.FormAltaArea.valid) {
-      this.AreaCrudService.InsertAreaService(this.FormAltaArea.value).subscribe(
+      
+      const encryptedData = this.CryptoServiceService.encryptData(JSON.stringify(this.FormAltaArea.value));
+
+      const data = {
+        data: encryptedData
+      };
+      this.AreaCrudService.InsertAreaService(data).subscribe(
         respuesta => {
-          console.log(respuesta)
-          if (respuesta.resultado.res) {
-            this.flasher.success(respuesta.resultado.data);
+          if (this.CryptoServiceService.decryptData(respuesta)?.resultado?.res) {
+            this.flasher.success(this.CryptoServiceService.decryptData(respuesta)?.resultado?.data);
             this.router.navigate(['/areas']);
           } else {
-            this.flasher.error(respuesta.resultado.data);
+            this.flasher.error(this.CryptoServiceService.decryptData(respuesta)?.resultado?.data);
           }
         },
         error => {

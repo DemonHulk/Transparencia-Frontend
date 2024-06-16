@@ -14,7 +14,7 @@ export class PuntosAreasCrudService {
 
     /*extrae los puntos de acceso de un area en especifico*/
     GetPuntosAccesoArea(id:any): Observable<any> {
-      return this.clientHttp.get(API_URL+"puntosareas/allpuntosaccesoarea/" + id)
+      return this.clientHttp.get(API_URL+"puntosareas/allpuntosaccesoarea/" + id, { responseType: 'text' })
     }
 
     InsertOrActivate_PuntoArea(formulario: any): Observable<any> {

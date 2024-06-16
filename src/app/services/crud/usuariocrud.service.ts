@@ -12,30 +12,30 @@ export class UsuariocrudService {
 
     /*extrae los usuarios que tienen un area un especifico activa*/
     GetUsuariosAccesoArea(id:any): Observable<any> {
-      return this.clientHttp.get(API_URL+"usuario/usuariosaccesoarea/" + id)
+      return this.clientHttp.get(API_URL+"usuario/usuariosaccesoarea/" + id, { responseType: 'text' })
     }
     
     InsertUsuarioService(formulario: any): Observable<any> {
-      return this.clientHttp.post(API_URL + "usuario", formulario);
+      return this.clientHttp.post(API_URL + "usuario", formulario, { responseType: 'text' });
     }
 
     GetUsuariosArea(){
-      return this.clientHttp.get(API_URL+"usuario")
+      return this.clientHttp.get(API_URL+"usuario",{ responseType: 'text' })
     }
 
     DeleteUserService(id: any): Observable<any> {
-      return this.clientHttp.delete(API_URL + "usuario/" + id);
+      return this.clientHttp.delete(API_URL + "usuario/" + id, { responseType: 'text' });
     }
   
     ActivateUserService(id: any): Observable<any> {
-      return this.clientHttp.get(API_URL + "usuario/activar/" + id);
+      return this.clientHttp.get(API_URL + "usuario/activar/" + id, { responseType: 'text' });
     }
 
     GetOneUserService(id:any){
-      return this.clientHttp.get(API_URL+"usuario/"+id);
+      return this.clientHttp.get(API_URL+"usuario/"+id,{ responseType: 'text' });
     }
 
     UpdateUserService(formulario: any, id: any): Observable<any> {
-      return this.clientHttp.put(API_URL + "usuario/"+ id, formulario);
+      return this.clientHttp.put(API_URL + "usuario/"+ id, formulario, { responseType: 'text' });
     }
 }
