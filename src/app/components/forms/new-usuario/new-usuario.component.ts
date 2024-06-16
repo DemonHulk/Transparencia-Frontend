@@ -120,12 +120,12 @@ SaveUsuario(): any {
     ).subscribe(
       respuesta => {
         this.isSubmitting = false; // Habilitar el botón
-        if (this.CryptoServiceService.decryptData(respuesta)?.resultado?.res) {
-          this.flasher.success(this.CryptoServiceService.decryptData(respuesta)?.resultado?.data);
+        if (this.CryptoServiceService.decryptData(respuesta)?.resultado?.data?.res) {
+          this.flasher.success(this.CryptoServiceService.decryptData(respuesta)?.resultado?.data?.data);
           this.router.navigate(['/usuarios']);
         } else {
           console.log('isSubmitting:', this.isSubmitting);
-          this.flasher.error(this.CryptoServiceService.decryptData(respuesta)?.resultado?.data);
+          this.flasher.error(this.CryptoServiceService.decryptData(respuesta)?.resultado?.data?.data);
         }
       },
       error => {
@@ -143,7 +143,7 @@ area: any[] = [];
 loadArea(): void {
   this.AreaCrudService.GetAllAreaService().subscribe(
     (resultado: any) => {
-      this.area = this.CryptoServiceService.decryptData(resultado)?.resultado?.data;
+      this.area = this.CryptoServiceService.decryptData(resultado)?.resultado?.data?.data;
     },
     (error: any) => {
       console.error('Error al cargar datos:', error);

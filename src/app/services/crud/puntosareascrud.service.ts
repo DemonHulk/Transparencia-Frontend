@@ -18,11 +18,11 @@ export class PuntosAreasCrudService {
     }
 
     InsertOrActivate_PuntoArea(formulario: any): Observable<any> {
-      return this.clientHttp.post(API_URL + "puntosareas/insertoractivate_puntoArea", formulario);
+      return this.clientHttp.post(API_URL + "puntosareas/insertoractivate_puntoArea", formulario, { responseType: 'text' });
     }
 
     Desactivate_PuntoArea(formulario: any): Observable<any> {
-      return this.clientHttp.post(API_URL + "puntosareas/desactivate_puntoarea", formulario);
+      return this.clientHttp.post(API_URL + "puntosareas/desactivate_puntoarea", formulario, { responseType: 'text' });
     }
     
 

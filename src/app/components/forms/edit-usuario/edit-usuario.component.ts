@@ -122,7 +122,7 @@ ngOnInit(): void {
     const encryptedID = this.encodeService.encryptData(JSON.stringify(this.id));
     this.UsuariocrudService.GetOneUserService(encryptedID).subscribe(
       (respuesta: any) => {
-        this.data_user = this.encodeService.decryptData(respuesta).resultado.data[0];
+        this.data_user = this.encodeService.decryptData(respuesta).resultado.data?.data[0];
         this.sharedService.changeTitle('Modificar usuario: ' + this.data_user?.nombre);
 
         this.FormAltaUsuario.patchValue({
@@ -162,13 +162,13 @@ ngOnInit(): void {
         delay(1000) // Agregar un retraso de 1 segundo (1000 ms)
       ).subscribe(
         respuesta => {
-          if (this.encodeService.decryptData(respuesta)?.resultado?.res) {
+          if (this.encodeService.decryptData(respuesta)?.resultado?.data?.res) {
             this.isSubmitting = false; // Habilitar el botón
-            this.flasher.success(this.encodeService.decryptData(respuesta)?.resultado?.data);
+            this.flasher.success(this.encodeService.decryptData(respuesta)?.resultado?.data?.data);
             this.router.navigate(['/usuarios']);
           } else {
             this.isSubmitting = false; // Habilitar el botón en caso de error
-            this.flasher.error(this.encodeService.decryptData(respuesta)?.resultado?.data || 'No se recibió una respuesta válida');
+            this.flasher.error(this.encodeService.decryptData(respuesta)?.resultado?.data?.data || 'No se recibió una respuesta válida');
           }
         },
         error => {
@@ -186,7 +186,7 @@ ngOnInit(): void {
   loadArea(): void {
     this.AreaCrudService.GetAllAreaService().subscribe(
       (resultado: any) => {
-        this.area = this.encodeService.decryptData(resultado).resultado?.data;
+        this.area = this.encodeService.decryptData(resultado).resultado?.data?.data;
       },
       (error: any) => {
         console.error('Error al cargar datos:', error);

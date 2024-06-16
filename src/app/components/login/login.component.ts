@@ -76,7 +76,7 @@ VerificarUser(): any {
   this.loginService.VerificarUser(data).subscribe(
     (response) => {
       // Asumiendo que response.resultado ya es un objeto
-      const resultado = this.CryptoServiceService.decryptData(response)?.resultado;
+      const resultado = this.CryptoServiceService.decryptData(response)?.resultado?.data;
       if (resultado?.res) {
         // Pasamos los datos a json y encriptamos los datos
         const encryptedUser = CryptoJS.AES.encrypt(JSON.stringify(resultado.user), 'UZ4"(fa$P9g4ñ').toString();

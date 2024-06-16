@@ -61,7 +61,7 @@ export class ListAreasComponent {
   GetAllAreaService() {
     this.AreaCrudService.GetAllAreaService().subscribe((respuesta: any) => {
       /* Desencriptamos la respuesta que nos retorna el backend */ 
-      this.ListAreas = this.encodeService.decryptData(respuesta).resultado.data.map((area: Area) => this.addFormattedDate(area));
+      this.ListAreas = this.encodeService.decryptData(respuesta).resultado?.data?.data.map((area: Area) => this.addFormattedDate(area));
       // Filtrar las áreas activas
       this.ListActiveAreas = this.ListAreas.filter(area => area.activo == true);
 
@@ -91,7 +91,7 @@ export class ListAreasComponent {
         const encryptedID = this.encodeService.encryptData(JSON.stringify(id));
         this.AreaCrudService.DeleteAreaService(encryptedID).subscribe(respuesta => {
           this.GetAllAreaService();
-          this.flasher.success(this.encodeService.decryptData(respuesta).resultado.data);
+          this.flasher.success(this.encodeService.decryptData(respuesta).resultado?.data?.data);
         });
       }
     });
@@ -104,7 +104,7 @@ export class ListAreasComponent {
         const encryptedID = this.encodeService.encryptData(JSON.stringify(id));
         this.AreaCrudService.ActivateAreaService(encryptedID).subscribe(respuesta => {
           this.GetAllAreaService();
-          this.flasher.success(this.encodeService.decryptData(respuesta).resultado.data);
+          this.flasher.success(this.encodeService.decryptData(respuesta).resultado?.data?.data);
         });
       }
     });
