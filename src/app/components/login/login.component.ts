@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 import * as CryptoJS from 'crypto-js';
 import { AlertsServiceService } from '../../services/alerts/alerts-service.service';
 import { validarCorreoUTDelacosta, validarPassword } from '../../services/api-config';
-
+import { CryptoServiceService } from '../../services/cryptoService/crypto-service.service';
 
 @Component({
   selector: 'app-login',
@@ -22,7 +22,8 @@ export class LoginComponent {
     public formulario: FormBuilder,
     private loginService: LoginService,
     private router: Router,
-    private flasher: AlertsServiceService
+    private flasher: AlertsServiceService,
+    private CryptoServiceService: CryptoServiceService
   ){
 
     this.formularioLogin = this.formulario.group({
@@ -64,17 +65,23 @@ VerificarUser(): any {
     this.flasher.error("Error Datos Faltantes");
     return;
   }
+  // Encriptamos los datos del formulario
+  const encryptedData = this.CryptoServiceService.encryptData(JSON.stringify(this.formularioLogin.value));
 
+  const data = {
+    data: encryptedData
+  };
+  
   // verificarUser es el metodo creado en el servicio, que es donde enviaremos los datos del formulario y conectarnos al backend
-  this.loginService.VerificarUser(this.formularioLogin.value).subscribe(
+  this.loginService.VerificarUser(data).subscribe(
     (response) => {
       // Asumiendo que response.resultado ya es un objeto
-      const resultado = response.resultado;
-      if (resultado.res) {
+      const resultado = this.CryptoServiceService.decryptData(response)?.resultado;
+      if (resultado?.res) {
         // Pasamos los datos a json y encriptamos los datos
         const encryptedUser = CryptoJS.AES.encrypt(JSON.stringify(resultado.user), 'UZ4"(fa$P9g4ñ').toString();
         localStorage.setItem('user', encryptedUser);
-        this.flasher.success(resultado.message);
+        this.flasher.success(resultado?.message);
 
         this.sharedService.login();
         this.router.navigateByUrl('/articulo33');
