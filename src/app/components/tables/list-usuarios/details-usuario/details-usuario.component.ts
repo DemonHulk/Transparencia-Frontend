@@ -1,9 +1,7 @@
 import { Component } from '@angular/core';
 import { SharedValuesService } from '../../../../services/shared-values.service';
 import { UsuariocrudService } from '../../../../services/crud/usuariocrud.service';
-import { Table } from 'primeng/table';
 import { CryptoServiceService } from '../../../../services/cryptoService/crypto-service.service';
-import { AlertsServiceService } from '../../../../services/alerts/alerts-service.service';
 import { Usuario } from '../../../../services/api-config';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FechaService } from '../../../../services/format/fecha.service';
@@ -24,7 +22,6 @@ export class DetailsUsuarioComponent {
     private UsuariocrudService: UsuariocrudService,
     private FechaService: FechaService,
     private activateRoute: ActivatedRoute,
-    private flasher: AlertsServiceService,
     private encodeService: CryptoServiceService,
     private router: Router
   ) {
@@ -61,14 +58,20 @@ export class DetailsUsuarioComponent {
 
    /* Extraer los datos del usuario que se esta visualizando el detalle */
    GetOneUserService(id: any) {
-    this.UsuariocrudService.GetOneUserService(id).subscribe(
+    const encryptedID = this.encodeService.encryptData(JSON.stringify(this.id));
+    this.UsuariocrudService.GetOneUserService(encryptedID).subscribe(
       (respuesta: any) => {
-        this.data_user = respuesta?.resultado?.data[0];
-        this.listUsuarios = [respuesta?.resultado?.data[0]];
+
+        /* Enviamos los datos de la respuesta al servicio para desencripatarla */
+        this.data_user = this.encodeService.decryptData(respuesta).resultado?.data?.data[0];
+        this.listUsuarios = [this.encodeService.decryptData(respuesta).resultado?.data?.data[0]];
         this.sharedService.changeTitle('Información detallada del usuario: ' + this.data_user?.nombre);
 
-        //Indicar que todos los datos se han cargado
-        this.sharedService.setLoading(false);
+        /*Indicar que todos los datos se han cargado */
+        setTimeout(() => {
+          this.sharedService.setLoading(false);
+          window.HSStaticMethods.autoInit();
+        }, 500);
       },
       error => {
         console.error('Ocurrió un error al obtener el usuario:', error);

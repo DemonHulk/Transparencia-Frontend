@@ -10,7 +10,7 @@
       </a>
     </li>
     <li class="inline-flex items-center text-sm font-semibold text-gray-800 truncate" aria-current="page">
-      Área {{data_area?.resultado?.data?.nombre_area}}
+      Área {{data_area?.resultado?.data?.data.nombre_area}}
     </li>  </ol>
 </div>
 <div class="w-12/12">
@@ -25,7 +25,7 @@
     </div>
     <div class="p-4 md:p-5">
       <h3 class="text-lg font-bold text-gray-800">
-        {{data_area?.resultado?.data?.nombre_area}}
+        {{data_area?.resultado?.data?.data?.nombre_area}}
       </h3>
     </div>
   </div>
@@ -38,7 +38,7 @@
     </div>
     <div class="p-4 md:p-5">
       <h3 class="text-lg font-bold text-gray-800">
-        {{FormatearDate(data_area?.resultado?.data?.fecha_creacion)}}
+        {{FormatearDate(data_area?.resultado?.data?.data?.fecha_creacion)}}
       </h3>
     </div>
   </div>
@@ -51,7 +51,7 @@
     </div>
     <div class="p-4 md:p-5">
       <h3 class="text-lg font-bold text-gray-800">
-        {{FormatearDate(data_area?.resultado?.data?.fecha_actualizado)}}
+        {{FormatearDate(data_area?.resultado?.data?.data?.fecha_actualizado)}}
       </h3>
     </div>
   </div>

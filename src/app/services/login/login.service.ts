@@ -12,7 +12,7 @@ export class LoginService {
 
   // Función para el formulario de inicio de sesion
   VerificarUser(formulario: any): Observable<any> {
-    return this.clientHttp.post(API_URL + "verificarUser", formulario);
+    return this.clientHttp.post(API_URL + "verificarUser", formulario, { responseType: 'text' });
   }
   
   // Función para cerrar sesión

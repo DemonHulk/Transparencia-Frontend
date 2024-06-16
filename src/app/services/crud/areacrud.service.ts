@@ -12,28 +12,27 @@ export class AreaCrudService {
   constructor(private clientHttp:HttpClient) { }
 
   GetAllAreaService(){
-    return this.clientHttp.get(API_URL+"area")
+    return this.clientHttp.get(API_URL+"area", { responseType: 'text' })
   }
 
   GetOneAreaService(id:any){
-    return this.clientHttp.get(API_URL+"area/"+id);
+    return this.clientHttp.get(API_URL+"area/"+id, { responseType: 'text' });
   }
 
-
   InsertAreaService(formulario: any): Observable<any> {
-    return this.clientHttp.post(API_URL + "area", formulario);
+    return this.clientHttp.post(API_URL + "area", formulario, { responseType: 'text' });
   }
 
   UpdateAreaService(formulario: any, id: any): Observable<any> {
-    return this.clientHttp.put(API_URL + "area/"+ id, formulario);
+    return this.clientHttp.put(API_URL + "area/"+ id, formulario, { responseType: 'text' });
   }
   
   DeleteAreaService(id: any): Observable<any> {
-    return this.clientHttp.delete(API_URL + "area/" + id);
+    return this.clientHttp.delete(API_URL + "area/" + id, { responseType: 'text' });
   }
 
   ActivateAreaService(id: any): Observable<any> {
-    return this.clientHttp.get(API_URL + "area/activar/" + id);
+    return this.clientHttp.get(API_URL + "areaAct/" + id, { responseType: 'text' });
   }
 
 

@@ -77,10 +77,11 @@ export class DetailsAreaComponent {
 
   /* Extraer los datos del area que se esta visualizando el detalle */
   GetOneAreaService(id: any) {
-    this.AreaCrudService.GetOneAreaService(id).subscribe(
+    const encryptedID = this.encodeService.encryptData(JSON.stringify(id));
+    this.AreaCrudService.GetOneAreaService(encryptedID).subscribe(
       respuesta => {
-        this.data_area = respuesta;
-        this.sharedService.changeTitle('Información detallada del área: ' + this.data_area?.resultado?.data?.nombre_area);
+        this.data_area = this.encodeService.decryptData(respuesta);
+        this.sharedService.changeTitle('Información detallada del área: ' + this.data_area?.resultado?.data?.data?.nombre_area);
       },
       error => {
         console.error('Ocurrió un error al obtener el área:', error);
@@ -90,17 +91,21 @@ export class DetailsAreaComponent {
 
   /* Extrae los puntos de acceso que tiene el area en especifico, los que tiene true + id */
   GetPuntosAccesoArea(id: any) {
-    this.PuntosAreasCrudService.GetPuntosAccesoArea(id).subscribe((respuesta: any) => {
-      this.listPuntosAcceso = respuesta.resultado.data;
-      console.log(this.listPuntosAcceso);
+    // Enviamos la id encriptada
+    const encryptedID = this.encodeService.encryptData(JSON.stringify(id));
+    this.PuntosAreasCrudService.GetPuntosAccesoArea(encryptedID).subscribe((respuesta: any) => {
+      this.listPuntosAcceso = this.encodeService.decryptData(respuesta).resultado?.data?.data;
+      
     });
   }
 
 
   /* Extrae los usuarios que cuentan con el area en especifico */
   GetUsuariosAccesoArea(id: any) {
-    this.UsuariocrudService.GetUsuariosAccesoArea(id).subscribe(respuesta => {
-      this.listUsuariosAcceso = respuesta.resultado.data.map((data: any) =>
+    // Encriptamos la id
+    const encryptedID = this.encodeService.encryptData(JSON.stringify(id));
+    this.UsuariocrudService.GetUsuariosAccesoArea(encryptedID).subscribe(respuesta => {
+      this.listUsuariosAcceso = this.encodeService.decryptData(respuesta).resultado?.data?.data.map((data: any) =>
         new Usuario(
           data.id_punto,
           data.nombre,
@@ -120,13 +125,17 @@ export class DetailsAreaComponent {
     const formulario = { area: this.id, punto: punto };
     this.flasher.confirmacionPersonalizada("¿Estas seguro de reactivar el permiso para este punto?", 'El Área retomara el acceso a la info de este punto').then((confirmado) => {
       if (confirmado) {
-        this.PuntosAreasCrudService.InsertOrActivate_PuntoArea(formulario).subscribe(
+        const encryptedData = this.encodeService.encryptData(JSON.stringify(formulario));
+        const data = {
+          data: encryptedData
+        };
+        this.PuntosAreasCrudService.InsertOrActivate_PuntoArea(data).subscribe(
           respuesta => {
-            if (respuesta.resultado.res) {
+            if (this.encodeService.decryptData(respuesta)?.resultado?.res) {
               this.GetPuntosAccesoArea(this.id);
-              this.flasher.success(respuesta.resultado.data);
+              this.flasher.success(this.encodeService.decryptData(respuesta)?.resultado?.data);
             } else {
-              this.flasher.error(respuesta.resultado.data);
+              this.flasher.error(this.encodeService.decryptData(respuesta)?.resultado?.data);
             }
           },
           (error: any) => {
@@ -148,14 +157,18 @@ export class DetailsAreaComponent {
     const formulario = { area: this.id, punto: punto };
     this.flasher.confirmacionPersonalizada("¿Estas seguro de eliminar el permiso para este punto?", 'El Área no podria modificar la info de este punto').then((confirmado) => {
       if (confirmado) {
+        const encryptedData = this.encodeService.encryptData(JSON.stringify(formulario));
+        const data = {
+          data: encryptedData
+        };
         // El usuario confirmó
-        this.PuntosAreasCrudService.Desactivate_PuntoArea(formulario).subscribe(
+        this.PuntosAreasCrudService.Desactivate_PuntoArea(data).subscribe(
           respuesta => {
-            if (respuesta.resultado.res) {
+            if (this.encodeService.decryptData(respuesta)?.resultado?.res) {
               this.GetPuntosAccesoArea(this.id);
-              this.flasher.success(respuesta.resultado.data);
+              this.flasher.success(this.encodeService.decryptData(respuesta)?.resultado?.data);
             } else {
-              this.flasher.error(respuesta.resultado.data);
+              this.flasher.error(this.encodeService.decryptData(respuesta)?.resultado?.data);
             }
           },
           (error: any) => {

@@ -5,7 +5,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AreaCrudService } from '../../../services/crud/areacrud.service';
 import { AlertsServiceService } from '../../../services/alerts/alerts-service.service';
 import { CryptoServiceService } from '../../../services/cryptoService/crypto-service.service';
-import { validarTextoNormal } from '../../../services/api-config';
+import { validarNombre, validarTextoNormal } from '../../../services/api-config';
 
 @Component({
   selector: 'app-edit-area',
@@ -29,7 +29,7 @@ export class EditAreaComponent implements OnInit {
     this.FormAltaArea = this.formulario.group({
       nombreArea: ['',
         [
-          validarTextoNormal(), //Validación personalizada
+          validarNombre(true), //Validación personalizada
           Validators.required,
           Validators.minLength(5),
           Validators.maxLength(100)
@@ -55,13 +55,13 @@ export class EditAreaComponent implements OnInit {
   }
 
   GetOneAreaService(id: any) {
-    this.AreaCrudService.GetOneAreaService(id).subscribe(respuesta => {
+    const encryptedID = this.encodeService.encryptData(JSON.stringify(this.id));
+    this.AreaCrudService.GetOneAreaService(encryptedID).subscribe(respuesta => {
       if (respuesta) { // Verificar si respuesta no es undefined
-        this.NombreArea = respuesta;
-        console.log(this.NombreArea);
+        this.NombreArea = this.encodeService.decryptData(respuesta);
         // Asigna el valor al FormControl nombreArea
         this.FormAltaArea.patchValue({
-          nombreArea: this.NombreArea?.resultado?.data?.nombre_area
+          nombreArea: this.NombreArea?.resultado?.data?.data?.nombre_area
         });
       } else {
         console.error('La respuesta es undefined');
@@ -75,14 +75,18 @@ export class EditAreaComponent implements OnInit {
 
   UpdateAreaService(): void {
     if (this.FormAltaArea.valid) {
-    this.AreaCrudService.UpdateAreaService(this.FormAltaArea.value, this.id).subscribe(
+      const encryptedData = this.encodeService.encryptData(JSON.stringify(this.FormAltaArea.value));
+      const encryptedID = this.encodeService.encryptData(JSON.stringify(this.id));
+      const data = {
+        data: encryptedData
+      };
+    this.AreaCrudService.UpdateAreaService(data, encryptedID).subscribe(
       respuesta => {
-        console.log(respuesta);
-        if (respuesta?.resultado?.res) { // Verificar si respuesta.resultado.res no es undefined
-          this.flasher.success(respuesta.resultado.data);
+        if (this.encodeService.decryptData(respuesta)?.resultado?.data?.res) { // Verificar si respuesta.resultado.res no es undefined
+          this.flasher.success(this.encodeService.decryptData(respuesta)?.resultado?.data?.data);
           this.router.navigate(['/areas']);
         } else {
-          this.flasher.error(respuesta?.resultado?.data || 'No se recibió una respuesta válida');
+          this.flasher.error(this.encodeService.decryptData(respuesta)?.resultado?.data?.data || 'No se recibió una respuesta válida');
         }
       },
       error => {
