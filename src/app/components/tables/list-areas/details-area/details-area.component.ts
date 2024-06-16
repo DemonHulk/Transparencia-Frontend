@@ -77,7 +77,8 @@ export class DetailsAreaComponent {
 
   /* Extraer los datos del area que se esta visualizando el detalle */
   GetOneAreaService(id: any) {
-    this.AreaCrudService.GetOneAreaService(id).subscribe(
+    const encryptedID = this.encodeService.encryptData(JSON.stringify(id));
+    this.AreaCrudService.GetOneAreaService(encryptedID).subscribe(
       respuesta => {
         this.data_area = this.encodeService.decryptData(respuesta);
         this.sharedService.changeTitle('Información detallada del área: ' + this.data_area?.resultado?.data?.nombre_area);
@@ -90,16 +91,20 @@ export class DetailsAreaComponent {
 
   /* Extrae los puntos de acceso que tiene el area en especifico, los que tiene true + id */
   GetPuntosAccesoArea(id: any) {
-    this.PuntosAreasCrudService.GetPuntosAccesoArea(id).subscribe((respuesta: any) => {
+    // Enviamos la id encriptada
+    const encryptedID = this.encodeService.encryptData(JSON.stringify(id));
+    this.PuntosAreasCrudService.GetPuntosAccesoArea(encryptedID).subscribe((respuesta: any) => {
       this.listPuntosAcceso = this.encodeService.decryptData(respuesta).resultado.data;
-      console.log(this.listPuntosAcceso);
+      
     });
   }
 
 
   /* Extrae los usuarios que cuentan con el area en especifico */
   GetUsuariosAccesoArea(id: any) {
-    this.UsuariocrudService.GetUsuariosAccesoArea(id).subscribe(respuesta => {
+    // Encriptamos la id
+    const encryptedID = this.encodeService.encryptData(JSON.stringify(id));
+    this.UsuariocrudService.GetUsuariosAccesoArea(encryptedID).subscribe(respuesta => {
       this.listUsuariosAcceso = this.encodeService.decryptData(respuesta).resultado.data.map((data: any) =>
         new Usuario(
           data.id_punto,

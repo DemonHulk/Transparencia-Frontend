@@ -119,7 +119,8 @@ ngOnInit(): void {
 
   /* Extraer los datos del usuario mediante su id e ingresarlos en su respectivo campo*/
   GetOneUserService(id: any) {
-    this.UsuariocrudService.GetOneUserService(id).subscribe(
+    const encryptedID = this.encodeService.encryptData(JSON.stringify(this.id));
+    this.UsuariocrudService.GetOneUserService(encryptedID).subscribe(
       (respuesta: any) => {
         this.data_user = this.encodeService.decryptData(respuesta).resultado.data[0];
         this.sharedService.changeTitle('Modificar usuario: ' + this.data_user?.nombre);
@@ -149,14 +150,15 @@ ngOnInit(): void {
       }
 
       this.isSubmitting = true; // Deshabilitar el botón
-
+      // Enviamos tanto los datos del formulario como el id encriptados
       const encryptedData = this.encodeService.encryptData(JSON.stringify(this.FormAltaUsuario.value));
+      const encryptedID = this.encodeService.encryptData(JSON.stringify(this.id));
 
       const data = {
         data: encryptedData
       };
-
-      this.UsuariocrudService.UpdateUserService(data, this.id).pipe(
+      
+      this.UsuariocrudService.UpdateUserService(data, encryptedID).pipe(
         delay(1000) // Agregar un retraso de 1 segundo (1000 ms)
       ).subscribe(
         respuesta => {
@@ -166,7 +168,7 @@ ngOnInit(): void {
             this.router.navigate(['/usuarios']);
           } else {
             this.isSubmitting = false; // Habilitar el botón en caso de error
-            this.flasher.error(this.encodeService.decryptData(respuesta)?.resultado?.data?.data || 'No se recibió una respuesta válida');
+            this.flasher.error(this.encodeService.decryptData(respuesta)?.resultado?.data || 'No se recibió una respuesta válida');
           }
         },
         error => {

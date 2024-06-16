@@ -2,17 +2,21 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { API_URL } from '../api-config';
 import { Observable } from 'rxjs';
+import { CryptoServiceService } from '../cryptoService/crypto-service.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsuariocrudService {
 
-  constructor(private clientHttp:HttpClient) { }
+  constructor(
+    private clientHttp:HttpClient,
+    private encodeService: CryptoServiceService
+  ) { }
 
     /*extrae los usuarios que tienen un area un especifico activa*/
     GetUsuariosAccesoArea(id:any): Observable<any> {
-      return this.clientHttp.get(API_URL+"usuario/usuariosaccesoarea/" + id, { responseType: 'text' })
+      return this.clientHttp.get(API_URL+"userAcces/" + id, { responseType: 'text' })
     }
     
     InsertUsuarioService(formulario: any): Observable<any> {
@@ -28,11 +32,11 @@ export class UsuariocrudService {
     }
   
     ActivateUserService(id: any): Observable<any> {
-      return this.clientHttp.get(API_URL + "usuario/activar/" + id, { responseType: 'text' });
+      return this.clientHttp.get(API_URL + "activarUser/" + id, { responseType: 'text' });
     }
 
     GetOneUserService(id:any){
-      return this.clientHttp.get(API_URL+"usuario/"+id,{ responseType: 'text' });
+      return this.clientHttp.get(API_URL+"usuario/"+id, { responseType: 'text' });
     }
 
     UpdateUserService(formulario: any, id: any): Observable<any> {

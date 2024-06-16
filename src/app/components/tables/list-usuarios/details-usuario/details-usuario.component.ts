@@ -58,7 +58,8 @@ export class DetailsUsuarioComponent {
 
    /* Extraer los datos del usuario que se esta visualizando el detalle */
    GetOneUserService(id: any) {
-    this.UsuariocrudService.GetOneUserService(id).subscribe(
+    const encryptedID = this.encodeService.encryptData(JSON.stringify(this.id));
+    this.UsuariocrudService.GetOneUserService(encryptedID).subscribe(
       (respuesta: any) => {
 
         /* Enviamos los datos de la respuesta al servicio para desencripatarla */

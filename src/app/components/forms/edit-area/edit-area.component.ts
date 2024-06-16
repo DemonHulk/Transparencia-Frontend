@@ -55,10 +55,10 @@ export class EditAreaComponent implements OnInit {
   }
 
   GetOneAreaService(id: any) {
-    this.AreaCrudService.GetOneAreaService(id).subscribe(respuesta => {
+    const encryptedID = this.encodeService.encryptData(JSON.stringify(this.id));
+    this.AreaCrudService.GetOneAreaService(encryptedID).subscribe(respuesta => {
       if (respuesta) { // Verificar si respuesta no es undefined
         this.NombreArea = this.encodeService.decryptData(respuesta);
-        console.log(this.NombreArea);
         // Asigna el valor al FormControl nombreArea
         this.FormAltaArea.patchValue({
           nombreArea: this.NombreArea?.resultado?.data?.nombre_area
@@ -76,11 +76,11 @@ export class EditAreaComponent implements OnInit {
   UpdateAreaService(): void {
     if (this.FormAltaArea.valid) {
       const encryptedData = this.encodeService.encryptData(JSON.stringify(this.FormAltaArea.value));
-
+      const encryptedID = this.encodeService.encryptData(JSON.stringify(this.id));
       const data = {
         data: encryptedData
       };
-    this.AreaCrudService.UpdateAreaService(data, this.id).subscribe(
+    this.AreaCrudService.UpdateAreaService(data, encryptedID).subscribe(
       respuesta => {
         if (this.encodeService.decryptData(respuesta)?.resultado?.res) { // Verificar si respuesta.resultado.res no es undefined
           this.flasher.success(this.encodeService.decryptData(respuesta)?.resultado?.data);

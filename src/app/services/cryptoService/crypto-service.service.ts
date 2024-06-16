@@ -48,7 +48,7 @@ export class CryptoServiceService {
     return decoded[0];
   }
 
-  // Metodo de encriptacion de prueba
+  // Metodo de encriptación (Angular->PHP)
   encryptData(data: string): string {
     const iv = CryptoJS.lib.WordArray.random(16); // Genera un IV aleatorio
     const encrypted = CryptoJS.AES.encrypt(data, CryptoJS.enc.Utf8.parse(this.secretKey), {
@@ -62,6 +62,7 @@ export class CryptoServiceService {
     return ivBase64 + ':' + encryptedBase64; // Usa ':' como delimitador
   }
   
+  // Metodo de desencriptación (PHP->Angular)
   decryptData(encryptedData: string): any {
     const [ivBase64, encryptedBase64] = encryptedData.split(':'); // Separa el IV y los datos cifrados
     const iv = CryptoJS.enc.Base64.parse(ivBase64); // Convierte el IV de base64 a WordArray

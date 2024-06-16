@@ -32,7 +32,7 @@ export class AreaCrudService {
   }
 
   ActivateAreaService(id: any): Observable<any> {
-    return this.clientHttp.get(API_URL + "area/activar/" + id, { responseType: 'text' });
+    return this.clientHttp.get(API_URL + "areaAct/" + id, { responseType: 'text' });
   }
 
 

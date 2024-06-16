@@ -55,7 +55,7 @@ export class ListUsuariosComponent {
   GetAllUserArea() {
     this.UsuariocrudService.GetUsuariosArea().subscribe((respuesta: any) => {
       
-      /* Enviamos los datos de la respuesta al servicio de desencriptar*/ 
+      /* Desencriptamos la respuesta que nos retorna el backend */ 
       this.ListUser = this.encodeService.decryptData(respuesta).resultado.data;
 
       // // Filtrar los usuarios activas
@@ -113,7 +113,9 @@ export class ListUsuariosComponent {
   DeleteUser(id: any) {
     this.flasher.eliminar().then((confirmado) => {
       if (confirmado) {
-        this.UsuariocrudService.DeleteUserService(id).subscribe(respuesta => {
+        // Enviamos la id encriptada
+        const encryptedID = this.encodeService.encryptData(JSON.stringify(id));
+        this.UsuariocrudService.DeleteUserService(encryptedID).subscribe(respuesta => {
           this.GetAllUserArea();
           this.flasher.success(this.encodeService.decryptData(respuesta).resultado.data);
         });
@@ -124,7 +126,9 @@ export class ListUsuariosComponent {
   ActivateUser(id: any) {
     this.flasher.reactivar().then((confirmado) => {
       if (confirmado) {
-        this.UsuariocrudService.ActivateUserService(id).subscribe(respuesta => {
+        // Enviamos la id encriptada
+        const encryptedID = this.encodeService.encryptData(JSON.stringify(id));
+        this.UsuariocrudService.ActivateUserService(encryptedID).subscribe(respuesta => {
           this.GetAllUserArea();
           this.flasher.success(this.encodeService.decryptData(respuesta).resultado.data);
         });
