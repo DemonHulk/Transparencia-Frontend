@@ -1,7 +1,7 @@
 <div class="12/12 text-right my-5">
   <ol class="flex items-center whitespace-nowrap">
     <li class="inline-flex items-center">
-      <a class="flex items-center text-sm text-gray-500 hover:text-color-active focus:outline-none focus:text-color-active" routerLink="/myprofile">
+      <a class="flex items-center text-sm text-gray-500 hover:text-color-active focus:outline-none focus:text-color-active" routerLink="/myprofile/{{encriptarId(this.id)}}">
         Perfil
         <svg class="flex-shrink-0 mx-2 overflow-visible size-4 text-gray-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="m9 18 6-6-6-6"></path>
@@ -15,12 +15,12 @@
 <div class="bg-white p-8 border border-gray-200 rounded-lg shadow-lg max-w-2xl mx-auto my-10">
   <h3 class="text-3xl text-left ">Modificar información</h3>
   <hr class="w-full mb-2 border-hr-color">
-  <form class="grid grid-cols-1 gap-y-6 gap-x-4">
+  <form class="grid grid-cols-1 gap-y-6 gap-x-4" [formGroup]="FormEditPerfil" (ngSubmit)="UpdatePerfilService()">
     <div class="sm:col-span-2">
       <label for="nombre" class="font-poppins">Nombre(s)</label>
       <div
         class="flex items-center border border-input-bord-color py-3 px-4 rounded-lg focus-within:border-input-focus-color focus-within:ring-input-focus-color">
-        <input type="text" id="nombre"
+        <input type="text" id="nombre" formControlName="nombre"
           class="name flex-grow border-none focus:ring-0 focus:outline-none text-sm text-dark"
           placeholder="Nombres del usuario">
         <div class="hs-tooltip [--trigger:hover] sm:[--placement:right] inline-block ml-2">
@@ -45,7 +45,7 @@
       <label for="primerApellido" class="font-poppins">Primer apellido</label>
       <div
         class="flex items-center border border-input-bord-color py-3 px-4 rounded-lg focus-within:border-input-focus-color focus-within:ring-input-focus-color">
-        <input type="text" id="primerApellido"
+        <input type="text" id="primerApellido" formControlName="primerApellido"
           class="name flex-grow border-none focus:ring-0 focus:outline-none text-sm text-dark"
           placeholder="Primer apellido">
         <div class="hs-tooltip [--trigger:hover] sm:[--placement:right] inline-block ml-2">
@@ -70,7 +70,7 @@
       <label for="segundoApellido" class="font-poppins">Segundo apellido</label>
       <div
         class="flex items-center border border-input-bord-color py-3 px-4 rounded-lg focus-within:border-input-focus-color focus-within:ring-input-focus-color">
-        <input type="text" id="segundoApellido"
+        <input type="text" id="segundoApellido" formControlName="segundoApellido"
           class="name flex-grow border-none focus:ring-0 focus:outline-none text-sm text-dark"
           placeholder="Segundo apellido">
         <div class="hs-tooltip [--trigger:hover] sm:[--placement:right] inline-block ml-2">
@@ -95,7 +95,7 @@
       <label for="correo" class="font-poppins">Correo</label>
       <div
         class="flex items-center border border-input-bord-color py-3 px-4 rounded-lg focus-within:border-input-focus-color focus-within:ring-input-focus-color">
-        <input type="email" id="correo"
+        <input type="email" id="correo" formControlName="correo"
           class=" flex-grow border-none focus:ring-0 focus:outline-none text-sm text-dark"
           placeholder="Correo">
         <div class="hs-tooltip [--trigger:hover] sm:[--placement:right] inline-block ml-2">
@@ -120,7 +120,7 @@
       <label for="telefono" class="font-poppins">Teléfono</label>
       <div
         class="flex items-center border border-input-bord-color py-3 px-4 rounded-lg focus-within:border-input-focus-color focus-within:ring-input-focus-color">
-        <input type="text" id="telefono"
+        <input type="text" id="telefono" formControlName="telefono"
           class="telefono flex-grow border-none focus:ring-0 focus:outline-none text-sm text-dark"
           placeholder="Teléfono">
         <div class="hs-tooltip [--trigger:hover] sm:[--placement:right] inline-block ml-2">
@@ -144,7 +144,7 @@
     <div class="sm:col-span-2">
       <label for="password" class="font-poppins">Contraseña</label>
       <div class="flex items-center border border-input-bord-color py-3 px-4 rounded-lg focus-within:border-input-focus-color focus-within:ring-input-focus-color">
-        <input id="hs-toggle-password" type="password" class=" flex-grow border-none focus:ring-0 focus:outline-none text-sm text-dark" placeholder="Contraseña">
+        <input id="hs-toggle-password" type="password" class=" flex-grow border-none focus:ring-0 focus:outline-none text-sm text-dark" placeholder="Contraseña" formControlName="password">
         <button type="button" data-hs-toggle-password='{
             "target": "#hs-toggle-password"
           }' class="ml-2 p-2 rounded-full bg-gray-200 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-color">

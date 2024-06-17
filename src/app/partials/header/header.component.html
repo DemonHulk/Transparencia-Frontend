@@ -80,7 +80,7 @@
               </div>
             </div>
           </div>
-          <a class="font-medium mx-3"  routerLink="/myprofile" routerLinkActive="underline" *ngIf="sesionActiva">Mi perfil</a>
+          <a class="font-medium mx-3"  routerLink="/myprofile/{{ encriptarId(datosUsuario.id_usuario) }}" routerLinkActive="underline" *ngIf="sesionActiva">Mi perfil</a>
           <a class="font-medium mx-3" routerLink="/login" routerLinkActive="underline" *ngIf="!sesionActiva">Iniciar sesión</a>
           <a class="font-medium mx-3" routerLink="/articulo33" *ngIf="sesionActiva" (click)="cerrarSesion()">Cerrar sesión</a>
         </div>
