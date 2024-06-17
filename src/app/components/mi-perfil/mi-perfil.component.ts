@@ -76,10 +76,8 @@ export class MiPerfilComponent {
         this.sharedService.changeTitle('Información detallada del usuario: ' + this.data_user?.nombre);
 
         /*Indicar que todos los datos se han cargado */
-        setTimeout(() => {
           this.sharedService.setLoading(false);
           window.HSStaticMethods.autoInit();
-        }, 500);
       },
       error => {
         console.error('Ocurrió un error al obtener el usuario:', error);
