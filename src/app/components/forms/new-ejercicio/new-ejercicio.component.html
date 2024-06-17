@@ -15,7 +15,7 @@
 <div class="bg-white p-8 border border-gray-200 rounded-lg shadow-lg max-w-2xl mx-auto my-10">
   <h3 class=" text-left my-2">Nuevo ejercicio</h3>
   <hr class="w-full mb-2 border-hr-color">
-  <form [formGroup]="FormAltaEjercicio" class="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-2" >
+  <form [formGroup]="FormAltaEjercicio" (submit)="SaveEjercicio()" class="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-2" >
     <!-- Input para el nombre interno del documento -->
     <div class="sm:col-span-2">
       <label for="ejercicio" class="font-poppins">Ejercicio</label>

@@ -4,7 +4,8 @@ import { SharedValuesService } from '../../../services/shared-values.service';
 import { Router } from '@angular/router';
 import { AlertsServiceService } from '../../../services/alerts/alerts-service.service';
 import { CryptoServiceService } from '../../../services/cryptoService/crypto-service.service';
-import { validarNombre, validarTelefono } from '../../../services/api-config';
+import { markFormGroupTouched, validarNombre, validarTelefono } from '../../../services/api-config';
+import { EjerciciocrudService } from '../../../services/crud/ejerciciocrud.service';
 
 @Component({
   selector: 'app-new-ejercicio',
@@ -19,7 +20,8 @@ export class NewEjercicioComponent {
     public formulario: FormBuilder,
     private router: Router, // Inyecta el Router
     private flasher: AlertsServiceService,
-    private CryptoServiceService: CryptoServiceService
+    private CryptoServiceService: CryptoServiceService,
+    private EjercicioCrudServuce: EjerciciocrudService
   ) {
     this.FormAltaEjercicio = this.formulario.group({
       ejercicio: ['',
@@ -47,5 +49,32 @@ export class NewEjercicioComponent {
        * @memberof SharedValuesService
        */
       this.sharedService.changeTitle('Registrar un nuevo ejercicio');
+  }
+
+  SaveEjercicio(): any {
+    markFormGroupTouched(this.FormAltaEjercicio);
+    if (this.FormAltaEjercicio.valid) {
+
+      const encryptedData = this.CryptoServiceService.encryptData(JSON.stringify(this.FormAltaEjercicio.value));
+
+      const data = {
+        data: encryptedData
+      };
+      this.EjercicioCrudServuce.InsertEjercicioService(data).subscribe(
+        respuesta => {
+          if (this.CryptoServiceService.decryptData(respuesta)?.resultado?.res) {
+            this.flasher.success(this.CryptoServiceService.decryptData(respuesta)?.resultado?.data);
+            this.router.navigate(['/ejercicios']);
+          } else {
+            this.flasher.error(this.CryptoServiceService.decryptData(respuesta)?.resultado?.data);
+          }
+        },
+        error => {
+          this.flasher.error("Hubo un error, Intente más tarde o notifique al soporte técnico.");
+        }
+      );
+    } else {
+      this.flasher.error("El formulario no es válido. Por favor, complete todos los campos requeridos correctamente.");
+    }
   }
 }
