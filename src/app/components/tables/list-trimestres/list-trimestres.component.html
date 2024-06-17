@@ -63,6 +63,9 @@
                       <th scope="col" class="px-6 py-3 text-start text-xs text-white uppercase">
                         <p class="h-2.5 bg-gray-200 rounded-full  w-48"></p>
                       </th>
+                      <th scope="col" class="px-6 py-3 text-start text-xs text-white uppercase">
+                        <p class="h-2.5 bg-gray-200 rounded-full  w-48"></p>
+                      </th>
                     </tr>
                   </thead>
                   <tbody class="divide-y divide-gray-200 animate-pulse" >
@@ -168,7 +171,7 @@
                 class="py-3 my-2 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent button-secondary text-white hover:bg-primary-color-90 disabled:opacity-50 disabled:pointer-events-none"
               >
                 <i class="fa fa-plus" aria-hidden="true"></i>
-                Registrar área
+                Registrar trimestre
               </button>
             </div>
           </div>
@@ -263,7 +266,7 @@
                 class="py-3 my-2 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent button-secondary text-white hover:bg-primary-color-90 disabled:opacity-50 disabled:pointer-events-none"
               >
                 <i class="fa fa-plus" aria-hidden="true"></i>
-                Registrar área
+                Registrar trimestre
               </button>
             </div>
           </div>
@@ -338,54 +341,6 @@
                       </td>
                       <td class="px-3 py-2 text-sm text-gray-800">
                         <div class="flex items-center space-x-3.5">
-                          <button
-                            routerLink="/details-trimestre/{{ encriptarId(trimestre.id_trimestre) }}"
-                            (mouseenter)="mostrar($event.target)"
-                            (mouseleave)="mostrar($event.target)"
-                            class="hover:text-primary"
-                          >
-                            <!-- User -->
-                            <div
-                              class="hs-tooltip [--trigger:hover] sm:[--placement:top] inline-block"
-                            >
-                              <div
-                                class="hs-tooltip-toggle max-w-xs p-3 flex items-center gap-x-3 bg-white border border-gray-200 rounded-xl shadow-sm"
-                              >
-                                <i class="fa fa-eye" aria-hidden="true"></i>
-                                <!-- Popover Content -->
-                                <div
-                                  class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible hidden opacity-0 transition-opacity absolute invisible z-10 max-w-xs w-full bg-white border border-gray-100 text-start rounded-xl shadow-md after:absolute after:top-0 after:-start-4 after:w-4 after:h-full"
-                                  role="tooltip"
-                                  data-popper-placement="top"
-                                >
-                                  <!-- Header -->
-                                  <div
-                                    class="py-3 px-4 border-b border-gray-200"
-                                  >
-                                    <div class="flex items-center gap-x-3">
-                                      <div class="grow">
-                                        <h4 class="font-semibold text-gray-800">
-                                          Detalles
-                                        </h4>
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <ul class="py-3 px-4 space-y-1">
-                                    <li>
-                                      <div
-                                        class="inline-flex items-center gap-x-3 text-sm text-gray-800 text-wrap"
-                                      >
-                                        Información detallada del registro
-                                        {{ trimestre.trimestre }}
-                                      </div>
-                                    </li>
-                                  </ul>
-                                </div>
-
-                                <!-- End Popover Content -->
-                              </div>
-                            </div>
-                          </button>
                           <button
                             routerLink="/edit-trimestre/{{ encriptarId(trimestre.id_trimestre) }}"
                             (mouseenter)="mostrar($event.target)"
@@ -648,161 +603,161 @@
                   [tableStyleClass]="'min-w-full divide-y'"
                   [resizableColumns]="true"
                 >
-                  <ng-template pTemplate="header">
-                    <tr
-                      class="divide-x divide-gray-200 bg-table-header-color rounded-lg"
+                <ng-template pTemplate="header">
+                  <tr
+                    class="divide-x divide-gray-200 bg-table-header-color rounded-lg"
+                  >
+                    <th
+                      scope="col"
+                      class="px-6 py-3 text-start text-xs text-white uppercase bg-table-header-color"
+                      pSortableColumn="trimestre"
                     >
-                      <th
-                        scope="col"
-                        class="px-6 py-3 text-start text-xs text-white uppercase bg-table-header-color"
-                        pSortableColumn="trimestre"
-                      >
-                        <div class="flex">
-                          Nombre del trimestre <p-sortIcon field="trimestre"></p-sortIcon>
-                        </div>
-                      </th>
-                      <th
-                        scope="col"
-                        class="px-6 py-3 text-start text-xs text-white uppercase bg-table-header-color"
-                        pSortableColumn="fecha_string"
-                      >
-                        <div class="flex">
-                          Ejercicio <p-sortIcon field="ejercicio"></p-sortIcon>
-                        </div>
-                      </th>
-                      <th
-                        scope="col"
-                        class="px-6 py-3 text-start text-xs text-white uppercase bg-table-header-color"
-                        pSortableColumn="fecha_string"
-                      >
-                        <div class="flex text-white">
-                          Fecha de creación
-                          <p-sortIcon field="fecha_string"></p-sortIcon>
-                        </div>
-                      </th>
-                      <th
-                        scope="col"
-                        class="px-6 py-3 text-start text-xs text-white uppercase bg-table-header-color"
-                      >
-                        <div class="flex">Acciones</div>
-                      </th>
-                    </tr>
-                  </ng-template>
-                  <ng-template pTemplate="body" let-trimestre>
-                    <tr class="divide-x divide-gray-200">
-                      <td class="px-3 py-2 text-sm text-gray-800">
-                        <p class="font-medium text-black">
-                          {{ trimestre.trimestre }}
-                        </p>
-                        <p class="text-sm">
-                          Acceso a {{ trimestre.total_puntos }} puntos
-                        </p>
-                      </td>
-                      <td class="px-3 py-2 text-sm text-gray-800">
-                        {{ trimestre.fecha_string }}
-                      </td>
-                      <td class="px-3 py-2 text-sm text-gray-800">
-                        <div class="flex items-center space-x-3.5">
-                          <button
-                            routerLink="/details-trimestre/{{ encriptarId(trimestre.id_trimestre) }}"
-                            (mouseenter)="mostrar($event.target)"
-                            (mouseleave)="mostrar($event.target)"
-                            class="hover:text-primary"
+                      <div class="flex">
+                        Nombre <p-sortIcon field="trimestre"></p-sortIcon>
+                      </div>
+                    </th>
+                    <th
+                      scope="col"
+                      class="px-6 py-3 text-start text-xs text-white uppercase bg-table-header-color"
+                      pSortableColumn="ejercicio"
+                    >
+                    <div class="flex">
+                      Ejercicio <p-sortIcon field="ejercicio"></p-sortIcon>
+                    </div>
+                  </th>
+                  <th
+                    scope="col"
+                    class="px-6 py-3 text-start text-xs text-white uppercase bg-table-header-color"
+                    pSortableColumn="fecha_string"
+                  >
+                      <div class="flex text-white">
+                        Fecha de creación
+                        <p-sortIcon field="fecha_string"></p-sortIcon>
+                      </div>
+                    </th>
+                    <th
+                      scope="col"
+                      class="px-6 py-3 text-start text-xs text-white uppercase bg-table-header-color"
+                    >
+                      <div class="flex">Acciones</div>
+                    </th>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-trimestre>
+                  <tr class="divide-x divide-gray-200">
+                    <td class="px-3 py-2 text-sm text-gray-800">
+                      <p class="font-medium text-black">
+                        {{ trimestre.trimestre }}
+                      </p>
+                    </td>
+                    <td class="px-3 py-2 text-sm text-gray-800">
+                      {{ trimestre.ejercicio }}
+                    </td>
+                    <td class="px-3 py-2 text-sm text-gray-800">
+                      {{ trimestre.fecha_string }}
+                    </td>
+                    <td class="px-3 py-2 text-sm text-gray-800">
+                      <div class="flex items-center space-x-3.5">
+                        <button
+                          (click)="DeleteTrimestre(trimestre.id_trimestre)"
+                          *ngIf="trimestre.activo"
+                          (mouseenter)="mostrar($event.target)"
+                          (mouseleave)="mostrar($event.target)"
+                          class="hover:text-primary"
+                        >
+                          <!-- User -->
+                          <div
+                            class="hs-tooltip [--trigger:hover] sm:[--placement:top] inline-block"
                           >
-                            <!-- User -->
                             <div
-                              class="hs-tooltip [--trigger:hover] sm:[--placement:top] inline-block"
+                              class="hs-tooltip-toggle max-w-xs p-3 flex items-center gap-x-3 bg-white border border-gray-200 rounded-xl shadow-sm"
                             >
+                              <i class="fa fa-trash" aria-hidden="true"></i>
+                              <!-- Popover Content -->
                               <div
-                                class="hs-tooltip-toggle max-w-xs p-3 flex items-center gap-x-3 bg-white border border-gray-200 rounded-xl shadow-sm"
+                                class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible hidden opacity-0 transition-opacity absolute invisible z-10 max-w-xs w-full bg-white border border-gray-100 text-start rounded-xl shadow-md after:absolute after:top-0 after:-start-4 after:w-4 after:h-full"
+                                role="tooltip"
                               >
-                                <i class="fa fa-eye" aria-hidden="true"></i>
-                                <!-- Popover Content -->
+                                <!-- Header -->
                                 <div
-                                  class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible hidden opacity-0 transition-opacity absolute invisible z-10 max-w-xs w-full bg-white border border-gray-100 text-start rounded-xl shadow-md after:absolute after:top-0 after:-start-4 after:w-4 after:h-full"
-                                  role="tooltip"
-                                  data-popper-placement="top"
+                                  class="py-3 px-4 border-b border-gray-200"
                                 >
-                                  <!-- Header -->
-                                  <div
-                                    class="py-3 px-4 border-b border-gray-200"
-                                  >
-                                    <div class="flex items-center gap-x-3">
-                                      <div class="grow">
-                                        <h4 class="font-semibold text-gray-800">
-                                          Detalles
-                                        </h4>
-                                      </div>
+                                  <div class="flex items-center gap-x-3">
+                                    <div class="grow">
+                                      <h4 class="font-semibold text-gray-800">
+                                        Eliminar
+                                      </h4>
                                     </div>
                                   </div>
-                                  <ul class="py-3 px-4 space-y-1">
-                                    <li>
-                                      <div
-                                        class="inline-flex items-center gap-x-3 text-sm text-gray-800 text-wrap"
-                                      >
-                                        Información detallada del registro
-                                        {{ trimestre.trimestre }}
-                                      </div>
-                                    </li>
-                                  </ul>
                                 </div>
-
-                                <!-- End Popover Content -->
+                                <ul class="py-3 px-4 space-y-1">
+                                  <li>
+                                    <div
+                                      class="inline-flex items-center gap-x-3 text-sm text-gray-800 text-wrap"
+                                    >
+                                      Eliminar el registro indica desaparecer
+                                      la información relacionada a este
+                                      registro.
+                                    </div>
+                                  </li>
+                                </ul>
                               </div>
+                              <!-- End Popover Content -->
                             </div>
-                          </button>
-                          <button
-                            *ngIf="!trimestre.activo"
-                            (click)="ActivateTrimestre(trimestre.id_trimestre)"
-                            (mouseenter)="mostrar($event.target)"
-                            (mouseleave)="mostrar($event.target)"
-                            class="hover:text-primary"
+                          </div>
+                        </button>
+                        <button
+                          *ngIf="!trimestre.activo"
+                          (click)="ActivateTrimestre(trimestre.id_trimestre)"
+                          (mouseenter)="mostrar($event.target)"
+                          (mouseleave)="mostrar($event.target)"
+                          class="hover:text-primary"
+                        >
+                          <!-- User -->
+                          <div
+                            class="hs-tooltip [--trigger:hover] sm:[--placement:top] inline-block"
                           >
-                            <!-- User -->
                             <div
-                              class="hs-tooltip [--trigger:hover] sm:[--placement:top] inline-block"
+                              class="hs-tooltip-toggle max-w-xs p-3 flex items-center gap-x-3 bg-white border border-gray-200 rounded-xl shadow-sm"
                             >
+                              <i class="fa-solid fa-arrow-rotate-left"></i>
+                              <!-- Popover Content -->
                               <div
-                                class="hs-tooltip-toggle max-w-xs p-3 flex items-center gap-x-3 bg-white border border-gray-200 rounded-xl shadow-sm"
+                                class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible hidden opacity-0 transition-opacity absolute invisible z-10 max-w-xs w-full bg-white border border-gray-100 text-start rounded-xl shadow-md after:absolute after:top-0 after:-start-4 after:w-4 after:h-full"
+                                role="tooltip"
                               >
-                                <i class="fa-solid fa-arrow-rotate-left"></i>
-                                <!-- Popover Content -->
+                                <!-- Header -->
                                 <div
-                                  class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible hidden opacity-0 transition-opacity absolute invisible z-10 max-w-xs w-full bg-white border border-gray-100 text-start rounded-xl shadow-md after:absolute after:top-0 after:-start-4 after:w-4 after:h-full"
-                                  role="tooltip"
+                                  class="py-3 px-4 border-b border-gray-200"
                                 >
-                                  <!-- Header -->
-                                  <div
-                                    class="py-3 px-4 border-b border-gray-200"
-                                  >
-                                    <div class="flex items-center gap-x-3">
-                                      <div class="grow">
-                                        <h4 class="font-semibold text-gray-800">
-                                          Reactivar
-                                        </h4>
-                                      </div>
+                                  <div class="flex items-center gap-x-3">
+                                    <div class="grow">
+                                      <h4 class="font-semibold text-gray-800">
+                                        Reactivar
+                                      </h4>
                                     </div>
                                   </div>
-                                  <ul class="py-3 px-4 space-y-1">
-                                    <li>
-                                      <div
-                                        class="inline-flex items-center gap-x-3 text-sm text-gray-800 text-wrap"
-                                      >
-                                        Volver a activar el registro regresando
-                                        con este toda la información
-                                        relacionada.
-                                      </div>
-                                    </li>
-                                  </ul>
                                 </div>
-                                <!-- End Popover Content -->
+                                <ul class="py-3 px-4 space-y-1">
+                                  <li>
+                                    <div
+                                      class="inline-flex items-center gap-x-3 text-sm text-gray-800 text-wrap"
+                                    >
+                                      Volver a activar el registro regresando
+                                      con este toda la información
+                                      relacionada.
+                                    </div>
+                                  </li>
+                                </ul>
                               </div>
+                              <!-- End Popover Content -->
                             </div>
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  </ng-template>
+                          </div>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                </ng-template>
                   <ng-template pTemplate="emptymessage">
                     <tr>
                       <td colspan="4">No se encontraron resultados.</td>

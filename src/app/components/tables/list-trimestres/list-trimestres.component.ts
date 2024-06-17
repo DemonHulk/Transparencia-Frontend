@@ -72,16 +72,33 @@ GetAllTrimestresService() {
 }
 
 
-
-
-
-
 DeleteTrimestre(id: any) {
-  
+  this.flasher.eliminar().then((confirmado) => {
+    if (confirmado) {
+      console.log(id);
+      // Enviamos la id encriptada
+      const encryptedID = this.encodeService.encryptData(JSON.stringify(id));
+      this.TrimestrecrudService.DeleteTrimestreService(encryptedID).subscribe(respuesta => {
+        // console.log(encryptedID);
+        this.GetAllTrimestresService();
+        this.flasher.success(this.encodeService.decryptData(respuesta).resultado?.data);
+      });
+    }
+  });
 }
 
-ActivateTrimestre(id: any) {
-  
+
+ActivateTrimestre(id: any) { 
+  this.flasher.reactivar().then((confirmado) => {
+    if (confirmado) {
+      // Enviamos la id encriptada
+      const encryptedID = this.encodeService.encryptData(JSON.stringify(id));
+      this.TrimestrecrudService.ActivateTrimestreService(encryptedID).subscribe(respuesta => {
+        this.GetAllTrimestresService();
+        this.flasher.success(this.encodeService.decryptData(respuesta).resultado?.data);
+      });
+    }
+  });
 }
 
 

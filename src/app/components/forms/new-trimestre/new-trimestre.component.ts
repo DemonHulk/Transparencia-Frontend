@@ -17,7 +17,6 @@ export class NewTrimestreComponent {
   FormAltaTrimestre:FormGroup;
   isSubmitting = false;
 
-  years: number[] = [];
   constructor(private sharedService: SharedValuesService,
     public formulario: FormBuilder,
     private router: Router, // Inyecta el Router

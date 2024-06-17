@@ -21,9 +21,9 @@
     <div class="sm:col-span-2">
       <label for="nombreTrimestre" class="font-poppins">Nombre del trimestre</label>
       <div
-      class="flex items-center border border-input-bord-color py-3 px-4 rounded-lg focus-within:border-input-focus-color focus-within:ring-input-focus-color"
+      class="flex items-center border border-input-bord-color  py-3 px-4 rounded-lg focus-within:border-input-focus-color focus-within:ring-input-focus-color"
       [ngClass]="{
-        'border-validator-error focus-within:border-validator-error focus-within:ring-validator-error': FormAltaTrimestre.get('nombreTrimestre')?.invalid && (FormAltaTrimestre.get('nombreTrimestre')?.dirty || FormAltaTrimestre.get('nombreTrimestre')?.touched)
+        'border-validator-error focus-within:border-validator-error focus-within:ring-validator-error': FormAltaTrimestre.get('trimestre')?.invalid && (FormAltaTrimestre.get('trimestre')?.dirty || FormAltaTrimestre.get('trimestre')?.touched)
         }">
         <input type="text" id="trimestre"
           class="trimestre flex-grow border-none focus:ring-0 focus:outline-none text-sm text-dark"
