@@ -12,6 +12,8 @@ export class HeaderComponent implements OnInit{
   // Varible para saber si el usuario cuenta con sesión activa y si es administrador
   sesionActiva: boolean = false;
   administrador: boolean = false;
+  datosUsuario: any;
+
   constructor(
     private CryptoServiceService: CryptoServiceService,
     private usuarioService: LoginService,
@@ -26,6 +28,7 @@ export class HeaderComponent implements OnInit{
       this.verificarSesion();
     });
 
+     this.datosUsuario = this.CryptoServiceService.desencriptarDatosUsuario()
   }
 
 
@@ -49,7 +52,7 @@ export class HeaderComponent implements OnInit{
         this.sesionActiva = false;
     }
   }
-
+  
   // Función para cerrar sesión
   cerrarSesion() {
     // Eliminar los datos del usuario del localStorage
@@ -62,5 +65,9 @@ export class HeaderComponent implements OnInit{
   
     // Reiniciar las variables de sesión después de un ciclo de cambios
     this.cdr.markForCheck();
+  }
+
+  encriptarId(id:any){
+    return this.CryptoServiceService.encodeID(id);
   }
 }
