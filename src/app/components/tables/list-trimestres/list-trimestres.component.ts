@@ -75,7 +75,6 @@ GetAllTrimestresService() {
 DeleteTrimestre(id: any) {
   this.flasher.eliminar().then((confirmado) => {
     if (confirmado) {
-      console.log(id);
       // Enviamos la id encriptada
       const encryptedID = this.encodeService.encryptData(JSON.stringify(id));
       this.TrimestrecrudService.DeleteTrimestreService(encryptedID).subscribe(respuesta => {

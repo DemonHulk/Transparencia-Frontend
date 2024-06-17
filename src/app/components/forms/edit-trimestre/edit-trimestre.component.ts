@@ -119,11 +119,9 @@ UpdateTrimestre(): any {
       (respuesta:any) => {
         this.isSubmitting = false; // Habilitar el botón
         if (this.CryptoServiceService.decryptData(respuesta)?.resultado?.res) {
-          console.log(this.CryptoServiceService.decryptData(respuesta))
           this.flasher.success(this.CryptoServiceService.decryptData(respuesta)?.resultado?.data);
           this.router.navigate(['/trimestres']);
         } else {
-          console.log('isSubmitting:', this.isSubmitting);
           this.flasher.error(this.CryptoServiceService.decryptData(respuesta)?.resultado?.data);
         }
       },
