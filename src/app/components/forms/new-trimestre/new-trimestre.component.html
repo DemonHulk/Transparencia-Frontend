@@ -16,15 +16,18 @@
 <div class="bg-white p-8 border border-gray-200 rounded-lg shadow-lg max-w-2xl mx-auto my-10">
   <h3 class="my-2 text-left">Nuevo trimestre</h3>
   <hr class="w-full mb-2 border-hr-color">
-  <form class="grid grid-cols-1 gap-y-6 gap-x-4">
+  <form [formGroup]="FormAltaTrimestre" (ngSubmit)="SaveTrimestre()" class="grid grid-cols-1 gap-y-6 gap-x-4">
     <!-- Input para el nombre interno del documento -->
     <div class="sm:col-span-2">
       <label for="nombreTrimestre" class="font-poppins">Nombre del trimestre</label>
       <div
-      class="flex items-center border border-input-bord-color py-3 px-4 rounded-lg focus-within:border-input-focus-color focus-within:ring-input-focus-color">
-        <input type="text" id="nombreTrimestre"
+      class="flex items-center border border-input-bord-color  py-3 px-4 rounded-lg focus-within:border-input-focus-color focus-within:ring-input-focus-color"
+      [ngClass]="{
+        'border-validator-error focus-within:border-validator-error focus-within:ring-validator-error': FormAltaTrimestre.get('trimestre')?.invalid && (FormAltaTrimestre.get('trimestre')?.dirty || FormAltaTrimestre.get('trimestre')?.touched)
+        }">
+        <input type="text" id="trimestre"
           class="trimestre flex-grow border-none focus:ring-0 focus:outline-none text-sm text-dark"
-          placeholder="Nombre del trimestre">
+          placeholder="Nombre del trimestre" formControlName="trimestre">
         <div class="hs-tooltip [--trigger:hover] sm:[--placement:right] inline-block ml-2">
           <!-- lo del simbolo de interrogacion -->
           <i class="fa-solid fa-question text-gray-500"></i>
@@ -42,6 +45,9 @@
             </ul>
           </div>
         </div>
+      </div>
+      <div *ngIf="FormAltaTrimestre.get('trimestre')?.invalid && (FormAltaTrimestre.get('trimestre')?.dirty || FormAltaTrimestre.get('trimestre')?.touched)">
+        <div *ngIf="FormAltaTrimestre.get('trimestre')?.errors?.['required']" class="text-sm text-validator-error mt-1">Este campo es requerido.</div>
       </div>
     </div>
 
@@ -64,14 +70,23 @@
           </div>
         </div>
       </label>
-      <select
-      class="sm:p-5 p-4 pe-9 block w-full border-input-bord-color rounded-lg text-sm focus:border-input-focus-color focus:ring-input-focus-color disabled:opacity-50 disabled:pointer-events-none ">
-        <option *ngFor="let year of years" value="{{year}}">{{year}}</option>
-      </select>
+      <select id="ejercicio" formControlName="ejercicio"
+      class="sm:p-5 p-4 pe-9 block w-full border-input-bord-color rounded-lg text-sm focus:border-input-focus-color focus:ring-input-focus-color disabled:opacity-50 disabled:pointer-events-none "
+      [ngClass]="{
+        'border-validator-error focus:border-validator-error focus:ring-validator-error': FormAltaTrimestre.get('ejercicio')?.invalid && (FormAltaTrimestre.get('ejercicio')?.dirty || FormAltaTrimestre.get('ejercicio')?.touched)
+        }">
+         <option value="" selected>Selecciona un ejercicio</option>
+         <option *ngFor="let ejercicio of ejercicio" [value]="ejercicio.id_ejercicio">
+             {{ ejercicio.ejercicio }}
+           </option>
+       </select>
+       <div *ngIf="FormAltaTrimestre.get('ejercicio')?.invalid && (FormAltaTrimestre.get('ejercicio')?.dirty || FormAltaTrimestre.get('ejercicio')?.touched)">
+         <div *ngIf="FormAltaTrimestre.get('ejercicio')?.errors?.['required']" class="text-sm text-validator-error mt-1">Este campo es requerido.</div>
+       </div> 
     </div>
     <!-- Botón de enviar -->
     <div class="sm:col-span-2 flex justify-end">
-      <button type="submit"
+      <button type="submit" 
         class="items-center button-save inline-flex justify-center py-2 px-6 border border-transparent shadow-sm text-sm font-medium rounded-md  ">
         <i class="fas fa-save mx-1"></i>
       </button>

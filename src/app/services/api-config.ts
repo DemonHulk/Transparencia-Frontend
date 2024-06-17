@@ -96,7 +96,15 @@ export class Ejercicio {
   activo!: boolean;
 }
 
-
+export class Trimestre {
+  id_trimestre!:string;
+  trimestre!:string;
+  id_ejercicio!: string;
+  ejercicio!: string;
+  fecha_creacion!: string;
+  fecha_actualizado!: string;
+  activo!: boolean;
+}
 
 import { AbstractControl, FormGroup, ValidationErrors, ValidatorFn } from '@angular/forms';
 
@@ -301,7 +309,7 @@ export function validarTrimestre(): ValidatorFn {
     // Limpiar y formatear el texto según las reglas necesarias
     const textoFormateado = valor
       .replace(/ {2,}/g, " ") // Reemplazar múltiples espacios en blanco por uno solo
-      .replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ0-9 \-]+/g, "") // Permitir solo letras (con o sin acentos), números y guiones
+      .replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ \-]+/g, "") // Permitir solo letras (con o sin acentos), números y guiones
       .replace(/^[^a-zA-ZáéíóúÁÉÍÓÚñÑ0-9 \-]+|[^a-zA-ZáéíóúÁÉÍÓÚñÑ0-9 \-]+$/g, "") // Eliminar caracteres no permitidos al principio o final
       .toUpperCase(); // Convertir a mayúsculas
 
