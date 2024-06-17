@@ -96,7 +96,15 @@ export class Ejercicio {
   activo!: boolean;
 }
 
-
+export class Trimestre {
+  id_trimestre!:string;
+  trimestre!:string;
+  id_ejercicio!: string;
+  ejercicio!: string;
+  fecha_creacion!: string;
+  fecha_actualizado!: string;
+  activo!: boolean;
+}
 
 import { AbstractControl, FormGroup, ValidationErrors, ValidatorFn } from '@angular/forms';
 
