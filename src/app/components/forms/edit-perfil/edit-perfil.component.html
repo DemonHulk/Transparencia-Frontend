@@ -9,7 +9,7 @@
       </a>
     </li>
     <li class="inline-flex items-center text-sm font-semibold text-gray-800 truncate" aria-current="page">
-      Modificar perfil
+      Modificar perfil 
     </li>  </ol>
 </div>
 <div class="bg-white p-8 border border-gray-200 rounded-lg shadow-lg max-w-2xl mx-auto my-10">
@@ -19,7 +19,10 @@
     <div class="sm:col-span-2">
       <label for="nombre" class="font-poppins">Nombre(s)</label>
       <div
-        class="flex items-center border border-input-bord-color py-3 px-4 rounded-lg focus-within:border-input-focus-color focus-within:ring-input-focus-color">
+        class="flex items-center border border-input-bord-color py-3 px-4 rounded-lg focus-within:border-input-focus-color focus-within:ring-input-focus-color"
+        [ngClass]="{
+          'border-validator-error focus-within:border-validator-error focus-within:ring-validator-error': FormEditPerfil.get('nombre')?.invalid && (FormEditPerfil.get('nombre')?.dirty || FormEditPerfil.get('nombre')?.touched)
+          }">
         <input type="text" id="nombre" formControlName="nombre"
           class="name flex-grow border-none focus:ring-0 focus:outline-none text-sm text-dark"
           placeholder="Nombres del usuario">
@@ -39,12 +42,21 @@
           </div>
         </div>
       </div>
+      <div *ngIf="FormEditPerfil.get('nombre')?.invalid && (FormEditPerfil.get('nombre')?.dirty || FormEditPerfil.get('nombre')?.touched)">
+        <div *ngIf="FormEditPerfil.get('nombre')?.errors?.['required']" class="text-sm text-validator-error mt-1">Este campo es requerido.</div>
+        <div *ngIf="FormEditPerfil.get('nombre')?.errors?.['minlength']" class="text-sm text-validator-error mt-1">El campo debe tener al menos 4 caracteres.</div>
+        <div *ngIf="FormEditPerfil.get('nombre')?.errors?.['maxlength']" class="text-sm text-validator-error mt-1">El campo no puede exceder los 100 caracteres.</div>
+        <div *ngIf="FormEditPerfil.get('nombre')?.errors?.['textoInvalido']" class="text-sm text-validator-error mt-1" title="No intentes ingresar caracteres especiales.">El campo no puede contener caracteres no permitidos.</div>
+      </div>
     </div>
 
     <div class="sm:col-span-2">
       <label for="primerApellido" class="font-poppins">Primer apellido</label>
       <div
-        class="flex items-center border border-input-bord-color py-3 px-4 rounded-lg focus-within:border-input-focus-color focus-within:ring-input-focus-color">
+        class="flex items-center border border-input-bord-color py-3 px-4 rounded-lg focus-within:border-input-focus-color focus-within:ring-input-focus-color"
+        [ngClass]="{
+          'border-validator-error focus-within:border-validator-error focus-within:ring-validator-error': FormEditPerfil.get('primerApellido')?.invalid && (FormEditPerfil.get('primerApellido')?.dirty || FormEditPerfil.get('primerApellido')?.touched)
+          }">
         <input type="text" id="primerApellido" formControlName="primerApellido"
           class="name flex-grow border-none focus:ring-0 focus:outline-none text-sm text-dark"
           placeholder="Primer apellido">
@@ -64,12 +76,21 @@
           </div>
         </div>
       </div>
+      <div *ngIf="FormEditPerfil.get('primerApellido')?.invalid && (FormEditPerfil.get('primerApellido')?.dirty || FormEditPerfil.get('primerApellido')?.touched)">
+        <div *ngIf="FormEditPerfil.get('primerApellido')?.errors?.['required']" class="text-sm text-validator-error mt-1">Este campo es requerido.</div>
+        <div *ngIf="FormEditPerfil.get('primerApellido')?.errors?.['minlength']" class="text-sm text-validator-error mt-1">El campo debe tener al menos 4 caracteres.</div>
+        <div *ngIf="FormEditPerfil.get('primerApellido')?.errors?.['maxlength']" class="text-sm text-validator-error mt-1">El campo no puede exceder los 100 caracteres.</div>
+        <div *ngIf="FormEditPerfil.get('primerApellido')?.errors?.['textoInvalido']" class="text-sm text-validator-error mt-1" title="No intentes ingresar caracteres especiales.">El campo no puede contener caracteres no permitidos.</div>
+      </div>
     </div>
 
     <div class="sm:col-span-2">
       <label for="segundoApellido" class="font-poppins">Segundo apellido</label>
       <div
-        class="flex items-center border border-input-bord-color py-3 px-4 rounded-lg focus-within:border-input-focus-color focus-within:ring-input-focus-color">
+        class="flex items-center border border-input-bord-color py-3 px-4 rounded-lg focus-within:border-input-focus-color focus-within:ring-input-focus-color"
+        [ngClass]="{
+          'border-validator-error focus-within:border-validator-error focus-within:ring-validator-error': FormEditPerfil.get('segundoApellido')?.invalid && (FormEditPerfil.get('segundoApellido')?.dirty || FormEditPerfil.get('segundoApellido')?.touched)
+          }">
         <input type="text" id="segundoApellido" formControlName="segundoApellido"
           class="name flex-grow border-none focus:ring-0 focus:outline-none text-sm text-dark"
           placeholder="Segundo apellido">
@@ -89,12 +110,20 @@
           </div>
         </div>
       </div>
+      <div *ngIf="FormEditPerfil.get('segundoApellido')?.invalid && (FormEditPerfil.get('segundoApellido')?.dirty || FormEditPerfil.get('segundoApellido')?.touched)">
+        <div *ngIf="FormEditPerfil.get('segundoApellido')?.errors?.['minlength']" class="text-sm text-validator-error mt-1">El campo debe tener al menos 4 caracteres.</div>
+        <div *ngIf="FormEditPerfil.get('segundoApellido')?.errors?.['maxlength']" class="text-sm text-validator-error mt-1">El campo no puede exceder los 100 caracteres.</div>
+        <div *ngIf="FormEditPerfil.get('segundoApellido')?.errors?.['textoInvalido']" class="text-sm text-validator-error mt-1" title="No intentes ingresar caracteres especiales.">El campo no puede contener caracteres no permitidos.</div>
+      </div>
     </div>
 
     <div class="sm:col-span-2">
       <label for="correo" class="font-poppins">Correo</label>
       <div
-        class="flex items-center border border-input-bord-color py-3 px-4 rounded-lg focus-within:border-input-focus-color focus-within:ring-input-focus-color">
+        class="flex items-center border border-input-bord-color py-3 px-4 rounded-lg focus-within:border-input-focus-color focus-within:ring-input-focus-color"
+        [ngClass]="{
+          'border-validator-error focus-within:border-validator-error focus-within:ring-validator-error': FormEditPerfil.get('correo')?.invalid && (FormEditPerfil.get('correo')?.dirty || FormEditPerfil.get('correo')?.touched)
+          }">
         <input type="email" id="correo" formControlName="correo"
           class=" flex-grow border-none focus:ring-0 focus:outline-none text-sm text-dark"
           placeholder="Correo">
@@ -114,12 +143,21 @@
           </div>
         </div>
       </div>
+      <div *ngIf="FormEditPerfil.get('correo')?.invalid && (FormEditPerfil.get('correo')?.dirty || FormEditPerfil.get('correo')?.touched)">
+        <div *ngIf="FormEditPerfil.get('correo')?.errors?.['required']" class="text-sm text-validator-error mt-1">Este campo es requerido.</div>
+        <div *ngIf="FormEditPerfil.get('correo')?.errors?.['minlength']" class="text-sm text-validator-error mt-1">El campo debe tener al menos 4 caracteres.</div>
+        <div *ngIf="FormEditPerfil.get('correo')?.errors?.['maxlength']" class="text-sm text-validator-error mt-1">El campo no puede exceder los 100 caracteres.</div>
+        <div *ngIf="FormEditPerfil.get('correo')?.errors?.['correoInvalido']"  class="text-sm text-validator-error mt-1">El correo electrónico debe ser del dominio utdelacosta.edu.mx.</div>
+      </div>
     </div>
 
     <div class="sm:col-span-2">
       <label for="telefono" class="font-poppins">Teléfono</label>
       <div
-        class="flex items-center border border-input-bord-color py-3 px-4 rounded-lg focus-within:border-input-focus-color focus-within:ring-input-focus-color">
+        class="flex items-center border border-input-bord-color py-3 px-4 rounded-lg focus-within:border-input-focus-color focus-within:ring-input-focus-color"
+        [ngClass]="{
+          'border-validator-error focus-within:border-validator-error focus-within:ring-validator-error': FormEditPerfil.get('telefono')?.invalid && (FormEditPerfil.get('telefono')?.dirty || FormEditPerfil.get('telefono')?.touched)
+          }">
         <input type="text" id="telefono" formControlName="telefono"
           class="telefono flex-grow border-none focus:ring-0 focus:outline-none text-sm text-dark"
           placeholder="Teléfono">
@@ -139,11 +177,19 @@
           </div>
         </div>
       </div>
+      <div *ngIf="FormEditPerfil.get('telefono')?.invalid && (FormEditPerfil.get('telefono')?.dirty || FormEditPerfil.get('telefono')?.touched)">
+        <div *ngIf="FormEditPerfil.get('telefono')?.errors?.['required']" class="text-sm text-validator-error mt-1">Este campo es requerido.</div>
+        <div *ngIf="FormEditPerfil.get('telefono')?.errors?.['minlength']" class="text-sm text-validator-error mt-1">El campo debe tener al menos 10 caracteres.</div>
+        <div *ngIf="FormEditPerfil.get('telefono')?.errors?.['maxlength']" class="text-sm text-validator-error mt-1">El campo no puede exceder los 10 caracteres.</div>
+      </div>
     </div>
 
     <div class="sm:col-span-2">
       <label for="password" class="font-poppins">Contraseña</label>
-      <div class="flex items-center border border-input-bord-color py-3 px-4 rounded-lg focus-within:border-input-focus-color focus-within:ring-input-focus-color">
+      <div class="flex items-center border border-input-bord-color py-3 px-4 rounded-lg focus-within:border-input-focus-color focus-within:ring-input-focus-color"
+      [ngClass]="{
+        'border-validator-error focus-within:border-validator-error focus-within:ring-validator-error': FormEditPerfil.get('password')?.invalid && (FormEditPerfil.get('password')?.dirty || FormEditPerfil.get('password')?.touched)
+        }">
         <input id="hs-toggle-password" type="password" class=" flex-grow border-none focus:ring-0 focus:outline-none text-sm text-dark" placeholder="Contraseña" formControlName="password">
         <button type="button" data-hs-toggle-password='{
             "target": "#hs-toggle-password"
@@ -157,6 +203,10 @@
             <circle class="hidden hs-password-active:block" cx="12" cy="12" r="3"></circle>
           </svg>
         </button>
+      </div>
+      <div *ngIf="FormEditPerfil.get('password')?.invalid && (FormEditPerfil.get('password')?.dirty || FormEditPerfil.get('password')?.touched)">
+        <div *ngIf="FormEditPerfil.get('password')?.errors?.['minlength']" class="text-sm text-validator-error mt-1">El campo debe tener al menos 6 caracteres.</div>
+        <div *ngIf="FormEditPerfil.get('password')?.errors?.['maxlength']" class="text-sm text-validator-error mt-1">El campo no puede exceder los 100 caracteres.</div>
       </div>
     </div>
 
