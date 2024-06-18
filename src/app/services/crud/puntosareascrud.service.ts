@@ -24,6 +24,11 @@ export class PuntosAreasCrudService {
     Desactivate_PuntoArea(formulario: any): Observable<any> {
       return this.clientHttp.post(API_URL + "puntosareas/desactivate_puntoarea", formulario, { responseType: 'text' });
     }
+
+    /**PARA SACAR LAS AREAS QUE TIENE UN PUNTO EN ESPECIFICO EL _PUNTO DICE QUE SE ESTA FILTRANDO POR PUNTO*/
+    GetAreasPunto_PuntoService(id:any){
+      return this.clientHttp.get(API_URL+"areapunto_punto/"+id, { responseType: 'text' });
+    }
     
 
 }
