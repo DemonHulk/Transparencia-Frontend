@@ -36,5 +36,8 @@ export class PuntocrudService {
       return this.clientHttp.put(API_URL + "punto/"+ id, formulario, { responseType: 'text' });
     }
     
-    
+    /*extrae todos los puntos estan activos y tengan la area del usuario en sesión*/
+    GetPuntosUserService(id:any){
+      return this.clientHttp.get(API_URL+"puntoUser/"+ id, { responseType: 'text' })
+    }
 }

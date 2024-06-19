@@ -136,6 +136,7 @@
           data-hs-tab="#tabs-with-icons-1"
           aria-controls="tabs-with-icons-1"
           role="tab"
+          *ngIf="administrador"
         >
           Todos
         </button>
@@ -146,6 +147,7 @@
           data-hs-tab="#tabs-with-icons-2"
           aria-controls="tabs-with-icons-2"
           role="tab"
+          *ngIf="administrador"
         >
           Papelera
         </button>
@@ -167,7 +169,8 @@
                 routerLink="/new-punto"
                 type="button"
                 class="py-3 my-2 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent button-secondary text-white hover:bg-primary-color-90 disabled:opacity-50 disabled:pointer-events-none"
-              >
+                *ngIf="administrador"
+                >
                 <i class="fa fa-plus" aria-hidden="true"></i>
                 Registrar Punto
               </button>
@@ -260,6 +263,7 @@
               <button
                 routerLink="/new-punto"
                 type="button"
+                *ngIf="administrador"
                 class="py-3 my-2 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent button-secondary text-white hover:bg-primary-color-90 disabled:opacity-50 disabled:pointer-events-none"
               >
                 <i class="fa fa-plus" aria-hidden="true"></i>
@@ -379,6 +383,7 @@
                             (mouseenter)="mostrar($event.target)"
                             (mouseleave)="mostrar($event.target)"
                             class="hover:text-primary"
+                            *ngIf="administrador"
                           >
                             <!-- User -->
                             <div
@@ -422,7 +427,7 @@
                           </button>
                           <button
                             (click)="DeletePunto(punto.id_punto)"
-                            *ngIf="punto.activo"
+                            *ngIf="punto.activo && administrador"
                             (mouseenter)="mostrar($event.target)"
                             (mouseleave)="mostrar($event.target)"
                             class="hover:text-primary"
@@ -469,7 +474,7 @@
                             </div>
                           </button>
                           <button
-                            *ngIf="!punto.activo"
+                            *ngIf="!punto.activo && administrador"
                             (click)="ActivatePunto(punto.id_punto)"
                             (mouseenter)="mostrar($event.target)"
                             (mouseleave)="mostrar($event.target)"
@@ -728,7 +733,7 @@
                             </div>
                           </button>
                           <button
-                            *ngIf="!punto.activo"
+                            *ngIf="!punto.activo && administrador"
                             (click)="ActivatePunto(punto.id_punto)"
                             (mouseenter)="mostrar($event.target)"
                             (mouseleave)="mostrar($event.target)"

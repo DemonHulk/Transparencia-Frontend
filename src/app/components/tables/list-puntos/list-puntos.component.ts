@@ -21,8 +21,9 @@ export class ListPuntosComponent {
   ListPuntos: (Punto & { fecha_string: string })[] = [];
   ListActivePuntos: (Punto & { fecha_string: string })[] = [];
   ListInactivePuntos: (Punto & { fecha_string: string })[] = [];
-
-
+  sesionActiva: any;
+  administrador: any;
+  datosUsuario: any;
   constructor(
     public sharedService: SharedValuesService,
     private PuntocrudService: PuntocrudService,
@@ -48,36 +49,49 @@ export class ListPuntosComponent {
      */
     this.sharedService.changeTitle('Puntos registrados en el sistema');
     this.sharedService.setLoading(true);
-    /**
-     * Llama al Servicio PuntocrudService y ejecutar la funcion para extraer todos los puntos.
-     */
-    this.GetAllPuntosService();
+    
+    this.verificarAdministrador();
   }
 
   encriptarId(id:any){
     return this.encodeService.encodeID(id);
   }
 
-
+  // Para cuando es usuario administrador
   GetAllPuntosService() {
-    this.PuntocrudService.GetAllPuntosService().subscribe((respuesta: any) => {
-      /* Desencriptamos la respuesta que nos retorna el backend */ 
-      this.ListPuntos = this.encodeService.decryptData(respuesta).resultado?.data.map((punto: Punto) => this.addFormattedDate(punto));
-      // Filtrar las áreas activas
-      this.ListActivePuntos = this.ListPuntos.filter(punto => punto.activo == true);
+      this.PuntocrudService.GetAllPuntosService().subscribe((respuesta: any) => {
+        this.ListPuntos = this.encodeService.decryptData(respuesta).resultado?.data.map((punto: Punto) => this.addFormattedDate(punto));
+        // Filtrar las áreas activas
+        this.ListActivePuntos = this.ListPuntos.filter(punto => punto.activo == true);
+        // Filtrar las áreas inactivas
+        this.ListInactivePuntos = this.ListPuntos.filter(punto => punto.activo == false);
+        //Indicar que todos los datos se han cargado
+        setTimeout(() => {
 
-      // Filtrar las áreas inactivas
-      this.ListInactivePuntos = this.ListPuntos.filter(punto => punto.activo == false);
-
-      //Indicar que todos los datos se han cargado
-      setTimeout(() => {
-
-        this.sharedService.setLoading(false);
-        window.HSStaticMethods.autoInit();
-      }, 500);
-
-    });
+          this.sharedService.setLoading(false);
+          window.HSStaticMethods.autoInit();
+        }, 500);
+        });
   }
+  
+  // Para cuando es usuario normal
+  GetUserPuntosService(id:any) {
+    const encryptedID = this.encodeService.encryptData(JSON.stringify(id));
+      this.PuntocrudService.GetPuntosUserService(encryptedID).subscribe((respuesta: any) => {
+        console.log(this.encodeService.decryptData(respuesta).resultado?.data);
+        this.ListPuntos = this.encodeService.decryptData(respuesta).resultado?.data.map((punto: Punto) => this.addFormattedDate(punto));
+        // Filtrar las áreas activas
+        this.ListActivePuntos = this.ListPuntos.filter(punto => punto.activo == true);
+        // Filtrar las áreas inactivas
+        this.ListInactivePuntos = this.ListPuntos.filter(punto => punto.activo == false);
+        //Indicar que todos los datos se han cargado
+        setTimeout(() => {
+          this.sharedService.setLoading(false);
+          window.HSStaticMethods.autoInit();
+        }, 500);
+        });
+  }
+
 
   private addFormattedDate(punto: Punto): Punto & { fecha_string: string } {
     return {
@@ -141,4 +155,26 @@ export class ListPuntosComponent {
     }
   }
   
+  // Función para verificar si la sesón esta activa y si es administrador
+  verificarAdministrador() {
+    this.datosUsuario = this.encodeService.desencriptarDatosUsuario();
+    if (this.datosUsuario) {
+      try {
+        if (this.datosUsuario.id_area === 1) {
+          this.administrador = true;
+          /**
+           * Llama al Servicio PuntocrudService y ejecutar la funcion para extraer todos los puntos.
+          */
+          this.GetAllPuntosService();
+        }else{
+          // Segunda funcion para mostrar los puntos a los que tiene acceso
+          this.GetUserPuntosService(this.datosUsuario.id_area);
+        }
+      } catch (e) {
+        console.error("Error parsing JSON data: ", e);
+      }
+    } else {
+      this.sesionActiva = false;
+    }
+  }
 }

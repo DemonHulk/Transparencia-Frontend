@@ -23,7 +23,7 @@
       <div
       class="flex items-center border border-input-bord-color py-3 px-4 rounded-lg focus-within:border-input-focus-color focus-within:ring-input-focus-color"
       [ngClass]="{
-        'border-validator-error focus-within:border-validator-error focus-within:ring-validator-error': FormAltaTrimestre.get('nombreTrimestre')?.invalid && (FormAltaTrimestre.get('nombreTrimestre')?.dirty || FormAltaTrimestre.get('nombreTrimestre')?.touched)
+        'border-validator-error focus-within:border-validator-error focus-within:ring-validator-error': FormAltaTrimestre.get('trimestre')?.invalid && (FormAltaTrimestre.get('trimestre')?.dirty || FormAltaTrimestre.get('trimestre')?.touched)
         }">
         <input type="text" id="trimestre" formControlName="trimestre"
           class="trimestre flex-grow border-none focus:ring-0 focus:outline-none text-sm text-dark"
@@ -48,6 +48,9 @@
       </div>
       <div *ngIf="FormAltaTrimestre.get('trimestre')?.invalid && (FormAltaTrimestre.get('trimestre')?.dirty || FormAltaTrimestre.get('trimestre')?.touched)">
         <div *ngIf="FormAltaTrimestre.get('trimestre')?.errors?.['required']" class="text-sm text-validator-error mt-1">Este campo es requerido.</div>
+        <div *ngIf="FormAltaTrimestre.get('trimestre')?.errors?.['minlength']" class="text-sm text-validator-error mt-1">El campo debe tener al menos 9 caracteres.</div>
+        <div *ngIf="FormAltaTrimestre.get('trimestre')?.errors?.['maxlength']" class="text-sm text-validator-error mt-1">El campo no puede exceder los 25 caracteres.</div>
+        <div *ngIf="FormAltaTrimestre.get('trimestre')?.errors?.['validarTrimestre']" class="text-sm text-validator-error mt-1" title="No intentes ingresar caracteres especiales.">El campo no puede contener caracteres no permitidos.</div>
       </div>
     </div>
 
