@@ -35,6 +35,8 @@ export class EditTrimestreComponent {
           [
             validarTrimestre(), // Aplica el validador personalizado, el true significa que no debe estar vacio
             Validators.required,
+            Validators.minLength(9),
+            Validators.maxLength(25)
           ],
         ],
         ejercicio: ['',

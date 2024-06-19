@@ -298,26 +298,64 @@ export function validarNombre(requiereNoVacio: boolean): ValidatorFn {
   };
 }
 
+// Array de meses en mayúsculas
+const meses = [
+  "ENERO", "FEBRERO", "MARZO", "ABRIL", "MAYO", "JUNIO",
+  "JULIO", "AGOSTO", "SEPTIEMBRE", "OCTUBRE", "NOVIEMBRE", "DICIEMBRE"
+];
+
 export function validarTrimestre(): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
-    const valor = control.value;
+    let valor = control.value;
 
     if (!valor) {
       return { 'textoVacio': true };
     }
 
     // Limpiar y formatear el texto según las reglas necesarias
-    const textoFormateado = valor
+    let textoFormateado = valor
       .replace(/ {2,}/g, " ") // Reemplazar múltiples espacios en blanco por uno solo
       .replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ \-]+/g, "") // Permitir solo letras (con o sin acentos), números y guiones
       .replace(/^[^a-zA-ZáéíóúÁÉÍÓÚñÑ0-9 \-]+|[^a-zA-ZáéíóúÁÉÍÓÚñÑ0-9 \-]+$/g, "") // Eliminar caracteres no permitidos al principio o final
       .toUpperCase(); // Convertir a mayúsculas
 
-    // Actualizar el valor del control con el texto formateado
+    // Insertar espacio alrededor del guion
+    textoFormateado = textoFormateado.replace(/ ?\- ?/g, " - ");
+
+    // Limitar a un solo guion
+    const partes = textoFormateado.split(" - ");
+    if (partes.length > 2) {
+      textoFormateado = partes.slice(0, 2).join(" - ");
+    }
+
+    // Insertar " - " en lugar del primer espacio si no hay guion
+    if (textoFormateado.indexOf(" - ") === -1) {
+      textoFormateado = textoFormateado.replace(" ", " - ");
+    }
+
+
+
+    // Actualizar el valor del control con el texto formateado solo si ha cambiado
     if (textoFormateado !== valor) {
-      control.setValue(textoFormateado.trim()); // Actualizar el valor del control con el texto formateado
+      // Usar `control.setValue` con `emitEvent: false` para evitar bucles infinitos
+      control.setValue(textoFormateado, { emitEvent: false });
       control.markAsDirty(); // Marcar el control como modificado para que Angular actualice la vista
     }
+
+    // Verificar si la cadena sigue la estructura MES - MES
+    const regex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ]+ ?\- ?[a-zA-ZáéíóúÁÉÍÓÚñÑ]+$/;
+    if (!regex.test(textoFormateado)) {
+      return { 'formatoInvalido': true };
+    }
+
+     // Verificar si las partes antes y después del guion son meses válidos
+     const [mes1, mes2] = textoFormateado.split(" - ");
+     if (!mes1 || !mes2 || !meses.includes(mes1) || !meses.includes(mes2)) {
+       return { 'mesInvalido': true };
+     }
+
+
+
 
     return null; // No hay errores, el texto es válido y está formateado correctamente
   };

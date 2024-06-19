@@ -65,11 +65,9 @@ export class EditAreaComponent implements OnInit {
         });
       } else {
         console.error('La respuesta es undefined');
-
       }
     }, error => {
       console.error('Ocurrió un error al obtener el área:', error);
-
     });
   }
 

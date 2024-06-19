@@ -15,15 +15,19 @@
 <div class="bg-white p-8 border border-gray-200 rounded-lg shadow-lg max-w-2xl mx-auto my-10">
   <h3 class="my-2 text-left">Modificar Punto</h3>
   <hr class="w-full mb-2 border-hr-color">
-  <form class="grid grid-cols-1 gap-y-6 gap-x-4">
+  <form [formGroup]="FormAltaPunto" (ngSubmit)="UpdatePunto()" class="grid grid-cols-1 gap-y-6 gap-x-4">
     <!-- Input para el nombre interno del documento -->
     <div class="sm:col-span-2">
       <label for="nombrePunto" class="font-poppins">Nombre del punto</label>
       <div
-      class="flex items-center border border-input-bord-color py-3 px-4 rounded-lg focus-within:border-input-focus-color focus-within:ring-input-focus-color">
-        <input type="text" id="nombrePunto"
-          class="tema flex-grow border-none focus:ring-0 focus:outline-none text-sm text-dark"
+        [ngClass]="{
+          'border-validator-error focus-within:border-validator-error focus-within:ring-validator-error': FormAltaPunto.get('nombrePunto')?.invalid && (FormAltaPunto.get('nombrePunto')?.dirty || FormAltaPunto.get('nombrePunto')?.touched)
+          }"
+        class="flex items-center border border-input-bord-color py-3 px-4 rounded-lg focus-within:border-input-focus-color focus-within:ring-input-focus-color">
+        <input type="text" id="nombrePunto" formControlName="nombrePunto"
+          class=" flex-grow border-none focus:ring-0 focus:outline-none text-sm text-dark"
           placeholder="Nombre del punto">
+
         <div class="hs-tooltip [--trigger:hover] sm:[--placement:right] inline-block ml-2">
           <!-- lo del simbolo de interrogacion -->
           <i class="fa-solid fa-question text-gray-500"></i>
@@ -44,6 +48,12 @@
           </div>
         </div>
       </div>
+      <div *ngIf="FormAltaPunto.get('nombrePunto')?.invalid && (FormAltaPunto.get('nombrePunto')?.dirty || FormAltaPunto.get('nombrePunto')?.touched)">
+        <div *ngIf="FormAltaPunto.get('nombrePunto')?.errors?.['required']" class="text-sm text-validator-error mt-1">Este campo es requerido.</div>
+        <div *ngIf="FormAltaPunto.get('nombrePunto')?.errors?.['minlength']" class="text-sm text-validator-error mt-1">El campo debe tener al menos 5 caracteres.</div>
+        <div *ngIf="FormAltaPunto.get('nombrePunto')?.errors?.['maxlength']" class="text-sm text-validator-error mt-1">El campo no puede exceder los 100 caracteres.</div>
+        <div *ngIf="FormAltaPunto.get('nombrePunto')?.errors?.['textoInvalido']" class="text-sm text-validator-error mt-1" title="No intentes ingresar caracteres especiales.">El campo no puede contener caracteres no permitidos.</div>
+      </div>
     </div>
     <div class="w-12/12  ">
       <label for="trimestre" class="font-poppins flex items-center">
@@ -62,9 +72,9 @@
         </div>
       </label>
       <div class="w-12/12 flex flex-wrap">
-        <label *ngFor="let area of getNumbers()" for="vertical-checkbox-{{area}}" class=" flex p-3 w-full lg:w-6/12 sm:w-12/12 md:w-6/12 bg-white  rounded-lg text-sm focus:border-primary-color focus:ring-primary-color">
-          <input type="checkbox" class=" mt-0.5 border-gray-200 rounded text-primary-color-90 focus:ring-primary-color disabled:opacity-50 disabled:pointer-events-none" id="vertical-checkbox-{{area}}" >
-          <span class="text-sm text-gray-500 ms-3">Área {{area}}</span>
+        <label *ngFor="let area of ListArea" for="vertical-checkbox-{{area}}" class=" flex p-3 w-full lg:w-6/12 sm:w-12/12 md:w-6/12 bg-white  rounded-lg text-sm focus:border-primary-color focus:ring-primary-color">
+          <input type="checkbox" class=" mt-0.5 border-gray-200 rounded text-primary-color-90 focus:ring-primary-color disabled:opacity-50 disabled:pointer-events-none" id="vertical-checkbox-{{area.id_area}}" formControlName="vertical-checkbox-{{area.id_area}}" >
+          <span class="text-sm text-gray-500 ms-3">{{area.nombre_area}}</span>
         </label>
       </div>
     </div>
