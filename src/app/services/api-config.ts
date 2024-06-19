@@ -309,12 +309,12 @@ export function validarTrimestre(): ValidatorFn {
     // Limpiar y formatear el texto según las reglas necesarias
     let textoFormateado = valor
       .replace(/ {2,}/g, " ") // Reemplazar múltiples espacios en blanco por uno solo
-      .replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ -]+/g, "") // Permitir solo letras (con o sin acentos), números y guiones
-      .replace(/^[^a-zA-ZáéíóúÁÉÍÓÚñÑ0-9 -]+|[^a-zA-ZáéíóúÁÉÍÓÚñÑ0-9 -]+$/g, "") // Eliminar caracteres no permitidos al principio o final
+      .replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ \-]+/g, "") // Permitir solo letras (con o sin acentos), números y guiones
+      .replace(/^[^a-zA-ZáéíóúÁÉÍÓÚñÑ0-9 \-]+|[^a-zA-ZáéíóúÁÉÍÓÚñÑ0-9 \-]+$/g, "") // Eliminar caracteres no permitidos al principio o final
       .toUpperCase(); // Convertir a mayúsculas
 
     // Insertar espacio alrededor del guion
-    textoFormateado = textoFormateado.replace(/ ?- ?/g, " - ");
+    textoFormateado = textoFormateado.replace(/ ?\- ?/g, " - ");
 
     // Limitar a un solo guion
     const partes = textoFormateado.split(" - ");
@@ -326,10 +326,10 @@ export function validarTrimestre(): ValidatorFn {
     if (textoFormateado.indexOf(" - ") === -1) {
       textoFormateado = textoFormateado.replace(" ", " - ");
     }
-
-    // Actualizar el valor del control con el texto formateado
+    // Actualizar el valor del control con el texto formateado solo si ha cambiado
     if (textoFormateado !== valor) {
-      control.setValue(textoFormateado.trim()); // Actualizar el valor del control con el texto formateado
+      // Usar `control.setValue` con `emitEvent: false` para evitar bucles infinitos
+      control.setValue(textoFormateado, { emitEvent: false });
       control.markAsDirty(); // Marcar el control como modificado para que Angular actualice la vista
     }
 
