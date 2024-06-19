@@ -50,7 +50,8 @@
         <div *ngIf="FormAltaTrimestre.get('trimestre')?.errors?.['required']" class="text-sm text-validator-error mt-1">Este campo es requerido.</div>
         <div *ngIf="FormAltaTrimestre.get('trimestre')?.errors?.['minlength']" class="text-sm text-validator-error mt-1">El campo debe tener al menos 9 caracteres.</div>
         <div *ngIf="FormAltaTrimestre.get('trimestre')?.errors?.['maxlength']" class="text-sm text-validator-error mt-1">El campo no puede exceder los 25 caracteres.</div>
-        <div *ngIf="FormAltaTrimestre.get('trimestre')?.errors?.['validarTrimestre']" class="text-sm text-validator-error mt-1" title="No intentes ingresar caracteres especiales.">El campo no puede contener caracteres no permitidos.</div>
+        <div *ngIf="FormAltaTrimestre.get('trimestre')?.errors?.['mesInvalido']" class="text-sm text-validator-error mt-1">Los valores proporcionados no corresponden a meses.</div>
+        <div *ngIf="FormAltaTrimestre.get('trimestre')?.errors?.['formatoInvalido']" class="text-sm text-validator-error mt-1">El formato correcto es <strong>MES - MES</strong>.</div>
       </div>
     </div>
 
@@ -85,7 +86,7 @@
        </select>
        <div *ngIf="FormAltaTrimestre.get('ejercicio')?.invalid && (FormAltaTrimestre.get('ejercicio')?.dirty || FormAltaTrimestre.get('ejercicio')?.touched)">
          <div *ngIf="FormAltaTrimestre.get('ejercicio')?.errors?.['required']" class="text-sm text-validator-error mt-1">Este campo es requerido.</div>
-       </div> 
+       </div>
     </div>
     <!-- Botón de enviar -->
     <div class="sm:col-span-2 flex justify-end">

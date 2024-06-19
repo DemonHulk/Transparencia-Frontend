@@ -298,6 +298,12 @@ export function validarNombre(requiereNoVacio: boolean): ValidatorFn {
   };
 }
 
+// Array de meses en mayúsculas
+const meses = [
+  "ENERO", "FEBRERO", "MARZO", "ABRIL", "MAYO", "JUNIO",
+  "JULIO", "AGOSTO", "SEPTIEMBRE", "OCTUBRE", "NOVIEMBRE", "DICIEMBRE"
+];
+
 export function validarTrimestre(): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
     let valor = control.value;
@@ -326,12 +332,30 @@ export function validarTrimestre(): ValidatorFn {
     if (textoFormateado.indexOf(" - ") === -1) {
       textoFormateado = textoFormateado.replace(" ", " - ");
     }
+
+
+
     // Actualizar el valor del control con el texto formateado solo si ha cambiado
     if (textoFormateado !== valor) {
       // Usar `control.setValue` con `emitEvent: false` para evitar bucles infinitos
       control.setValue(textoFormateado, { emitEvent: false });
       control.markAsDirty(); // Marcar el control como modificado para que Angular actualice la vista
     }
+
+    // Verificar si la cadena sigue la estructura MES - MES
+    const regex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ]+ ?\- ?[a-zA-ZáéíóúÁÉÍÓÚñÑ]+$/;
+    if (!regex.test(textoFormateado)) {
+      return { 'formatoInvalido': true };
+    }
+
+     // Verificar si las partes antes y después del guion son meses válidos
+     const [mes1, mes2] = textoFormateado.split(" - ");
+     if (!mes1 || !mes2 || !meses.includes(mes1) || !meses.includes(mes2)) {
+       return { 'mesInvalido': true };
+     }
+
+
+
 
     return null; // No hay errores, el texto es válido y está formateado correctamente
   };
