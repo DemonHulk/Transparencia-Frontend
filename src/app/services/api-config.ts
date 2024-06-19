@@ -300,18 +300,32 @@ export function validarNombre(requiereNoVacio: boolean): ValidatorFn {
 
 export function validarTrimestre(): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
-    const valor = control.value;
+    let valor = control.value;
 
     if (!valor) {
       return { 'textoVacio': true };
     }
 
     // Limpiar y formatear el texto según las reglas necesarias
-    const textoFormateado = valor
+    let textoFormateado = valor
       .replace(/ {2,}/g, " ") // Reemplazar múltiples espacios en blanco por uno solo
-      .replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ \-]+/g, "") // Permitir solo letras (con o sin acentos), números y guiones
-      .replace(/^[^a-zA-ZáéíóúÁÉÍÓÚñÑ0-9 \-]+|[^a-zA-ZáéíóúÁÉÍÓÚñÑ0-9 \-]+$/g, "") // Eliminar caracteres no permitidos al principio o final
+      .replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ -]+/g, "") // Permitir solo letras (con o sin acentos), números y guiones
+      .replace(/^[^a-zA-ZáéíóúÁÉÍÓÚñÑ0-9 -]+|[^a-zA-ZáéíóúÁÉÍÓÚñÑ0-9 -]+$/g, "") // Eliminar caracteres no permitidos al principio o final
       .toUpperCase(); // Convertir a mayúsculas
+
+    // Insertar espacio alrededor del guion
+    textoFormateado = textoFormateado.replace(/ ?- ?/g, " - ");
+
+    // Limitar a un solo guion
+    const partes = textoFormateado.split(" - ");
+    if (partes.length > 2) {
+      textoFormateado = partes.slice(0, 2).join(" - ");
+    }
+
+    // Insertar " - " en lugar del primer espacio si no hay guion
+    if (textoFormateado.indexOf(" - ") === -1) {
+      textoFormateado = textoFormateado.replace(" ", " - ");
+    }
 
     // Actualizar el valor del control con el texto formateado
     if (textoFormateado !== valor) {
