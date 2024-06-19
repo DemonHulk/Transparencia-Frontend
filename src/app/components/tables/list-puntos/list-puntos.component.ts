@@ -78,7 +78,6 @@ export class ListPuntosComponent {
   GetUserPuntosService(id:any) {
     const encryptedID = this.encodeService.encryptData(JSON.stringify(id));
       this.PuntocrudService.GetPuntosUserService(encryptedID).subscribe((respuesta: any) => {
-        console.log(this.encodeService.decryptData(respuesta).resultado?.data);
         this.ListPuntos = this.encodeService.decryptData(respuesta).resultado?.data.map((punto: Punto) => this.addFormattedDate(punto));
         // Filtrar las áreas activas
         this.ListActivePuntos = this.ListPuntos.filter(punto => punto.activo == true);
@@ -138,7 +137,6 @@ export class ListPuntosComponent {
     this.flasher.reactivar().then((confirmado) => {
       if (confirmado) {
         // Enviamos la id encriptada
-          console.log((id));
           const encryptedID = this.encodeService.encryptData(JSON.stringify(id));
         this.PuntocrudService.ActivatePuntoService(encryptedID).subscribe(respuesta => {
           this.GetAllPuntosService();
@@ -146,6 +144,13 @@ export class ListPuntosComponent {
         });
       }
     });
+  }
+
+  filterGlobalActive(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (this.dtActive) {
+      this.dtActive.filterGlobal(input.value, 'contains');
+    }
   }
 
   filterGlobalInactive(event: Event) {
@@ -168,10 +173,10 @@ export class ListPuntosComponent {
           this.GetAllPuntosService();
         }else{
           // Segunda funcion para mostrar los puntos a los que tiene acceso
-          this.GetUserPuntosService(this.datosUsuario.id_area);
+          this.GetUserPuntosService(this.datosUsuario?.id_area);
         }
       } catch (e) {
-        console.error("Error parsing JSON data: ", e);
+
       }
     } else {
       this.sesionActiva = false;
