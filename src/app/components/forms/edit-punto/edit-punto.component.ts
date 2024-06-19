@@ -186,9 +186,14 @@ export class EditPuntoComponent {
   GetActAreaService() {
     this.AreaCrudService.GetActAreaService().subscribe((respuesta: any) => {
       /* Desencriptamos la respuesta que nos retorna el backend */ 
-      this.ListArea = this.encodeService.decryptData(respuesta).resultado?.data?.data;
+      let decryptedData = this.encodeService.decryptData(respuesta).resultado?.data?.data;
+  
+      // Filtrar el array para excluir el registro con id_area = 1
+      this.ListArea = decryptedData?.filter((area: any) => area.id_area !== 1) || [];
+  
       this.initializeDynamicControls();
-      //Indicar que todos los datos se han cargado
+  
+      // Indicar que todos los datos se han cargado
       setTimeout(() => {
         this.sharedService.setLoading(false);
         window.HSStaticMethods.autoInit();
