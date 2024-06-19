@@ -83,7 +83,7 @@ export class EditPuntoComponent {
   
   UpdatePunto(): any {
     markFormGroupTouched(this.FormAltaPunto);
-    if (this.FormAltaPunto.valid) {
+    if (this.FormAltaPunto.valid && this.selectedAreas.length > 0) {
       const encryptedData = this.CryptoServiceService.encryptData(JSON.stringify(this.FormAltaPunto.value));
       const encryptedID = this.encodeService.encryptData(JSON.stringify(this.id));
 
@@ -93,7 +93,6 @@ export class EditPuntoComponent {
       this.PuntocrudService.UpdatePuntoService(data,encryptedID).subscribe(
         respuesta => {
           if (this.CryptoServiceService.decryptData(respuesta)?.resultado?.res) {
-            console.log(this.CryptoServiceService.decryptData(respuesta));
             this.flasher.success(this.CryptoServiceService.decryptData(respuesta)?.resultado?.data);
             this.router.navigate(['/puntos']);
           } else {
@@ -105,12 +104,16 @@ export class EditPuntoComponent {
         }
       );
     } else {
-      this.flasher.error("El formulario no es válido. Por favor, complete todos los campos requeridos correctamente.");
+      if (!this.FormAltaPunto.valid) {
+        this.flasher.error("Datos Invalidos. Complete los datos correctamente.");
+      } else {
+        this.flasher.error("Debe seleccionar al menos un área.");
+      }
     }
   }
 
 
-
+  selectedAreas: number[] = [];
 
   /** EXTRAE EL NOMBRE DEL PUNTO ACTUAL EN REVISION */
   GetOnePuntoService(id: any) {
@@ -151,14 +154,29 @@ export class EditPuntoComponent {
 
   /** AJUSTA EL FORMULARIO DINAMICO PARA QUE SE AGREGEN LOS PUNTOS DE LAS AREAS QUE SEAN */
   initializeDynamicControls() {
-    // Itera sobre ListArea y agrega los controles dinámicamente al formulario
-    console.log(this.ListArea);
-    console.log(this.ListAreaPunto);
+    // Inicializar selectedAreas con las áreas seleccionadas previamente
+    this.selectedAreas = [];
     this.ListArea.forEach(area => {
       const puntoArea = this.ListAreaPunto.find(pa => pa.id_area === area.id_area);
-      area.activo = puntoArea ? puntoArea.activo : false; // Verifica si existe un punto para el área
       const controlName = `vertical-checkbox-${area.id_area}`;
-      this.FormAltaPunto.addControl(controlName, this.formulario.control(area.activo));
+      const control = this.formulario.control(puntoArea ? puntoArea.activo : false);
+      area.activo = puntoArea ? puntoArea.activo : false; // Verifica si existe un punto para el área
+  
+      this.FormAltaPunto.addControl(controlName, control);
+  
+      // Agregar las áreas previamente seleccionadas a selectedAreas
+      if (area.activo) {
+        this.selectedAreas.push(Number(area.id_area));
+      }
+  
+      // Agrega un event listener al control
+      control.valueChanges.subscribe((value: boolean | null) => {
+        if (value) {
+          this.selectedAreas.push(Number(area.id_area)); // Convertir area.id_area a número
+        } else {
+          this.selectedAreas = this.selectedAreas.filter(id => id !== Number(area.id_area)); // Convertir area.id_area a número
+        }
+      });
     });
   }
   

@@ -37,6 +37,7 @@ export class NewPuntoComponent {
           Validators.minLength(5),
           Validators.maxLength(100)
         ],
+        
       ]
     });
   }
@@ -62,16 +63,13 @@ export class NewPuntoComponent {
 
   SavePunto(): any {
     markFormGroupTouched(this.FormAltaPunto);
-    if (this.FormAltaPunto.valid) {
-      console.log((this.FormAltaPunto.value));
+    if (this.FormAltaPunto.valid && this.selectedAreas.length > 0) {
       const encryptedData = this.CryptoServiceService.encryptData(JSON.stringify(this.FormAltaPunto.value));
-
       const data = {
         data: encryptedData
       };
       this.PuntocrudService.InsertPuntoService(data).subscribe(
         respuesta => {
-          console.log(this.CryptoServiceService.decryptData(respuesta));
           if (this.CryptoServiceService.decryptData(respuesta)?.resultado?.res) {
             this.flasher.success(this.CryptoServiceService.decryptData(respuesta)?.resultado?.data);
             this.router.navigate(['/puntos']);
@@ -84,15 +82,31 @@ export class NewPuntoComponent {
         }
       );
     } else {
-      this.flasher.error("El formulario no es válido. Por favor, complete todos los campos requeridos correctamente.");
+      if (!this.FormAltaPunto.valid) {
+        this.flasher.error("Datos Invalidos. Complete los datos correctamente.");
+      } else {
+        this.flasher.error("Debe seleccionar al menos un área.");
+      }
     }
   }
+
+  selectedAreas: number[] = [];
 
   initializeDynamicControls() {
     // Itera sobre ListArea y agrega los controles dinámicamente al formulario
     this.ListArea.forEach(area => {
       const controlName = `vertical-checkbox-${area.id_area}`;
-      this.FormAltaPunto.addControl(controlName, this.formulario.control(false));
+      const control = this.formulario.control(false);
+      this.FormAltaPunto.addControl(controlName, control);
+  
+      // Agrega un event listener al control
+      control.valueChanges.subscribe((value: boolean | null) => {
+        if (value) {
+          this.selectedAreas.push(Number(area.id_area)); // Convertir area.id_area a número
+        } else {
+          this.selectedAreas = this.selectedAreas.filter(id => id !== Number(area.id_area)); // Convertir area.id_area a número
+        }
+      });
     });
   }
 
