@@ -1,37 +1,43 @@
 <div class="12/12 text-right my-5">
   <ol class="flex items-center whitespace-nowrap">
     <li class="inline-flex items-center">
-      <a class="flex items-center text-sm text-gray-500 hover:text-color-active focus:outline-none focus:text-color-active" routerLink="/puntos">
+      <a class="flex items-center text-sm text-gray-500 hover:text-color-active focus:outline-none focus:text-color-active"
+        routerLink="/puntos">
         Puntos
-        <svg class="flex-shrink-0 mx-2 overflow-visible size-4 text-gray-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <svg class="flex-shrink-0 mx-2 overflow-visible size-4 text-gray-400" xmlns="http://www.w3.org/2000/svg"
+          width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
           <path d="m9 18 6-6-6-6"></path>
         </svg>
       </a>
     </li>
     <li class="inline-flex items-center">
-      <a class="flex items-center text-sm text-gray-500 hover:text-color-active focus:outline-none focus:text-color-active" routerLink="/details-punto/1">
+      <a class="flex items-center text-sm text-gray-500 hover:text-color-active focus:outline-none focus:text-color-active"
+        routerLink="/details-punto/{{idEncrypt}}">
         Detalles punto
-        <svg class="flex-shrink-0 mx-2 overflow-visible size-4 text-gray-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <svg class="flex-shrink-0 mx-2 overflow-visible size-4 text-gray-400" xmlns="http://www.w3.org/2000/svg"
+          width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
           <path d="m9 18 6-6-6-6"></path>
         </svg>
       </a>
     </li>
     <li class="inline-flex items-center text-sm font-semibold text-gray-800 truncate" aria-current="page">
       Nuevo tema
-    </li>  </ol>
+    </li>
+  </ol>
 </div>
 <div class="bg-white p-8 border border-gray-200 rounded-lg shadow-lg max-w-2xl mx-auto my-10">
   <h3 class="my-2 text-left">Nuevo Tema</h3>
   <hr class="w-full mb-2 border-hr-color">
-  <form class="grid grid-cols-1 gap-y-6 gap-x-4">
+  <form class="grid grid-cols-1 gap-y-6 gap-x-4" [formGroup]="formAltaTema">
 
     <div class="sm:col-span-2">
       <label for="titulo" class="font-poppins">Punto</label>
       <div
         class="flex items-center border border-input-bord-color py-3 px-4 rounded-lg focus-within:border-input-focus-color focus-within:ring-input-focus-color">
-        <input type="text" id="titulo"
-          class=" flex-grow border-none focus:ring-0 focus:outline-none text-sm text-dark"
-          placeholder="Nombre del punto" value="Nombre del punto" readonly>
+        <input type="text" id="titulo" class=" flex-grow border-none focus:ring-0 focus:outline-none text-sm text-dark"
+          placeholder="Nombre del punto" [value]="nombrePunto" readonly>
         <div class="hs-tooltip [--trigger:hover] sm:[--placement:right] inline-block ml-2">
           <!-- lo del simbolo de interrogacion -->
           <i class="fa-solid fa-question text-gray-500"></i>
@@ -52,10 +58,12 @@
 
     <!-- Input para el nombre interno del documento -->
     <div class="sm:col-span-2">
-      <label for="titulo" class="font-poppins">Titulo</label>
-      <div
-      class="flex items-center border border-input-bord-color py-3 px-4 rounded-lg focus-within:border-input-focus-color focus-within:ring-input-focus-color">
-        <input type="text" id="titulo"
+      <label for="nombre_titulo" class="font-poppins">Titulo</label>
+      <div [ngClass]="{
+        'border-validator-error focus-within:border-validator-error focus-within:ring-validator-error': formAltaTema.get('nombre_titulo')?.invalid && (formAltaTema.get('nombre_titulo')?.dirty || formAltaTema.get('nombre_titulo')?.touched)
+        }"
+        class="flex items-center border border-input-bord-color py-3 px-4 rounded-lg focus-within:border-input-focus-color focus-within:ring-input-focus-color">
+        <input type="text" id="nombre_titulo" formControlName="nombre_titulo"
           class="tema flex-grow border-none focus:ring-0 focus:outline-none text-sm text-dark"
           placeholder="Titulo del tema">
         <div class="hs-tooltip [--trigger:hover] sm:[--placement:right] inline-block ml-2">
@@ -74,11 +82,22 @@
           </div>
         </div>
       </div>
+      <div
+        *ngIf="formAltaTema.get('nombre_titulo')?.invalid && (formAltaTema.get('nombre_titulo')?.dirty || formAltaTema.get('nombre_titulo')?.touched)">
+        <div *ngIf="formAltaTema.get('nombre_titulo')?.errors?.['required']" class="text-sm text-validator-error mt-1">
+          Este campo es requerido.</div>
+        <div *ngIf="formAltaTema.get('nombre_titulo')?.errors?.['minlength']" class="text-sm text-validator-error mt-1">
+          El campo debe tener al menos 10 caracteres.</div>
+        <div *ngIf="formAltaTema.get('nombre_titulo')?.errors?.['maxlength']" class="text-sm text-validator-error mt-1">
+          El campo no puede exceder los 70 caracteres.</div>
+        <div *ngIf="formAltaTema.get('nombre_titulo')?.errors?.['mesInvalido']"
+          class="text-sm text-validator-error mt-1">Los valores proporcionados no corresponden a meses.</div>
+      </div>
     </div>
 
     <!-- Es link -->
     <div class="sm:col-span-2">
-      <label for="trimestre" class="font-poppins flex items-center">
+      <label for="nombre_titulo" class="font-poppins flex items-center">
         Es link
         <div class="hs-tooltip [--trigger:hover] sm:[--placement:right] inline-block ml-2">
           <i class="fa-solid fa-question text-gray-500"></i>
@@ -100,16 +119,15 @@
         class="flex items-start  py-3 px-4 border-gray-200 rounded-lg focus-within:border-primary-color focus-within:ring-primary-color">
         <div class="flex items-center">
           <label for="hs-basic-with-description" class="text-sm text-gray-500 me-3">No</label>
-          <input type="checkbox" id="hs-basic-with-description"
+          <input type="checkbox" id="hs-basic-with-description" formControlName="es_link"
             class="border bg-input-bord-color relative w-[3.25rem] h-7 p-px  border-transparent text-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:ring-primary-color disabled:opacity-50 disabled:pointer-events-none checked:bg-none checked:text-primary-color checked:border-primary-color focus:checked:border-primary-color
-
-      before:inline-block before:size-6 before:bg-white checked:before:bg-white before:translate-x-0 checked:before:translate-x-full before:rounded-full before:shadow before:transform before:ring-0 before:transition before:ease-in-out before:duration-200">
+            before:inline-block before:size-6 before:bg-white checked:before:bg-white before:translate-x-0 checked:before:translate-x-full before:rounded-full before:shadow before:transform before:ring-0 before:transition before:ease-in-out before:duration-200">
           <label for="hs-basic-with-description" class="text-sm text-gray-500 ms-3">Si</label>
         </div>
       </div>
     </div>
 
-    <!-- Select para seleccionar el trimestre -->
+    <!-- Select para seleccionar el nombre_titulo -->
     <div class="sm:col-span-2">
       <label for="contenido" class="font-poppins flex items-center">
         Tipo de contenido
@@ -128,13 +146,19 @@
           </div>
         </div>
       </label>
-      <select id="contenido"
-      class="sm:p-5 p-4 pe-9 block w-full border-input-bord-color rounded-lg text-sm focus:border-input-focus-color focus:ring-input-focus-color disabled:opacity-50 disabled:pointer-events-none ">
+      <select id="contenido" [ngClass]="{
+        'border-validator-error focus-within:border-validator-error focus-within:ring-validator-error': formAltaTema.get('tipo_contenido')?.invalid && (formAltaTema.get('tipo_contenido')?.dirty || formAltaTema.get('tipo_contenido')?.touched)
+        }" formControlName="tipo_contenido"
+        class="sm:p-5 p-4 pe-9 block w-full border-input-bord-color rounded-lg text-sm focus:border-input-focus-color focus:ring-input-focus-color disabled:opacity-50 disabled:pointer-events-none ">
         <option value="1">Estático</option>
         <option value="2">Dinámico</option>
       </select>
+      <div
+        *ngIf="formAltaTema.get('tipo_contenido')?.invalid && (formAltaTema.get('tipo_contenido')?.dirty || formAltaTema.get('tipo_contenido')?.touched)">
+        <div *ngIf="formAltaTema.get('tipo_contenido')?.errors?.['required']" class="text-sm text-validator-error mt-1">
+          Este campo es requerido.</div>
+      </div>
     </div>
-
     <!-- Botón de enviar -->
     <div class="sm:col-span-2 flex justify-end">
       <button type="submit"

@@ -24,7 +24,7 @@
     </div>
     <div class="p-4 md:p-5">
       <h3 class="text-lg font-bold text-gray-800">
-        Normativas de la institución
+        {{punto?.nombre_punto}}
       </h3>
     </div>
   </div>
@@ -37,7 +37,7 @@
     </div>
     <div class="p-4 md:p-5">
       <h3 class="text-lg font-bold text-gray-800">
-        Enero 15, 2023
+        {{FormatearDate(punto?.fecha_creacion)}}
       </h3>
     </div>
   </div>
@@ -50,7 +50,7 @@
     </div>
     <div class="p-4 md:p-5">
       <h3 class="text-lg font-bold text-gray-800">
-        Mayo 28, 2024
+        {{FormatearDate(punto?.fecha_actualizado)}}
       </h3>
     </div>
   </div>
@@ -60,7 +60,7 @@
   <h3 class="text-2xl">Contenido del punto</h3>
 </div>
 <div class="12/12 text-right">
-  <button type="button" routerLink="/new-tema/1"
+  <button type="button" routerLink="/new-tema/{{idEncrypt}}"
     class="py-3 my-2 button-secondary  px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-primary-color text-white hover:bg-primary-color-90 disabled:opacity-50 disabled:pointer-events-none">
     <i class="fa fa-plus" aria-hidden="true"></i>
     Agregar tema
