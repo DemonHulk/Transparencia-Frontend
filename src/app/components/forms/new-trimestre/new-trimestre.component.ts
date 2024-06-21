@@ -8,6 +8,7 @@ import { markFormGroupTouched, validarTrimestre } from '../../../services/api-co
 import { EjerciciocrudService } from '../../../services/crud/ejerciciocrud.service';
 import { TrimestrecrudService } from '../../../services/crud/trimestrecrud.service';
 import { delay } from 'rxjs';
+import { HttpEvent, HttpEventType } from '@angular/common/http';
 @Component({
   selector: 'app-new-trimestre',
   templateUrl: './new-trimestre.component.html',
@@ -60,43 +61,58 @@ ngOnInit(): void {
 
 }
 
-SaveTrimestre(): any {
-  markFormGroupTouched(this.FormAltaTrimestre);
-  if (this.FormAltaTrimestre.valid) {
-    if (this.isSubmitting) {
-      console.log('Ya hay una petición en curso. Espera a que se complete.');
-      return;
-    }
-    this.isSubmitting = true; // Deshabilitar el botón
-    const encryptedData = this.CryptoServiceService.encryptData(JSON.stringify(this.FormAltaTrimestre.value));
+  /* Variables spinner */
+  porcentajeEnvio: number = 0;
+  mostrarSpinner: boolean = false;
+  mensaje = "Guardando...";
+  SaveTrimestre(): void {
+    markFormGroupTouched(this.FormAltaTrimestre);
 
-    const data = {
-      data: encryptedData
-    };
-
-    this.TrimestrecrudService.InsertTrimestreService(data).pipe(
-      delay(1000) // Agregar un retraso de 1 segundo (1000 ms)
-    ).subscribe(
-      (respuesta:any) => {
-        this.isSubmitting = false; // Habilitar el botón
-        if (this.CryptoServiceService.decryptData(respuesta)?.resultado?.res) {
-          this.flasher.success(this.CryptoServiceService.decryptData(respuesta)?.resultado?.data);
-          this.router.navigate(['/trimestres']);
-        } else {
-          console.log('isSubmitting:', this.isSubmitting);
-          this.flasher.error(this.CryptoServiceService.decryptData(respuesta)?.resultado?.data);
+    if (this.FormAltaTrimestre.valid) {
+      this.mostrarSpinner = true; // Mostrar spinner de carga
+      const encryptedData = this.CryptoServiceService.encryptData(JSON.stringify(this.FormAltaTrimestre.value));
+      const data = {
+        data: encryptedData
+      };
+      this.TrimestrecrudService.InsertTrimestreService(data).subscribe(
+        (event: HttpEvent<any>) => {
+          switch (event.type) {
+            case HttpEventType.Sent:
+              break;
+            case HttpEventType.UploadProgress:
+              if (event.total !== undefined) {
+                const percentDone = Math.round((100 * event.loaded) / event.total);
+                this.porcentajeEnvio = percentDone; // Actualizar el porcentaje de envío
+              }
+              break;
+            case HttpEventType.Response:
+              // Manejo de la respuesta encriptada
+              const encryptedResponse = event.body;
+              const decryptedResponse = this.CryptoServiceService.decryptData(encryptedResponse);
+              if (decryptedResponse?.resultado?.res) {
+                this.flasher.success(decryptedResponse?.resultado?.data);
+                this.router.navigate(['/trimestres']);
+              } else {
+                this.flasher.error(decryptedResponse?.resultado?.data);
+              }
+              this.mostrarSpinner = false; // Ocultar spinner al finalizar
+              break;
+            default:
+              this.mostrarSpinner = false;
+              this.flasher.error("Hubo un error, Intente más tarde o notifique al soporte técnico.");
+              break;
+          }
+        },
+        error => {
+          this.mostrarSpinner = false; // Ocultar spinner en caso de error
+          this.flasher.error("Hubo un error, Intente más tarde o notifique al soporte técnico.");
         }
-      },
-      (error:any) => {
-        this.isSubmitting = false; // Habilitar el botón
-        this.flasher.error("Hubo un error, Intente más tarde o notifique al soporte técnico.");
-      }
-    );
-  } else {
-    this.isSubmitting = false; // Habilitar el botón
-    this.flasher.error("El formulario no es válido. Por favor, complete todos los campos requeridos correctamente.");
+      );
+    } else {
+      this.flasher.error("El formulario no es válido. Por favor, complete todos los campos requeridos correctamente.");
+    }
   }
-}
+
 
 ejercicio: any[] = [];
 loadEjercicio(): void {
@@ -105,7 +121,6 @@ loadEjercicio(): void {
       this.ejercicio = this.CryptoServiceService.decryptData(resultado)?.resultado?.data;
     },
     (error: any) => {
-      console.error('Error al cargar datos:', error);
       this.ejercicio = [];
     }
   );

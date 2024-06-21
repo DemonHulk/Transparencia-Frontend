@@ -6,6 +6,7 @@ import { AlertsServiceService } from '../../../services/alerts/alerts-service.se
 import { CryptoServiceService } from '../../../services/cryptoService/crypto-service.service';
 import { markFormGroupTouched, validarNombre, validarTelefono } from '../../../services/api-config';
 import { EjerciciocrudService } from '../../../services/crud/ejerciciocrud.service';
+import { HttpEvent, HttpEventType } from '@angular/common/http';
 
 @Component({
   selector: 'app-new-ejercicio',
@@ -50,26 +51,53 @@ export class NewEjercicioComponent {
        */
       this.sharedService.changeTitle('Registrar un nuevo ejercicio');
   }
-
-  SaveEjercicio(): any {
+  /* Variables spinner */
+  porcentajeEnvio: number = 0;
+  mostrarSpinner: boolean = false;
+  mensaje = "Guardando...";
+  SaveEjercicio(): void {
     markFormGroupTouched(this.FormAltaEjercicio);
+
     if (this.FormAltaEjercicio.valid) {
+      this.mostrarSpinner = true; // Mostrar spinner de carga
 
       const encryptedData = this.CryptoServiceService.encryptData(JSON.stringify(this.FormAltaEjercicio.value));
 
       const data = {
         data: encryptedData
       };
+
       this.EjercicioCrudServuce.InsertEjercicioService(data).subscribe(
-        respuesta => {
-          if (this.CryptoServiceService.decryptData(respuesta)?.resultado?.res) {
-            this.flasher.success(this.CryptoServiceService.decryptData(respuesta)?.resultado?.data);
-            this.router.navigate(['/ejercicios']);
-          } else {
-            this.flasher.error(this.CryptoServiceService.decryptData(respuesta)?.resultado?.data);
+        (event: HttpEvent<any>) => {
+          switch (event.type) {
+            case HttpEventType.Sent:
+              break;
+            case HttpEventType.UploadProgress:
+              if (event.total !== undefined) {
+                const percentDone = Math.round((100 * event.loaded) / event.total);
+                this.porcentajeEnvio = percentDone; // Actualizar el porcentaje de envío
+              }
+              break;
+            case HttpEventType.Response:
+              // Manejo de la respuesta encriptada
+              const encryptedResponse = event.body;
+              const decryptedResponse = this.CryptoServiceService.decryptData(encryptedResponse);
+              if (decryptedResponse?.resultado?.res) {
+                this.flasher.success(decryptedResponse?.resultado?.data);
+                this.router.navigate(['/ejercicios']);
+              } else {
+                this.flasher.error(decryptedResponse?.resultado?.data || 'No se recibió una respuesta válida');
+              }
+              this.mostrarSpinner = false; // Ocultar spinner al finalizar
+              break;
+            default:
+              this.mostrarSpinner = false;
+              this.flasher.error("Hubo un error, Intente más tarde o notifique al soporte técnico.");
+              break;
           }
         },
         error => {
+          this.mostrarSpinner = false; // Ocultar spinner en caso de error
           this.flasher.error("Hubo un error, Intente más tarde o notifique al soporte técnico.");
         }
       );
@@ -78,3 +106,4 @@ export class NewEjercicioComponent {
     }
   }
 }
+

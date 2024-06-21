@@ -4,8 +4,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertsServiceService } from '../../../services/alerts/alerts-service.service';
 import { CryptoServiceService } from '../../../services/cryptoService/crypto-service.service';
-import { validarTelefono } from '../../../services/api-config';
+import { markFormGroupTouched, validarTelefono } from '../../../services/api-config';
 import { EjerciciocrudService } from '../../../services/crud/ejerciciocrud.service';
+import { HttpEvent, HttpEventType } from '@angular/common/http';
 
 @Component({
   selector: 'app-edit-ejercicio',
@@ -78,29 +79,58 @@ export class EditEjercicioComponent {
     });
   }
 
-  UpdateEjercicioService(): void {
+   /* Variables spinner */
+   porcentajeEnvio: number = 0;
+   mostrarSpinner: boolean = false;
+   mensaje = "Actualizando...";
+   UpdateEjercicioService(): void {
+    markFormGroupTouched(this.FormEditEjercicio);
+
     if (this.FormEditEjercicio.valid) {
+      this.mostrarSpinner = true; // Mostrar spinner de carga
+
       const encryptedData = this.encodeService.encryptData(JSON.stringify(this.FormEditEjercicio.value));
       const encryptedID = this.encodeService.encryptData(JSON.stringify(this.id));
       const data = {
         data: encryptedData
       };
-    this.EjercicioCrudService.UpdateEjercicioService(data, encryptedID).subscribe(
-      respuesta => {
-        if (this.encodeService.decryptData(respuesta)?.resultado?.res) { // Verificar si respuesta.resultado.res no es undefined
-          this.flasher.success(this.encodeService.decryptData(respuesta)?.resultado?.data);
-          this.router.navigate(['/ejercicios']);
-        } else {
-          this.flasher.error(this.encodeService.decryptData(respuesta)?.resultado?.data || 'No se recibió una respuesta válida');
+
+      this.EjercicioCrudService.UpdateEjercicioService(data, encryptedID).subscribe(
+        (event: HttpEvent<any>) => {
+          switch (event.type) {
+            case HttpEventType.Sent:
+              break;
+            case HttpEventType.UploadProgress:
+              if (event.total !== undefined) {
+                const percentDone = Math.round((100 * event.loaded) / event.total);
+                this.porcentajeEnvio = percentDone; // Actualizar el porcentaje de envío
+              }
+              break;
+            case HttpEventType.Response:
+              // Manejo de la respuesta encriptada
+              const encryptedResponse = event.body;
+              const decryptedResponse = this.encodeService.decryptData(encryptedResponse);
+              if (decryptedResponse?.resultado?.res) {
+                this.flasher.success(decryptedResponse?.resultado?.data);
+                this.router.navigate(['/ejercicios']);
+              } else {
+                this.flasher.error(decryptedResponse?.resultado?.data || 'No se recibió una respuesta válida');
+              }
+              this.mostrarSpinner = false; // Ocultar spinner al finalizar
+              break;
+            default:
+              this.mostrarSpinner = false;
+              this.flasher.error("Hubo un error, Intente más tarde o notifique al soporte técnico.");
+              break;
+          }
+        },
+        error => {
+          this.mostrarSpinner = false; // Ocultar spinner en caso de error
+          this.flasher.error("Hubo un error, Intente más tarde o notifique al soporte técnico.");
         }
-      },
-      error => {
-        console.log(error);
-        this.flasher.error("Hubo un error, Intente más tarde o notifique al soporte técnico.");
-      }
-    );
-  } else {
-    this.flasher.error("El formulario no es válido. Por favor, complete todos los campos requeridos correctamente.");
-  }
+      );
+    } else {
+      this.flasher.error("El formulario no es válido. Por favor, complete todos los campos requeridos correctamente.");
+    }
   }
 }

@@ -8,6 +8,7 @@ import { UsuariocrudService } from '../../../services/crud/usuariocrud.service';
 import { AreaCrudService } from '../../../services/crud/areacrud.service';
 import { delay } from 'rxjs/operators';
 import { CryptoServiceService } from '../../../services/cryptoService/crypto-service.service';
+import { HttpEvent, HttpEventType } from '@angular/common/http';
 
 @Component({
   selector: 'app-new-usuario',
@@ -17,7 +18,6 @@ import { CryptoServiceService } from '../../../services/cryptoService/crypto-ser
 export class NewUsuarioComponent {
 
   FormAltaUsuario:FormGroup;
-  isSubmitting = false;
   constructor(
     private sharedService: SharedValuesService,
     public formulario: FormBuilder,
@@ -100,56 +100,80 @@ ngOnInit(): void {
     this.loadArea();
 }
 
+/* Variables spinner y mensaje */
+porcentajeEnvio: number = 0;
+mostrarSpinner: boolean = false;
+mensaje = "Guardando...";
 
-SaveUsuario(): any {
+SaveUsuario(): void {
   markFormGroupTouched(this.FormAltaUsuario);
+
   if (this.FormAltaUsuario.valid) {
-    if (this.isSubmitting) {
-      console.log('Ya hay una petición en curso. Espera a que se complete.');
-      return;
-    }
-    this.isSubmitting = true; // Deshabilitar el botón
+    this.mostrarSpinner = true;
+
     const encryptedData = this.CryptoServiceService.encryptData(JSON.stringify(this.FormAltaUsuario.value));
 
     const data = {
       data: encryptedData
     };
 
-    this.UsuariocrudService.InsertUsuarioService(data).pipe(
-      delay(1000) // Agregar un retraso de 1 segundo (1000 ms)
-    ).subscribe(
-      respuesta => {
-        this.isSubmitting = false; // Habilitar el botón
-        if (this.CryptoServiceService.decryptData(respuesta)?.resultado?.data?.res) {
-          this.flasher.success(this.CryptoServiceService.decryptData(respuesta)?.resultado?.data?.data);
-          this.router.navigate(['/usuarios']);
-        } else {
-          console.log('isSubmitting:', this.isSubmitting);
-          this.flasher.error(this.CryptoServiceService.decryptData(respuesta)?.resultado?.data?.data);
+    this.UsuariocrudService.InsertUsuarioService(data).subscribe(
+      (event: HttpEvent<any>) => {
+        switch (event.type) {
+          case HttpEventType.Sent:
+            break;
+          case HttpEventType.UploadProgress:
+            if (event.total !== undefined) {
+              const percentDone = Math.round((100 * event.loaded) / event.total);
+              this.porcentajeEnvio = percentDone;
+            }
+            break;
+          case HttpEventType.Response:
+            // Manejo de la respuesta encriptada
+            const encryptedResponse = event.body;
+            const decryptedResponse = this.CryptoServiceService.decryptData(encryptedResponse);
+            if (decryptedResponse?.resultado?.data?.res) {
+              this.flasher.success(decryptedResponse?.resultado?.data?.data);
+              this.router.navigate(['/usuarios']);
+            } else {
+              this.flasher.error(decryptedResponse?.resultado?.data?.data || 'No se recibió una respuesta válida');
+            }
+            this.mostrarSpinner = false; // Ocultar spinner al finalizar
+            break;
+          default:
+            this.flasher.error("Hubo un error, Intente más tarde o notifique al soporte técnico.");
+            break;
         }
       },
       error => {
-        this.isSubmitting = false; // Habilitar el botón
+        console.log(error);
+        this.mostrarSpinner = false; // Ocultar spinner en caso de error
         this.flasher.error("Hubo un error, Intente más tarde o notifique al soporte técnico.");
       }
     );
   } else {
-    this.isSubmitting = false; // Habilitar el botón
     this.flasher.error("El formulario no es válido. Por favor, complete todos los campos requeridos correctamente.");
   }
 }
 
-area: any[] = [];
-loadArea(): void {
-  this.AreaCrudService.GetAllAreaService().subscribe(
-    (resultado: any) => {
-      this.area = this.CryptoServiceService.decryptData(resultado)?.resultado?.data?.data;
-    },
-    (error: any) => {
-      console.error('Error al cargar datos:', error);
-      this.area = [];
-    }
-  );
-}
+
+
+  area: any[] = [];
+
+  loadArea(): void {
+    this.AreaCrudService.GetAllAreaService().subscribe(
+      (resultado: any) => {
+        const decryptedData = this.CryptoServiceService.decryptData(resultado);
+        const areas = decryptedData?.resultado?.data?.data || [];
+
+        // Filtrar solo las áreas activas
+        this.area = areas.filter((area: any) => area.activo === true);
+      },
+      (error: any) => {
+        console.error('Error al cargar datos:', error);
+        this.area = []; // Asignar un array vacío en caso de error
+      }
+    );
+  }
 
 }

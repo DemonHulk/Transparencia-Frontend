@@ -4,9 +4,10 @@ import { UsuariocrudService } from '../../../services/crud/usuariocrud.service';
 import { CryptoServiceService } from '../../../services/cryptoService/crypto-service.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { validarCorreoUTDelacosta, validarNombre, validarPassword, validarTelefono } from '../../../services/api-config';
+import { markFormGroupTouched, validarCorreoUTDelacosta, validarNombre, validarPassword, validarTelefono } from '../../../services/api-config';
 import { delay } from 'rxjs';
 import { AlertsServiceService } from '../../../services/alerts/alerts-service.service';
+import { HttpEvent, HttpEventType } from '@angular/common/http';
 
 @Component({
   selector: 'app-edit-perfil',
@@ -131,14 +132,16 @@ export class EditPerfilComponent {
     );
   }
 
+  /* Variables spinner */
+ porcentajeEnvio: number = 0;
+ mostrarSpinner: boolean = false;
+ mensaje = "Actualizando...";
   UpdatePerfilService(): void {
+    markFormGroupTouched(this.FormEditPerfil);
+
     if (this.FormEditPerfil.valid) {
-      if (this.isSubmitting) {
-        console.log('Ya hay una petición en curso. Espera a que se complete.');
-        return;
-      }
-      this.isSubmitting = true; // Deshabilitar el botón
-      // Enviamos tanto los datos del formulario como el id encriptados
+      this.mostrarSpinner = true;
+
       const encryptedData = this.encodeService.encryptData(JSON.stringify(this.FormEditPerfil.value));
       const encryptedID = this.encodeService.encryptData(JSON.stringify(this.id));
 
@@ -146,22 +149,38 @@ export class EditPerfilComponent {
         data: encryptedData
       };
 
-      this.UsuariocrudService.UpdateUserService(data, encryptedID).pipe(
-        delay(1000) // Agregar un retraso de 1 segundo (1000 ms)
-      ).subscribe(
-        respuesta => {
-          if (this.encodeService.decryptData(respuesta)?.resultado?.data?.res) {
-            this.isSubmitting = false; // Habilitar el botón
-            this.flasher.success(this.encodeService.decryptData(respuesta)?.resultado?.data?.data);
-            this.router.navigate(['/myprofile/'+this.encriptarId(this.id)]);
-          } else {
-            this.isSubmitting = false; // Habilitar el botón en caso de error
-            this.flasher.error(this.encodeService.decryptData(respuesta)?.resultado?.data?.data || 'No se recibió una respuesta válida');
+      this.UsuariocrudService.UpdateUserService(data, encryptedID).subscribe(
+        (event: HttpEvent<any>) => {
+          switch (event.type) {
+            case HttpEventType.Sent:
+              break;
+            case HttpEventType.UploadProgress:
+              if (event.total !== undefined) {
+                const percentDone = Math.round((100 * event.loaded) / event.total);
+                this.porcentajeEnvio = percentDone;
+                this.mostrarSpinner = true;
+              }
+              break;
+            case HttpEventType.Response:
+              // Manejo de la respuesta encriptada
+              const encryptedResponse = event.body;
+              const decryptedResponse = this.encodeService.decryptData(encryptedResponse);
+              if (decryptedResponse?.resultado?.data?.res) {
+                this.flasher.success(decryptedResponse?.resultado?.data?.data);
+                this.router.navigate(['/myprofile/' + this.encriptarId(this.id)]);
+              } else {
+                this.flasher.error(decryptedResponse?.resultado?.data?.data || 'No se recibió una respuesta válida');
+              }
+              this.mostrarSpinner = false;
+              break;
+            default:
+              this.mostrarSpinner = false;
+              this.flasher.error("Hubo un error, Intente más tarde o notifique al soporte técnico.");
+              break;
           }
         },
         error => {
-          console.log(error);
-          this.isSubmitting = false; // Habilitar el botón en caso de error
+          this.mostrarSpinner = false;
           this.flasher.error("Hubo un error, Intente más tarde o notifique al soporte técnico.");
         }
       );
@@ -169,6 +188,7 @@ export class EditPerfilComponent {
       this.flasher.error("El formulario no es válido. Por favor, complete todos los campos requeridos correctamente.");
     }
   }
+
 
   encriptarId(id:any){
     return this.encodeService.encodeID(id);
