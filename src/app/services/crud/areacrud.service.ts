@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { API_URL } from '../api-config';
 import { Observable } from 'rxjs';
@@ -31,13 +31,21 @@ export class AreaCrudService {
   }
 
   InsertAreaService(formulario: any): Observable<any> {
-    return this.clientHttp.post(API_URL + "area", formulario, { responseType: 'text' });
+    const req = new HttpRequest('POST', API_URL + 'area', formulario, {
+      reportProgress: true,
+      responseType: 'text'
+    });
+    return this.clientHttp.request(req);
   }
 
   UpdateAreaService(formulario: any, id: any): Observable<any> {
-    return this.clientHttp.put(API_URL + "area/"+ id, formulario, { responseType: 'text' });
+    const req = new HttpRequest('PUT', API_URL + "area/"+ id, formulario, {
+      reportProgress: true,
+      responseType: 'text'
+    });
+    return this.clientHttp.request(req);
   }
-  
+
   DeleteAreaService(id: any): Observable<any> {
     return this.clientHttp.delete(API_URL + "area/" + id, { responseType: 'text' });
   }
@@ -47,8 +55,8 @@ export class AreaCrudService {
   }
 
 
-  
-  
-  
+
+
+
 }
 

@@ -1,0 +1,11 @@
+<!-- text-fill.component.html -->
+<div class="backdrop" *ngIf="isVisible">
+  <div class="text-container">
+    <p class="text-fill">
+      <span class="background" [style.backgroundImage]="getGradient()" [style.webkitBackgroundClip]="'text'" [style.backgroundClip]="'text'" [style.color]="'transparent'">{{text}}</span>
+      <span class="foreground" [style.clipPath]="'inset(0 ' + (100 - fillPercentage) + '% 0 0)'">{{text}}</span>
+    </p>
+    <br>
+    <small class="action">{{updateText}} {{fillPercentage}}%</small>
+  </div>
+</div>
