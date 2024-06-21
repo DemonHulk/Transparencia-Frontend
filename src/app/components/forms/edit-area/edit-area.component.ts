@@ -18,7 +18,7 @@ export class EditAreaComponent implements OnInit {
   NombreArea: any;
 
   constructor(
-    private sharedService: SharedValuesService,
+    public sharedService: SharedValuesService,
     private activateRoute: ActivatedRoute,
     public formulario: FormBuilder,
     private AreaCrudService: AreaCrudService,
@@ -50,6 +50,8 @@ export class EditAreaComponent implements OnInit {
       this.router.navigateByUrl("/areas");
     }
     this.sharedService.changeTitle('Modificar área');
+    this.sharedService.setLoading(true);
+
     this.GetOneAreaService(this.id);
 
   }
@@ -63,6 +65,7 @@ export class EditAreaComponent implements OnInit {
         this.FormAltaArea.patchValue({
           nombreArea: this.NombreArea?.resultado?.data?.data?.nombre_area
         });
+        this.sharedService.setLoading(false);
       } else {
         console.error('La respuesta es undefined');
       }

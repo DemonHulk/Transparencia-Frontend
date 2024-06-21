@@ -22,7 +22,7 @@ export class EditUsuarioComponent implements OnInit {
   isSubmitting: boolean = false;
   response: any;
   constructor(
-    private sharedService: SharedValuesService,
+    public sharedService: SharedValuesService,
     private activateRoute: ActivatedRoute,
     public formulario: FormBuilder,
     private UsuariocrudService: UsuariocrudService,
@@ -100,7 +100,8 @@ ngOnInit(): void {
      * @memberof SharedValuesService
      */
     // this.sharedService.changeTitle('Modificar usuario: Nombre completo');
-    this.sharedService.loadScript("/assets/js/validations.js");
+    this.sharedService.setLoading(true);
+
 
     //Tomas la id de la URL
     this.id = this.activateRoute.snapshot.paramMap.get("id");
@@ -157,7 +158,7 @@ ngOnInit(): void {
       const data = {
         data: encryptedData
       };
-      
+
       this.UsuariocrudService.UpdateUserService(data, encryptedID).pipe(
         delay(1000) // Agregar un retraso de 1 segundo (1000 ms)
       ).subscribe(
@@ -187,6 +188,8 @@ ngOnInit(): void {
     this.AreaCrudService.GetAllAreaService().subscribe(
       (resultado: any) => {
         this.area = this.encodeService.decryptData(resultado).resultado?.data?.data;
+        this.sharedService.setLoading(false);
+
       },
       (error: any) => {
         console.error('Error al cargar datos:', error);

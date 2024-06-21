@@ -200,6 +200,21 @@ h6 {
   font-family: "texto-medium", sans-serif !important;
 }
 
+.button-skeleton{
+  background-color: rgba(var(--editar-color),1) !important;
+  border-radius: 10px !important ;
+  color: #fff !important;
+  transition: ease 0.3s !important;
+  padding: 10px !important;
+  font-family: "texto-medium", sans-serif !important;
+}
+
+.button-skeleton:hover  {
+  background-color: rgba(var(--editar-color),0.8) !important;
+  transition: ease 0.3s !important;
+  font-family: "texto-medium", sans-serif !important;
+}
+
 .button-update{
   background-color: rgba(var(--editar-color),1) !important;
   border-radius: 10px !important ;

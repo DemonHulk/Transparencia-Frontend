@@ -25,7 +25,7 @@ export class EditPuntoComponent {
 
 
   constructor(
-    private sharedService: SharedValuesService,
+    public sharedService: SharedValuesService,
     public formulario: FormBuilder,
     private activateRoute: ActivatedRoute,
     private PuntocrudService: PuntocrudService,
@@ -35,7 +35,7 @@ export class EditPuntoComponent {
     private flasher: AlertsServiceService,
     private CryptoServiceService: CryptoServiceService,
     private encodeService: CryptoServiceService,
-  ) { 
+  ) {
     this.FormAltaPunto = this.formulario.group({
       nombrePunto: ['',
         [
@@ -60,7 +60,8 @@ export class EditPuntoComponent {
      * @memberof SharedValuesService
      */
     this.sharedService.changeTitle('Modificar punto');
-    this.sharedService.loadScript("/assets/js/validations.js");
+    this.sharedService.setLoading(true);
+
 
     //Tomas la id de la URL
     this.id = this.activateRoute.snapshot.paramMap.get("id");
@@ -73,14 +74,14 @@ export class EditPuntoComponent {
       this.router.navigateByUrl("/puntos");
     }
 
-    
+
     this.GetOnePuntoService(this.id);
     this.GetAreasPunto_PuntoService(this.id);
 
   }
 
 
-  
+
   UpdatePunto(): any {
     markFormGroupTouched(this.FormAltaPunto);
     if (this.FormAltaPunto.valid && this.selectedAreas.length > 0) {
@@ -143,6 +144,8 @@ export class EditPuntoComponent {
         this.FormAltaPunto.patchValue({
           nombrePunto: this.nombrePunto?.resultado?.data?.nombre_punto
         });
+        this.sharedService.setLoading(false);
+
       } else {
         console.error('La respuesta es undefined');
       }
@@ -161,14 +164,14 @@ export class EditPuntoComponent {
       const controlName = `vertical-checkbox-${area.id_area}`;
       const control = this.formulario.control(puntoArea ? puntoArea.activo : false);
       area.activo = puntoArea ? puntoArea.activo : false; // Verifica si existe un punto para el área
-  
+
       this.FormAltaPunto.addControl(controlName, control);
-  
+
       // Agregar las áreas previamente seleccionadas a selectedAreas
       if (area.activo) {
         this.selectedAreas.push(Number(area.id_area));
       }
-  
+
       // Agrega un event listener al control
       control.valueChanges.subscribe((value: boolean | null) => {
         if (value) {
@@ -179,20 +182,20 @@ export class EditPuntoComponent {
       });
     });
   }
-  
-  
+
+
 
   /** EXTRAE LAS AREAS ACTIVAS PARA AGREGARLAS ABAJO*/
   GetActAreaService() {
     this.AreaCrudService.GetActAreaService().subscribe((respuesta: any) => {
-      /* Desencriptamos la respuesta que nos retorna el backend */ 
+      /* Desencriptamos la respuesta que nos retorna el backend */
       let decryptedData = this.encodeService.decryptData(respuesta).resultado?.data?.data;
-  
+
       // Filtrar el array para excluir el registro con id_area = 1
       this.ListArea = decryptedData?.filter((area: any) => area.id_area !== 1) || [];
-  
+
       this.initializeDynamicControls();
-  
+
       // Indicar que todos los datos se han cargado
       setTimeout(() => {
         this.sharedService.setLoading(false);
@@ -206,7 +209,7 @@ export class EditPuntoComponent {
   GetAreasPunto_PuntoService(id: any) {
     const encryptedID = this.encodeService.encryptData(JSON.stringify(this.id));
     this.PuntosAreasCrudService.GetAreasPunto_PuntoService(encryptedID).subscribe((respuesta: any) => {
-      /* Desencriptamos la respuesta que nos retorna el backend */ 
+      /* Desencriptamos la respuesta que nos retorna el backend */
       this.ListAreaPunto = this.encodeService.decryptData(respuesta).resultado?.data;
       //Indicar que todos los datos se han cargado
       this.GetActAreaService();
@@ -218,7 +221,7 @@ export class EditPuntoComponent {
   }
 
 
-  
+
 
 
 

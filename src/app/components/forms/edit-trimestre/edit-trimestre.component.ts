@@ -21,7 +21,7 @@ export class EditTrimestreComponent {
   isSubmitting = false;
   data_trimestre: any;
 
-  constructor(private sharedService: SharedValuesService,
+  constructor(public sharedService: SharedValuesService,
     public formulario: FormBuilder,
     private router: Router, // Inyecta el Router
     private flasher: AlertsServiceService,
@@ -60,10 +60,8 @@ ngOnInit(): void {
      * @memberof SharedValuesService
      */
     this.sharedService.changeTitle('Modificar trimestre');
-    this.sharedService.loadScript("/assets/js/validations.js");
+    this.sharedService.setLoading(true);
 
-    // this.sharedService.changeTitle('Modificar usuario: Nombre completo');
-    this.sharedService.loadScript("/assets/js/validations.js");
 
     //Tomas la id de la URL
     this.id = this.activateRoute.snapshot.paramMap.get("id");
@@ -78,7 +76,7 @@ ngOnInit(): void {
 
     this.GetOneTrimestreService(this.id);
     this.loadEjercicio();
-} 
+}
 
 
 /* Extraer los datos del usuario mediante su id e ingresarlos en su respectivo campo*/
@@ -143,6 +141,8 @@ loadEjercicio(): void {
   this.EjerciciocrudService.GetAllEjercicioService().subscribe(
     (resultado: any) => {
       this.ejercicio = this.CryptoServiceService.decryptData(resultado)?.resultado?.data;
+      this.sharedService.setLoading(false);
+
     },
     (error: any) => {
       console.error('Error al cargar datos:', error);

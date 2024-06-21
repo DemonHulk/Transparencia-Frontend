@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { SharedValuesService } from '../../../services/shared-values.service';
-import { UsuariocrudService } from '../../../services/crud/usuariocrud.service'; 
+import { UsuariocrudService } from '../../../services/crud/usuariocrud.service';
 import { CryptoServiceService } from '../../../services/cryptoService/crypto-service.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -22,14 +22,14 @@ export class EditPerfilComponent {
   response: any;
 
   constructor(
-    private sharedService: SharedValuesService,
+    public sharedService: SharedValuesService,
     private activateRoute: ActivatedRoute,
     public formulario: FormBuilder,
     private flasher: AlertsServiceService,
     private UsuariocrudService: UsuariocrudService,
     private router: Router,
     private encodeService: CryptoServiceService,
-  ) { 
+  ) {
     this.FormEditPerfil = this.formulario.group({
       nombre: ['',
         [
@@ -94,16 +94,15 @@ export class EditPerfilComponent {
      * @memberof SharedValuesService
      */
     this.sharedService.changeTitle('Modificar mi información');
-    this.sharedService.loadScript("/assets/js/validations.js");
-
+    let idencrypt;
     //Tomas la id de la URL
     this.id = this.activateRoute.snapshot.paramMap.get("id");
-
+    idencrypt = this.id;
     //Desencriptar la ID
     this.id = this.encodeService.decodeID(this.id);
     //Verificar si la ID es null, si es así, redirige a la página de áreas
     if (this.id === null) {
-      this.router.navigateByUrl("/usuarios");
+      this.router.navigateByUrl("/myprofile/");
     }
     this.sharedService.setLoading(true);
     this.GetOneUserService(this.id);
@@ -124,6 +123,7 @@ export class EditPerfilComponent {
           telefono: this.data_user?.telefono,
           correo: this.data_user?.correo,
         });
+        this.sharedService.setLoading(false);
       },
       error => {
         console.error('Ocurrió un error al obtener el usuario:', error);
@@ -145,7 +145,7 @@ export class EditPerfilComponent {
       const data = {
         data: encryptedData
       };
-      
+
       this.UsuariocrudService.UpdateUserService(data, encryptedID).pipe(
         delay(1000) // Agregar un retraso de 1 segundo (1000 ms)
       ).subscribe(

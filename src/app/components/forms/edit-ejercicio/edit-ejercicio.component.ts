@@ -18,7 +18,7 @@ export class EditEjercicioComponent {
   ejercicio: any;
 
   constructor(
-    private sharedService: SharedValuesService,
+    public sharedService: SharedValuesService,
     private activateRoute: ActivatedRoute,
     public formulario: FormBuilder,
     private EjercicioCrudService: EjerciciocrudService,
@@ -50,6 +50,8 @@ export class EditEjercicioComponent {
       this.router.navigateByUrl("/ejercicios");
     }
     this.sharedService.changeTitle('Modificar Ejercicio');
+    this.sharedService.setLoading(true);
+
     this.GetOneEjercicioService(this.id);
 
   }
@@ -64,6 +66,8 @@ export class EditEjercicioComponent {
         this.FormEditEjercicio.patchValue({
           ejercicio: this.ejercicio?.resultado?.data?.ejercicio
         });
+        this.sharedService.setLoading(false);
+
       } else {
         console.error('La respuesta es undefined');
 

@@ -1,3 +1,5 @@
+<app-form *ngIf="sharedService.loading$ | async; else content"></app-form>
+<ng-template #content>
 <div class="12/12 text-right my-5">
   <ol class="flex items-center whitespace-nowrap">
     <li class="inline-flex items-center">
@@ -63,3 +65,4 @@
     </div>
   </form>
 </div>
+</ng-template>
