@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { API_URL } from '../api-config';
 import { Observable } from 'rxjs';
@@ -19,11 +19,19 @@ export class EjerciciocrudService {
   }
 
   InsertEjercicioService(formulario: any): Observable<any> {
-    return this.clientHttp.post(API_URL + "ejercicio", formulario, { responseType: 'text' });
+    const req = new HttpRequest('POST',API_URL + "ejercicio", formulario, {
+      reportProgress: true,
+      responseType: 'text'
+    });
+    return this.clientHttp.request(req);
   }
 
   UpdateEjercicioService(formulario: any, id: any): Observable<any> {
-    return this.clientHttp.put(API_URL + "ejercicio/"+ id, formulario, { responseType: 'text' });
+    const req = new HttpRequest('PUT',API_URL + "ejercicio/"+ id, formulario, {
+      reportProgress: true,
+      responseType: 'text'
+    });
+    return this.clientHttp.request(req);
   }
 
   DeleteEjercicioService(id: any): Observable<any> {

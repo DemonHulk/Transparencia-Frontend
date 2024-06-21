@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { API_URL } from '../api-config';
 import { Observable } from 'rxjs';
@@ -18,9 +18,13 @@ export class UsuariocrudService {
     GetUsuariosAccesoArea(id:any): Observable<any> {
       return this.clientHttp.get(API_URL+"userAcces/" + id, { responseType: 'text' })
     }
-    
+
     InsertUsuarioService(formulario: any): Observable<any> {
-      return this.clientHttp.post(API_URL + "usuario", formulario, { responseType: 'text' });
+      const req = new HttpRequest('POST',API_URL + "usuario", formulario, {
+        reportProgress: true,
+        responseType: 'text'
+      });
+      return this.clientHttp.request(req);
     }
 
     GetUsuariosArea(){
@@ -30,7 +34,7 @@ export class UsuariocrudService {
     DeleteUserService(id: any): Observable<any> {
       return this.clientHttp.delete(API_URL + "usuario/" + id, { responseType: 'text' });
     }
-  
+
     ActivateUserService(id: any): Observable<any> {
       return this.clientHttp.get(API_URL + "activarUser/" + id, { responseType: 'text' });
     }
@@ -40,6 +44,12 @@ export class UsuariocrudService {
     }
 
     UpdateUserService(formulario: any, id: any): Observable<any> {
-      return this.clientHttp.put(API_URL + "usuario/"+ id, formulario, { responseType: 'text' });
+      const req = new HttpRequest('PUT',API_URL + "usuario/"+ id, formulario, {
+        reportProgress: true,
+        responseType: 'text'
+      });
+      return this.clientHttp.request(req);
     }
+
+
 }

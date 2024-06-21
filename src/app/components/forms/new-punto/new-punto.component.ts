@@ -7,6 +7,7 @@ import { CryptoServiceService } from '../../../services/cryptoService/crypto-ser
 import { PuntocrudService } from '../../../services/crud/puntocrud.service';
 import { Area,  markFormGroupTouched, validarNombre } from '../../../services/api-config';
 import { AreaCrudService } from '../../../services/crud/areacrud.service';
+import { HttpEvent, HttpEventType } from '@angular/common/http';
 
 @Component({
   selector: 'app-new-punto',
@@ -28,7 +29,7 @@ export class NewPuntoComponent {
     private flasher: AlertsServiceService,
     private CryptoServiceService: CryptoServiceService,
     private encodeService: CryptoServiceService,
-  ) { 
+  ) {
     this.FormAltaPunto = this.formulario.group({
       nombrePunto: ['',
         [
@@ -37,7 +38,7 @@ export class NewPuntoComponent {
           Validators.minLength(5),
           Validators.maxLength(100)
         ],
-        
+
       ]
     });
   }
@@ -61,34 +62,65 @@ export class NewPuntoComponent {
 
   }
 
-  SavePunto(): any {
-    markFormGroupTouched(this.FormAltaPunto);
-    if (this.FormAltaPunto.valid && this.selectedAreas.length > 0) {
-      const encryptedData = this.CryptoServiceService.encryptData(JSON.stringify(this.FormAltaPunto.value));
-      const data = {
-        data: encryptedData
-      };
-      this.PuntocrudService.InsertPuntoService(data).subscribe(
-        respuesta => {
-          if (this.CryptoServiceService.decryptData(respuesta)?.resultado?.res) {
-            this.flasher.success(this.CryptoServiceService.decryptData(respuesta)?.resultado?.data);
-            this.router.navigate(['/puntos']);
-          } else {
-            this.flasher.error(this.CryptoServiceService.decryptData(respuesta)?.resultado?.data);
-          }
-        },
-        error => {
-          this.flasher.error("Hubo un error, Intente más tarde o notifique al soporte técnico.");
+/* Variables spinner y mensaje */
+porcentajeEnvio: number = 0;
+mostrarSpinner: boolean = false;
+mensaje = "Guardando...";
+
+SavePunto(): any {
+  markFormGroupTouched(this.FormAltaPunto);
+
+  if (this.FormAltaPunto.valid && this.selectedAreas.length > 0) {
+    this.mostrarSpinner = true; // Mostrar spinner de carga
+
+    const encryptedData = this.CryptoServiceService.encryptData(JSON.stringify(this.FormAltaPunto.value));
+    const data = {
+      data: encryptedData
+    };
+
+    this.PuntocrudService.InsertPuntoService(data).subscribe(
+      (event: HttpEvent<any>) => {
+        switch (event.type) {
+          case HttpEventType.Sent:
+            break;
+          case HttpEventType.UploadProgress:
+            if (event.total !== undefined) {
+              const percentDone = Math.round((100 * event.loaded) / event.total);
+              this.porcentajeEnvio = percentDone; // Actualizar el porcentaje de envío
+            }
+            break;
+          case HttpEventType.Response:
+            // Manejo de la respuesta encriptada
+            const encryptedResponse = event.body;
+            const decryptedResponse = this.CryptoServiceService.decryptData(encryptedResponse);
+            if (decryptedResponse?.resultado?.res) {
+              this.flasher.success(decryptedResponse?.resultado?.data);
+              this.router.navigate(['/puntos']);
+            } else {
+              this.flasher.error(decryptedResponse?.resultado?.data || 'No se recibió una respuesta válida');
+            }
+            this.mostrarSpinner = false; // Ocultar spinner al finalizar
+            break;
+          default:
+            this.mostrarSpinner = false;
+            this.flasher.error("Hubo un error, Intente más tarde o notifique al soporte técnico.");
+            break;
         }
-      );
-    } else {
-      if (!this.FormAltaPunto.valid) {
-        this.flasher.error("Datos Invalidos. Complete los datos correctamente.");
-      } else {
-        this.flasher.error("Debe seleccionar al menos un área.");
+      },
+      error => {
+        this.mostrarSpinner = false; // Ocultar spinner en caso de error
+        this.flasher.error("Hubo un error, Intente más tarde o notifique al soporte técnico.");
       }
+    );
+  } else {
+    if (!this.FormAltaPunto.valid) {
+      this.flasher.error("Datos Invalidos. Complete los datos correctamente.");
+    } else {
+      this.flasher.error("Debe seleccionar al menos un área.");
     }
   }
+}
+
 
   selectedAreas: number[] = [];
 
@@ -98,7 +130,7 @@ export class NewPuntoComponent {
       const controlName = `vertical-checkbox-${area.id_area}`;
       const control = this.formulario.control(false);
       this.FormAltaPunto.addControl(controlName, control);
-  
+
       // Agrega un event listener al control
       control.valueChanges.subscribe((value: boolean | null) => {
         if (value) {
@@ -112,14 +144,14 @@ export class NewPuntoComponent {
 
   GetActAreaService() {
     this.AreaCrudService.GetActAreaService().subscribe((respuesta: any) => {
-      /* Desencriptamos la respuesta que nos retorna el backend */ 
+      /* Desencriptamos la respuesta que nos retorna el backend */
       let decryptedData = this.encodeService.decryptData(respuesta).resultado?.data?.data;
-  
+
       // Filtrar el array para excluir el registro con id_area = 1
       this.ListArea = decryptedData?.filter((area: any) => area.id_area !== 1) || [];
-  
+
       this.initializeDynamicControls();
-  
+
       // Indicar que todos los datos se han cargado
       setTimeout(() => {
         this.sharedService.setLoading(false);

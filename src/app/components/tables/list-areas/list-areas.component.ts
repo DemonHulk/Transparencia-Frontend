@@ -50,7 +50,6 @@ export class ListAreasComponent {
      * Llama al Servicio AreaCrudService y ejecutar la funcion para extraer areas.
      */
     this.GetAllAreaService();
-
   }
 
   encriptarId(id:any){
@@ -60,7 +59,7 @@ export class ListAreasComponent {
 
   GetAllAreaService() {
     this.AreaCrudService.GetAllAreaService().subscribe((respuesta: any) => {
-      /* Desencriptamos la respuesta que nos retorna el backend */ 
+      /* Desencriptamos la respuesta que nos retorna el backend */
       this.ListAreas = this.encodeService.decryptData(respuesta).resultado?.data?.data.map((area: Area) => this.addFormattedDate(area));
       // Filtrar las áreas activas
       this.ListActiveAreas = this.ListAreas.filter(area => area.activo == true);

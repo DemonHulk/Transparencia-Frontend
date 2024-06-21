@@ -1,266 +1,276 @@
-<div class="12/12 text-right my-5">
-  <ol class="flex items-center whitespace-nowrap">
-    <li class="inline-flex items-center">
-      <a class="flex items-center text-sm text-gray-500 hover:text-color-active focus:outline-none focus:text-color-active" routerLink="/usuarios">
-        Usuarios
-        <svg class="flex-shrink-0 mx-2 overflow-visible size-4 text-gray-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="m9 18 6-6-6-6"></path>
-        </svg>
-      </a>
-    </li>
-    <li class="inline-flex items-center text-sm font-semibold text-gray-800 truncate" aria-current="page">
-      Modificar usuario
-    </li>  </ol>
-</div>
-<div class="bg-white p-8 border border-gray-200 rounded-lg shadow-lg max-w-2xl mx-auto my-10">
-  <h3 class="my-2 text-left ">Modificar usuario</h3>
-  <hr class="w-full mb-2 border-hr-color">
-  <form class="grid grid-cols-1 gap-y-6 gap-x-4" [formGroup]="FormAltaUsuario" (ngSubmit)="UpdateUserService()">
-    <div class="sm:col-span-2">
-      <label for="nombre" class="font-poppins">Nombre(s)</label>
-      <div
-        class="flex items-center border border-input-bord-color py-3 px-4 rounded-lg focus-within:border-input-focus-color focus-within:ring-input-focus-color"
-        [ngClass]="{
-          'border-validator-error focus-within:border-validator-error focus-within:ring-validator-error': FormAltaUsuario.get('nombre')?.invalid && (FormAltaUsuario.get('nombre')?.dirty || FormAltaUsuario.get('nombre')?.touched)
-          }">
-        <input type="text" id="nombre" formControlName="nombre"
-          class="name flex-grow border-none focus:ring-0 focus:outline-none text-sm text-dark"
-          placeholder="Nombres del usuario">
-        <div class="hs-tooltip [--trigger:hover] sm:[--placement:right] inline-block ml-2">
-          <!-- lo del simbolo de interrogacion -->
-          <i class="fa-solid fa-question text-gray-500"></i>
-          <div
-            class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible hidden opacity-0 transition-opacity absolute invisible z-10 max-w-xs w-full bg-white border border-gray-100 text-start rounded-xl shadow-md after:absolute after:top-0 after:-start-4 after:w-4 after:h-full"
-            role="tooltip">
-            <ul class="py-3 px-4 space-y-1">
-              <li>
-                <div class="inline-flex items-center gap-x-3 text-sm text-gray-800">
-                  <p>Nombre o nombres del usuario</p>
-                </div>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <div *ngIf="FormAltaUsuario.get('nombre')?.invalid && (FormAltaUsuario.get('nombre')?.dirty || FormAltaUsuario.get('nombre')?.touched)">
-        <div *ngIf="FormAltaUsuario.get('nombre')?.errors?.['required']" class="text-sm text-validator-error mt-1">Este campo es requerido.</div>
-        <div *ngIf="FormAltaUsuario.get('nombre')?.errors?.['minlength']" class="text-sm text-validator-error mt-1">El campo debe tener al menos 4 caracteres.</div>
-        <div *ngIf="FormAltaUsuario.get('nombre')?.errors?.['maxlength']" class="text-sm text-validator-error mt-1">El campo no puede exceder los 100 caracteres.</div>
-        <div *ngIf="FormAltaUsuario.get('nombre')?.errors?.['textoInvalido']" class="text-sm text-validator-error mt-1" title="No intentes ingresar caracteres especiales.">El campo no puede contener caracteres no permitidos.</div>
-      </div>
-    </div>
-
-    <div class="sm:col-span-2">
-      <label for="primerApellido" class="font-poppins">Primer apellido</label>
-      <div
-        class="flex items-center border border-input-bord-color py-3 px-4 rounded-lg focus-within:border-input-focus-color focus-within:ring-input-focus-color"
-        [ngClass]="{
-          'border-validator-error focus-within:border-validator-error focus-within:ring-validator-error': FormAltaUsuario.get('primerApellido')?.invalid && (FormAltaUsuario.get('primerApellido')?.dirty || FormAltaUsuario.get('primerApellido')?.touched)
-          }">
-        <input type="text" id="primerApellido" formControlName="primerApellido"
-          class="name flex-grow border-none focus:ring-0 focus:outline-none text-sm text-dark"
-          placeholder="Primer apellido">
-        <div class="hs-tooltip [--trigger:hover] sm:[--placement:right] inline-block ml-2">
-          <!-- lo del simbolo de interrogacion -->
-          <i class="fa-solid fa-question text-gray-500"></i>
-          <div
-            class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible hidden opacity-0 transition-opacity absolute invisible z-10 max-w-xs w-full bg-white border border-gray-100 text-start rounded-xl shadow-md after:absolute after:top-0 after:-start-4 after:w-4 after:h-full"
-            role="tooltip">
-            <ul class="py-3 px-4 space-y-1">
-              <li>
-                <div class="inline-flex items-center gap-x-3 text-sm text-gray-800">
-                  <p>Primer apellido del usuario</p>
-                </div>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <div *ngIf="FormAltaUsuario.get('primerApellido')?.invalid && (FormAltaUsuario.get('primerApellido')?.dirty || FormAltaUsuario.get('primerApellido')?.touched)">
-        <div *ngIf="FormAltaUsuario.get('primerApellido')?.errors?.['required']" class="text-sm text-validator-error mt-1">Este campo es requerido.</div>
-        <div *ngIf="FormAltaUsuario.get('primerApellido')?.errors?.['minlength']" class="text-sm text-validator-error mt-1">El campo debe tener al menos 4 caracteres.</div>
-        <div *ngIf="FormAltaUsuario.get('primerApellido')?.errors?.['maxlength']" class="text-sm text-validator-error mt-1">El campo no puede exceder los 100 caracteres.</div>
-        <div *ngIf="FormAltaUsuario.get('primerApellido')?.errors?.['textoInvalido']" class="text-sm text-validator-error mt-1" title="No intentes ingresar caracteres especiales.">El campo no puede contener caracteres no permitidos.</div>
-      </div>
-    </div>
-
-    <div class="sm:col-span-2">
-      <label for="segundoApellido" class="font-poppins">Segundo apellido</label>
-      <div
-        class="flex items-center border border-input-bord-color py-3 px-4 rounded-lg focus-within:border-input-focus-color focus-within:ring-input-focus-color"
-        [ngClass]="{
-          'border-validator-error focus-within:border-validator-error focus-within:ring-validator-error': FormAltaUsuario.get('segundoApellido')?.invalid && (FormAltaUsuario.get('segundoApellido')?.dirty || FormAltaUsuario.get('segundoApellido')?.touched)
-          }">
-        <input type="text" id="segundoApellido" formControlName="segundoApellido"
-          class="name flex-grow border-none focus:ring-0 focus:outline-none text-sm text-dark"
-          placeholder="Segundo apellido">
-        <div class="hs-tooltip [--trigger:hover] sm:[--placement:right] inline-block ml-2">
-          <!-- lo del simbolo de interrogacion -->
-          <i class="fa-solid fa-question text-gray-500"></i>
-          <div
-            class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible hidden opacity-0 transition-opacity absolute invisible z-10 max-w-xs w-full bg-white border border-gray-100 text-start rounded-xl shadow-md after:absolute after:top-0 after:-start-4 after:w-4 after:h-full"
-            role="tooltip">
-            <ul class="py-3 px-4 space-y-1">
-              <li>
-                <div class="inline-flex items-center gap-x-3 text-sm text-gray-800">
-                  <p>Segundo apellido del usuario en caso de contar con uno</p>
-                </div>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <div *ngIf="FormAltaUsuario.get('segundoApellido')?.invalid && (FormAltaUsuario.get('segundoApellido')?.dirty || FormAltaUsuario.get('segundoApellido')?.touched)">
-        <div *ngIf="FormAltaUsuario.get('segundoApellido')?.errors?.['minlength']" class="text-sm text-validator-error mt-1">El campo debe tener al menos 4 caracteres.</div>
-        <div *ngIf="FormAltaUsuario.get('segundoApellido')?.errors?.['maxlength']" class="text-sm text-validator-error mt-1">El campo no puede exceder los 100 caracteres.</div>
-        <div *ngIf="FormAltaUsuario.get('segundoApellido')?.errors?.['textoInvalido']" class="text-sm text-validator-error mt-1" title="No intentes ingresar caracteres especiales.">El campo no puede contener caracteres no permitidos.</div>
-      </div>
-    </div>
-
-    <div class="sm:col-span-2">
-      <label for="correo" class="font-poppins">Correo</label>
-      <div
-        class="flex items-center border border-input-bord-color py-3 px-4 rounded-lg focus-within:border-input-focus-color focus-within:ring-input-focus-color"
-        [ngClass]="{
-          'border-validator-error focus-within:border-validator-error focus-within:ring-validator-error': FormAltaUsuario.get('correo')?.invalid && (FormAltaUsuario.get('correo')?.dirty || FormAltaUsuario.get('correo')?.touched)
-          }">
-        <input type="email" id="correo" formControlName="correo"
-          class=" flex-grow border-none focus:ring-0 focus:outline-none text-sm text-dark"
-          placeholder="Correo">
-        <div class="hs-tooltip [--trigger:hover] sm:[--placement:right] inline-block ml-2">
-          <!-- lo del simbolo de interrogacion -->
-          <i class="fa-solid fa-question text-gray-500"></i>
-          <div
-            class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible hidden opacity-0 transition-opacity absolute invisible z-10 max-w-xs w-full bg-white border border-gray-100 text-start rounded-xl shadow-md after:absolute after:top-0 after:-start-4 after:w-4 after:h-full"
-            role="tooltip">
-            <ul class="py-3 px-4 space-y-1">
-              <li>
-                <div class="inline-flex items-center gap-x-3 text-sm text-gray-800">
-                  <p>Correo para el acceso al sistema, y un medio de contacto.</p>
-                </div>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <div *ngIf="FormAltaUsuario.get('correo')?.invalid && (FormAltaUsuario.get('correo')?.dirty || FormAltaUsuario.get('correo')?.touched)">
-        <div *ngIf="FormAltaUsuario.get('correo')?.errors?.['required']" class="text-sm text-validator-error mt-1">Este campo es requerido.</div>
-        <div *ngIf="FormAltaUsuario.get('correo')?.errors?.['minlength']" class="text-sm text-validator-error mt-1">El campo debe tener al menos 4 caracteres.</div>
-        <div *ngIf="FormAltaUsuario.get('correo')?.errors?.['maxlength']" class="text-sm text-validator-error mt-1">El campo no puede exceder los 100 caracteres.</div>
-        <div *ngIf="FormAltaUsuario.get('correo')?.errors?.['correoInvalido']"  class="text-sm text-validator-error mt-1">El correo electrónico debe ser del dominio utdelacosta.edu.mx.</div>
-      </div>
-    </div>
-
-    <div class="sm:col-span-2">
-      <label for="telefono" class="font-poppins">Teléfono</label>
-      <div
-        class="flex items-center border border-input-bord-color py-3 px-4 rounded-lg focus-within:border-input-focus-color focus-within:ring-input-focus-color"
-        [ngClass]="{
-          'border-validator-error focus-within:border-validator-error focus-within:ring-validator-error': FormAltaUsuario.get('telefono')?.invalid && (FormAltaUsuario.get('telefono')?.dirty || FormAltaUsuario.get('telefono')?.touched)
-          }">
-        <input type="text" id="telefono" formControlName="telefono"
-          class="telefono flex-grow border-none focus:ring-0 focus:outline-none text-sm text-dark"
-          placeholder="Teléfono">
-        <div class="hs-tooltip [--trigger:hover] sm:[--placement:right] inline-block ml-2">
-          <!-- lo del simbolo de interrogacion -->
-          <i class="fa-solid fa-question text-gray-500"></i>
-          <div
-            class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible hidden opacity-0 transition-opacity absolute invisible z-10 max-w-xs w-full bg-white border border-gray-100 text-start rounded-xl shadow-md after:absolute after:top-0 after:-start-4 after:w-4 after:h-full"
-            role="tooltip">
-            <ul class="py-3 px-4 space-y-1">
-              <li>
-                <div class="inline-flex items-center gap-x-3 text-sm text-gray-800">
-                  <p>Teléfono del usuario como un medio de contacto.</p>
-                </div>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <div *ngIf="FormAltaUsuario.get('telefono')?.invalid && (FormAltaUsuario.get('telefono')?.dirty || FormAltaUsuario.get('telefono')?.touched)">
-        <div *ngIf="FormAltaUsuario.get('telefono')?.errors?.['required']" class="text-sm text-validator-error mt-1">Este campo es requerido.</div>
-        <div *ngIf="FormAltaUsuario.get('telefono')?.errors?.['minlength']" class="text-sm text-validator-error mt-1">El campo debe tener al menos 10 caracteres.</div>
-        <div *ngIf="FormAltaUsuario.get('telefono')?.errors?.['maxlength']" class="text-sm text-validator-error mt-1">El campo no puede exceder los 10 caracteres.</div>
-      </div>
-    </div>
-
-    <div class="sm:col-span-2">
-      <label for="password" class="font-poppins">Contraseña</label>
-      <div class="hs-tooltip [--trigger:hover] sm:[--placement:right] inline-block ml-2">
-        <i class="fa-solid fa-question text-gray-500"></i>
-        <div class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible hidden opacity-0 transition-opacity absolute invisible z-10 max-w-xs w-full bg-white border border-gray-100 text-start rounded-xl shadow-md after:absolute after:top-0 after:-start-4 after:w-4 after:h-full" role="tooltip">
-          <ul class="py-3 px-4 space-y-1">
-            <li>
-              <div class="inline-flex items-center gap-x-3 text-sm text-gray-800">
-                <p>La contraseña puede quedar vacía en caso de no necesitar modificarla.</p>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <div class="flex items-center border border-input-bord-color py-3 px-4 rounded-lg focus-within:border-input-focus-color focus-within:ring-input-focus-color"
-      [ngClass]="{
-        'border-validator-error focus-within:border-validator-error focus-within:ring-validator-error': FormAltaUsuario.get('password')?.invalid && (FormAltaUsuario.get('password')?.dirty || FormAltaUsuario.get('password')?.touched)
-        }">
-        <input id="hs-toggle-password" type="password" class=" flex-grow border-none focus:ring-0 focus:outline-none text-sm text-dark" placeholder="Contraseña" formControlName="password">
-        <button type="button" data-hs-toggle-password='{
-            "target": "#hs-toggle-password"
-          }' class="ml-2 p-2 rounded-full bg-gray-200 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-color">
-          <svg class="flex-shrink-0 size-3.5 text-gray-400" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path class="hs-password-active:hidden" d="M9.88 9.88a3 3 0 1 0 4.24 4.24"></path>
-            <path class="hs-password-active:hidden" d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"></path>
-            <path class="hs-password-active:hidden" d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"></path>
-            <line class="hs-password-active:hidden" x1="2" x2="22" y1="2" y2="22"></line>
-            <path class="hidden hs-password-active:block" d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
-            <circle class="hidden hs-password-active:block" cx="12" cy="12" r="3"></circle>
+<app-form *ngIf="sharedService.loading$ | async; else content"></app-form>
+<ng-template #content>
+  <div class="12/12 text-right my-5">
+    <ol class="flex items-center whitespace-nowrap">
+      <li class="inline-flex items-center">
+        <a class="flex items-center text-sm text-gray-500 hover:text-color-active focus:outline-none focus:text-color-active" routerLink="/usuarios">
+          Usuarios
+          <svg class="flex-shrink-0 mx-2 overflow-visible size-4 text-gray-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m9 18 6-6-6-6"></path>
           </svg>
-        </button>
+        </a>
+      </li>
+      <li class="inline-flex items-center text-sm font-semibold text-gray-800 truncate" aria-current="page">
+        Modificar usuario
+      </li>  </ol>
+  </div>
+  <div class="bg-white p-8 border border-gray-200 rounded-lg shadow-lg max-w-2xl mx-auto my-10">
+    <h3 class="my-2 text-left ">Modificar usuario</h3>
+    <hr class="w-full mb-2 border-hr-color">
+    <form class="grid grid-cols-1 gap-y-6 gap-x-4" [formGroup]="FormAltaUsuario" (ngSubmit)="UpdateUserService()">
+      <div class="sm:col-span-2">
+        <label for="nombre" class="font-poppins">Nombre(s)</label>
+        <div
+          class="flex items-center border border-input-bord-color py-3 px-4 rounded-lg focus-within:border-input-focus-color focus-within:ring-input-focus-color"
+          [ngClass]="{
+            'border-validator-error focus-within:border-validator-error focus-within:ring-validator-error': FormAltaUsuario.get('nombre')?.invalid && (FormAltaUsuario.get('nombre')?.dirty || FormAltaUsuario.get('nombre')?.touched)
+            }">
+          <input type="text" id="nombre" formControlName="nombre"
+            class="name flex-grow border-none focus:ring-0 focus:outline-none text-sm text-dark"
+            placeholder="Nombres del usuario">
+          <div class="hs-tooltip [--trigger:hover] sm:[--placement:right] inline-block ml-2">
+            <!-- lo del simbolo de interrogacion -->
+            <i class="fa-solid fa-question text-gray-500"></i>
+            <div
+              class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible hidden opacity-0 transition-opacity absolute invisible z-10 max-w-xs w-full bg-white border border-gray-100 text-start rounded-xl shadow-md after:absolute after:top-0 after:-start-4 after:w-4 after:h-full"
+              role="tooltip">
+              <ul class="py-3 px-4 space-y-1">
+                <li>
+                  <div class="inline-flex items-center gap-x-3 text-sm text-gray-800">
+                    <p>Nombre o nombres del usuario</p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="FormAltaUsuario.get('nombre')?.invalid && (FormAltaUsuario.get('nombre')?.dirty || FormAltaUsuario.get('nombre')?.touched)">
+          <div *ngIf="FormAltaUsuario.get('nombre')?.errors?.['required']" class="text-sm text-validator-error mt-1">Este campo es requerido.</div>
+          <div *ngIf="FormAltaUsuario.get('nombre')?.errors?.['minlength']" class="text-sm text-validator-error mt-1">El campo debe tener al menos 4 caracteres.</div>
+          <div *ngIf="FormAltaUsuario.get('nombre')?.errors?.['maxlength']" class="text-sm text-validator-error mt-1">El campo no puede exceder los 100 caracteres.</div>
+          <div *ngIf="FormAltaUsuario.get('nombre')?.errors?.['textoInvalido']" class="text-sm text-validator-error mt-1" title="No intentes ingresar caracteres especiales.">El campo no puede contener caracteres no permitidos.</div>
+        </div>
       </div>
-      <div *ngIf="FormAltaUsuario.get('password')?.invalid && (FormAltaUsuario.get('password')?.dirty || FormAltaUsuario.get('password')?.touched)">
-        <div *ngIf="FormAltaUsuario.get('password')?.errors?.['minlength']" class="text-sm text-validator-error mt-1">El campo debe tener al menos 6 caracteres.</div>
-        <div *ngIf="FormAltaUsuario.get('password')?.errors?.['maxlength']" class="text-sm text-validator-error mt-1">El campo no puede exceder los 100 caracteres.</div>
-      </div>
-    </div>
 
-    <div class="sm:col-span-2">
-      <label for="trimestre" class="font-poppins flex items-center">
-        Área
+      <div class="sm:col-span-2">
+        <label for="primerApellido" class="font-poppins">Primer apellido</label>
+        <div
+          class="flex items-center border border-input-bord-color py-3 px-4 rounded-lg focus-within:border-input-focus-color focus-within:ring-input-focus-color"
+          [ngClass]="{
+            'border-validator-error focus-within:border-validator-error focus-within:ring-validator-error': FormAltaUsuario.get('primerApellido')?.invalid && (FormAltaUsuario.get('primerApellido')?.dirty || FormAltaUsuario.get('primerApellido')?.touched)
+            }">
+          <input type="text" id="primerApellido" formControlName="primerApellido"
+            class="name flex-grow border-none focus:ring-0 focus:outline-none text-sm text-dark"
+            placeholder="Primer apellido">
+          <div class="hs-tooltip [--trigger:hover] sm:[--placement:right] inline-block ml-2">
+            <!-- lo del simbolo de interrogacion -->
+            <i class="fa-solid fa-question text-gray-500"></i>
+            <div
+              class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible hidden opacity-0 transition-opacity absolute invisible z-10 max-w-xs w-full bg-white border border-gray-100 text-start rounded-xl shadow-md after:absolute after:top-0 after:-start-4 after:w-4 after:h-full"
+              role="tooltip">
+              <ul class="py-3 px-4 space-y-1">
+                <li>
+                  <div class="inline-flex items-center gap-x-3 text-sm text-gray-800">
+                    <p>Primer apellido del usuario</p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="FormAltaUsuario.get('primerApellido')?.invalid && (FormAltaUsuario.get('primerApellido')?.dirty || FormAltaUsuario.get('primerApellido')?.touched)">
+          <div *ngIf="FormAltaUsuario.get('primerApellido')?.errors?.['required']" class="text-sm text-validator-error mt-1">Este campo es requerido.</div>
+          <div *ngIf="FormAltaUsuario.get('primerApellido')?.errors?.['minlength']" class="text-sm text-validator-error mt-1">El campo debe tener al menos 4 caracteres.</div>
+          <div *ngIf="FormAltaUsuario.get('primerApellido')?.errors?.['maxlength']" class="text-sm text-validator-error mt-1">El campo no puede exceder los 100 caracteres.</div>
+          <div *ngIf="FormAltaUsuario.get('primerApellido')?.errors?.['textoInvalido']" class="text-sm text-validator-error mt-1" title="No intentes ingresar caracteres especiales.">El campo no puede contener caracteres no permitidos.</div>
+        </div>
+      </div>
+
+      <div class="sm:col-span-2">
+        <label for="segundoApellido" class="font-poppins">Segundo apellido</label>
+        <div
+          class="flex items-center border border-input-bord-color py-3 px-4 rounded-lg focus-within:border-input-focus-color focus-within:ring-input-focus-color"
+          [ngClass]="{
+            'border-validator-error focus-within:border-validator-error focus-within:ring-validator-error': FormAltaUsuario.get('segundoApellido')?.invalid && (FormAltaUsuario.get('segundoApellido')?.dirty || FormAltaUsuario.get('segundoApellido')?.touched)
+            }">
+          <input type="text" id="segundoApellido" formControlName="segundoApellido"
+            class="name flex-grow border-none focus:ring-0 focus:outline-none text-sm text-dark"
+            placeholder="Segundo apellido">
+          <div class="hs-tooltip [--trigger:hover] sm:[--placement:right] inline-block ml-2">
+            <!-- lo del simbolo de interrogacion -->
+            <i class="fa-solid fa-question text-gray-500"></i>
+            <div
+              class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible hidden opacity-0 transition-opacity absolute invisible z-10 max-w-xs w-full bg-white border border-gray-100 text-start rounded-xl shadow-md after:absolute after:top-0 after:-start-4 after:w-4 after:h-full"
+              role="tooltip">
+              <ul class="py-3 px-4 space-y-1">
+                <li>
+                  <div class="inline-flex items-center gap-x-3 text-sm text-gray-800">
+                    <p>Segundo apellido del usuario en caso de contar con uno</p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="FormAltaUsuario.get('segundoApellido')?.invalid && (FormAltaUsuario.get('segundoApellido')?.dirty || FormAltaUsuario.get('segundoApellido')?.touched)">
+          <div *ngIf="FormAltaUsuario.get('segundoApellido')?.errors?.['minlength']" class="text-sm text-validator-error mt-1">El campo debe tener al menos 4 caracteres.</div>
+          <div *ngIf="FormAltaUsuario.get('segundoApellido')?.errors?.['maxlength']" class="text-sm text-validator-error mt-1">El campo no puede exceder los 100 caracteres.</div>
+          <div *ngIf="FormAltaUsuario.get('segundoApellido')?.errors?.['textoInvalido']" class="text-sm text-validator-error mt-1" title="No intentes ingresar caracteres especiales.">El campo no puede contener caracteres no permitidos.</div>
+        </div>
+      </div>
+
+      <div class="sm:col-span-2">
+        <label for="correo" class="font-poppins">Correo</label>
+        <div
+          class="flex items-center border border-input-bord-color py-3 px-4 rounded-lg focus-within:border-input-focus-color focus-within:ring-input-focus-color"
+          [ngClass]="{
+            'border-validator-error focus-within:border-validator-error focus-within:ring-validator-error': FormAltaUsuario.get('correo')?.invalid && (FormAltaUsuario.get('correo')?.dirty || FormAltaUsuario.get('correo')?.touched)
+            }">
+          <input type="email" id="correo" formControlName="correo"
+            class=" flex-grow border-none focus:ring-0 focus:outline-none text-sm text-dark"
+            placeholder="Correo">
+          <div class="hs-tooltip [--trigger:hover] sm:[--placement:right] inline-block ml-2">
+            <!-- lo del simbolo de interrogacion -->
+            <i class="fa-solid fa-question text-gray-500"></i>
+            <div
+              class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible hidden opacity-0 transition-opacity absolute invisible z-10 max-w-xs w-full bg-white border border-gray-100 text-start rounded-xl shadow-md after:absolute after:top-0 after:-start-4 after:w-4 after:h-full"
+              role="tooltip">
+              <ul class="py-3 px-4 space-y-1">
+                <li>
+                  <div class="inline-flex items-center gap-x-3 text-sm text-gray-800">
+                    <p>Correo para el acceso al sistema, y un medio de contacto.</p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="FormAltaUsuario.get('correo')?.invalid && (FormAltaUsuario.get('correo')?.dirty || FormAltaUsuario.get('correo')?.touched)">
+          <div *ngIf="FormAltaUsuario.get('correo')?.errors?.['required']" class="text-sm text-validator-error mt-1">Este campo es requerido.</div>
+          <div *ngIf="FormAltaUsuario.get('correo')?.errors?.['minlength']" class="text-sm text-validator-error mt-1">El campo debe tener al menos 4 caracteres.</div>
+          <div *ngIf="FormAltaUsuario.get('correo')?.errors?.['maxlength']" class="text-sm text-validator-error mt-1">El campo no puede exceder los 100 caracteres.</div>
+          <div *ngIf="FormAltaUsuario.get('correo')?.errors?.['correoInvalido']"  class="text-sm text-validator-error mt-1">El correo electrónico debe ser del dominio utdelacosta.edu.mx.</div>
+        </div>
+      </div>
+
+      <div class="sm:col-span-2">
+        <label for="telefono" class="font-poppins">Teléfono</label>
+        <div
+          class="flex items-center border border-input-bord-color py-3 px-4 rounded-lg focus-within:border-input-focus-color focus-within:ring-input-focus-color"
+          [ngClass]="{
+            'border-validator-error focus-within:border-validator-error focus-within:ring-validator-error': FormAltaUsuario.get('telefono')?.invalid && (FormAltaUsuario.get('telefono')?.dirty || FormAltaUsuario.get('telefono')?.touched)
+            }">
+          <input type="text" id="telefono" formControlName="telefono"
+            class="telefono flex-grow border-none focus:ring-0 focus:outline-none text-sm text-dark"
+            placeholder="Teléfono">
+          <div class="hs-tooltip [--trigger:hover] sm:[--placement:right] inline-block ml-2">
+            <!-- lo del simbolo de interrogacion -->
+            <i class="fa-solid fa-question text-gray-500"></i>
+            <div
+              class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible hidden opacity-0 transition-opacity absolute invisible z-10 max-w-xs w-full bg-white border border-gray-100 text-start rounded-xl shadow-md after:absolute after:top-0 after:-start-4 after:w-4 after:h-full"
+              role="tooltip">
+              <ul class="py-3 px-4 space-y-1">
+                <li>
+                  <div class="inline-flex items-center gap-x-3 text-sm text-gray-800">
+                    <p>Teléfono del usuario como un medio de contacto.</p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="FormAltaUsuario.get('telefono')?.invalid && (FormAltaUsuario.get('telefono')?.dirty || FormAltaUsuario.get('telefono')?.touched)">
+          <div *ngIf="FormAltaUsuario.get('telefono')?.errors?.['required']" class="text-sm text-validator-error mt-1">Este campo es requerido.</div>
+          <div *ngIf="FormAltaUsuario.get('telefono')?.errors?.['minlength']" class="text-sm text-validator-error mt-1">El campo debe tener al menos 10 caracteres.</div>
+          <div *ngIf="FormAltaUsuario.get('telefono')?.errors?.['maxlength']" class="text-sm text-validator-error mt-1">El campo no puede exceder los 10 caracteres.</div>
+        </div>
+      </div>
+
+      <div class="sm:col-span-2">
+        <label for="password" class="font-poppins">Contraseña</label>
         <div class="hs-tooltip [--trigger:hover] sm:[--placement:right] inline-block ml-2">
           <i class="fa-solid fa-question text-gray-500"></i>
           <div class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible hidden opacity-0 transition-opacity absolute invisible z-10 max-w-xs w-full bg-white border border-gray-100 text-start rounded-xl shadow-md after:absolute after:top-0 after:-start-4 after:w-4 after:h-full" role="tooltip">
             <ul class="py-3 px-4 space-y-1">
               <li>
                 <div class="inline-flex items-center gap-x-3 text-sm text-gray-800">
-                  <p>El área al que el usuario tendra acceso.</p>
+                  <p>La contraseña puede quedar vacía en caso de no necesitar modificarla.</p>
                 </div>
               </li>
             </ul>
           </div>
         </div>
-      </label>
-
-      <select id="area" formControlName="id_area"
-      class="sm:p-5 p-4 pe-9 block w-full border-input-bord-color rounded-lg text-sm focus:border-input-focus-color focus:ring-input-focus-color disabled:opacity-50 disabled:pointer-events-none "
-      [ngClass]="{
-        'border-validator-error focus:border-validator-error focus:ring-validator-error': FormAltaUsuario.get('id_area')?.invalid && (FormAltaUsuario.get('id_area')?.dirty || FormAltaUsuario.get('id_area')?.touched)
-        }">
-        <option value="" selected>Selecciona una área</option>
-        <option *ngFor="let area of area" [value]="area?.id_area">
-            {{ area.nombre_area }}
-          </option>
-      </select>
-      <div *ngIf="FormAltaUsuario.get('id_area')?.invalid && (FormAltaUsuario.get('id_area')?.dirty || FormAltaUsuario.get('id_area')?.touched)">
-        <div *ngIf="FormAltaUsuario.get('id_area')?.errors?.['required']" class="text-sm text-validator-error mt-1">Este campo es requerido.</div>
+        <div class="flex items-center border border-input-bord-color py-3 px-4 rounded-lg focus-within:border-input-focus-color focus-within:ring-input-focus-color"
+        [ngClass]="{
+          'border-validator-error focus-within:border-validator-error focus-within:ring-validator-error': FormAltaUsuario.get('password')?.invalid && (FormAltaUsuario.get('password')?.dirty || FormAltaUsuario.get('password')?.touched)
+          }">
+          <input id="hs-toggle-password" type="password" class=" flex-grow border-none focus:ring-0 focus:outline-none text-sm text-dark" placeholder="Contraseña" formControlName="password">
+          <button type="button" data-hs-toggle-password='{
+              "target": "#hs-toggle-password"
+            }' class="ml-2 p-2 rounded-full bg-gray-200 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-color">
+            <svg class="flex-shrink-0 size-3.5 text-gray-400" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path class="hs-password-active:hidden" d="M9.88 9.88a3 3 0 1 0 4.24 4.24"></path>
+              <path class="hs-password-active:hidden" d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"></path>
+              <path class="hs-password-active:hidden" d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"></path>
+              <line class="hs-password-active:hidden" x1="2" x2="22" y1="2" y2="22"></line>
+              <path class="hidden hs-password-active:block" d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
+              <circle class="hidden hs-password-active:block" cx="12" cy="12" r="3"></circle>
+            </svg>
+          </button>
+        </div>
+        <div *ngIf="FormAltaUsuario.get('password')?.invalid && (FormAltaUsuario.get('password')?.dirty || FormAltaUsuario.get('password')?.touched)">
+          <div *ngIf="FormAltaUsuario.get('password')?.errors?.['minlength']" class="text-sm text-validator-error mt-1">El campo debe tener al menos 6 caracteres.</div>
+          <div *ngIf="FormAltaUsuario.get('password')?.errors?.['maxlength']" class="text-sm text-validator-error mt-1">El campo no puede exceder los 100 caracteres.</div>
+        </div>
       </div>
-    </div>
+
+      <div class="sm:col-span-2">
+        <label for="trimestre" class="font-poppins flex items-center">
+          Área
+          <div class="hs-tooltip [--trigger:hover] sm:[--placement:right] inline-block ml-2">
+            <i class="fa-solid fa-question text-gray-500"></i>
+            <div class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible hidden opacity-0 transition-opacity absolute invisible z-10 max-w-xs w-full bg-white border border-gray-100 text-start rounded-xl shadow-md after:absolute after:top-0 after:-start-4 after:w-4 after:h-full" role="tooltip">
+              <ul class="py-3 px-4 space-y-1">
+                <li>
+                  <div class="inline-flex items-center gap-x-3 text-sm text-gray-800">
+                    <p>El área al que el usuario tendra acceso.</p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </label>
+
+        <select id="area" formControlName="id_area"
+        class="sm:p-5 p-4 pe-9 block w-full border-input-bord-color rounded-lg text-sm focus:border-input-focus-color focus:ring-input-focus-color disabled:opacity-50 disabled:pointer-events-none "
+        [ngClass]="{
+          'border-validator-error focus:border-validator-error focus:ring-validator-error': FormAltaUsuario.get('id_area')?.invalid && (FormAltaUsuario.get('id_area')?.dirty || FormAltaUsuario.get('id_area')?.touched)
+          }">
+          <option value="" selected>Selecciona una área</option>
+          <option *ngFor="let area of area" [value]="area?.id_area">
+              {{ area.nombre_area }}
+            </option>
+        </select>
+        <div *ngIf="FormAltaUsuario.get('id_area')?.invalid && (FormAltaUsuario.get('id_area')?.dirty || FormAltaUsuario.get('id_area')?.touched)">
+          <div *ngIf="FormAltaUsuario.get('id_area')?.errors?.['required']" class="text-sm text-validator-error mt-1">Este campo es requerido.</div>
+        </div>
+      </div>
 
 
-    <!-- Botón de enviar -->
-    <div class="sm:col-span-2 flex justify-end">
-      <button type="submit" [disabled]="isSubmitting"
-        class="items-center inline-flex justify-center py-2 px-6 border border-transparent shadow-sm text-sm font-medium rounded-md button-update">
-        <i class="fas fa-save mx-1"></i>
-      </button>
-    </div>
-  </form>
-</div>
+      <!-- Botón de enviar -->
+      <div class="sm:col-span-2 flex justify-end">
+        <button type="submit" [disabled]="mostrarSpinner"
+          class="items-center inline-flex justify-center py-2 px-6 border border-transparent shadow-sm text-sm font-medium rounded-md button-update">
+          <i class="fas fa-save mx-1"></i>
+        </button>
+      </div>
+    </form>
+  </div>
+</ng-template>
+
+<app-loading-spinner
+  [fillPercentage]="porcentajeEnvio"
+  [text]="'UTC'"
+  [isVisible]="mostrarSpinner"
+  [updateText]="mensaje">
+</app-loading-spinner>

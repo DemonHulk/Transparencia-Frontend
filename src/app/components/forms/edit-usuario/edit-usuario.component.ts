@@ -3,11 +3,12 @@ import { SharedValuesService } from '../../../services/shared-values.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CryptoServiceService } from '../../../services/cryptoService/crypto-service.service';
 import { AlertsServiceService } from '../../../services/alerts/alerts-service.service';
-import { validarCorreoUTDelacosta, validarNombre, validarPassword, validarTelefono } from '../../../services/api-config';
+import { markFormGroupTouched, validarCorreoUTDelacosta, validarNombre, validarPassword, validarTelefono } from '../../../services/api-config';
 import { UsuariocrudService } from '../../../services/crud/usuariocrud.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AreaCrudService } from '../../../services/crud/areacrud.service';
 import { delay } from 'rxjs/operators';
+import { HttpEvent, HttpEventType } from '@angular/common/http';
 
 @Component({
   selector: 'app-edit-usuario',
@@ -22,7 +23,7 @@ export class EditUsuarioComponent implements OnInit {
   isSubmitting: boolean = false;
   response: any;
   constructor(
-    private sharedService: SharedValuesService,
+    public sharedService: SharedValuesService,
     private activateRoute: ActivatedRoute,
     public formulario: FormBuilder,
     private UsuariocrudService: UsuariocrudService,
@@ -100,7 +101,8 @@ ngOnInit(): void {
      * @memberof SharedValuesService
      */
     // this.sharedService.changeTitle('Modificar usuario: Nombre completo');
-    this.sharedService.loadScript("/assets/js/validations.js");
+    this.sharedService.setLoading(true);
+
 
     //Tomas la id de la URL
     this.id = this.activateRoute.snapshot.paramMap.get("id");
@@ -141,15 +143,15 @@ ngOnInit(): void {
       }
     );
   }
-
+ /* Variables spinner */
+ porcentajeEnvio: number = 0;
+ mostrarSpinner: boolean = false;
+ mensaje = "Actualizando...";
   UpdateUserService(): void {
-    if (this.FormAltaUsuario.valid) {
-      if (this.isSubmitting) {
-        console.log('Ya hay una petición en curso. Espera a que se complete.');
-        return;
-      }
+    markFormGroupTouched(this.FormAltaUsuario);
 
-      this.isSubmitting = true; // Deshabilitar el botón
+    if (this.FormAltaUsuario.valid) {
+      this.mostrarSpinner = true; // Mostrar spinner de carga
       // Enviamos tanto los datos del formulario como el id encriptados
       const encryptedData = this.encodeService.encryptData(JSON.stringify(this.FormAltaUsuario.value));
       const encryptedID = this.encodeService.encryptData(JSON.stringify(this.id));
@@ -157,23 +159,38 @@ ngOnInit(): void {
       const data = {
         data: encryptedData
       };
-      
-      this.UsuariocrudService.UpdateUserService(data, encryptedID).pipe(
-        delay(1000) // Agregar un retraso de 1 segundo (1000 ms)
-      ).subscribe(
-        respuesta => {
-          if (this.encodeService.decryptData(respuesta)?.resultado?.data?.res) {
-            this.isSubmitting = false; // Habilitar el botón
-            this.flasher.success(this.encodeService.decryptData(respuesta)?.resultado?.data?.data);
-            this.router.navigate(['/usuarios']);
-          } else {
-            this.isSubmitting = false; // Habilitar el botón en caso de error
-            this.flasher.error(this.encodeService.decryptData(respuesta)?.resultado?.data?.data || 'No se recibió una respuesta válida');
+
+      this.UsuariocrudService.UpdateUserService(data, encryptedID).subscribe(
+        (event: HttpEvent<any>) => {
+          switch (event.type) {
+            case HttpEventType.Sent:
+              break;
+            case HttpEventType.UploadProgress:
+              if (event.total !== undefined) {
+                const percentDone = Math.round((100 * event.loaded) / event.total);
+                this.porcentajeEnvio = percentDone; // Actualizar el porcentaje de envío
+              }
+              break;
+            case HttpEventType.Response:
+              // Manejo de la respuesta encriptada
+              const encryptedResponse = event.body;
+              const decryptedResponse = this.encodeService.decryptData(encryptedResponse);
+              if (decryptedResponse?.resultado?.data?.res) {
+                this.flasher.success(decryptedResponse?.resultado?.data?.data);
+                this.router.navigate(['/usuarios']);
+              } else {
+                this.flasher.error(decryptedResponse?.resultado?.data?.data || 'No se recibió una respuesta válida');
+              }
+              this.mostrarSpinner = false; // Ocultar spinner al finalizar
+              break;
+            default:
+              this.mostrarSpinner = false;
+              this.flasher.error("Hubo un error, Intente más tarde o notifique al soporte técnico.");
+              break;
           }
         },
         error => {
-          console.log(error);
-          this.isSubmitting = false; // Habilitar el botón en caso de error
+          this.mostrarSpinner = false; // Ocultar spinner en caso de error
           this.flasher.error("Hubo un error, Intente más tarde o notifique al soporte técnico.");
         }
       );
@@ -182,15 +199,22 @@ ngOnInit(): void {
     }
   }
 
+
   area: any[] = [];
   loadArea(): void {
     this.AreaCrudService.GetAllAreaService().subscribe(
       (resultado: any) => {
-        this.area = this.encodeService.decryptData(resultado).resultado?.data?.data;
+        const decryptedData = this.encodeService.decryptData(resultado);
+        const areas = decryptedData?.resultado?.data?.data || [];
+        this.sharedService.setLoading(false);
+
+
+        // Filtrar solo las áreas activas
+        this.area = areas.filter((area: any) => area.activo === true);
       },
       (error: any) => {
         console.error('Error al cargar datos:', error);
-        this.area = [];
+        this.area = []; // Asignar un array vacío en caso de error
       }
     );
   }

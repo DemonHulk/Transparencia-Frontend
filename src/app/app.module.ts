@@ -46,6 +46,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ListEjercicioComponent } from './components/tables/list-ejercicio/list-ejercicio.component';
 import { NewEjercicioComponent } from './components/forms/new-ejercicio/new-ejercicio.component';
 import { EditEjercicioComponent } from './components/forms/edit-ejercicio/edit-ejercicio.component';
+import { FormComponent } from './components/skeleton/form/form.component';
+import { LoadingSpinnerComponent } from './components/skeleton/loading-spinner/loading-spinner.component';
 
 @NgModule({
   declarations: [
@@ -84,6 +86,8 @@ import { EditEjercicioComponent } from './components/forms/edit-ejercicio/edit-e
     ListEjercicioComponent,
     NewEjercicioComponent,
     EditEjercicioComponent,
+    FormComponent,
+    LoadingSpinnerComponent,
 
   ],
   imports: [

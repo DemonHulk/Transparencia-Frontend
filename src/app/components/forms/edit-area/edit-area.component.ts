@@ -5,7 +5,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AreaCrudService } from '../../../services/crud/areacrud.service';
 import { AlertsServiceService } from '../../../services/alerts/alerts-service.service';
 import { CryptoServiceService } from '../../../services/cryptoService/crypto-service.service';
-import { validarNombre, validarTextoNormal } from '../../../services/api-config';
+import { markFormGroupTouched, validarNombre, validarTextoNormal } from '../../../services/api-config';
+import { HttpEvent, HttpEventType } from '@angular/common/http';
 
 @Component({
   selector: 'app-edit-area',
@@ -18,7 +19,7 @@ export class EditAreaComponent implements OnInit {
   NombreArea: any;
 
   constructor(
-    private sharedService: SharedValuesService,
+    public sharedService: SharedValuesService,
     private activateRoute: ActivatedRoute,
     public formulario: FormBuilder,
     private AreaCrudService: AreaCrudService,
@@ -50,6 +51,8 @@ export class EditAreaComponent implements OnInit {
       this.router.navigateByUrl("/areas");
     }
     this.sharedService.changeTitle('Modificar área');
+    this.sharedService.setLoading(true);
+
     this.GetOneAreaService(this.id);
 
   }
@@ -63,6 +66,7 @@ export class EditAreaComponent implements OnInit {
         this.FormAltaArea.patchValue({
           nombreArea: this.NombreArea?.resultado?.data?.data?.nombre_area
         });
+        this.sharedService.setLoading(false);
       } else {
         console.error('La respuesta es undefined');
       }
@@ -70,30 +74,59 @@ export class EditAreaComponent implements OnInit {
       console.error('Ocurrió un error al obtener el área:', error);
     });
   }
-
+ /* Variables spinner */
+ porcentajeEnvio: number = 0;
+ mostrarSpinner: boolean = false;
+ mensaje = "Actualizando...";
   UpdateAreaService(): void {
+    markFormGroupTouched(this.FormAltaArea);
+
     if (this.FormAltaArea.valid) {
+      this.mostrarSpinner = true;
+
       const encryptedData = this.encodeService.encryptData(JSON.stringify(this.FormAltaArea.value));
-      const encryptedID = this.encodeService.encryptData(JSON.stringify(this.id));
+      const encryptedID = this.encodeService.encryptData(JSON.stringify(this.id)); // Asumiendo que 'id' es tu identificador a encriptar
+
       const data = {
         data: encryptedData
       };
-    this.AreaCrudService.UpdateAreaService(data, encryptedID).subscribe(
-      respuesta => {
-        if (this.encodeService.decryptData(respuesta)?.resultado?.data?.res) { // Verificar si respuesta.resultado.res no es undefined
-          this.flasher.success(this.encodeService.decryptData(respuesta)?.resultado?.data?.data);
-          this.router.navigate(['/areas']);
-        } else {
-          this.flasher.error(this.encodeService.decryptData(respuesta)?.resultado?.data?.data || 'No se recibió una respuesta válida');
+
+      this.AreaCrudService.UpdateAreaService(data, encryptedID).subscribe(
+        (event: HttpEvent<any>) => {
+          switch (event.type) {
+            case HttpEventType.Sent:
+              break;
+            case HttpEventType.UploadProgress:
+              if (event.total !== undefined) {
+                const percentDone = Math.round((100 * event.loaded) / event.total);
+                this.porcentajeEnvio = percentDone;
+                this.mostrarSpinner = true;
+              }
+              break;
+            case HttpEventType.Response:
+              // Manejo de la respuesta encriptada
+              const encryptedResponse = event.body;
+              const decryptedResponse = this.encodeService.decryptData(encryptedResponse);
+              if (decryptedResponse?.resultado?.data?.res) {
+                this.flasher.success(decryptedResponse?.resultado?.data?.data);
+                this.router.navigate(['/areas']);
+              } else {
+                this.mostrarSpinner = false;
+                this.flasher.error(decryptedResponse?.resultado?.data?.data || 'No se recibió una respuesta válida');
+              }
+              break;
+            default:
+              this.mostrarSpinner = false;
+              break;
+          }
+        },
+        error => {
+          this.mostrarSpinner = false;
+          this.flasher.error("Hubo un error, Intente más tarde o notifique al soporte técnico.");
         }
-      },
-      error => {
-        console.log(error);
-        this.flasher.error("Hubo un error, Intente más tarde o notifique al soporte técnico.");
-      }
-    );
-  } else {
-    this.flasher.error("El formulario no es válido. Por favor, complete todos los campos requeridos correctamente.");
-  }
+      );
+    } else {
+      this.flasher.error("El formulario no es válido. Por favor, complete todos los campos requeridos correctamente.");
+    }
   }
 }

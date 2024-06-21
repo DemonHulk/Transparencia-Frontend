@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { API_URL } from '../api-config';
 import { Observable } from 'rxjs';
@@ -14,9 +14,13 @@ export class TrimestrecrudService {
     GetAllTrimestreService(){
       return this.clientHttp.get(API_URL+"trimestre", { responseType: 'text' })
     }
-    
+
     InsertTrimestreService(formulario: any): Observable<any> {
-      return this.clientHttp.post(API_URL + "trimestre", formulario, { responseType: 'text' });
+      const req = new HttpRequest('POST',API_URL + "trimestre", formulario, {
+        reportProgress: true,
+        responseType: 'text'
+      });
+      return this.clientHttp.request(req);
     }
 
     GetUsuariosArea(){
@@ -26,7 +30,7 @@ export class TrimestrecrudService {
     DeleteTrimestreService(id: any): Observable<any> {
       return this.clientHttp.delete(API_URL + "trimestre/" + id, { responseType: 'text' });
     }
-  
+
     ActivateTrimestreService(id: any): Observable<any> {
       return this.clientHttp.get(API_URL + "trimestreAct/" + id, { responseType: 'text' });
     }
@@ -36,6 +40,10 @@ export class TrimestrecrudService {
     }
 
     UpdateTrimestreService(formulario: any, id: any): Observable<any> {
-      return this.clientHttp.put(API_URL + "trimestre/"+ id, formulario, { responseType: 'text' });
+      const req = new HttpRequest('PUT',API_URL + "trimestre/"+ id, formulario, {
+        reportProgress: true,
+        responseType: 'text'
+      });
+      return this.clientHttp.request(req);
     }
 }

@@ -8,6 +8,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AlertsServiceService } from '../../../services/alerts/alerts-service.service';
 import { CryptoServiceService } from '../../../services/cryptoService/crypto-service.service';
 import { PuntosAreasCrudService } from '../../../services/crud/puntosareascrud.service';
+import { HttpEvent, HttpEventType } from '@angular/common/http';
 
 @Component({
   selector: 'app-edit-punto',
@@ -25,7 +26,7 @@ export class EditPuntoComponent {
 
 
   constructor(
-    private sharedService: SharedValuesService,
+    public sharedService: SharedValuesService,
     public formulario: FormBuilder,
     private activateRoute: ActivatedRoute,
     private PuntocrudService: PuntocrudService,
@@ -35,7 +36,7 @@ export class EditPuntoComponent {
     private flasher: AlertsServiceService,
     private CryptoServiceService: CryptoServiceService,
     private encodeService: CryptoServiceService,
-  ) { 
+  ) {
     this.FormAltaPunto = this.formulario.group({
       nombrePunto: ['',
         [
@@ -60,7 +61,8 @@ export class EditPuntoComponent {
      * @memberof SharedValuesService
      */
     this.sharedService.changeTitle('Modificar punto');
-    this.sharedService.loadScript("/assets/js/validations.js");
+    this.sharedService.setLoading(true);
+
 
     //Tomas la id de la URL
     this.id = this.activateRoute.snapshot.paramMap.get("id");
@@ -73,33 +75,59 @@ export class EditPuntoComponent {
       this.router.navigateByUrl("/puntos");
     }
 
-    
+
     this.GetOnePuntoService(this.id);
     this.GetAreasPunto_PuntoService(this.id);
 
   }
 
 
-  
+  porcentajeEnvio: number = 0;
+  mostrarSpinner: boolean = false;
+  mensaje = "Actualizando...";
   UpdatePunto(): any {
     markFormGroupTouched(this.FormAltaPunto);
+
     if (this.FormAltaPunto.valid && this.selectedAreas.length > 0) {
+      this.mostrarSpinner = true; // Mostrar spinner de carga
+
       const encryptedData = this.CryptoServiceService.encryptData(JSON.stringify(this.FormAltaPunto.value));
       const encryptedID = this.encodeService.encryptData(JSON.stringify(this.id));
-
       const data = {
         data: encryptedData
       };
-      this.PuntocrudService.UpdatePuntoService(data,encryptedID).subscribe(
-        respuesta => {
-          if (this.CryptoServiceService.decryptData(respuesta)?.resultado?.res) {
-            this.flasher.success(this.CryptoServiceService.decryptData(respuesta)?.resultado?.data);
-            this.router.navigate(['/puntos']);
-          } else {
-            this.flasher.error(this.CryptoServiceService.decryptData(respuesta)?.resultado?.data);
+
+      this.PuntocrudService.UpdatePuntoService(data, encryptedID).subscribe(
+        (event: HttpEvent<any>) => {
+          switch (event.type) {
+            case HttpEventType.Sent:
+              break;
+            case HttpEventType.UploadProgress:
+              if (event.total !== undefined) {
+                const percentDone = Math.round((100 * event.loaded) / event.total);
+                this.porcentajeEnvio = percentDone; // Actualizar el porcentaje de envío
+              }
+              break;
+            case HttpEventType.Response:
+              // Manejo de la respuesta encriptada
+              const encryptedResponse = event.body;
+              const decryptedResponse = this.CryptoServiceService.decryptData(encryptedResponse);
+              if (decryptedResponse?.resultado?.res) {
+                this.flasher.success(decryptedResponse?.resultado?.data);
+                this.router.navigate(['/puntos']);
+              } else {
+                this.flasher.error(decryptedResponse?.resultado?.data || 'No se recibió una respuesta válida');
+              }
+              this.mostrarSpinner = false; // Ocultar spinner al finalizar
+              break;
+            default:
+              this.mostrarSpinner = false;
+              this.flasher.error("Hubo un error, Intente más tarde o notifique al soporte técnico.");
+              break;
           }
         },
         error => {
+          this.mostrarSpinner = false; // Ocultar spinner en caso de error
           this.flasher.error("Hubo un error, Intente más tarde o notifique al soporte técnico.");
         }
       );
@@ -143,6 +171,8 @@ export class EditPuntoComponent {
         this.FormAltaPunto.patchValue({
           nombrePunto: this.nombrePunto?.resultado?.data?.nombre_punto
         });
+        this.sharedService.setLoading(false);
+
       } else {
         console.error('La respuesta es undefined');
       }
@@ -161,14 +191,14 @@ export class EditPuntoComponent {
       const controlName = `vertical-checkbox-${area.id_area}`;
       const control = this.formulario.control(puntoArea ? puntoArea.activo : false);
       area.activo = puntoArea ? puntoArea.activo : false; // Verifica si existe un punto para el área
-  
+
       this.FormAltaPunto.addControl(controlName, control);
-  
+
       // Agregar las áreas previamente seleccionadas a selectedAreas
       if (area.activo) {
         this.selectedAreas.push(Number(area.id_area));
       }
-  
+
       // Agrega un event listener al control
       control.valueChanges.subscribe((value: boolean | null) => {
         if (value) {
@@ -179,20 +209,20 @@ export class EditPuntoComponent {
       });
     });
   }
-  
-  
+
+
 
   /** EXTRAE LAS AREAS ACTIVAS PARA AGREGARLAS ABAJO*/
   GetActAreaService() {
     this.AreaCrudService.GetActAreaService().subscribe((respuesta: any) => {
-      /* Desencriptamos la respuesta que nos retorna el backend */ 
+      /* Desencriptamos la respuesta que nos retorna el backend */
       let decryptedData = this.encodeService.decryptData(respuesta).resultado?.data?.data;
-  
+
       // Filtrar el array para excluir el registro con id_area = 1
       this.ListArea = decryptedData?.filter((area: any) => area.id_area !== 1) || [];
-  
+
       this.initializeDynamicControls();
-  
+
       // Indicar que todos los datos se han cargado
       setTimeout(() => {
         this.sharedService.setLoading(false);
@@ -206,7 +236,7 @@ export class EditPuntoComponent {
   GetAreasPunto_PuntoService(id: any) {
     const encryptedID = this.encodeService.encryptData(JSON.stringify(this.id));
     this.PuntosAreasCrudService.GetAreasPunto_PuntoService(encryptedID).subscribe((respuesta: any) => {
-      /* Desencriptamos la respuesta que nos retorna el backend */ 
+      /* Desencriptamos la respuesta que nos retorna el backend */
       this.ListAreaPunto = this.encodeService.decryptData(respuesta).resultado?.data;
       //Indicar que todos los datos se han cargado
       this.GetActAreaService();
@@ -218,7 +248,7 @@ export class EditPuntoComponent {
   }
 
 
-  
+
 
 
 
