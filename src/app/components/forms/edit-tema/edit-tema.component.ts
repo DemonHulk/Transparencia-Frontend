@@ -102,7 +102,6 @@ export class EditTemaComponent {
           tipoContenido: this.ListTitulo?.tipo_contenido,
           punto: this.ListTitulo?.id_punto,
         });
-        console.log(this.ListTitulo?.nombre_punto);
         this.sharedService.setLoading(false);
       },
       error => {
