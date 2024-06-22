@@ -23,7 +23,7 @@
 <div class="bg-white p-8 border border-gray-200 rounded-lg shadow-lg max-w-2xl mx-auto my-10">
   <h3 class="my-2 text-left">Nuevo Tema</h3>
   <hr class="w-full mb-2 border-hr-color">
-  <form class="grid grid-cols-1 gap-y-6 gap-x-4">
+  <form [formGroup]="FormAltaTema" (ngSubmit)="SaveTema()" class="grid grid-cols-1 gap-y-6 gap-x-4">
 
     <div class="sm:col-span-2">
       <label for="titulo" class="font-poppins">Punto</label>
@@ -31,7 +31,7 @@
         class="flex items-center border border-input-bord-color py-3 px-4 rounded-lg focus-within:border-input-focus-color focus-within:ring-input-focus-color">
         <input type="text" id="titulo"
           class=" flex-grow border-none focus:ring-0 focus:outline-none text-sm text-dark"
-          placeholder="Nombre del punto" value="Nombre del punto" readonly>
+          placeholder="Nombre del punto" value="{{DataPunto?.nombre_punto}}" readonly>
         <div class="hs-tooltip [--trigger:hover] sm:[--placement:right] inline-block ml-2">
           <!-- lo del simbolo de interrogacion -->
           <i class="fa-solid fa-question text-gray-500"></i>
@@ -55,7 +55,7 @@
       <label for="titulo" class="font-poppins">Titulo</label>
       <div
       class="flex items-center border border-input-bord-color py-3 px-4 rounded-lg focus-within:border-input-focus-color focus-within:ring-input-focus-color">
-        <input type="text" id="titulo"
+        <input type="text" id="titulo" formControlName="nombreTitulo"
           class="tema flex-grow border-none focus:ring-0 focus:outline-none text-sm text-dark"
           placeholder="Titulo del tema">
         <div class="hs-tooltip [--trigger:hover] sm:[--placement:right] inline-block ml-2">
@@ -73,6 +73,12 @@
             </ul>
           </div>
         </div>
+      </div>
+      <div *ngIf="FormAltaTema.get('nombreTitulo')?.invalid && (FormAltaTema.get('nombreTitulo')?.dirty || FormAltaTema.get('nombreTitulo')?.touched)">
+        <div *ngIf="FormAltaTema.get('nombreTitulo')?.errors?.['required']" class="text-sm text-validator-error mt-1">Este campo es requerido.</div>
+        <div *ngIf="FormAltaTema.get('nombreTitulo')?.errors?.['minlength']" class="text-sm text-validator-error mt-1">El campo debe tener al menos 5 caracteres.</div>
+        <div *ngIf="FormAltaTema.get('nombreTitulo')?.errors?.['maxlength']" class="text-sm text-validator-error mt-1">El campo no puede exceder los 100 caracteres.</div>
+        <div *ngIf="FormAltaTema.get('nombreTitulo')?.errors?.['textoInvalido']" class="text-sm text-validator-error mt-1" title="No intentes ingresar caracteres especiales.">El campo no puede contener caracteres no permitidos.</div>
       </div>
     </div>
 
@@ -100,7 +106,7 @@
         class="flex items-start  py-3 px-4 border-gray-200 rounded-lg focus-within:border-primary-color focus-within:ring-primary-color">
         <div class="flex items-center">
           <label for="hs-basic-with-description" class="text-sm text-gray-500 me-3">No</label>
-          <input type="checkbox" id="hs-basic-with-description"
+          <input type="checkbox" id="hs-basic-with-description" formControlName="esLink"
             class="border bg-input-bord-color relative w-[3.25rem] h-7 p-px  border-transparent text-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:ring-primary-color disabled:opacity-50 disabled:pointer-events-none checked:bg-none checked:text-primary-color checked:border-primary-color focus:checked:border-primary-color
 
       before:inline-block before:size-6 before:bg-white checked:before:bg-white before:translate-x-0 checked:before:translate-x-full before:rounded-full before:shadow before:transform before:ring-0 before:transition before:ease-in-out before:duration-200">
@@ -128,11 +134,14 @@
           </div>
         </div>
       </label>
-      <select id="contenido"
+      <select id="contenido" formControlName="tipoContenido"
       class="sm:p-5 p-4 pe-9 block w-full border-input-bord-color rounded-lg text-sm focus:border-input-focus-color focus:ring-input-focus-color disabled:opacity-50 disabled:pointer-events-none ">
         <option value="1">Estático</option>
         <option value="2">Dinámico</option>
       </select>
+      <div *ngIf="FormAltaTema.get('tipoContenido')?.invalid && (FormAltaTema.get('tipoContenido')?.dirty || FormAltaTema.get('tipoContenido')?.touched)">
+        <div *ngIf="FormAltaTema.get('tipoContenido')?.errors?.['required']" class="text-sm text-validator-error mt-1">Este campo es requerido.</div>
+      </div>
     </div>
 
     <!-- Botón de enviar -->
@@ -144,3 +153,11 @@
     </div>
   </form>
 </div>
+
+
+<app-loading-spinner
+  [fillPercentage]="porcentajeEnvio"
+  [text]="'UTC'"
+  [isVisible]="mostrarSpinner"
+  [updateText]="mensaje">
+</app-loading-spinner>

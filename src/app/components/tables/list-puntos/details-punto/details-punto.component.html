@@ -24,7 +24,7 @@
     </div>
     <div class="p-4 md:p-5">
       <h3 class="text-lg font-bold text-gray-800">
-        Normativas de la institución
+        {{DataPunto?.nombre_punto}}
       </h3>
     </div>
   </div>
@@ -37,7 +37,7 @@
     </div>
     <div class="p-4 md:p-5">
       <h3 class="text-lg font-bold text-gray-800">
-        Enero 15, 2023
+        {{FormatearDate(DataPunto?.fecha_creacion)}}
       </h3>
     </div>
   </div>
@@ -50,7 +50,7 @@
     </div>
     <div class="p-4 md:p-5">
       <h3 class="text-lg font-bold text-gray-800">
-        Mayo 28, 2024
+        {{FormatearDate(DataPunto?.fecha_actualizado)}}
       </h3>
     </div>
   </div>
@@ -60,22 +60,22 @@
   <h3 class="text-2xl">Contenido del punto</h3>
 </div>
 <div class="12/12 text-right">
-  <button type="button" routerLink="/new-tema/1"
-    class="py-3 my-2 button-secondary  px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-primary-color text-white hover:bg-primary-color-90 disabled:opacity-50 disabled:pointer-events-none">
+  <button type="button" routerLink="/new-tema/{{encriptarId(DataPunto?.id_punto)}}"
+    class="py-3 my-2 button-secondary  px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-primary-color text-white hover:bg-primary-color-90 disabled:opacity-50 disabled:pointer-events-none ">
     <i class="fa fa-plus" aria-hidden="true"></i>
     Agregar tema
   </button>
 </div>
 <nav class="relative z-0 flex border rounded-xl overflow-hidden" aria-label="Tabs" role="tablist">
-  <button *ngFor="let tema of getNumbers();let i = index" [ngClass]="{' active': i === 0}" type="button"
+  <button *ngFor="let tema of ListTitulos;let i = index" [ngClass]="{' active': i === 0}" type="button"
     class="hs-tab-active:border-b-primary-color hs-tab-active:text-gray-900 relative min-w-0 flex-1 bg-white first:border-s-0 border-s border-b-2 py-4 px-4 text-gray-500 hover:text-gray-700 text-sm font-medium text-center overflow-hidden hover:bg-gray-50 focus:z-10 focus:outline-none focus:text-primary-color disabled:opacity-50 disabled:pointer-events-none "
-    id="bar-with-underline-item-1" [attr.data-hs-tab]="'#bar-with-underline-' + tema"
-    [attr.aria-controls]="'bar-with-underline-' + tema" role="tab">
-    Tema {{tema}}
+    id="bar-with-underline-item-1" [attr.data-hs-tab]="'#bar-with-underline-' + i"
+    [attr.aria-controls]="'bar-with-underline-' + i" role="tab">
+    {{tema?.nombre_titulo}}
   </button>
 </nav>
 <div class="mt-3">
-  <div *ngFor="let tema of getNumbers();let i = index" id="bar-with-underline-{{tema}}" [ngClass]="{'hidden': i !== 0}"
+  <div *ngFor="let tema of ListTitulos;let i = index" id="bar-with-underline-{{i}}" [ngClass]="{'hidden': i !== 0}"
     role="tabpanel" aria-labelledby="bar-with-underline-item-1">
     <div class="12/12 text-right">
 
@@ -85,20 +85,28 @@
         Agregar subtema
       </button>
 
-      <button type="button" routerLink="/edit-tema/1"
+      <button type="button" routerLink="/edit-tema/{{encriptarId(tema.id_titulo)}}"
         class="button-secondary py-3 my-2 mx-2 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-primary-color text-white hover:bg-primary-color-90 disabled:opacity-50 disabled:pointer-events-none">
         <i class="fas fa-edit"></i>
         Modificar tema
       </button>
-
-      <button type="button"
+      
+      <button type="button" *ngIf="tema.activo == true"
+        (click)="DeleteTitulo(tema.id_titulo)"
         class="button-secondary py-3 my-2 mx-2 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-primary-color text-white hover:bg-primary-color-90 disabled:opacity-50 disabled:pointer-events-none">
         <i class="fa fa-trash" aria-hidden="true"></i>
         Desactivar tema
       </button>
 
+      <button type="button" *ngIf="tema.activo == false"
+        (click)="ActivateTitulo(tema.id_titulo)"
+        class="button-secondary py-3 my-2 mx-2 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-primary-color text-white hover:bg-primary-color-90 disabled:opacity-50 disabled:pointer-events-none">
+        <i class="fa-solid fa-arrow-rotate-left" aria-hidden="true"></i>
+        Activar tema
+      </button>
+
     </div>
-    <ng-container *ngIf="tema % 2 != 0">
+    <ng-container *ngIf="tema?.tipo_contenido === 2">
       <div class="w-12/12">
         <div class="flex flex-col">
           <div class="-m-1.5 overflow-x-auto">
@@ -131,7 +139,7 @@
                         </label>
                       </td>
                       <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">
-                        Enero 13, 2023
+                        {{FormatearDate(tema?.fecha_actualizado)}}
                       </td>
                     </tr>
                   </tbody>
@@ -400,7 +408,7 @@
       </div>
     </ng-container>
 
-    <ng-container *ngIf="tema % 2 == 0">
+    <ng-container *ngIf="tema?.tipo_contenido === 1">
       <div class="w-12/12">
         <div class="flex flex-col">
           <div class="-m-1.5 overflow-x-auto">
@@ -433,7 +441,7 @@
                         </label>
                       </td>
                       <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">
-                        Febrero 18, 2024
+                        {{FormatearDate(tema?.fecha_actualizado)}}
                       </td>
                     </tr>
                   </tbody>

@@ -1,4 +1,4 @@
-export const API_URL = 'http://localhost/Transparencia-Backend/index.php/';
+export const API_URL = 'http://localhost/Transpariencia/Transparencia-Backend/index.php/';
 
 export class TooltipManager {
   static adjustTooltipPosition(button: HTMLElement, tooltip: HTMLElement): void {
@@ -56,6 +56,20 @@ export class Punto {
   id_punto!:string;
   nombre_punto!: string;
   fecha_creacion!: string;
+  activo!: boolean;
+}
+
+export class Titulo {
+  id_titulo!:string;
+  id_punto!:string;
+  nombre_titulo!: string;
+  tipo_contenido!: number;
+  link!: boolean;
+  punto_destino!: string;
+  orden_titulos!: string;
+  fecha_creacion!: string;
+  hora_creacion!: string;
+  fecha_actualizado!: string;
   activo!: boolean;
 }
 
