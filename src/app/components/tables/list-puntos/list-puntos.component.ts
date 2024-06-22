@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { SharedValuesService } from '../../../services/shared-values.service';
 import { Table } from 'primeng/table';
 import { PuntocrudService } from '../../../services/crud/puntocrud.service';
@@ -17,7 +17,6 @@ export class ListPuntosComponent {
   @ViewChild('dtActive') dtActive: Table | undefined;
   @ViewChild('dtInactive') dtInactive: Table | undefined;
 
-  isLoading: boolean = true;
   ListPuntos: (Punto & { fecha_string: string })[] = [];
   ListActivePuntos: (Punto & { fecha_string: string })[] = [];
   ListInactivePuntos: (Punto & { fecha_string: string })[] = [];
@@ -30,9 +29,8 @@ export class ListPuntosComponent {
     private flasher: AlertsServiceService,
     private FechaService: FechaService,
     private encodeService: CryptoServiceService,
-  ) { 
-    this.isLoading= true;
-    
+    private el: ElementRef
+  ) {
   }
 
   /**
@@ -49,48 +47,60 @@ export class ListPuntosComponent {
      */
     this.sharedService.changeTitle('Puntos registrados en el sistema');
     this.sharedService.setLoading(true);
-    
+
     this.verificarAdministrador();
   }
 
-  encriptarId(id:any){
+  encriptarId(id: any) {
     return this.encodeService.encodeID(id);
   }
 
   // Para cuando es usuario administrador
   GetAllPuntosService() {
-      this.PuntocrudService.GetAllPuntosService().subscribe((respuesta: any) => {
-        this.ListPuntos = this.encodeService.decryptData(respuesta).resultado?.data.map((punto: Punto) => this.addFormattedDate(punto));
-        // Filtrar las áreas activas
-        this.ListActivePuntos = this.ListPuntos.filter(punto => punto.activo == true);
-        // Filtrar las áreas inactivas
-        this.ListInactivePuntos = this.ListPuntos.filter(punto => punto.activo == false);
-        //Indicar que todos los datos se han cargado
-        setTimeout(() => {
-
-          this.sharedService.setLoading(false);
-          window.HSStaticMethods.autoInit();
-        }, 500);
-        });
+    this.PuntocrudService.GetAllPuntosService().subscribe(
+      (respuesta: any) => {
+        try {
+          this.ListPuntos = this.encodeService.decryptData(respuesta).resultado?.data.map((punto: Punto) => this.addFormattedDate(punto));
+          this.ListActivePuntos = this.ListPuntos.filter(punto => punto.activo == true);
+          this.ListInactivePuntos = this.ListPuntos.filter(punto => punto.activo == false);
+          setTimeout(() => {
+            this.sharedService.setLoading(false);
+            window.HSStaticMethods.autoInit();
+          }, 500);
+        } catch {
+          this.sharedService.updateErrorLoading(this.el, { message: 'puntos' });
+        }
+      },
+      () => {
+        this.sharedService.updateErrorLoading(this.el, { message: 'puntos' });
+      }
+    );
   }
-  
+
+
   // Para cuando es usuario normal
-  GetUserPuntosService(id:any) {
+  GetUserPuntosService(id: any) {
     const encryptedID = this.encodeService.encryptData(JSON.stringify(id));
-      this.PuntocrudService.GetPuntosUserService(encryptedID).subscribe((respuesta: any) => {
-        this.ListPuntos = this.encodeService.decryptData(respuesta).resultado?.data.map((punto: Punto) => this.addFormattedDate(punto));
-        // Filtrar las áreas activas
-        this.ListActivePuntos = this.ListPuntos.filter(punto => punto.activo == true);
-        // Filtrar las áreas inactivas
-        this.ListInactivePuntos = this.ListPuntos.filter(punto => punto.activo == false);
-        //Indicar que todos los datos se han cargado
-        setTimeout(() => {
-          this.sharedService.setLoading(false);
-          window.HSStaticMethods.autoInit();
-        }, 500);
-        });
-  }
 
+    this.PuntocrudService.GetPuntosUserService(encryptedID).subscribe(
+      (respuesta: any) => {
+        try {
+          this.ListPuntos = this.encodeService.decryptData(respuesta).resultado?.data.map((punto: Punto) => this.addFormattedDate(punto));
+          this.ListActivePuntos = this.ListPuntos.filter(punto => punto.activo == true);
+          this.ListInactivePuntos = this.ListPuntos.filter(punto => punto.activo == false);
+          setTimeout(() => {
+            this.sharedService.setLoading(false);
+            window.HSStaticMethods.autoInit();
+          }, 500);
+        } catch {
+          this.sharedService.updateErrorLoading(this.el, { message: 'puntos' });
+        }
+      },
+      () => {
+        this.sharedService.updateErrorLoading(this.el, { message: 'puntos' });
+      }
+    );
+  }
 
   private addFormattedDate(punto: Punto): Punto & { fecha_string: string } {
     return {
@@ -98,7 +108,6 @@ export class ListPuntosComponent {
       fecha_string: this.FechaService.formatDate(punto.fecha_creacion)
     };
   }
-
 
   mostrar(elemento: any): void {
     // Verifica si el elemento recibido es un botón
@@ -118,8 +127,6 @@ export class ListPuntosComponent {
     }
   }
 
-
-
   DeletePunto(id: any) {
     this.flasher.eliminar().then((confirmado) => {
       if (confirmado) {
@@ -137,7 +144,7 @@ export class ListPuntosComponent {
     this.flasher.reactivar().then((confirmado) => {
       if (confirmado) {
         // Enviamos la id encriptada
-          const encryptedID = this.encodeService.encryptData(JSON.stringify(id));
+        const encryptedID = this.encodeService.encryptData(JSON.stringify(id));
         this.PuntocrudService.ActivatePuntoService(encryptedID).subscribe(respuesta => {
           this.GetAllPuntosService();
           this.flasher.success(this.encodeService.decryptData(respuesta).resultado?.data);
@@ -159,7 +166,7 @@ export class ListPuntosComponent {
       this.dtInactive.filterGlobal(input.value, 'contains');
     }
   }
-  
+
   // Función para verificar si la sesón esta activa y si es administrador
   verificarAdministrador() {
     this.datosUsuario = this.encodeService.desencriptarDatosUsuario();
@@ -171,7 +178,7 @@ export class ListPuntosComponent {
            * Llama al Servicio PuntocrudService y ejecutar la funcion para extraer todos los puntos.
           */
           this.GetAllPuntosService();
-        }else{
+        } else {
           // Segunda funcion para mostrar los puntos a los que tiene acceso
           this.GetUserPuntosService(this.datosUsuario?.id_area);
         }

@@ -1,5 +1,6 @@
 export const API_URL = 'http://localhost/Transparencia-Backend/index.php/';
 
+
 export class TooltipManager {
   static adjustTooltipPosition(button: HTMLElement, tooltip: HTMLElement): void {
       // Obtener dimensiones del botón y del tooltip
@@ -106,6 +107,7 @@ export class Trimestre {
   activo!: boolean;
 }
 
+import { ElementRef } from '@angular/core';
 import { AbstractControl, FormGroup, ValidationErrors, ValidatorFn } from '@angular/forms';
 
 export function validarTextoNormal(): ValidatorFn {
@@ -386,3 +388,4 @@ export function markFormGroupTouched(formGroup: FormGroup): void {
     }
   });
 }
+

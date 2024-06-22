@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef } from '@angular/core';
 import { SharedValuesService } from '../../../services/shared-values.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -18,6 +18,7 @@ import { HttpEvent, HttpEventType } from '@angular/common/http';
 export class EditTrimestreComponent {
 
   id: any;
+  idEncrypt:any;
   FormAltaTrimestre:FormGroup;
   isSubmitting = false;
   data_trimestre: any;
@@ -29,7 +30,8 @@ export class EditTrimestreComponent {
     private EjerciciocrudService : EjerciciocrudService,
     private CryptoServiceService: CryptoServiceService,
     private TrimestrecrudService: TrimestrecrudService,
-    private activateRoute: ActivatedRoute
+    private activateRoute: ActivatedRoute,
+    private el: ElementRef,
     ) {
       this.FormAltaTrimestre = this.formulario.group({
         trimestre: ['',
@@ -66,6 +68,7 @@ ngOnInit(): void {
 
     //Tomas la id de la URL
     this.id = this.activateRoute.snapshot.paramMap.get("id");
+    this.idEncrypt=this.id;
 
     //Desencriptar la ID
     this.id = this.CryptoServiceService.decodeID(this.id);
@@ -83,22 +86,39 @@ ngOnInit(): void {
 /* Extraer los datos del usuario mediante su id e ingresarlos en su respectivo campo*/
 GetOneTrimestreService(id: any) {
   const encryptedID = this.CryptoServiceService.encryptData(JSON.stringify(id));
+
   this.TrimestrecrudService.GetOneTrimestreService(encryptedID).subscribe(
     (respuesta: any) => {
-      this.data_trimestre = this.CryptoServiceService.decryptData(respuesta).resultado.data[0];
-      this.sharedService.changeTitle('Modificar Trimestre: ' + this.data_trimestre?.trimestre);
+      try {
+        // Desencriptar la respuesta para obtener los datos del trimestre
+        const decryptedData = this.CryptoServiceService.decryptData(respuesta);
 
-      this.FormAltaTrimestre.patchValue({
-        id_trimestre: this.data_trimestre?.id_trimestre,
-        trimestre: this.data_trimestre?.trimestre,
-        ejercicio: this.data_trimestre?.id_ejercicio
-      });
+        // Verificar si la respuesta contiene datos válidos
+        if (decryptedData && decryptedData.resultado?.data?.length > 0) {
+          this.data_trimestre = decryptedData.resultado.data[0];
+
+          // Actualizar el título del componente con el nombre del trimestre
+          this.sharedService.changeTitle('Modificar Trimestre: ' + this.data_trimestre?.trimestre);
+
+          // Asignar los valores recuperados al formulario FormAltaTrimestre
+          this.FormAltaTrimestre.patchValue({
+            id_trimestre: this.data_trimestre?.id_trimestre,
+            trimestre: this.data_trimestre?.trimestre,
+            ejercicio: this.data_trimestre?.id_ejercicio
+          });
+        } else {
+          this.sharedService.updateErrorLoading(this.el, { message: 'edit-trimestre/'+this.idEncrypt });
+        }
+      } catch (error) {
+        this.sharedService.updateErrorLoading(this.el, { message: 'edit-trimestre/'+this.idEncrypt });
+      }
     },
-    error => {
-      console.error('Ocurrió un error al obtener el trimestre:', error);
+    (error) => {
+      this.sharedService.updateErrorLoading(this.el, { message: 'edit-trimestre/'+this.idEncrypt });
     }
   );
 }
+
 
   /* Variables spinner */
   porcentajeEnvio: number = 0;
@@ -165,15 +185,33 @@ ejercicio: any[] = [];
 loadEjercicio(): void {
   this.EjerciciocrudService.GetAllEjercicioService().subscribe(
     (resultado: any) => {
-      this.ejercicio = this.CryptoServiceService.decryptData(resultado)?.resultado?.data;
-      this.sharedService.setLoading(false);
+      try {
+        // Desencriptar la respuesta para obtener los datos de los ejercicios
+        const decryptedData = this.CryptoServiceService.decryptData(resultado);
 
+        // Verificar si la respuesta contiene datos válidos
+        if (decryptedData && decryptedData.resultado?.data) {
+          this.ejercicio = decryptedData.resultado.data;
+        } else {
+          this.sharedService.updateErrorLoading(this.el, { message: 'edit-trimestre/'+this.idEncrypt });
+          this.ejercicio = []; // Asignar un arreglo vacío en caso de datos inválidos
+        }
+
+        // Indicar que la carga ha finalizado
+        this.sharedService.setLoading(false);
+      } catch (error) {
+        this.sharedService.updateErrorLoading(this.el, { message: 'edit-trimestre/'+this.idEncrypt });
+        this.ejercicio = []; // Manejar el error asignando un arreglo vacío
+        this.sharedService.setLoading(false); // Asegurar que se marque como cargado aunque haya error
+      }
     },
     (error: any) => {
-      console.error('Error al cargar datos:', error);
-      this.ejercicio = [];
+      this.sharedService.updateErrorLoading(this.el, { message: 'edit-trimestre/'+this.idEncrypt });
+      this.ejercicio = []; // Manejar el error asignando un arreglo vacío
+      this.sharedService.setLoading(false); // Asegurar que se marque como cargado aunque haya error
     }
   );
+
 }
 
 

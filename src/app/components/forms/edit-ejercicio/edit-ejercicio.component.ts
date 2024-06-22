@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef } from '@angular/core';
 import { SharedValuesService } from '../../../services/shared-values.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -15,6 +15,7 @@ import { HttpEvent, HttpEventType } from '@angular/common/http';
 })
 export class EditEjercicioComponent {
   id: any;
+  idEncrypt: any;
   FormEditEjercicio: FormGroup;
   ejercicio: any;
 
@@ -25,7 +26,8 @@ export class EditEjercicioComponent {
     private EjercicioCrudService: EjerciciocrudService,
     private router: Router,
     private flasher: AlertsServiceService,
-    private encodeService: CryptoServiceService
+    private encodeService: CryptoServiceService,
+    private el: ElementRef
   ) {
     this.FormEditEjercicio = this.formulario.group({
       ejercicio: ['',
@@ -42,6 +44,7 @@ export class EditEjercicioComponent {
   ngOnInit(): void {
     //Tomas la id de la URL
     this.id = this.activateRoute.snapshot.paramMap.get("id");
+    this.idEncrypt = this.id;
 
     //Desencriptar la ID
     this.id = this.encodeService.decodeID(this.id);
@@ -58,26 +61,36 @@ export class EditEjercicioComponent {
   }
 
   GetOneEjercicioService(id: any) {
-    const encryptedID = this.encodeService.encryptData(JSON.stringify(this.id));
-    this.EjercicioCrudService.GetOneEjercicioService(encryptedID).subscribe(respuesta => {
-      if (respuesta) { // Verificar si respuesta no es undefined
-        this.ejercicio = this.encodeService.decryptData(respuesta);
-        console.log(this.ejercicio);
-        // Asigna el valor al FormControl ejercicio
-        this.FormEditEjercicio.patchValue({
-          ejercicio: this.ejercicio?.resultado?.data?.ejercicio
-        });
-        this.sharedService.setLoading(false);
+    const encryptedID = this.encodeService.encryptData(JSON.stringify(id));
 
-      } else {
-        console.error('La respuesta es undefined');
+    this.EjercicioCrudService.GetOneEjercicioService(encryptedID).subscribe(
+      (respuesta: any) => {
+        try {
+          if (respuesta) {
+            this.ejercicio = this.encodeService.decryptData(respuesta);
 
+            // Asegúrate de que ejercicio y resultado.data.data.ejercicio existan antes de asignar
+            const ejercicio = this.ejercicio?.resultado?.data?.ejercicio || '';
+
+            // Asigna el valor al FormControl ejercicio
+            this.FormEditEjercicio.patchValue({
+              ejercicio: ejercicio
+            });
+
+            this.sharedService.setLoading(false);
+          } else {
+            this.sharedService.updateErrorLoading(this.el, { message: 'edit-ejercicio/' +this.idEncrypt });
+          }
+        } catch (error) {
+          this.sharedService.updateErrorLoading(this.el, { message: 'edit-ejercicio/' +this.idEncrypt });
+        }
+      },
+      (error) => {
+        this.sharedService.updateErrorLoading(this.el, { message: 'edit-ejercicio/' +this.idEncrypt });
       }
-    }, error => {
-      console.error('Ocurrió un error al obtener el área:', error);
-
-    });
+    );
   }
+
 
    /* Variables spinner */
    porcentajeEnvio: number = 0;

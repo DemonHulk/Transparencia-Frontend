@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { SharedValuesService } from '../../../../services/shared-values.service';
 import { AreaCrudService } from '../../../../services/crud/areacrud.service';
 import { FechaService } from '../../../../services/format/fecha.service';
@@ -20,6 +20,7 @@ export class DetailsAreaComponent {
   @ViewChild('dtPuntos') dtPuntos: Table | undefined;
 
   id: any;
+  idEncrypt: any;
   data_area: any;
   listPuntosAcceso: Punto[] = [];
   listUsuariosAcceso: Usuario[] = [];
@@ -34,14 +35,13 @@ export class DetailsAreaComponent {
     private activateRoute: ActivatedRoute,
     private flasher: AlertsServiceService,
     private encodeService: CryptoServiceService,
-    private router: Router
-
-
+    private router: Router,
+    private el: ElementRef
   ) {
 
     //Tomas la id de la URL
     this.id = this.activateRoute.snapshot.paramMap.get("id");
-
+    this.idEncrypt = this.id;
     //Desencriptar la ID
     this.id = this.encodeService.decodeID(this.id);
 
@@ -51,8 +51,6 @@ export class DetailsAreaComponent {
     }
 
     this.sharedService.setLoading(true);
-
-
   }
 
 
@@ -78,13 +76,15 @@ export class DetailsAreaComponent {
   /* Extraer los datos del area que se esta visualizando el detalle */
   GetOneAreaService(id: any) {
     const encryptedID = this.encodeService.encryptData(JSON.stringify(id));
+
     this.AreaCrudService.GetOneAreaService(encryptedID).subscribe(
       respuesta => {
         this.data_area = this.encodeService.decryptData(respuesta);
         this.sharedService.changeTitle('Información detallada del área: ' + this.data_area?.resultado?.data?.data?.nombre_area);
       },
-      error => {
-        console.error('Ocurrió un error al obtener el área:', error);
+      // Manejo del error sin imprimir explícitamente
+      () => {
+        this.sharedService.updateErrorLoading(this.el, { message: 'details-area/' + this.idEncrypt });
       }
     );
   }
@@ -93,33 +93,49 @@ export class DetailsAreaComponent {
   GetPuntosAccesoArea(id: any) {
     // Enviamos la id encriptada
     const encryptedID = this.encodeService.encryptData(JSON.stringify(id));
-    this.PuntosAreasCrudService.GetPuntosAccesoArea(encryptedID).subscribe((respuesta: any) => {
-      this.listPuntosAcceso = this.encodeService.decryptData(respuesta).resultado?.data?.data;
-      
-    });
+    this.PuntosAreasCrudService.GetPuntosAccesoArea(encryptedID).subscribe(
+      (respuesta: any) => {
+        try {
+          this.listPuntosAcceso = this.encodeService.decryptData(respuesta).resultado?.data?.data;
+        } catch {
+          this.sharedService.updateErrorLoading(this.el, { message: 'details-area/' + this.idEncrypt });
+        }
+      },
+      () => {
+        this.sharedService.updateErrorLoading(this.el, { message: 'details-area/' + this.idEncrypt });
+      }
+    );
   }
-
 
   /* Extrae los usuarios que cuentan con el area en especifico */
   GetUsuariosAccesoArea(id: any) {
     // Encriptamos la id
     const encryptedID = this.encodeService.encryptData(JSON.stringify(id));
-    this.UsuariocrudService.GetUsuariosAccesoArea(encryptedID).subscribe(respuesta => {
-      this.listUsuariosAcceso = this.encodeService.decryptData(respuesta).resultado?.data?.data.map((data: any) =>
-        new Usuario(
-          data.id_punto,
-          data.nombre,
-          data.apellido1,
-          data.apellido2,
-          data.correo,
-          data.activo
-        )
-      );
+    this.UsuariocrudService.GetUsuariosAccesoArea(encryptedID).subscribe(
+      (respuesta: any) => {
+        try {
+          this.listUsuariosAcceso = this.encodeService.decryptData(respuesta).resultado?.data?.data.map((data: any) =>
+            new Usuario(
+              data.id_punto,
+              data.nombre,
+              data.apellido1,
+              data.apellido2,
+              data.correo,
+              data.activo
+            )
+          );
 
-      this.sharedService.setLoading(false);
-
-    });
+          this.sharedService.setLoading(false);
+        } catch {
+          this.sharedService.updateErrorLoading(this.el, { message: 'details-area/' + this.idEncrypt });
+        }
+      },
+      () => {
+        this.sharedService.updateErrorLoading(this.el, { message: 'details-area/' + this.idEncrypt });
+      }
+    );
   }
+
 
   InsertOrActivatePuntoAcceso(punto: any) {
     const formulario = { area: this.id, punto: punto };
@@ -180,8 +196,6 @@ export class DetailsAreaComponent {
     });
   }
 
-
-
   /**
   * Actualiza la fecha de formato YYYY-MM-DD a
   */
@@ -209,6 +223,4 @@ export class DetailsAreaComponent {
       }
     }
   }
-
-
 }

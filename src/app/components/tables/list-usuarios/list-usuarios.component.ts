@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { SharedValuesService } from '../../../services/shared-values.service';
 import { Table } from 'primeng/table';
 import { Usuario, TooltipManager } from '../../../services/api-config';
@@ -24,11 +24,12 @@ export class ListUsuariosComponent {
   constructor(
     public sharedService: SharedValuesService,
     private encodeService: CryptoServiceService,
-    private UsuariocrudService : UsuariocrudService,
-    private flasher: AlertsServiceService
+    private UsuariocrudService: UsuariocrudService,
+    private flasher: AlertsServiceService,
+    private el: ElementRef
   ) {
-    this.isLoading= true;
-   }
+    this.isLoading = true;
+  }
 
   /**
  * Inicializa el componente y establece el título en el servicio de valores compartidos.
@@ -47,33 +48,39 @@ export class ListUsuariosComponent {
     this.GetAllUserArea();
   }
 
-  encriptarId(id:any){
+  encriptarId(id: any) {
     return this.encodeService.encodeID(id);
   }
 
 
   GetAllUserArea() {
-    this.UsuariocrudService.GetUsuariosArea().subscribe((respuesta: any) => {
-      
-      /* Desencriptamos la respuesta que nos retorna el backend */ 
-      this.ListUser = this.encodeService.decryptData(respuesta).resultado?.data?.data;
+    this.UsuariocrudService.GetUsuariosArea().subscribe(
+      (respuesta: any) => {
+        try {
+          /* Desencriptamos la respuesta que nos retorna el backend */
+          this.ListUser = this.encodeService.decryptData(respuesta).resultado?.data?.data;
 
-      // // Filtrar los usuarios activas
-       this.ListActiveUser = this.ListUser.filter(usuario => usuario.activo == true);
+          // Filtrar los usuarios activos
+          this.ListActiveUser = this.ListUser.filter(usuario => usuario.activo == true);
 
-      // // Filtrar los usuarios inactivas
-       this.ListInactiveUser = this.ListUser.filter(usuario => usuario.activo == false);
+          // Filtrar los usuarios inactivos
+          this.ListInactiveUser = this.ListUser.filter(usuario => usuario.activo == false);
 
-      //Indicar que todos los datos se han cargado
-      setTimeout(() => {
-        this.sharedService.setLoading(false);
-        window.HSStaticMethods.autoInit();
-      }, 500);
-    });
+          // Indicar que todos los datos se han cargado
+          setTimeout(() => {
+            this.sharedService.setLoading(false);
+            window.HSStaticMethods.autoInit();
+          }, 500);
+        } catch {
+          this.sharedService.updateErrorLoading(this.el, { message: 'usuarios' });
+        }
+      },
+      () => {
+        this.sharedService.updateErrorLoading(this.el, { message: 'usuarios' });
+      }
+    );
   }
 
-  
-  
   getNombreCompleto(usuario: any): string {
     return `${usuario.nombre} ${usuario.apellido1} ${usuario.apellido2}`;
   }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef } from '@angular/core';
 import { SharedValuesService } from '../../../services/shared-values.service';
 import { UsuariocrudService } from '../../../services/crud/usuariocrud.service';
 import { CryptoServiceService } from '../../../services/cryptoService/crypto-service.service';
@@ -30,6 +30,8 @@ export class EditPerfilComponent {
     private UsuariocrudService: UsuariocrudService,
     private router: Router,
     private encodeService: CryptoServiceService,
+    private el: ElementRef,
+
   ) {
     this.FormEditPerfil = this.formulario.group({
       nombre: ['',
@@ -103,7 +105,7 @@ export class EditPerfilComponent {
     this.id = this.encodeService.decodeID(this.id);
     //Verificar si la ID es null, si es así, redirige a la página de áreas
     if (this.id === null) {
-      this.router.navigateByUrl("/myprofile/");
+      this.router.navigateByUrl("/myprofile");
     }
     this.sharedService.setLoading(true);
     this.GetOneUserService(this.id);
@@ -112,25 +114,45 @@ export class EditPerfilComponent {
   /* Extraer los datos del usuario mediante su id e ingresarlos en su respectivo campo*/
   GetOneUserService(id: any) {
     const encryptedID = this.encodeService.encryptData(JSON.stringify(id));
+
     this.UsuariocrudService.GetOneUserService(encryptedID).subscribe(
       (respuesta: any) => {
-        this.data_user = this.encodeService.decryptData(respuesta).resultado.data?.data[0];
-        this.sharedService.changeTitle('Modificar usuario: ' + this.data_user?.nombre);
+        try {
+          // Desencripta la respuesta para obtener los datos del usuario
+          const decryptedData = this.encodeService.decryptData(respuesta);
 
-        this.FormEditPerfil.patchValue({
-          nombre: this.data_user?.nombre,
-          primerApellido: this.data_user?.apellido1,
-          segundoApellido: this.data_user?.apellido2,
-          telefono: this.data_user?.telefono,
-          correo: this.data_user?.correo,
-        });
-        this.sharedService.setLoading(false);
+          // Verifica si la respuesta y sus datos están presentes y son válidos
+          if (decryptedData && decryptedData.resultado?.data?.data?.length > 0) {
+            this.data_user = decryptedData.resultado.data?.data[0];
+
+            // Actualiza el título del componente con el nombre del usuario
+            this.sharedService.changeTitle('Modificar usuario: ' + this.data_user?.nombre);
+
+            // Asigna los valores a los controles del formulario FormEditPerfil
+            this.FormEditPerfil.patchValue({
+              nombre: this.data_user?.nombre,
+              primerApellido: this.data_user?.apellido1,
+              segundoApellido: this.data_user?.apellido2,
+              telefono: this.data_user?.telefono,
+              correo: this.data_user?.correo,
+            });
+
+            // Indica que la carga ha finalizado
+            this.sharedService.setLoading(false);
+          } else {
+            this.sharedService.updateErrorLoading(this.el, { message: 'usuario' });
+          }
+        } catch (error) {
+          this.sharedService.updateErrorLoading(this.el, { message: 'usuario' });
+        }
       },
-      error => {
-        console.error('Ocurrió un error al obtener el usuario:', error);
+      (error) => {
+        this.sharedService.updateErrorLoading(this.el, { message: 'usuario' });
       }
     );
   }
+
+
 
   /* Variables spinner */
  porcentajeEnvio: number = 0;
