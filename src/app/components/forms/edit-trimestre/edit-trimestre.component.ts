@@ -186,32 +186,35 @@ loadEjercicio(): void {
   this.EjerciciocrudService.GetAllEjercicioService().subscribe(
     (resultado: any) => {
       try {
-        // Desencriptar la respuesta para obtener los datos de los ejercicios
+        // Desencriptar de manera segura la respuesta recibida del backend
         const decryptedData = this.CryptoServiceService.decryptData(resultado);
 
         // Verificar si la respuesta contiene datos válidos
         if (decryptedData && decryptedData.resultado?.data) {
-          this.ejercicio = decryptedData.resultado.data;
+          // Filtrar solo los ejercicios activos
+          this.ejercicio = decryptedData.resultado.data.filter((ejercicio: any) => ejercicio.activo === true);
         } else {
-          this.sharedService.updateErrorLoading(this.el, { message: 'edit-trimestre/'+this.idEncrypt });
+          this.sharedService.updateErrorLoading(this.el, { message: 'edit-trimestre/' + this.idEncrypt });
           this.ejercicio = []; // Asignar un arreglo vacío en caso de datos inválidos
         }
 
-        // Indicar que la carga ha finalizado
+        // Indicar que la carga de datos ha finalizado correctamente
         this.sharedService.setLoading(false);
       } catch (error) {
-        this.sharedService.updateErrorLoading(this.el, { message: 'edit-trimestre/'+this.idEncrypt });
+        console.error('Error al desencriptar datos de ejercicios:', error);
+        this.sharedService.updateErrorLoading(this.el, { message: 'edit-trimestre/' + this.idEncrypt });
         this.ejercicio = []; // Manejar el error asignando un arreglo vacío
         this.sharedService.setLoading(false); // Asegurar que se marque como cargado aunque haya error
       }
     },
     (error: any) => {
-      this.sharedService.updateErrorLoading(this.el, { message: 'edit-trimestre/'+this.idEncrypt });
+      // Manejar errores de la suscripción al servicio
+      console.error('Error al obtener datos de ejercicios:', error);
+      this.sharedService.updateErrorLoading(this.el, { message: 'edit-trimestre/' + this.idEncrypt });
       this.ejercicio = []; // Manejar el error asignando un arreglo vacío
       this.sharedService.setLoading(false); // Asegurar que se marque como cargado aunque haya error
     }
   );
-
 }
 
 
