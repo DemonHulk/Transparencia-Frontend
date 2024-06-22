@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef } from '@angular/core';
 import { SharedValuesService } from '../../../services/shared-values.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -25,7 +25,8 @@ export class NewUsuarioComponent {
     private router: Router, // Inyecta el Router
     private flasher: AlertsServiceService,
     private AreaCrudService : AreaCrudService,
-    private CryptoServiceService: CryptoServiceService
+    private CryptoServiceService: CryptoServiceService,
+    private el:ElementRef
   ) {
     this.FormAltaUsuario = this.formulario.group({
       nombre: ['',
@@ -163,15 +164,27 @@ SaveUsuario(): void {
   loadArea(): void {
     this.AreaCrudService.GetAllAreaService().subscribe(
       (resultado: any) => {
-        const decryptedData = this.CryptoServiceService.decryptData(resultado);
-        const areas = decryptedData?.resultado?.data?.data || [];
+        try {
+          // Desencriptar de manera segura la respuesta recibida del backend
+          const decryptedData = this.CryptoServiceService.decryptData(resultado);
+          const areas = decryptedData?.resultado?.data?.data || [];
 
-        // Filtrar solo las áreas activas
-        this.area = areas.filter((area: any) => area.activo === true);
+          // Filtrar solo las áreas activas
+          this.area = areas.filter((area: any) => area.activo === true);
+
+          // Indicar que la carga de datos ha finalizado correctamente
+          setTimeout(() => {
+            this.sharedService.setLoading(false);
+            window.HSStaticMethods.autoInit();
+          }, 500);
+        } catch (error) {
+          // Manejar errores de desencriptación u otros errores inesperados
+          this.sharedService.updateErrorLoading(this.el, { message: 'new-usuario' });
+        }
       },
       (error: any) => {
-        console.error('Error al cargar datos:', error);
-        this.area = []; // Asignar un array vacío en caso de error
+        // Manejar errores de la suscripción al servicio
+        this.sharedService.updateErrorLoading(this.el, { message: 'new-usuario' });
       }
     );
   }

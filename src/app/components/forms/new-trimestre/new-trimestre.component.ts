@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef } from '@angular/core';
 import { SharedValuesService } from '../../../services/shared-values.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlertsServiceService } from '../../../services/alerts/alerts-service.service';
@@ -24,7 +24,8 @@ export class NewTrimestreComponent {
     private flasher: AlertsServiceService,
     private EjerciciocrudService : EjerciciocrudService,
     private CryptoServiceService: CryptoServiceService,
-    private TrimestrecrudService: TrimestrecrudService
+    private TrimestrecrudService: TrimestrecrudService,
+    private el: ElementRef
     ) {
       this.FormAltaTrimestre = this.formulario.group({
         trimestre: ['',
@@ -56,7 +57,6 @@ ngOnInit(): void {
      * @memberof SharedValuesService
      */
     this.sharedService.changeTitle('Registrar un nuevo trimestre');
-    this.sharedService.loadScript("/assets/js/validations.js");
     this.loadEjercicio();
 
 }
@@ -118,10 +118,26 @@ ejercicio: any[] = [];
 loadEjercicio(): void {
   this.EjerciciocrudService.GetAllEjercicioService().subscribe(
     (resultado: any) => {
-      this.ejercicio = this.CryptoServiceService.decryptData(resultado)?.resultado?.data;
+      try {
+        // Desencriptar de manera segura la respuesta recibida del backend
+        const decryptedData = this.CryptoServiceService.decryptData(resultado)?.resultado?.data;
+
+        // Filtrar los ejercicios activos
+        this.ejercicio = decryptedData?.filter((ejercicio: any) => ejercicio.activo === true);
+
+        // Indicar que la carga de datos ha finalizado correctamente
+        setTimeout(() => {
+          this.sharedService.setLoading(false);
+          window.HSStaticMethods.autoInit();
+        }, 500);
+      } catch (error) {
+        // Manejar errores de desencriptación u otros errores inesperados
+        this.sharedService.updateErrorLoading(this.el, { message: 'new-trimestre' });
+      }
     },
     (error: any) => {
-      this.ejercicio = [];
+      // Manejar errores de la suscripción al servicio
+      this.sharedService.updateErrorLoading(this.el, { message: 'new-trimestre' });
     }
   );
 }
