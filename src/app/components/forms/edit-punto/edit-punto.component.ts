@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef } from '@angular/core';
 import { SharedValuesService } from '../../../services/shared-values.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Area, markFormGroupTouched, validarNombre } from '../../../services/api-config';
@@ -18,6 +18,7 @@ import { HttpEvent, HttpEventType } from '@angular/common/http';
 export class EditPuntoComponent {
 
   id: any;
+  idEncrpyt: any;
   FormAltaPunto:FormGroup;
   ListArea: Area[] = [];
   ListAreaPunto: Area[] = [];
@@ -34,8 +35,9 @@ export class EditPuntoComponent {
     private PuntosAreasCrudService:PuntosAreasCrudService,
     private router: Router, // Inyecta el Router
     private flasher: AlertsServiceService,
-    private CryptoServiceService: CryptoServiceService,
     private encodeService: CryptoServiceService,
+    private el: ElementRef
+
   ) {
     this.FormAltaPunto = this.formulario.group({
       nombrePunto: ['',
@@ -66,6 +68,7 @@ export class EditPuntoComponent {
 
     //Tomas la id de la URL
     this.id = this.activateRoute.snapshot.paramMap.get("id");
+    this.idEncrpyt = this.id;
 
     //Desencriptar la ID
     this.id = this.encodeService.decodeID(this.id);
@@ -74,11 +77,8 @@ export class EditPuntoComponent {
     if (this.id === null) {
       this.router.navigateByUrl("/puntos");
     }
-
-
     this.GetOnePuntoService(this.id);
     this.GetAreasPunto_PuntoService(this.id);
-
   }
 
 
@@ -91,7 +91,7 @@ export class EditPuntoComponent {
     if (this.FormAltaPunto.valid && this.selectedAreas.length > 0) {
       this.mostrarSpinner = true; // Mostrar spinner de carga
 
-      const encryptedData = this.CryptoServiceService.encryptData(JSON.stringify(this.FormAltaPunto.value));
+      const encryptedData = this.encodeService.encryptData(JSON.stringify(this.FormAltaPunto.value));
       const encryptedID = this.encodeService.encryptData(JSON.stringify(this.id));
       const data = {
         data: encryptedData
@@ -111,7 +111,7 @@ export class EditPuntoComponent {
             case HttpEventType.Response:
               // Manejo de la respuesta encriptada
               const encryptedResponse = event.body;
-              const decryptedResponse = this.CryptoServiceService.decryptData(encryptedResponse);
+              const decryptedResponse = this.encodeService.decryptData(encryptedResponse);
               if (decryptedResponse?.resultado?.res) {
                 this.flasher.success(decryptedResponse?.resultado?.data);
                 this.router.navigate(['/puntos']);
@@ -145,40 +145,71 @@ export class EditPuntoComponent {
 
   /** EXTRAE EL NOMBRE DEL PUNTO ACTUAL EN REVISION */
   GetOnePuntoService(id: any) {
-    const encryptedID = this.encodeService.encryptData(JSON.stringify(this.id));
-    this.PuntocrudService.GetOnePuntoService(encryptedID).subscribe(respuesta => {
-      if (respuesta) { // Verificar si respuesta no es undefined
-        this.nombrePunto = this.encodeService.decryptData(respuesta);
-        // Asigna el valor al FormControl nombrePunto
-        this.FormAltaPunto.patchValue({
-          nombrePunto: this.nombrePunto?.resultado?.data?.nombre_punto
-        });
-      } else {
-        console.error('La respuesta es undefined');
+    const encryptedID = this.encodeService.encryptData(JSON.stringify(id));
+
+    this.PuntocrudService.GetOnePuntoService(encryptedID).subscribe(
+      (respuesta: any) => {
+        try {
+          if (respuesta) {
+            this.nombrePunto = this.encodeService.decryptData(respuesta);
+
+            // Asegúrate de que nombrePunto y resultado.data.nombre_punto existan antes de asignar
+            const nombrePunto = this.nombrePunto?.resultado?.data?.nombre_punto || '';
+
+            // Asigna el valor al FormControl nombrePunto
+            this.FormAltaPunto.patchValue({
+              nombrePunto: nombrePunto
+            });
+          } else {
+            this.sharedService.updateErrorLoading(this.el, { message: 'edit-punto/'+this.idEncrpyt });
+          }
+        } catch (error) {
+          this.sharedService.updateErrorLoading(this.el, { message: 'edit-punto/'+this.idEncrpyt });
+        }
+      },
+      (error) => {
+        this.sharedService.updateErrorLoading(this.el, { message: 'edit-punto/'+this.idEncrpyt });
       }
-    }, error => {
-      console.error('Ocurrió un error al obtener el área:', error);
-    });
+    );
   }
+
 
   /** EXTRAE LSO DATOS DEL PUNTO ACTUAL EN REVISION */
   GetAreasPuntoService(id: any) {
-    const encryptedID = this.encodeService.encryptData(JSON.stringify(this.id));
-    this.PuntocrudService.GetOnePuntoService(encryptedID).subscribe(respuesta => {
-      if (respuesta) { // Verificar si respuesta no es undefined
-        this.nombrePunto = this.encodeService.decryptData(respuesta);
-        // Asigna el valor al FormControl nombrePunto
-        this.FormAltaPunto.patchValue({
-          nombrePunto: this.nombrePunto?.resultado?.data?.nombre_punto
-        });
-        this.sharedService.setLoading(false);
+    const encryptedID = this.encodeService.encryptData(JSON.stringify(id));
 
-      } else {
-        console.error('La respuesta es undefined');
+    this.PuntocrudService.GetOnePuntoService(encryptedID).subscribe(
+      (respuesta: any) => {
+        try {
+          if (respuesta) {
+            // Desencriptar la respuesta para obtener los datos del punto
+            const decryptedData = this.encodeService.decryptData(respuesta);
+
+            // Verificar si la respuesta contiene datos válidos
+            if (decryptedData && decryptedData.resultado?.data) {
+              this.nombrePunto = decryptedData.resultado.data.nombre_punto;
+
+              // Asignar el valor al FormControl nombrePunto del formulario FormAltaPunto
+              this.FormAltaPunto.patchValue({
+                nombrePunto: this.nombrePunto
+              });
+
+              // Indicar que la carga ha finalizado
+              this.sharedService.setLoading(false);
+            } else {
+              this.sharedService.updateErrorLoading(this.el, { message: 'edit-punto/'+this.idEncrpyt });
+            }
+          } else {
+            this.sharedService.updateErrorLoading(this.el, { message: 'edit-punto/'+this.idEncrpyt });
+          }
+        } catch (error) {
+          this.sharedService.updateErrorLoading(this.el, { message: 'edit-punto/'+this.idEncrpyt });
+        }
+      },
+      (error) => {
+        this.sharedService.updateErrorLoading(this.el, { message: 'edit-punto/'+this.idEncrpyt });
       }
-    }, error => {
-      console.error('Ocurrió un error al obtener el área:', error);
-    });
+    );
   }
 
 

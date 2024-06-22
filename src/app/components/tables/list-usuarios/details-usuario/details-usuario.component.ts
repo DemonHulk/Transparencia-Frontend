@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef } from '@angular/core';
 import { SharedValuesService } from '../../../../services/shared-values.service';
 import { UsuariocrudService } from '../../../../services/crud/usuariocrud.service';
 import { CryptoServiceService } from '../../../../services/cryptoService/crypto-service.service';
@@ -14,6 +14,7 @@ import { FechaService } from '../../../../services/format/fecha.service';
 export class DetailsUsuarioComponent {
 
   id: any;
+  idEncrypt: any;
   data_user: any;
   listUsuarios: Usuario[] = [];
 
@@ -23,11 +24,13 @@ export class DetailsUsuarioComponent {
     private FechaService: FechaService,
     private activateRoute: ActivatedRoute,
     private encodeService: CryptoServiceService,
-    private router: Router
+    private router: Router,
+    private el: ElementRef
   ) {
 
     //Tomas la id de la URL
     this.id = this.activateRoute.snapshot.paramMap.get("id");
+    this.idEncrypt = this.id;
 
     //Desencriptar la ID
     this.id = this.encodeService.decodeID(this.id);
@@ -59,25 +62,30 @@ export class DetailsUsuarioComponent {
    /* Extraer los datos del usuario que se esta visualizando el detalle */
    GetOneUserService(id: any) {
     const encryptedID = this.encodeService.encryptData(JSON.stringify(id));
+
     this.UsuariocrudService.GetOneUserService(encryptedID).subscribe(
       (respuesta: any) => {
+        try {
+          /* Enviamos los datos de la respuesta al servicio para desencriptarla */
+          this.data_user = this.encodeService.decryptData(respuesta).resultado?.data?.data[0];
+          this.listUsuarios = [this.encodeService.decryptData(respuesta).resultado?.data?.data[0]];
+          this.sharedService.changeTitle('Información detallada del usuario: ' + this.data_user?.nombre);
 
-        /* Enviamos los datos de la respuesta al servicio para desencripatarla */
-        this.data_user = this.encodeService.decryptData(respuesta).resultado?.data?.data[0];
-        this.listUsuarios = [this.encodeService.decryptData(respuesta).resultado?.data?.data[0]];
-        this.sharedService.changeTitle('Información detallada del usuario: ' + this.data_user?.nombre);
-
-        /*Indicar que todos los datos se han cargado */
-        setTimeout(() => {
-          this.sharedService.setLoading(false);
-          window.HSStaticMethods.autoInit();
-        }, 500);
+          /* Indicar que todos los datos se han cargado */
+          setTimeout(() => {
+            this.sharedService.setLoading(false);
+            window.HSStaticMethods.autoInit();
+          }, 500);
+        } catch {
+          this.sharedService.updateErrorLoading(this.el, { message: 'details-usuario/'+this.idEncrypt });
+        }
       },
-      error => {
-        console.error('Ocurrió un error al obtener el usuario:', error);
+      () => {
+        this.sharedService.updateErrorLoading(this.el, { message: 'details-usuario/'+this.idEncrypt });
       }
     );
   }
+
 
   FormatearDate(fecha: any) {
     if (!fecha) {

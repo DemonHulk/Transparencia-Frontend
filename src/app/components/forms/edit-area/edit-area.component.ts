@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit } from '@angular/core';
 import { SharedValuesService } from '../../../services/shared-values.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -15,6 +15,7 @@ import { HttpEvent, HttpEventType } from '@angular/common/http';
 })
 export class EditAreaComponent implements OnInit {
   id: any;
+  idEncrypt: any;
   FormAltaArea: FormGroup;
   NombreArea: any;
 
@@ -25,7 +26,8 @@ export class EditAreaComponent implements OnInit {
     private AreaCrudService: AreaCrudService,
     private router: Router,
     private flasher: AlertsServiceService,
-    private encodeService: CryptoServiceService
+    private encodeService: CryptoServiceService,
+    private el: ElementRef
   ) {
     this.FormAltaArea = this.formulario.group({
       nombreArea: ['',
@@ -42,6 +44,7 @@ export class EditAreaComponent implements OnInit {
   ngOnInit(): void {
     //Tomas la id de la URL
     this.id = this.activateRoute.snapshot.paramMap.get("id");
+    this.idEncrypt = this.id;
 
     //Desencriptar la ID
     this.id = this.encodeService.decodeID(this.id);
@@ -58,22 +61,36 @@ export class EditAreaComponent implements OnInit {
   }
 
   GetOneAreaService(id: any) {
-    const encryptedID = this.encodeService.encryptData(JSON.stringify(this.id));
-    this.AreaCrudService.GetOneAreaService(encryptedID).subscribe(respuesta => {
-      if (respuesta) { // Verificar si respuesta no es undefined
-        this.NombreArea = this.encodeService.decryptData(respuesta);
-        // Asigna el valor al FormControl nombreArea
-        this.FormAltaArea.patchValue({
-          nombreArea: this.NombreArea?.resultado?.data?.data?.nombre_area
-        });
-        this.sharedService.setLoading(false);
-      } else {
-        console.error('La respuesta es undefined');
+    const encryptedID = this.encodeService.encryptData(JSON.stringify(id));
+
+    this.AreaCrudService.GetOneAreaService(encryptedID).subscribe(
+      (respuesta: any) => {
+        try {
+          if (respuesta) {
+            this.NombreArea = this.encodeService.decryptData(respuesta);
+
+            // Asegúrate de que NombreArea y resultado.data.data.nombre_area existan antes de asignar
+            const nombreArea = this.NombreArea?.resultado?.data?.data?.nombre_area || '';
+
+            // Asigna el valor al FormControl nombreArea
+            this.FormAltaArea.patchValue({
+              nombreArea: nombreArea
+            });
+
+            this.sharedService.setLoading(false);
+          } else {
+            this.sharedService.updateErrorLoading(this.el, { message: 'edit-area/'+this.idEncrypt });
+          }
+        } catch (error) {
+          this.sharedService.updateErrorLoading(this.el, { message: 'edit-area/'+this.idEncrypt });
+        }
+      },
+      (error) => {
+        this.sharedService.updateErrorLoading(this.el, { message: 'edit-area/'+this.idEncrypt });
       }
-    }, error => {
-      console.error('Ocurrió un error al obtener el área:', error);
-    });
+    );
   }
+
  /* Variables spinner */
  porcentajeEnvio: number = 0;
  mostrarSpinner: boolean = false;

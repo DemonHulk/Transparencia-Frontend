@@ -1,6 +1,8 @@
 import { isPlatformBrowser } from '@angular/common';
-import { Inject, Injectable, PLATFORM_ID, Renderer2, RendererFactory2 } from '@angular/core';
+import { ApplicationRef, ComponentFactoryResolver, ComponentRef, ElementRef, Inject, Injectable, Injector, PLATFORM_ID, Renderer2, RendererFactory2, SecurityContext, Type, ViewContainerRef, createComponent } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { ErrorLoadingComponent } from '../partials/error-loading/error-loading.component';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Injectable({
   providedIn: 'root'
@@ -14,11 +16,44 @@ export class SharedValuesService {
 
   constructor(
     private rendererFactory: RendererFactory2,
+    private componentFactoryResolver: ComponentFactoryResolver,
+    private appRef: ApplicationRef,
+    private injector: Injector,
+    private sanitizer: DomSanitizer,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
     this.renderer = this.rendererFactory.createRenderer(null, null);
   }
 
+  getComponentHtml<T>(component: Type<T>, data: any): SafeHtml {
+    const childInjector = Injector.create({
+      providers: [{ provide: 'data', useValue: data }],
+      parent: this.injector
+    });
+
+    const componentRef: ComponentRef<T> = createComponent(component, {
+      environmentInjector: this.appRef.injector,
+      elementInjector: childInjector
+    });
+
+    // Ejecutar detección de cambios
+    componentRef.changeDetectorRef.detectChanges();
+
+    this.appRef.attachView(componentRef.hostView);
+
+    const domElem = (componentRef.hostView as any).rootNodes[0] as HTMLElement;
+    const htmlContent = domElem.outerHTML;
+
+    this.appRef.detachView(componentRef.hostView);
+    componentRef.destroy();
+
+    return this.sanitizer.bypassSecurityTrustHtml(htmlContent);
+  }
+
+  updateErrorLoading(el: ElementRef, data: any): void {
+    const safeHtmlContent = this.getComponentHtml(ErrorLoadingComponent, data);
+    el.nativeElement.innerHTML = this.sanitizer.sanitize(SecurityContext.HTML, safeHtmlContent) || '';
+  }
   public loadScript(scriptUrl: string): Promise<void> {
     return new Promise<void>((resolve, reject) => {
       if (isPlatformBrowser(this.platformId)) {
@@ -63,5 +98,4 @@ export class SharedValuesService {
   setLoading(isLoading: boolean): void {
     this.loadingSubject.next(isLoading);
   }
-
 }

@@ -1,4 +1,4 @@
-import {  Component,ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { SharedValuesService } from '../../../services/shared-values.service';
 import { Table } from 'primeng/table';
 import { Item, TooltipManager, Trimestre } from '../../../services/api-config';
@@ -25,8 +25,8 @@ export class ListTrimestresComponent {
     private FechaService: FechaService,
     private flasher: AlertsServiceService,
     private encodeService: CryptoServiceService,
-    private TrimestrecrudService: TrimestrecrudService
-
+    private TrimestrecrudService: TrimestrecrudService,
+    private el: ElementRef
   ) { }
 
   /**
@@ -34,7 +34,7 @@ export class ListTrimestresComponent {
  *
  * @returns {void}
  */
-ngOnInit(): void {
+  ngOnInit(): void {
     /**
      * Llama al método changeTitle del servicio de valores compartidos para actualizar el título.
      *
@@ -46,108 +46,108 @@ ngOnInit(): void {
 
     this.GetAllTrimestresService();
 
-}
+  }
 
-encriptarId(id:any){
-  return this.encodeService.encodeID(id);
-}
+  encriptarId(id: any) {
+    return this.encodeService.encodeID(id);
+  }
 
-GetAllTrimestresService() {
-  this.TrimestrecrudService.GetAllTrimestreService().subscribe((respuesta: any) => {
-    /* Desencriptamos la respuesta que nos retorna el backend */
+  GetAllTrimestresService() {
+    this.TrimestrecrudService.GetAllTrimestreService().subscribe(
+      (respuesta: any) => {
+        try {
+          /* Desencriptamos la respuesta que nos retorna el backend */
+          this.ListTrimestres = this.encodeService.decryptData(respuesta).resultado?.data?.data.map((trimestre: Trimestre) => this.addFormattedDate(trimestre));
+          // Filtrar los trimestres activos
+          this.ListActiveTrimestres = this.ListTrimestres.filter(trimestre => trimestre.activo == true);
+          // Filtrar los trimestres inactivos
+          this.ListInactiveTrimestres = this.ListTrimestres.filter(trimestre => trimestre.activo == false);
+          //Indicar que todos los datos se han cargado
+          this.sharedService.setLoading(false);
+          window.HSStaticMethods.autoInit();
+        } catch {
+          this.sharedService.updateErrorLoading(this.el, { message: 'trimestres' });
+        }
+      },
+      () => {
+        this.sharedService.updateErrorLoading(this.el, { message: 'trimestres' });
+      }
+    );
+  }
 
-    this.ListTrimestres = this.encodeService.decryptData(respuesta).resultado?.data?.data.map((trimestre: Trimestre) => this.addFormattedDate(trimestre));
-    // Filtrar los trimestres activas
-    this.ListActiveTrimestres = this.ListTrimestres.filter(trimestre => trimestre.activo == true);
 
-    // Filtrar los Trimestre inactivas
-    this.ListInactiveTrimestres = this.ListTrimestres.filter(trimestre => trimestre.activo == false);
-
-    //Indicar que todos los datos se han cargado
-
-      this.sharedService.setLoading(false);
-      window.HSStaticMethods.autoInit();
+  DeleteTrimestre(id: any) {
+    this.flasher.eliminar().then((confirmado) => {
+      if (confirmado) {
+        // Enviamos la id encriptada
+        const encryptedID = this.encodeService.encryptData(JSON.stringify(id));
+        this.TrimestrecrudService.DeleteTrimestreService(encryptedID).subscribe(respuesta => {
+          // console.log(encryptedID);
+          this.GetAllTrimestresService();
+          this.flasher.success(this.encodeService.decryptData(respuesta).resultado?.data);
+        });
+      }
     });
-
-}
-
-
-DeleteTrimestre(id: any) {
-  this.flasher.eliminar().then((confirmado) => {
-    if (confirmado) {
-      // Enviamos la id encriptada
-      const encryptedID = this.encodeService.encryptData(JSON.stringify(id));
-      this.TrimestrecrudService.DeleteTrimestreService(encryptedID).subscribe(respuesta => {
-        // console.log(encryptedID);
-        this.GetAllTrimestresService();
-        this.flasher.success(this.encodeService.decryptData(respuesta).resultado?.data);
-      });
-    }
-  });
-}
-
-
-ActivateTrimestre(id: any) { 
-  this.flasher.reactivar().then((confirmado) => {
-    if (confirmado) {
-      // Enviamos la id encriptada
-      const encryptedID = this.encodeService.encryptData(JSON.stringify(id));
-      this.TrimestrecrudService.ActivateTrimestreService(encryptedID).subscribe(respuesta => {
-        this.GetAllTrimestresService();
-        this.flasher.success(this.encodeService.decryptData(respuesta).resultado?.data);
-      });
-    }
-  });
-}
-
-
-filterGlobalActive(event: Event) {
-  const input = event.target as HTMLInputElement;
-  if (this.dtActive) {
-    this.dtActive.filterGlobal(input.value, 'contains');
   }
-}
 
-filterGlobalInactive(event: Event) {
-  const input = event.target as HTMLInputElement;
-  if (this.dtInactive) {
-    this.dtInactive.filterGlobal(input.value, 'contains');
+
+  ActivateTrimestre(id: any) {
+    this.flasher.reactivar().then((confirmado) => {
+      if (confirmado) {
+        // Enviamos la id encriptada
+        const encryptedID = this.encodeService.encryptData(JSON.stringify(id));
+        this.TrimestrecrudService.ActivateTrimestreService(encryptedID).subscribe(respuesta => {
+          this.GetAllTrimestresService();
+          this.flasher.success(this.encodeService.decryptData(respuesta).resultado?.data);
+        });
+      }
+    });
   }
-}
-
-private addFormattedDate(trimestre: Trimestre): Trimestre & { fecha_string: string } {
-  return {
-    ...trimestre,
-    fecha_string: this.FechaService.formatDate(trimestre.fecha_creacion)
-  };
-}
-
-@ViewChild('dt') dt: Table | undefined;
 
 
-filterGlobal(event: Event) {
-const input = event.target as HTMLInputElement;
-if (this.dt) {
-  this.dt.filterGlobal(input.value, 'contains');
-}
-}
+  filterGlobalActive(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (this.dtActive) {
+      this.dtActive.filterGlobal(input.value, 'contains');
+    }
+  }
 
+  filterGlobalInactive(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (this.dtInactive) {
+      this.dtInactive.filterGlobal(input.value, 'contains');
+    }
+  }
+
+  private addFormattedDate(trimestre: Trimestre): Trimestre & { fecha_string: string } {
+    return {
+      ...trimestre,
+      fecha_string: this.FechaService.formatDate(trimestre.fecha_creacion)
+    };
+  }
+
+  @ViewChild('dt') dt: Table | undefined;
+  filterGlobal(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (this.dt) {
+      this.dt.filterGlobal(input.value, 'contains');
+    }
+  }
   mostrar(elemento: any): void {
     // Verifica si el elemento recibido es un botón
     if (elemento.tagName.toLowerCase() === 'button') {
-        const tooltipElement = elemento.querySelector('.hs-tooltip');
-        if (tooltipElement) {
-            tooltipElement.classList.toggle('show');
-            const tooltipContent = tooltipElement.querySelector('.hs-tooltip-content');
-            if (tooltipContent) {
-                tooltipContent.classList.toggle('hidden');
-                tooltipContent.classList.toggle('invisible');
-                tooltipContent.classList.toggle('visible');
-                // Ajustar la posición del tooltip
-                TooltipManager.adjustTooltipPosition(elemento, tooltipContent);
-            }
+      const tooltipElement = elemento.querySelector('.hs-tooltip');
+      if (tooltipElement) {
+        tooltipElement.classList.toggle('show');
+        const tooltipContent = tooltipElement.querySelector('.hs-tooltip-content');
+        if (tooltipContent) {
+          tooltipContent.classList.toggle('hidden');
+          tooltipContent.classList.toggle('invisible');
+          tooltipContent.classList.toggle('visible');
+          // Ajustar la posición del tooltip
+          TooltipManager.adjustTooltipPosition(elemento, tooltipContent);
         }
+      }
     }
   }
-
 }

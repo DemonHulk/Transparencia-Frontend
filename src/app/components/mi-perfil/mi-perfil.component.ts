@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef } from '@angular/core';
 import { SharedValuesService } from '../../services/shared-values.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CryptoServiceService } from '../../services/cryptoService/crypto-service.service';
@@ -20,7 +20,8 @@ export class MiPerfilComponent {
     private router: Router,
     private activateRoute: ActivatedRoute,
     private CryptoServiceService: CryptoServiceService,
-    private UsuariocrudService: UsuariocrudService
+    private UsuariocrudService: UsuariocrudService,
+    private el: ElementRef
   ) { }
 
   /**
@@ -47,43 +48,49 @@ export class MiPerfilComponent {
     if (this.id === null) {
       this.router.navigateByUrl("/areas");
     }
-
     this.sharedService.setLoading(true);
-
     this.GetOneUserService(this.id);
   }
 
 
   /* Extraer los datos del usuario que se esta visualizando el detalle */
   GetOneUserService(id: any) {
-    const encryptedID = this.CryptoServiceService.encryptData(JSON.stringify(this.id));
+    const encryptedID = this.CryptoServiceService.encryptData(JSON.stringify(id));
+
     this.UsuariocrudService.GetOneUserService(encryptedID).subscribe(
       (respuesta: any) => {
+        try {
+          /* Enviamos los datos de la respuesta al servicio para desencriptarla */
+          this.decryptedData = this.CryptoServiceService.decryptData(respuesta).resultado?.data?.data[0];
 
-        /* Enviamos los datos de la respuesta al servicio para desencripatarla */
-        this.decryptedData = this.CryptoServiceService.decryptData(respuesta).resultado?.data?.data[0];
+          // Verificamos que la respuesta sea válida antes de proceder
+          if (this.decryptedData) {
+            // Crear objeto Usuario con los datos desencriptados
+            this.data_user = new Usuario(
+              this.decryptedData.id_punto,
+              this.decryptedData.nombre,
+              this.decryptedData.apellido1,
+              this.decryptedData.apellido2,
+              this.decryptedData.correo,
+              this.decryptedData.activo
+            );
 
-        // Asegúrate de que la data_user sea del tipo Usuario
-        this.data_user = new Usuario(
-          this.decryptedData.id_punto,
-          this.decryptedData.nombre,
-          this.decryptedData.apellido1,
-          this.decryptedData.apellido2,
-          this.decryptedData.correo,
-          this.decryptedData.activo
-        );
+            this.sharedService.changeTitle('Información detallada del usuario: ' + this.data_user?.nombre);
+          }
 
-        this.sharedService.changeTitle('Información detallada del usuario: ' + this.data_user?.nombre);
-
-        /*Indicar que todos los datos se han cargado */
+          /* Indicar que todos los datos se han cargado */
           this.sharedService.setLoading(false);
           window.HSStaticMethods.autoInit();
+        } catch {
+          this.sharedService.updateErrorLoading(this.el, { message: 'myprofile' });
+        }
       },
-      error => {
-        console.error('Ocurrió un error al obtener el usuario:', error);
+      () => {
+        this.sharedService.updateErrorLoading(this.el, { message: 'myprofile' });
       }
     );
   }
+
 
   encriptarId(id:any){
     return this.CryptoServiceService.encodeID(id);

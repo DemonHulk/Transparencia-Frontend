@@ -170,7 +170,7 @@ h6 {
   line-height: 1.5rem !important;
 }
 
-.button-secondary,  .button-back  {
+.button-secondary,  .button-back, .button-reload  {
   background-color: rgba(var(--secondary-color),1) !important;
   border-radius: 10px !important ;
   color: #fff !important;
@@ -179,7 +179,7 @@ h6 {
   font-family: "texto-medium", sans-serif !important;
 }
 
-.button-secondary:hover, .button-back:hover  {
+.button-secondary:hover, .button-back:hover, .button-reload:hover  {
   background-color: rgba(var(--secondary-color),0.8) !important;
   transition: ease 0.3s !important;
   font-family: "texto-medium", sans-serif !important;
@@ -242,6 +242,11 @@ h6 {
 
 .button-back::after {
   content: "Volver" !important; /* Texto añadido */
+  position: sticky !important; /* Posición absoluta */
+}
+
+.button-reload::after {
+  content: " Recargar" !important; /* Texto añadido */
   position: sticky !important; /* Posición absoluta */
 }
 

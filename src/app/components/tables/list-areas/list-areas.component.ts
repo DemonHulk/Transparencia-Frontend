@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ElementRef, Renderer2, ViewChild } from '@angular/core';
 import { SharedValuesService } from '../../../services/shared-values.service';
 import { AreaCrudService } from '../../../services/crud/areacrud.service';
 import { FechaService } from '../../../services/format/fecha.service';
@@ -6,6 +6,7 @@ import { Area, TooltipManager } from '../../../services/api-config';
 import { Table } from 'primeng/table';
 import { AlertsServiceService } from '../../../services/alerts/alerts-service.service';
 import { CryptoServiceService } from '../../../services/cryptoService/crypto-service.service';
+import { ErrorLoadingComponent } from '../../../partials/error-loading/error-loading.component';
 
 @Component({
   selector: 'app-list-areas',
@@ -20,16 +21,15 @@ export class ListAreasComponent {
   ListAreas: (Area & { fecha_string: string })[] = [];
   ListActiveAreas: (Area & { fecha_string: string })[] = [];
   ListInactiveAreas: (Area & { fecha_string: string })[] = [];
-  isLoading: boolean = true;
 
   constructor(
     public sharedService: SharedValuesService,
     private AreaCrudService: AreaCrudService,
     private FechaService: FechaService,
     private flasher: AlertsServiceService,
-    private encodeService: CryptoServiceService
+    private encodeService: CryptoServiceService,
+    private el: ElementRef
   ) {
-    this.isLoading= true;
   }
 
   /**
@@ -56,26 +56,29 @@ export class ListAreasComponent {
     return this.encodeService.encodeID(id);
   }
 
-
   GetAllAreaService() {
-    this.AreaCrudService.GetAllAreaService().subscribe((respuesta: any) => {
-      /* Desencriptamos la respuesta que nos retorna el backend */
-      this.ListAreas = this.encodeService.decryptData(respuesta).resultado?.data?.data.map((area: Area) => this.addFormattedDate(area));
-      // Filtrar las áreas activas
-      this.ListActiveAreas = this.ListAreas.filter(area => area.activo == true);
+    this.AreaCrudService.GetAllAreaService().subscribe(
+      (respuesta: any) => {
+        /* Desencriptamos la respuesta que nos retorna el backend */
+        this.ListAreas = this.encodeService.decryptData(respuesta).resultado?.data?.data.map((area: Area) => this.addFormattedDate(area));
+        // Filtrar las áreas activas
+        this.ListActiveAreas = this.ListAreas.filter(area => area.activo === true);
 
-      // Filtrar las áreas inactivas
-      this.ListInactiveAreas = this.ListAreas.filter(area => area.activo == false);
+        // Filtrar las áreas inactivas
+        this.ListInactiveAreas = this.ListAreas.filter(area => area.activo === false);
 
-      //Indicar que todos los datos se han cargado
-      setTimeout(() => {
-
-        this.sharedService.setLoading(false);
-        window.HSStaticMethods.autoInit();
-      }, 500);
-
-    });
+        // Indicar que todos los datos se han cargado
+        setTimeout(() => {
+          this.sharedService.setLoading(false);
+          window.HSStaticMethods.autoInit();
+        }, 500);
+      },
+      (error) => {
+        this.sharedService.updateErrorLoading(this.el, { message: 'areas' });
+      }
+    );
   }
+
   private addFormattedDate(area: Area): Area & { fecha_string: string } {
     return {
       ...area,
