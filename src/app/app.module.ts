@@ -48,6 +48,7 @@ import { NewEjercicioComponent } from './components/forms/new-ejercicio/new-ejer
 import { EditEjercicioComponent } from './components/forms/edit-ejercicio/edit-ejercicio.component';
 import { FormComponent } from './components/skeleton/form/form.component';
 import { LoadingSpinnerComponent } from './components/skeleton/loading-spinner/loading-spinner.component';
+import { ErrorLoadingComponent } from './partials/error-loading/error-loading.component';
 
 @NgModule({
   declarations: [
@@ -88,6 +89,7 @@ import { LoadingSpinnerComponent } from './components/skeleton/loading-spinner/l
     EditEjercicioComponent,
     FormComponent,
     LoadingSpinnerComponent,
+    ErrorLoadingComponent,
 
   ],
   imports: [

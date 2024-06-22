@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { SharedValuesService } from '../../../services/shared-values.service';
 import { EjerciciocrudService } from '../../../services/crud/ejerciciocrud.service';
 import { FechaService } from '../../../services/format/fecha.service';
@@ -26,7 +26,9 @@ export class ListEjercicioComponent {
     private EjercicioCrudService: EjerciciocrudService,
     private FechaService: FechaService,
     private flasher: AlertsServiceService,
-    private encodeService: CryptoServiceService
+    private encodeService: CryptoServiceService,
+    private el: ElementRef
+
   ) {
   }
 
@@ -57,24 +59,30 @@ export class ListEjercicioComponent {
 
 
   GetAllEjerciciosService() {
-    this.EjercicioCrudService.GetAllEjercicioService().subscribe((respuesta: any) => {
-      /* Desencriptamos la respuesta que nos retorna el backend */
-      this.ListEjercicios = this.encodeService.decryptData(respuesta).resultado?.data?.map((ejercicio: Ejercicio) => this.addFormattedDate(ejercicio));
-      // Filtrar los ejercicios activas
-      this.ListActiveEjercicios = this.ListEjercicios.filter(ejercicio => ejercicio.activo == true);
-
-      // Filtrar los ejercicios inactivas
-      this.ListInactiveEjercicios = this.ListEjercicios.filter(ejercicio => ejercicio.activo == false);
-
-      //Indicar que todos los datos se han cargado
-      setTimeout(() => {
-
-        this.sharedService.setLoading(false);
-        window.HSStaticMethods.autoInit();
-      }, 500);
-
-    });
+    this.EjercicioCrudService.GetAllEjercicioService().subscribe(
+      (respuesta: any) => {
+        try {
+          /* Desencriptamos la respuesta que nos retorna el backend */
+          this.ListEjercicios = this.encodeService.decryptData(respuesta).resultado?.data?.map((ejercicio: Ejercicio) => this.addFormattedDate(ejercicio));
+          // Filtrar los ejercicios activos
+          this.ListActiveEjercicios = this.ListEjercicios.filter(ejercicio => ejercicio.activo == true);
+          // Filtrar los ejercicios inactivos
+          this.ListInactiveEjercicios = this.ListEjercicios.filter(ejercicio => ejercicio.activo == false);
+          // Indicar que todos los datos se han cargado
+          setTimeout(() => {
+            this.sharedService.setLoading(false);
+            window.HSStaticMethods.autoInit();
+          }, 500);
+        } catch {
+          this.sharedService.updateErrorLoading(this.el, { message: 'ejercicios' });
+        }
+      },
+      () => {
+        this.sharedService.updateErrorLoading(this.el, { message: 'ejercicios' });
+      }
+    );
   }
+
   private addFormattedDate(ejercicio: Ejercicio): Ejercicio & { fecha_string: string } {
     return {
       ...ejercicio,

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit } from '@angular/core';
 import { SharedValuesService } from '../../../services/shared-values.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CryptoServiceService } from '../../../services/cryptoService/crypto-service.service';
@@ -18,6 +18,7 @@ import { HttpEvent, HttpEventType } from '@angular/common/http';
 export class EditUsuarioComponent implements OnInit {
 
   id: any;
+  idEncrypt: any;
   FormAltaUsuario: FormGroup;
   data_user: any;
   isSubmitting: boolean = false;
@@ -30,7 +31,9 @@ export class EditUsuarioComponent implements OnInit {
     private router: Router,
     private flasher: AlertsServiceService,
     private encodeService: CryptoServiceService,
-    private AreaCrudService : AreaCrudService
+    private AreaCrudService : AreaCrudService,
+    private el: ElementRef
+
   ) {
     this.FormAltaUsuario = this.formulario.group({
       nombre: ['',
@@ -106,7 +109,7 @@ ngOnInit(): void {
 
     //Tomas la id de la URL
     this.id = this.activateRoute.snapshot.paramMap.get("id");
-
+    this.idEncrypt = this.id;
     //Desencriptar la ID
     this.id = this.encodeService.decodeID(this.id);
 
@@ -121,28 +124,45 @@ ngOnInit(): void {
 
   /* Extraer los datos del usuario mediante su id e ingresarlos en su respectivo campo*/
   GetOneUserService(id: any) {
-    const encryptedID = this.encodeService.encryptData(JSON.stringify(this.id));
+    const encryptedID = this.encodeService.encryptData(JSON.stringify(id));
+
     this.UsuariocrudService.GetOneUserService(encryptedID).subscribe(
       (respuesta: any) => {
-        this.data_user = this.encodeService.decryptData(respuesta).resultado.data?.data[0];
-        this.sharedService.changeTitle('Modificar usuario: ' + this.data_user?.nombre);
+        try {
+          // Desencriptar la respuesta para obtener los datos del usuario
+          const decryptedData = this.encodeService.decryptData(respuesta);
 
-        this.FormAltaUsuario.patchValue({
-          id_usuario: this.data_user?.id_usuario,
-          nombre: this.data_user?.nombre,
-          primerApellido: this.data_user?.apellido1,
-          segundoApellido: this.data_user?.apellido2,
-          telefono: this.data_user?.telefono,
-          correo: this.data_user?.correo,
-          id_area: this.data_user?.id_area,
-          nombre_area: this.data_user?.nombre_area
-        });
+          // Verificar si la respuesta contiene datos válidos
+          if (decryptedData && decryptedData.resultado?.data?.data.length > 0) {
+            this.data_user = decryptedData.resultado.data.data[0];
+
+            // Actualizar el título del componente con el nombre del usuario
+            this.sharedService.changeTitle('Modificar usuario: ' + this.data_user.nombre);
+
+            // Asignar los valores recuperados al formulario FormAltaUsuario
+            this.FormAltaUsuario.patchValue({
+              id_usuario: this.data_user.id_usuario,
+              nombre: this.data_user.nombre,
+              primerApellido: this.data_user.apellido1,
+              segundoApellido: this.data_user.apellido2,
+              telefono: this.data_user.telefono,
+              correo: this.data_user.correo,
+              id_area: this.data_user.id_area,
+              nombre_area: this.data_user.nombre_area
+            });
+          } else {
+            this.sharedService.updateErrorLoading(this.el, { message: 'edit-usuario/'+this.idEncrypt });
+          }
+        } catch (error) {
+          this.sharedService.updateErrorLoading(this.el, { message: 'edit-usuario/'+this.idEncrypt });
+        }
       },
-      error => {
-        console.error('Ocurrió un error al obtener el usuario:', error);
+      (error) => {
+        this.sharedService.updateErrorLoading(this.el, { message: 'edit-usuario/'+this.idEncrypt });
       }
     );
   }
+
  /* Variables spinner */
  porcentajeEnvio: number = 0;
  mostrarSpinner: boolean = false;
@@ -204,18 +224,30 @@ ngOnInit(): void {
   loadArea(): void {
     this.AreaCrudService.GetAllAreaService().subscribe(
       (resultado: any) => {
-        const decryptedData = this.encodeService.decryptData(resultado);
-        const areas = decryptedData?.resultado?.data?.data || [];
-        this.sharedService.setLoading(false);
+        try {
+          // Desencriptar la respuesta para obtener los datos de las áreas
+          const decryptedData = this.encodeService.decryptData(resultado);
 
+          // Obtener las áreas del resultado desencriptado o asignar un arreglo vacío si no hay datos válidos
+          const areas = decryptedData?.resultado?.data?.data || [];
 
-        // Filtrar solo las áreas activas
-        this.area = areas.filter((area: any) => area.activo === true);
+          // Filtrar solo las áreas activas
+          this.area = areas.filter((area: any) => area.activo === true);
+
+          // Indicar que la carga ha finalizado
+          this.sharedService.setLoading(false);
+        } catch (error) {
+          // Manejar el error utilizando updateErrorLoading para mostrar un mensaje específico
+          this.sharedService.updateErrorLoading(this.el, { message: 'edit-usuario/'+this.idEncrypt });
+          this.sharedService.setLoading(false); // Asegurar que se marque como cargado aunque haya error
+        }
       },
       (error: any) => {
-        console.error('Error al cargar datos:', error);
-        this.area = []; // Asignar un array vacío en caso de error
+        // Manejar el error utilizando updateErrorLoading para mostrar un mensaje específico
+        this.sharedService.updateErrorLoading(this.el, { message: 'edit-usuario/'+this.idEncrypt });
+        this.sharedService.setLoading(false); // Asegurar que se marque como cargado aunque haya error
       }
     );
+
   }
 }

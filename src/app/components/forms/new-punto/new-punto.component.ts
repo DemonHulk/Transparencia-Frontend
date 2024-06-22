@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef } from '@angular/core';
 import { SharedValuesService } from '../../../services/shared-values.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -29,6 +29,7 @@ export class NewPuntoComponent {
     private flasher: AlertsServiceService,
     private CryptoServiceService: CryptoServiceService,
     private encodeService: CryptoServiceService,
+    private el:ElementRef
   ) {
     this.FormAltaPunto = this.formulario.group({
       nombrePunto: ['',
@@ -143,22 +144,35 @@ SavePunto(): any {
   }
 
   GetActAreaService() {
-    this.AreaCrudService.GetActAreaService().subscribe((respuesta: any) => {
-      /* Desencriptamos la respuesta que nos retorna el backend */
-      let decryptedData = this.encodeService.decryptData(respuesta).resultado?.data?.data;
+    this.AreaCrudService.GetActAreaService().subscribe(
+      (respuesta: any) => {
+        try {
+          // Desencriptar la respuesta recibida del backend de manera segura
+          const decryptedData = this.encodeService.decryptData(respuesta).resultado?.data?.data;
 
-      // Filtrar el array para excluir el registro con id_area = 1
-      this.ListArea = decryptedData?.filter((area: any) => area.id_area !== 1) || [];
+          // Filtrar el array para excluir el registro con id_area = 1
+          this.ListArea = decryptedData?.filter((area: any) => area.id_area !== 1) || [];
 
-      this.initializeDynamicControls();
+          // Inicializar controles dinámicos para mejorar la interfaz de usuario
+          this.initializeDynamicControls();
 
-      // Indicar que todos los datos se han cargado
-      setTimeout(() => {
-        this.sharedService.setLoading(false);
-        window.HSStaticMethods.autoInit();
-      }, 500);
-    });
+          // Indicar que la carga de datos ha finalizado correctamente
+          setTimeout(() => {
+            this.sharedService.setLoading(false);
+            window.HSStaticMethods.autoInit();
+          }, 500);
+        } catch (error) {
+          // Manejar cualquier error que ocurra durante el proceso
+          this.sharedService.updateErrorLoading(this.el, { message: 'new-punto' });
+        }
+      },
+      (error: any) => {
+        // Manejar errores de la suscripción al servicio
+        this.sharedService.updateErrorLoading(this.el, { message: 'new-punto' });
+      }
+    );
   }
+
 
 
 
