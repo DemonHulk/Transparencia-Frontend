@@ -1,3 +1,5 @@
+<app-form *ngIf="sharedService.loading$ | async; else content"></app-form>
+<ng-template #content>
 <div class="12/12 text-right my-5">
   <ol class="flex items-center whitespace-nowrap">
     <li class="inline-flex items-center">
@@ -30,7 +32,7 @@
       <label for="titulo" class="font-poppins">Punto</label>
       <div
         class="flex items-center border border-input-bord-color py-3 px-4 rounded-lg focus-within:border-input-focus-color focus-within:ring-input-focus-color">
-        <input type="text" id="titulo" formControlName="punto" 
+        <input type="text" id="titulo"
           class=" flex-grow border-none focus:rNombre del puntoing-0 focus:outline-none text-sm text-dark"
           placeholder="Nombre del punto" value="{{ListTitulo?.nombre_punto}}" readonly>
         <div class="hs-tooltip [--trigger:hover] sm:[--placement:right] inline-block ml-2">
@@ -54,6 +56,9 @@
     <div class="sm:col-span-2">
       <label for="titulo" class="font-poppins">Titulo</label>
       <div
+      [ngClass]="{
+        'border-validator-error focus-within:border-validator-error focus-within:ring-validator-error': FormAltaTema.get('nombreTitulo')?.invalid && (FormAltaTema.get('nombreTitulo')?.dirty || FormAltaTema.get('nombreTitulo')?.touched)
+        }"
       class="flex items-center border border-input-bord-color py-3 px-4 rounded-lg focus-within:border-input-focus-color focus-within:ring-input-focus-color">
         <input type="text" id="titulo" value="{{ListTitulo?.nombre_titulo}}" formControlName="nombreTitulo"
           class="tema flex-grow border-none focus:ring-0 focus:outline-none text-sm text-dark"
@@ -134,8 +139,11 @@
           </div>
         </div>
       </label>
-      
+
       <select id="contenido" formControlName="tipoContenido"
+      [ngClass]="{
+        'border-validator-error focus-within:border-validator-error focus-within:ring-validator-error': FormAltaTema.get('tipoContenido')?.invalid && (FormAltaTema.get('tipoContenido')?.dirty || FormAltaTema.get('tipoContenido')?.touched)
+        }"
       class="sm:p-5 p-4 pe-9 block w-full border-input-bord-color rounded-lg text-sm focus:border-input-focus-color focus:ring-input-focus-color disabled:opacity-50 disabled:pointer-events-none ">
         <option value="1">Estático</option>
         <option value="2">Dinámico</option>
@@ -143,23 +151,17 @@
       <div *ngIf="FormAltaTema.get('tipoContenido')?.invalid && (FormAltaTema.get('tipoContenido')?.dirty || FormAltaTema.get('tipoContenido')?.touched)">
         <div *ngIf="FormAltaTema.get('tipoContenido')?.errors?.['required']" class="text-sm text-validator-error mt-1">Este campo es requerido.</div>
       </div>
-
-
     </div>
-
     <!-- Botón de enviar -->
     <div class="sm:col-span-2 flex justify-end">
-      <button type="submit"
+      <button type="submit" [disabled]="mostrarSpinner"
         class="items-center inline-flex justify-center py-2 px-6 border border-transparent shadow-sm text-sm font-medium rounded-md button-update">
         <i class="fas fa-save mx-1"></i>
       </button>
     </div>
   </form>
 </div>
-
-
-
-
+</ng-template>
 <app-loading-spinner
   [fillPercentage]="porcentajeEnvio"
   [text]="'UTC'"

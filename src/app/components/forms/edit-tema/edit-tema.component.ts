@@ -1,13 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef } from '@angular/core';
 import { SharedValuesService } from '../../../services/shared-values.service';
-import { Punto, Titulo, markFormGroupTouched, validarTitulo } from '../../../services/api-config';
+import { markFormGroupTouched, validarTitulo } from '../../../services/api-config';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { UsuariocrudService } from '../../../services/crud/usuariocrud.service';
-import { FechaService } from '../../../services/format/fecha.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertsServiceService } from '../../../services/alerts/alerts-service.service';
 import { CryptoServiceService } from '../../../services/cryptoService/crypto-service.service';
-import { PuntocrudService } from '../../../services/crud/puntocrud.service';
 import { TituloscrudService } from '../../../services/crud/tituloscrud.service';
 import { HttpEvent, HttpEventType } from '@angular/common/http';
 
@@ -18,29 +15,28 @@ import { HttpEvent, HttpEventType } from '@angular/common/http';
 })
 export class EditTemaComponent {
   id: any;
+  idEncrypt: any;
   ListTitulo: any;
   data_usuariosacceso: any;
   FormAltaTema:FormGroup;
 
   constructor(
     public sharedService: SharedValuesService,
-    private UsuariocrudService: UsuariocrudService,
     public formulario: FormBuilder,
-    private FechaService: FechaService,
+    private el: ElementRef,
     private activateRoute: ActivatedRoute,
     private flasher: AlertsServiceService,
     private encodeService: CryptoServiceService,
     private router: Router,
-    private PuntocrudService: PuntocrudService,
-    private TituloscrudService: TituloscrudService,
-    private CryptoServiceService: CryptoServiceService
+    private TituloscrudService: TituloscrudService
 
-    
+
 
   ) {
 
     //Tomas la id de la URL
     this.id = this.activateRoute.snapshot.paramMap.get("id");
+    this.idEncrypt = this.id;
 
     //Desencriptar la ID
     this.id = this.encodeService.decodeID(this.id);
@@ -70,9 +66,9 @@ export class EditTemaComponent {
           Validators.required,
         ],
       ],
-      punto: [this.ListTitulo?.id_punto, 
+      punto: [this.ListTitulo?.id_punto,
         [
-          Validators.required, 
+          Validators.required,
         ],
       ]
     });
@@ -90,7 +86,6 @@ export class EditTemaComponent {
      * @param {string} newTitle - El nuevo título a establecer.
      * @memberof SharedValuesService
      */
-    this.sharedService.loadScript("/assets/js/validations.js");
     this.GettitulosmaspuntoService(this.id);
   }
 
@@ -107,12 +102,14 @@ export class EditTemaComponent {
           tipoContenido: this.ListTitulo?.tipo_contenido,
           punto: this.ListTitulo?.id_punto,
         });
+        console.log(this.ListTitulo?.nombre_punto);
+        this.sharedService.setLoading(false);
       },
       error => {
-        console.error('Ocurrió un error al obtener el área:', error);
+        this.sharedService.updateErrorLoading(this.el, { message: 'new-tema/'+this.idEncrypt });
       }
     );
-  }  
+  }
 
   encriptarId(id:any){
     return this.encodeService.encodeID(id);

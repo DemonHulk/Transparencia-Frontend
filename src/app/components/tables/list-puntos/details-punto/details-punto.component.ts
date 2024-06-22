@@ -86,16 +86,22 @@ export class DetailsPuntoComponent {
     );
   }
 
-  
+
   /** Desactiva un titulo */
   DeleteTitulo(id: any) {
     this.flasher.eliminar().then((confirmado) => {
       if (confirmado) {
+      this.sharedService.setLoading(true);
+
         // Enviamos la id encriptada
         const encryptedID = this.encodeService.encryptData(JSON.stringify(id));
         this.TituloscrudService.DeleteTituloService(encryptedID).subscribe(respuesta => {
           this.GetTitulosPunto(this.id);
           this.flasher.success(this.encodeService.decryptData(respuesta).resultado?.data);
+          setTimeout(() => {
+            this.sharedService.setLoading(false);
+            window.HSStaticMethods.autoInit();
+          }, 500);
         });
       }
     });
@@ -105,16 +111,22 @@ export class DetailsPuntoComponent {
     ActivateTitulo(id: any) {
       this.flasher.reactivar().then((confirmado) => {
         if (confirmado) {
+      this.sharedService.setLoading(true);
+
           // Enviamos la id encriptada
           const encryptedID = this.encodeService.encryptData(JSON.stringify(id));
           this.TituloscrudService.ActivateTituloService(encryptedID).subscribe(respuesta => {
             this.GetTitulosPunto(this.id);
             this.flasher.success(this.encodeService.decryptData(respuesta).resultado?.data);
+            setTimeout(() => {
+              this.sharedService.setLoading(false);
+              window.HSStaticMethods.autoInit();
+            }, 500);
           });
         }
       });
     }
-  
+
 
   /* Extraer los datos del area que se esta visualizando el detalle */
   GetTitulosPunto(id: any) {
@@ -122,6 +134,7 @@ export class DetailsPuntoComponent {
     this.TituloscrudService.GetTitulosPunto(encryptedID).subscribe(
       respuesta => {
         this.ListTitulos = this.encodeService.decryptData(respuesta)?.resultado?.data;
+        this.sharedService.setLoading(false);
       },
       error => {
         console.error('Ocurrió un error al obtener el titulo:', error);

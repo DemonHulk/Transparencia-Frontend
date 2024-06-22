@@ -1,8 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef } from '@angular/core';
 import { SharedValuesService } from '../../../services/shared-values.service';
 import { Punto, markFormGroupTouched, validarNombre, validarTitulo } from '../../../services/api-config';
-import { UsuariocrudService } from '../../../services/crud/usuariocrud.service';
-import { FechaService } from '../../../services/format/fecha.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertsServiceService } from '../../../services/alerts/alerts-service.service';
 import { CryptoServiceService } from '../../../services/cryptoService/crypto-service.service';
@@ -19,6 +17,7 @@ import { HttpEvent, HttpEventType } from '@angular/common/http';
 export class NewTemaComponent {
 
   id: any;
+  idEncrypt: any;
   DataPunto: any;
   ListPunto: Punto[] = [];
   data_usuariosacceso: any;
@@ -26,23 +25,22 @@ export class NewTemaComponent {
 
   constructor(
     public sharedService: SharedValuesService,
-    private UsuariocrudService: UsuariocrudService,
     public formulario: FormBuilder,
-    private FechaService: FechaService,
+    private el: ElementRef,
     private activateRoute: ActivatedRoute,
     private flasher: AlertsServiceService,
     private encodeService: CryptoServiceService,
     private router: Router,
     private PuntocrudService: PuntocrudService,
-    private TituloscrudService: TituloscrudService,
-    private CryptoServiceService: CryptoServiceService
+    private TituloscrudService: TituloscrudService
 
-    
+
 
   ) {
 
     //Tomas la id de la URL
     this.id = this.activateRoute.snapshot.paramMap.get("punto");
+    this.idEncrypt = this.id;
 
     //Desencriptar la ID
     this.id = this.encodeService.decodeID(this.id);
@@ -72,9 +70,9 @@ export class NewTemaComponent {
           Validators.required,
         ],
       ],
-      punto: [this.id, 
+      punto: [this.id,
         [
-          Validators.required, 
+          Validators.required,
         ],
       ]
     });
@@ -105,12 +103,13 @@ ngOnInit(): void {
       respuesta => {
         this.DataPunto = this.encodeService.decryptData(respuesta)?.resultado?.data;
         this.sharedService.changeTitle('Registrar un nuevo tema para el punto: ' + this.DataPunto?.nombre_punto);
+        this.sharedService.setLoading(false);
       },
       error => {
-        console.error('Ocurrió un error al obtener el área:', error);
+        this.sharedService.updateErrorLoading(this.el, { message: 'new-tema/'+this.idEncrypt });
       }
     );
-  }  
+  }
 
   encriptarId(id:any){
     return this.encodeService.encodeID(id);
@@ -124,7 +123,7 @@ ngOnInit(): void {
     markFormGroupTouched(this.FormAltaTema);
     if (this.FormAltaTema.valid) {
       this.mostrarSpinner = true;
-      const encryptedData = this.CryptoServiceService.encryptData(JSON.stringify(this.FormAltaTema.value));
+      const encryptedData = this.encodeService.encryptData(JSON.stringify(this.FormAltaTema.value));
       const data = {
         data: encryptedData
       };
@@ -145,7 +144,7 @@ ngOnInit(): void {
             case HttpEventType.Response:
               // Manejo de la respuesta encriptada
               const encryptedResponse = event.body;
-              const decryptedResponse = this.CryptoServiceService.decryptData(encryptedResponse);
+              const decryptedResponse = this.encodeService.decryptData(encryptedResponse);
               if (decryptedResponse?.resultado?.res) {
                 this.flasher.success(decryptedResponse?.resultado?.data);
                 this.router.navigate(['/details-punto/'+ this.encriptarId(this.id)]);

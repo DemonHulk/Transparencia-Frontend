@@ -1,3 +1,5 @@
+<app-form *ngIf="sharedService.loading$ | async; else content"></app-form>
+<ng-template #content>
 <div class="12/12 text-right my-5">
   <ol class="flex items-center whitespace-nowrap">
     <li class="inline-flex items-center">
@@ -9,7 +11,7 @@
       </a>
     </li>
     <li class="inline-flex items-center">
-      <a class="flex items-center text-sm text-gray-500 hover:text-color-active focus:outline-none focus:text-color-active" routerLink="/details-punto/1">
+      <a class="flex items-center text-sm text-gray-500 hover:text-color-active focus:outline-none focus:text-color-active" routerLink="/details-punto/{{idEncrypt}}">
         Detalles punto
         <svg class="flex-shrink-0 mx-2 overflow-visible size-4 text-gray-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="m9 18 6-6-6-6"></path>
@@ -54,6 +56,9 @@
     <div class="sm:col-span-2">
       <label for="titulo" class="font-poppins">Titulo</label>
       <div
+      [ngClass]="{
+        'border-validator-error focus-within:border-validator-error focus-within:ring-validator-error': FormAltaTema.get('nombreTitulo')?.invalid && (FormAltaTema.get('nombreTitulo')?.dirty || FormAltaTema.get('nombreTitulo')?.touched)
+        }"
       class="flex items-center border border-input-bord-color py-3 px-4 rounded-lg focus-within:border-input-focus-color focus-within:ring-input-focus-color">
         <input type="text" id="titulo" formControlName="nombreTitulo"
           class="tema flex-grow border-none focus:ring-0 focus:outline-none text-sm text-dark"
@@ -135,8 +140,12 @@
         </div>
       </label>
       <select id="contenido" formControlName="tipoContenido"
+      [ngClass]="{
+        'border-validator-error focus-within:border-validator-error focus-within:ring-validator-error': FormAltaTema.get('tipoContenido')?.invalid && (FormAltaTema.get('tipoContenido')?.dirty || FormAltaTema.get('tipoContenido')?.touched)
+        }"
       class="sm:p-5 p-4 pe-9 block w-full border-input-bord-color rounded-lg text-sm focus:border-input-focus-color focus:ring-input-focus-color disabled:opacity-50 disabled:pointer-events-none ">
-        <option value="1">Estático</option>
+      <option value="">Selecciona un tipo de contenido</option>
+      <option value="1">Estático</option>
         <option value="2">Dinámico</option>
       </select>
       <div *ngIf="FormAltaTema.get('tipoContenido')?.invalid && (FormAltaTema.get('tipoContenido')?.dirty || FormAltaTema.get('tipoContenido')?.touched)">
@@ -146,15 +155,14 @@
 
     <!-- Botón de enviar -->
     <div class="sm:col-span-2 flex justify-end">
-      <button type="submit"
+      <button type="submit" [disabled]="mostrarSpinner"
         class="items-center button-save inline-flex justify-center py-2 px-6 border border-transparent shadow-sm text-sm font-medium rounded-md  ">
         <i class="fas fa-save mx-1"></i>
       </button>
     </div>
   </form>
 </div>
-
-
+</ng-template>
 <app-loading-spinner
   [fillPercentage]="porcentajeEnvio"
   [text]="'UTC'"
