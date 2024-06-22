@@ -1,0 +1,11 @@
+
+.text-elipsis >p{
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  text-wrap: nowrap !important;
+}
+
+.hs-tooltip{
+  cursor: pointer !important;
+  text-wrap: wrap !important;
+}
