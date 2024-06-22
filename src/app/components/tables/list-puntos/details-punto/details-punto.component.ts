@@ -1,7 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef } from '@angular/core';
 import { SharedValuesService } from '../../../../services/shared-values.service';
 import { PuntocrudService } from '../../../../services/crud/puntocrud.service';
-import { UsuariocrudService } from '../../../../services/crud/usuariocrud.service';
 import { FechaService } from '../../../../services/format/fecha.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertsServiceService } from '../../../../services/alerts/alerts-service.service';
@@ -18,6 +17,7 @@ export class DetailsPuntoComponent {
 
 
   id: any;
+  idEncrypt:any;
   DataPunto: any;
   ListPunto: Punto[] = [];
   ListTitulos: Titulo[] = [];
@@ -25,7 +25,7 @@ export class DetailsPuntoComponent {
 
   constructor(
     public sharedService: SharedValuesService,
-    private UsuariocrudService: UsuariocrudService,
+    private el: ElementRef,
     private FechaService: FechaService,
     private activateRoute: ActivatedRoute,
     private flasher: AlertsServiceService,
@@ -39,6 +39,7 @@ export class DetailsPuntoComponent {
 
     //Tomas la id de la URL
     this.id = this.activateRoute.snapshot.paramMap.get("id");
+    this.idEncrypt = this.id;
 
     //Desencriptar la ID
     this.id = this.encodeService.decodeID(this.id);
@@ -81,7 +82,7 @@ export class DetailsPuntoComponent {
         this.sharedService.changeTitle('Información detallada del punto: ' + this.DataPunto?.nombre_punto);
       },
       error => {
-        console.error('Ocurrió un error al obtener punto:', error);
+        this.sharedService.updateErrorLoading(this.el, { message: 'details-punto/'+this.idEncrypt });
       }
     );
   }
@@ -137,7 +138,7 @@ export class DetailsPuntoComponent {
         this.sharedService.setLoading(false);
       },
       error => {
-        console.error('Ocurrió un error al obtener el titulo:', error);
+        this.sharedService.updateErrorLoading(this.el, { message: 'details-punto/'+this.idEncrypt });
       }
     );
   }
