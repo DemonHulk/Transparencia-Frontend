@@ -1,4 +1,4 @@
-export const API_URL = 'http://localhost/Transpariencia/Transparencia-Backend/index.php/';
+export const API_URL = 'http://localhost/Transparencia-Backend/index.php/';
 
 
 export class TooltipManager {
