@@ -107,7 +107,6 @@ export class Trimestre {
   activo!: boolean;
 }
 
-import { ElementRef } from '@angular/core';
 import { AbstractControl, FormGroup, ValidationErrors, ValidatorFn } from '@angular/forms';
 
 export function validarTextoNormal(): ValidatorFn {
