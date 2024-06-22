@@ -108,7 +108,7 @@ export class DetailsPuntoComponent {
     });
   }
 
-    /** Desactiva un titulo */
+    /** Activa un titulo */
     ActivateTitulo(id: any) {
       this.flasher.reactivar().then((confirmado) => {
         if (confirmado) {
