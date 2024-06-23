@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { FechaService } from '../../../../services/format/fecha.service';
+import { SharedValuesService } from '../../../../services/shared-values.service';
 
 @Component({
   selector: 'app-contenido-item',
@@ -10,9 +11,11 @@ import { FechaService } from '../../../../services/format/fecha.service';
 export class ContenidoItemComponent {
 
   constructor(private sanitizer: DomSanitizer,
-    private fechaService: FechaService
-  ) { }
+    private fechaService: FechaService,
+    public sharedService: SharedValuesService
+  ) {
 
+   }
   sanitizeHtml(html: string): SafeHtml {
     return this.sanitizer.bypassSecurityTrustHtml(html);
   }
@@ -23,7 +26,6 @@ export class ContenidoItemComponent {
     return this.title.length > 20 ? this.title.substring(0, 20) + '...' : this.title;
   }
   descripcion: string = 'El Manual Gubernamental de Contabilidad (UTC) es una guía exhaustiva destinada a estandarizar y mejorar los  procesos contables dentro de las entidades gubernamentales. Este manual establece un conjunto uniforme de principios, normas y procedimientos contables que deben seguir las instituciones públicas para garantizar la transparencia, eficiencia y precisión en la gestión financiera.';
-
 
   addFormattedDate(fecha: any): any {
     return this.fechaService.formatDate(fecha)

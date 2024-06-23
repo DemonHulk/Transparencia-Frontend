@@ -1,6 +1,5 @@
 import { Component, ElementRef } from '@angular/core';
 import { SharedValuesService } from '../../services/shared-values.service';
-import * as CryptoJS from 'crypto-js';
 import { Punto } from '../../services/api-config';
 import { PuntocrudService } from '../../services/crud/puntocrud.service';
 import { CryptoServiceService } from '../../services/cryptoService/crypto-service.service';
@@ -13,12 +12,13 @@ import { FechaService } from '../../services/format/fecha.service';
 })
 export class Articulo33Component {
 
-  constructor(private sharedService: SharedValuesService,
+  constructor(public sharedService: SharedValuesService,
     private PuntocrudService: PuntocrudService,
     private encodeService: CryptoServiceService,
     private el: ElementRef,
-    private FechaService: FechaService
+    private FechaService: FechaService,
   ) {
+
   }
 
   /**
@@ -34,26 +34,24 @@ ngOnInit(): void {
      * @memberof SharedValuesService
      */
     this.sharedService.changeTitle('Articulo 33');
-    this.GetAllPuntosService();
 
+    this.GetAllPuntosService();
 }
-  getNumbers(): number[] {
-    const numbers: number[] = [];
-    for (let i = 1; i <= 48; i++) {
-      numbers.push(i);
-    }
-    return numbers;
-  }
 
 
   ListPuntos :any = [];
   puntoSeleccionado: any;
 
   cambiarPunto(punto: any){
-    this.puntoSeleccionado  = punto;
-    this.cambiarContenidoPunto();
+    if(punto > 0){
+
+      this.puntoSeleccionado  = punto;
+      this.cambiarContenidoPunto();
+    }
   }
 
+
+   loadingCompleted: boolean = false;
   /**
    * Obtener los puntos activos del sistema
    */
@@ -65,11 +63,12 @@ ngOnInit(): void {
           this.ListPuntos = this.ListPuntos.filter((punto:any) => punto.activo == true);
           const puntoSeleccionado = this.ListPuntos.find((punto:any) => punto.orden_punto === 1);
           this.puntoSeleccionado = puntoSeleccionado ? puntoSeleccionado.id_punto : null;
-          this.cambiarContenidoPunto();
+          this.cambiarPunto(puntoSeleccionado.id_punto);
 
           setTimeout(() => {
-            this.sharedService.setLoading(false);
+            this.loadingCompleted = true; // Marca que la carga ha completado
             window.HSStaticMethods.autoInit();
+
           }, 500);
         } catch {
           this.sharedService.updateErrorLoading(this.el, { message: 'puntos' });
@@ -80,6 +79,7 @@ ngOnInit(): void {
       }
     );
   }
+
 
   private addFormattedDate(punto: Punto): Punto & { fecha_string: string } {
     return {

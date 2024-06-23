@@ -1,6 +1,5 @@
 <div class="p-4 ">
-    <app-contenido-punto-skeleton *ngIf="sharedService.loading$ | async; else content"></app-contenido-punto-skeleton>
-
+  <app-contenido-punto-skeleton *ngIf="sharedService.loading$ | async; else content"></app-contenido-punto-skeleton>
   <ng-template #content>
     <ng-container *ngIf="titulos?.length > 0">
       <ng-container *ngFor="let titulo of titulos">

@@ -23,26 +23,28 @@ export class ContenidoPuntoComponent {
     public sharedService: SharedValuesService
   ){
     this.sharedService.setLoading(true);
-
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes['punto']) {
-      const puntoChange: SimpleChange = changes['punto'];
-      this.sharedService.setLoading(true);
-
-      if(puntoChange.currentValue > 0){
-      this.sharedService.setLoading(true);
-        this.getTitulosByPunto(puntoChange.currentValue);
+    if(this.punto != undefined){
+      if (changes['punto']) {
+        const puntoChange: SimpleChange = changes['punto'];
+        this.sharedService.setLoading(true);
+        if(puntoChange.currentValue > 0){
+        this.sharedService.setLoading(true);
+          this.getTitulosByPunto(puntoChange.currentValue);
+        }
       }
+    }else{
+      this.sharedService.setLoading(true);
     }
+
   }
 
   titulos: any ;
 
   getTitulosByPunto(id: any) {
     const encryptedID = this.encodeService.encryptData(JSON.stringify(id));
-    this.sharedService.setLoading(true);
 
     this.tituloCrudService.GetTitulosByPunto(encryptedID)
       .pipe(
