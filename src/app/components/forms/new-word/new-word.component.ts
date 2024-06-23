@@ -20,7 +20,7 @@ export class NewWordComponent {
   id_tema:any;
   id_punto:any;
   datosUsuario: any;
-  
+
   constructor(
     private sharedService: SharedValuesService,
     private formulario: FormBuilder,
@@ -29,7 +29,7 @@ export class NewWordComponent {
     private ContenidocrudService: ContenidocrudService,
     private flasher: AlertsServiceService,
     private router: Router, // Inyecta el Router
-  ) { 
+  ) {
     //Tomas la id de la URL
     this.id_tema = this.activateRoute.snapshot.paramMap.get("tema");
     this.id_punto = this.activateRoute.snapshot.paramMap.get("punto");

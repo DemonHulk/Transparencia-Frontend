@@ -56,6 +56,7 @@ export class Area {
 export class Punto {
   id_punto!:string;
   nombre_punto!: string;
+  otden_punto!: string;
   fecha_creacion!: string;
   activo!: boolean;
 }

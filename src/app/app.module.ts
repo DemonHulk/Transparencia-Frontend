@@ -50,6 +50,8 @@ import { FormComponent } from './components/skeleton/form/form.component';
 import { LoadingSpinnerComponent } from './components/skeleton/loading-spinner/loading-spinner.component';
 import { ErrorLoadingComponent } from './partials/error-loading/error-loading.component';
 import { EditWordComponent } from './components/forms/edit-word/edit-word.component';
+import { ContenidoItemComponent } from './components/articulo33/contenido-punto/contenido-item/contenido-item.component';
+import { ContenidoPuntoSkeletonComponent } from './components/skeleton/contenido-punto-skeleton/contenido-punto-skeleton.component';
 
 @NgModule({
   declarations: [
@@ -92,6 +94,8 @@ import { EditWordComponent } from './components/forms/edit-word/edit-word.compon
     LoadingSpinnerComponent,
     ErrorLoadingComponent,
     EditWordComponent,
+    ContenidoItemComponent,
+    ContenidoPuntoSkeletonComponent,
 
   ],
   imports: [

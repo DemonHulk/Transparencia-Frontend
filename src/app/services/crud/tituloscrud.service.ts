@@ -31,7 +31,7 @@ export class TituloscrudService {
   }
 
 
-  
+
   DeleteTituloService(id: any): Observable<any> {
     return this.clientHttp.delete(API_URL + "titulos/" + id, { responseType: 'text' });
   }
@@ -40,13 +40,17 @@ export class TituloscrudService {
   ActivateTituloService(id: any): Observable<any> {
     return this.clientHttp.get(API_URL + "titulosAct/" + id, { responseType: 'text' });
   }
-    
+
   UpdateTituloService(formulario: any, id: any): Observable<any> {
     const req = new HttpRequest('PUT', API_URL + "titulos/"+ id, formulario, {
       reportProgress: true,
       responseType: 'text'
     });
     return this.clientHttp.request(req);
+  }
+
+  GetTitulosByPunto(id: any): Observable<any> {
+    return this.clientHttp.get(API_URL + "titulosCompletos/" + id, { responseType: 'text' });
   }
 
 
