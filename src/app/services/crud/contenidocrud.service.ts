@@ -1,14 +1,16 @@
-import { HttpClient, HttpRequest } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { API_URL } from '../api-config';
-import { Observable } from 'rxjs';
+import { Observable, catchError, map, throwError } from 'rxjs';
+import { CryptoServiceService } from '../cryptoService/crypto-service.service';
+import { AlertsServiceService } from '../alerts/alerts-service.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ContenidocrudService {
 
-  constructor(private clientHttp:HttpClient) { }
+  constructor(private clientHttp:HttpClient, private encodeService: CryptoServiceService, private flasher: AlertsServiceService) { }
 /***************************************************************************************************
 *  CONTENIDO DINAMICO                                                                               *
 ***************************************************************************************************/ 
@@ -82,4 +84,43 @@ export class ContenidocrudService {
     return this.clientHttp.get(API_URL + "contenidoEstaticoAct/" + id, { responseType: 'text' });
   }
 
+  /***************************************************************************************************
+  *  Visualizar Documento                                                                            *
+  ***************************************************************************************************/
+
+  getPDF(fileName: string): Observable<Blob> {
+    return this.clientHttp.get(API_URL + "getDocument/" + fileName, { responseType: 'text' })
+      .pipe(
+        map(response => {
+          let decryptedResponse = this.encodeService.decryptData(response);
+          if (decryptedResponse?.resultado?.res) {
+            const byteCharacters = atob(decryptedResponse.resultado.data);
+            const byteNumbers = new Array(byteCharacters.length);
+            for (let i = 0; i < byteCharacters.length; i++) {
+              byteNumbers[i] = byteCharacters.charCodeAt(i);
+            }
+            const byteArray = new Uint8Array(byteNumbers);
+            return new Blob([byteArray], { type: decryptedResponse.resultado.mime });
+          } else {
+            throw new Error(decryptedResponse?.resultado?.data || 'Respuesta inválida del servidor');
+          }
+        }),
+        catchError(error => this.handleError(error, fileName))
+      );
+  }
+  
+  private handleError(error: any, fileName: string): Observable<never> {
+    let errorMessage = 'Ocurrió un error desconocido';
+    
+    if (error instanceof HttpErrorResponse) {
+      errorMessage = `Error HTTP: ${error.status}, ${error.statusText}`;
+    } else if (error instanceof Error) {
+      errorMessage = error.message;
+    }
+  
+    // Añadir información adicional
+    errorMessage += ` - Archivo: ${fileName}`;
+  
+    return throwError(() => new Error(errorMessage));
+  }
 }

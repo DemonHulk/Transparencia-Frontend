@@ -268,7 +268,7 @@
 </div>
 <ng-container *ngIf="ListTitulos.length > 0">
   <nav class="relative z-0 flex border rounded-xl overflow-hidden" aria-label="Tabs" role="tablist">
-    <button *ngFor="let tema of ListTitulos;let i = index" [ngClass]="{' active': i === 0}" type="button" (click)="onTemaSeleccionado(tema?.id_titulo, tema?.tipo_contenido)"
+    <button *ngFor="let tema of ListTitulos;let i = index" [ngClass]="{'active': isActive(i)}" type="button" (click)="onTemaSeleccionado(tema?.id_titulo, tema?.tipo_contenido, i)"
       class="text-elipsis hs-tab-active:border-b-primary-color hs-tab-active:text-gray-900  relative min-w-0 flex-1 bg-white first:border-s-0 border-s border-b-2 py-4 px-4 text-gray-500 hover:text-gray-700 text-sm font-medium text-center overflow-hidden hover:bg-gray-50 focus:z-10 focus:outline-none focus:text-primary-color disabled:opacity-50 disabled:pointer-events-none  hs-tooltip [--trigger:hover] inline-block"
       id="bar-with-underline-item-1" [attr.data-hs-tab]="'#bar-with-underline-' + i"
       [attr.aria-controls]="'bar-with-underline-' + i" role="tab">
@@ -366,9 +366,9 @@
                           <button
                             type="button"
                             class="hs-tab-active:font-semibold hs-tab-active:border-color-active hs-tab-active:text-color-active py-4 px-1 inline-flex items-center gap-x-2 border-b-2 border-transparent text-sm whitespace-nowrap text-gray-500 hover:text-color-active focus:outline-none focus:text-color-active disabled:opacity-50 disabled:pointer-events-none active"
-                            id="tabs-with-icons-item-1"
-                            data-hs-tab="#tabs-with-icons-1"
-                            aria-controls="tabs-with-icons-1"
+                            [id]="'tabs-with-icons-item-todos-'+i"
+                            [attr.data-hs-tab]="'#tabs-with-icons-todos-'+i"
+                            [attr.aria-controls]="'tabs-with-icons-todos-'+i"
                             role="tab"
                           >
                             Todos
@@ -376,10 +376,9 @@
                           <button
                             type="button"
                             class="hs-tab-active:font-semibold hs-tab-active:border-color-active hs-tab-active:text-color-active py-4 px-1 inline-flex items-center gap-x-2 border-b-2 border-transparent text-sm whitespace-nowrap text-gray-500 hover:text-color-active focus:outline-none focus:text-color-active disabled:opacity-50 disabled:pointer-events-none"
-                            id="tabs-with-icons-item-2"
-                            data-hs-tab="#tabs-with-icons-2"
-                            aria-controls="tabs-with-icons-2"
-                            role="tab"
+                            [id]="'tabs-with-icons-item-papelera-'+i"
+                            [attr.data-hs-tab]="'#tabs-with-icons-papelera-'+i"
+                            [attr.aria-controls]="'tabs-with-icons-papelera-'+i"
                           >
                             Papelera
                           </button>
@@ -388,9 +387,9 @@
                   
                       <div class="mt-3">
                         <div
-                          id="tabs-with-icons-1"
+                          [id]="'tabs-with-icons-todos-'+i"
                           role="tabpanel"
-                          aria-labelledby="tabs-with-icons-item-1"
+                          [attr.aria-labelledby]="'tabs-with-icons-item-todos-'+i"
                         >
                         <ng-container *ngIf="ListpdfsActivos?.length === 0">
                           <div
@@ -538,7 +537,7 @@
                                           class="px-6 py-3 text-start text-xs text-white uppercase bg-table-header-color"
                                           pSortableColumn="descripcion"
                                         >
-                                          <div class="flex">
+                                          <div class="flex max-w-[350px]">
                                             Descripción<p-sortIcon field="descripcion"></p-sortIcon>
                                           </div>
                                         </th>
@@ -569,8 +568,8 @@
                                       </tr>
                                     </ng-template>
                                     <ng-template pTemplate="body" let-pdf>
-                                      <tr class="divide-x divide-gray-200">
-                                        <td class="px-3 py-2 text-sm text-gray-800">
+                                      <tr class="divide-x divide-gray-200 max-h-[20px]">
+                                        <td class="px-3 py-2 text-sm text-gray-800" (click)="openPDF(pdf?.nombre_interno_documento)">
                                           <p class="font-medium text-black">
                                             {{ pdf?.nombre_externo_documento }}
                                           </p>
@@ -578,8 +577,22 @@
                                             {{ pdf?.nombre_interno_documento }}
                                           </p>
                                         </td>
-                                        <td class="px-3 py-2 text-sm text-gray-800">
+                                        <td class="px-3 py-2 text-sm max-w-[300px] text-gray-800 hs-tooltip ">
                                           {{ pdf?.descripcion }}
+                                          <div
+                                            class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible hidden opacity-0 transition-opacity absolute invisible z-10 max-w-xs bg-white border border-gray-100 text-start rounded-lg shadow-md mt-2 left-1/2 transform -translate-x-1/2"
+                                            role="tooltip">
+                                            <div class="py-3 px-4">
+                                              <span class="block text-lg font-bold text-gray-800">{{ pdf?.nombre_externo_documento }}</span>
+                                              <p class="mt-2 text-sm text-gray-600">
+                                                {{pdf?.descripcion}}
+                                              </p>
+                                              <button type="submit"
+                                                class="mt-3 inline-flex justify-center py-3 px-6 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-secondary-color hover:bg-secondary-color-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                                                Ir al documento
+                                              </button>
+                                            </div>
+                                          </div>
                                         </td>
                                         <td class="px-3 py-2 text-sm text-gray-800">
                                           {{ pdf?.trimestre }}
@@ -748,10 +761,10 @@
                         </ng-container>
                         </div>
                         <div
-                          id="tabs-with-icons-2"
+                          [id]="'tabs-with-icons-papelera-'+i"
                           class="hidden"
                           role="tabpanel"
-                          aria-labelledby="tabs-with-icons-item-2"
+                          [attr.aria-labelledby]="'tabs-with-icons-item-papelera-'+i"
                         >
                         <ng-container *ngIf="ListpdfsInactivos?.length === 0">
                           <div class="min-h-60 flex flex-col bg-white rounded-xl">
@@ -909,8 +922,11 @@
                                             {{ pdf?.nombre_interno_documento }}
                                           </p>
                                         </td>
-                                        <td class="px-3 py-2 text-sm text-gray-800">
+                                        <td class="px-3 py-2 text-sm text-gray-800 hs-tooltip" >
                                           {{ pdf?.descripcion }}
+                                          <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-700 text-white text-xs rounded-lg shadow-md" role="tooltip">
+                                            {{ pdf?.descripcion }}
+                                          </span>
                                         </td>
                                         <td class="px-3 py-2 text-sm text-gray-800">
                                           {{ pdf?.trimestre }}
@@ -1163,14 +1179,15 @@
                                       {{ contenidoEstatico.nombre_completo }}
                                     </td>
                                     <td class="px-3 py-2 text-sm text-gray-800">
-                                      {{ contenidoEstatico.fecha_creacion }}
+                                      {{FormatearDate(contenidoEstatico?.fecha_creacion)}}
                                     </td>
                                     <td class="px-3 py-2 text-sm text-gray-800">
-                                      {{ contenidoEstatico.fecha_actualizado }}
+                                      {{FormatearDate(contenidoEstatico?.fecha_actualizado)}}
                                     </td>
                                     <td class="px-3 py-2 text-sm text-gray-800">
                                       <div class="flex items-center space-x-3.5">
                                         <button
+                                          *ngIf="contenidoEstatico?.activo"
                                           routerLink="/edit-word/{{ encriptarId(this.id) }}/{{ encriptarId(contenidoEstatico?.id_contenido_estatico)}}"
                                           (mouseenter)="mostrar($event.target)"
                                           (mouseleave)="mostrar($event.target)"
@@ -1348,7 +1365,9 @@
                 <div class="border border-2 pb-5 p-3 mb-5 border-gray-200 border-dashed rounded-lg" *ngIf="ListContenidoEstatico.length > 0">
                   <div class="flex justify-between items-center w-full my-4">
                     <h4 class="text-xl">Información acerca del contenido</h4>
-                    <button routerLink="/new-pdf/1/1" type="button" 
+                    <button 
+                    *ngIf="ListContenidoEstatico[0]?.activo"
+                    routerLink="/new-pdf/1/1" type="button" routerLink="/edit-word/{{ encriptarId(this.id) }}/{{ encriptarId(ListContenidoEstatico[0].id_contenido_estatico)}}"
                       class="py-3 my-2 mx-2 button-secondary px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-primary-color text-white hover:bg-primary-color-90 disabled:opacity-50 disabled:pointer-events-none">
                       <i class="fas fa-edit"></i>
                       Modificar contenido

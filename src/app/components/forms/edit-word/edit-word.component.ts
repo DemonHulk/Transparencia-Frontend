@@ -23,7 +23,7 @@ export class EditWordComponent {
 
   
   constructor(
-    private sharedService: SharedValuesService,
+    public sharedService: SharedValuesService,
     private formulario: FormBuilder,
     private activateRoute: ActivatedRoute,
     private CryptoServiceService: CryptoServiceService,
@@ -77,12 +77,12 @@ ngOnInit(): void {
 ListContenidoEstatico: (ContenidoEstatico & { fecha_string: string })[] = [];
 
 cargarContenidoEstaticoPorTema() {
+  this.sharedService.setLoading(true);
   const encryptedID = this.CryptoServiceService.encryptData(JSON.stringify(this.id_contenido_estatico));
   this.ContenidocrudService.GetOneContenidoEstaticoService(encryptedID).subscribe({
     next: (respuesta) => {
       const decryptedData = this.CryptoServiceService.decryptData(respuesta);
       this.ListContenidoEstatico = decryptedData?.resultado?.data?.map((contenidoestatico: any) => this.addFormattedDate2(contenidoestatico));
-      console.log("Datos del back: ", this.ListContenidoEstatico);
       if (this.ListContenidoEstatico.length > 0) {
         this.FormAltaContent.patchValue({
           htmlContent: this.ListContenidoEstatico[0].contenido,
@@ -242,7 +242,7 @@ tableDataCells.forEach(td => {
 /* Variables spinner */
 porcentajeEnvio: number = 0;
 mostrarSpinner: boolean = false;
-mensaje = "Guardando...";
+mensaje = "Actualizando...";
 updateContent(): any {
   markFormGroupTouched(this.FormAltaContent);
   if (this.FormAltaContent.valid) {
@@ -271,7 +271,6 @@ updateContent(): any {
             // Manejo de la respuesta encriptada
             const encryptedResponse = event.body;
             const decryptedResponse = this.CryptoServiceService.decryptData(encryptedResponse);
-            console.log(decryptedResponse);
             if (decryptedResponse?.resultado?.res) {
               this.flasher.success(decryptedResponse?.resultado?.data);
               this.router.navigate(['/details-punto/'+ this.encriptarId(this.id_punto)]);

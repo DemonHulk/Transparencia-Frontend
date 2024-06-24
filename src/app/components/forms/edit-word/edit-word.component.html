@@ -1,3 +1,6 @@
+<app-form *ngIf="sharedService.loading$ | async; else content"></app-form>
+
+<ng-template #content>
 <div class="12/12 text-right my-5">
     <ol class="flex items-center whitespace-nowrap">
       <li class="inline-flex items-center">
@@ -46,7 +49,7 @@
   
     <div *ngIf="FormAltaContent.get('htmlContent')?.invalid && (FormAltaContent.get('htmlContent')?.dirty || FormAltaContent.get('htmlContent')?.touched)">
       <div *ngIf="FormAltaContent.get('htmlContent')?.errors?.['required']" class="text-sm text-validator-error mt-1">Este campo es requerido.</div>
-      <div *ngIf="FormAltaContent.get('htmlContent')?.errors?.['minlength']" class="text-sm text-validator-error mt-1">El contenido debe tener al menos 10 caracteres.</div>
+      <div *ngIf="FormAltaContent.get('htmlContent')?.errors?.['minlength']" class="text-sm text-validator-error mt-1">El contenido debe tener al menos 3 caracteres.</div>
     </div>
   
    <!-- Botón de enviar -->
@@ -64,6 +67,7 @@
     </div>
     <div class="contenido-prev sm:9/12 lg:w-12/12 p-4 mx-0 my-2 max-h-[85vh] text-wrap border-2 pb-5 border-gray-200 border-dashed rounded-lg"  [innerHtml]="htmlContent">
     </div>
+</ng-template>
     <app-loading-spinner
     [fillPercentage]="porcentajeEnvio"
     [text]="'UTC'"

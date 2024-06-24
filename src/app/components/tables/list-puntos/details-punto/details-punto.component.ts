@@ -152,8 +152,10 @@ export class DetailsPuntoComponent {
       respuesta => {
         this.ListTitulos = this.encodeService.decryptData(respuesta)?.resultado?.data;
         this.sharedService.setLoading(false);
-        if (this.ListTitulos && this.ListTitulos.length > 0) {
-          this.cargarPDFsPorTema(this.ListTitulos[0].id_titulo);
+        if(this.tituloSeleccionado > 0){
+          this.onTemaSeleccionado(this.tituloSeleccionado, this.tipoContenidoSeleccionado, this.temaSeleccionado);
+        }else{
+          this.onTemaSeleccionado(this.ListTitulos[0].id_titulo, this.ListTitulos[0].tipo_contenido, 0);
         }
       },
       error => {
@@ -165,7 +167,18 @@ export class DetailsPuntoComponent {
   
 
   // Funcion que actualiza los datos del contenido si se cambia de tema
-  onTemaSeleccionado(id_titulo:any, tipo_contenido:any) {
+  temaSeleccionado: any = 0;
+  tituloSeleccionado: any = 0;
+  tipoContenidoSeleccionado: any = 0;
+
+  isActive(i: number): boolean {
+    return this.temaSeleccionado === i;
+  }
+  // Funcion que actualiza los datos del contenido si se cambia de tema
+  onTemaSeleccionado(id_titulo:any, tipo_contenido:any, i:any) {
+    this.tituloSeleccionado = id_titulo;
+    this.tipoContenidoSeleccionado = tipo_contenido;
+    this.temaSeleccionado = i;
     // 2 Contenido dinamico(PDF)
     if( tipo_contenido == 2){
       this.cargarPDFsPorTema(id_titulo);
@@ -173,7 +186,6 @@ export class DetailsPuntoComponent {
       this.cargarContenidoEstaticoPorTema(id_titulo);
       this.safeContent = this.sanitizer.bypassSecurityTrustHtml(this.content);
     }
-    
   }
 
   // Funcion que consigue el contenido dinamico del punto
@@ -209,13 +221,14 @@ export class DetailsPuntoComponent {
   DeleteContenidoDinamico(id: any) {
     this.flasher.eliminar().then((confirmado) => {
       if (confirmado) {
-      this.sharedService.setLoading(true);
         // Enviamos la id encriptada
         const encryptedID = this.encodeService.encryptData(JSON.stringify(id));
         this.ContenidocrudService.DeleteContenidoDinamicoService(encryptedID).subscribe(respuesta => {
-          this.GetTitulosPunto(this.id);
           this.flasher.success(this.encodeService.decryptData(respuesta).resultado?.data);
           setTimeout(() => {
+            if(this.tituloSeleccionado > 0){
+              this.onTemaSeleccionado(this.tituloSeleccionado, this.tipoContenidoSeleccionado, this.temaSeleccionado);
+            }
             this.sharedService.setLoading(false);
             window.HSStaticMethods.autoInit();
           }, 500);
@@ -228,13 +241,14 @@ export class DetailsPuntoComponent {
   ActivateContenidoDinamico(id: any) {
     this.flasher.reactivar().then((confirmado) => {
       if (confirmado) {
-    this.sharedService.setLoading(true);
         // Enviamos la id encriptada
         const encryptedID = this.encodeService.encryptData(JSON.stringify(id));
         this.ContenidocrudService.ActivateContenidoDinamicoService(encryptedID).subscribe(respuesta => {
-          this.GetTitulosPunto(this.id);
           this.flasher.success(this.encodeService.decryptData(respuesta).resultado?.data);
           setTimeout(() => {
+            if(this.tituloSeleccionado > 0){
+              this.onTemaSeleccionado(this.tituloSeleccionado, this.tipoContenidoSeleccionado, this.temaSeleccionado);
+            }
             this.sharedService.setLoading(false);
             window.HSStaticMethods.autoInit();
           }, 500);
@@ -269,17 +283,18 @@ export class DetailsPuntoComponent {
     };
   }
 
-  // Funcion para desactivar un contenido dinamico
+  // Funcion para desactivar un contenido Estatico
   DeleteContenidoEstatico(id: any) {
     this.flasher.eliminar().then((confirmado) => {
       if (confirmado) {
-      this.sharedService.setLoading(true);
         // Enviamos la id encriptada
         const encryptedID = this.encodeService.encryptData(JSON.stringify(id));
         this.ContenidocrudService.DeleteContenidoEstaticoService(encryptedID).subscribe(respuesta => {
-          this.GetTitulosPunto(this.id);
           this.flasher.success(this.encodeService.decryptData(respuesta).resultado?.data);
           setTimeout(() => {
+            if(this.tituloSeleccionado > 0){
+              this.onTemaSeleccionado(this.tituloSeleccionado, this.tipoContenidoSeleccionado, this.temaSeleccionado);
+            }
             this.sharedService.setLoading(false);
             window.HSStaticMethods.autoInit();
           }, 500);
@@ -288,17 +303,18 @@ export class DetailsPuntoComponent {
     });
   }
 
-  // Funcion para activar un contenido dinamico
+  // Funcion para activar un contenido Estatico
   ActivateContenidoEstatico(id: any) {
     this.flasher.reactivar().then((confirmado) => {
       if (confirmado) {
-    this.sharedService.setLoading(true);
         // Enviamos la id encriptada
         const encryptedID = this.encodeService.encryptData(JSON.stringify(id));
         this.ContenidocrudService.ActivateContenidoEstaticoService(encryptedID).subscribe(respuesta => {
-          this.GetTitulosPunto(this.id);
           this.flasher.success(this.encodeService.decryptData(respuesta).resultado?.data);
           setTimeout(() => {
+            if(this.tituloSeleccionado > 0){
+              this.onTemaSeleccionado(this.tituloSeleccionado, this.tipoContenidoSeleccionado, this.temaSeleccionado);
+            }
             this.sharedService.setLoading(false);
             window.HSStaticMethods.autoInit();
           }, 500);
@@ -307,12 +323,12 @@ export class DetailsPuntoComponent {
     });
   }
 
-
+  // Funcion para sanitizar el html para mostrar la tabla con el diseño de preline
   getSafeHtml(html: string): SafeHtml {
     return this.sanitizer.bypassSecurityTrustHtml(html);
   }
 
-  // Variable que almacenara los datos estaticos para mostrar
+  // Variable que almacenara los datos estaticos para mostrar 
   htmlContent:any;
   printHTML(contenido:any) {
     const html = contenido || '';
@@ -425,6 +441,35 @@ export class DetailsPuntoComponent {
 
   encriptarId(id:any){
     return this.encodeService.encodeID(id);
+  }
+
+  // Funcion para visualizar los documentos
+  openPDF(nombre_interno_documento: any) {
+    const encryptedName = this.encodeService.encryptData(JSON.stringify(nombre_interno_documento));
+    this.ContenidocrudService.getPDF(encryptedName).subscribe({
+      next: (blob: Blob) => {
+        // Crear un objeto URL
+        const url = window.URL.createObjectURL(blob);
+        
+        // Abrir el PDF en una nueva pestaña
+        const newWindow = window.open(url, '_blank');
+        
+        // Si la ventana se abrió correctamente, configurar la limpieza del objeto URL
+        if (newWindow) {
+          newWindow.onload = () => {
+            // Esperar un poco antes de revocar la URL para asegurar que el PDF se cargue completamente
+            setTimeout(() => window.URL.revokeObjectURL(url), 1000);
+          };
+        } else {
+          // Si la ventana no se pudo abrir (por ejemplo, bloqueada por un popup blocker),
+          // revocar la URL después de un breve delay
+          setTimeout(() => window.URL.revokeObjectURL(url), 100);
+        }
+      },
+      error: (error: Error) => {
+        this.flasher.error("No se encontró el archivo");
+      }
+    });
   }
 
 
