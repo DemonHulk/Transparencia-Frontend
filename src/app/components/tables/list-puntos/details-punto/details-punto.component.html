@@ -324,7 +324,7 @@
                   <table class="min-w-full divide-y divide-gray-200 ">
                     <thead>
                       <tr>
-                        <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Tipo de contenido</th> 
+                        <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Tipo de contenido</th>
                         <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Ultima actualización</th>
                       </tr>
                     </thead>
@@ -384,7 +384,7 @@
                           </button>
                         </nav>
                       </div>
-                  
+
                       <div class="mt-3">
                         <div
                           [id]="'tabs-with-icons-todos-'+i"
@@ -471,7 +471,7 @@
                                       data-hs-combo-box-input=""
                                     />
                                   </div>
-                  
+
                                   <!-- SearchBox Dropdown -->
                                   <div
                                     class="absolute z-50 w-full bg-white border border-gray-200 rounded-lg"
@@ -577,14 +577,14 @@
                                             {{ pdf?.nombre_interno_documento }}
                                           </p>
                                         </td>
-                                        <td class="px-3 py-2 text-sm max-w-[300px] text-gray-800 hs-tooltip ">
-                                          {{ pdf?.descripcion }}
+                                        <td class="px-3 py-2 text-sm max-w-[300px] text-gray-800 hs-tooltip text-elipsis">
+                                          <p>{{ pdf?.descripcion }}</p>
                                           <div
                                             class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible hidden opacity-0 transition-opacity absolute invisible z-10 max-w-xs bg-white border border-gray-100 text-start rounded-lg shadow-md mt-2 left-1/2 transform -translate-x-1/2"
                                             role="tooltip">
-                                            <div class="py-3 px-4">
+                                            <div class="py-3 px-4 text-wrap">
                                               <span class="block text-lg font-bold text-gray-800">{{ pdf?.nombre_externo_documento }}</span>
-                                              <p class="mt-2 text-sm text-gray-600">
+                                              <p class="mt-2 text-sm text-gray-600 text-wrap">
                                                 {{pdf?.descripcion}}
                                               </p>
                                               <button type="submit"
@@ -831,7 +831,7 @@
                                       data-hs-combo-box-input=""
                                     />
                                   </div>
-                  
+
                                   <!-- SearchBox Dropdown -->
                                   <div
                                     class="absolute z-50 w-full bg-white border border-gray-200 rounded-lg"
@@ -1110,7 +1110,7 @@
                       Agregar contenido
                     </button>
                   </div>
-                  
+
                   <div class=" flex-col justify-center items-center p-3 md:p-3">
                     <div class="max-w-full">
                       <div class="flex flex-col mb-5" *ngIf="ListContenidoEstatico.length > 0">
@@ -1365,7 +1365,7 @@
                 <div class="border border-2 pb-5 p-3 mb-5 border-gray-200 border-dashed rounded-lg" *ngIf="ListContenidoEstatico.length > 0">
                   <div class="flex justify-between items-center w-full my-4">
                     <h4 class="text-xl">Información acerca del contenido</h4>
-                    <button 
+                    <button
                     *ngIf="ListContenidoEstatico[0]?.activo"
                     routerLink="/new-pdf/1/1" type="button" routerLink="/edit-word/{{ encriptarId(this.id) }}/{{ encriptarId(ListContenidoEstatico[0].id_contenido_estatico)}}"
                       class="py-3 my-2 mx-2 button-secondary px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-primary-color text-white hover:bg-primary-color-90 disabled:opacity-50 disabled:pointer-events-none">
