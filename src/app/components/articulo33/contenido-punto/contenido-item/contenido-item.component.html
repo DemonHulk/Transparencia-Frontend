@@ -121,7 +121,7 @@
       </div>
     </div>
 
-    <div *ngIf="titulo.subtitulos && titulo.subtitulos.length > 0">
+    <div *ngIf="titulo.subtitulos && titulo.subtitulos.length > 0 && titulo.link == false || titulo.subtitulos && titulo.subtitulos.length > 0 && titulo?.visualizar">
       <app-contenido-item *ngFor="let subtitulo of titulo.subtitulos" [titulo]="subtitulo"></app-contenido-item>
     </div>
   </div>
@@ -191,7 +191,7 @@
             </div>
           </div>
         </div>
-        <div *ngIf="titulo.subtitulos && titulo.subtitulos.length > 0">
+        <div *ngIf="titulo.subtitulos && titulo.subtitulos.length > 0 && titulo.link == false || titulo.subtitulos && titulo.subtitulos.length > 0 && titulo?.visualizar">
           <app-contenido-item *ngFor="let subtitulo of titulo.subtitulos" [titulo]="subtitulo"></app-contenido-item>
         </div>
       </div>
