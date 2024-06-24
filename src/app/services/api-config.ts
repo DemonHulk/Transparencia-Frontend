@@ -1,4 +1,4 @@
-export const API_URL = 'http://localhost/Transparencia-Backend/index.php/';
+export const API_URL = 'http://localhost/transpariencia/Transparencia-Backend/index.php/';
 
 
 export class TooltipManager {
@@ -63,6 +63,21 @@ export class Punto {
 export class Titulo {
   id_titulo!:string;
   id_punto!:string;
+  nombre_titulo!: string;
+  tipo_contenido!: number;
+  link!: boolean;
+  punto_destino!: string;
+  orden_titulos!: string;
+  fecha_creacion!: string;
+  hora_creacion!: string;
+  fecha_actualizado!: string;
+  activo!: boolean;
+}
+
+export class SubTema {
+  id_titulo!:number;
+  id_punto!:number;
+  fk_titulos!:number;
   nombre_titulo!: string;
   tipo_contenido!: number;
   link!: boolean;

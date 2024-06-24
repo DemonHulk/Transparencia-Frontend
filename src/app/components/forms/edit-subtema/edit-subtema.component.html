@@ -1,3 +1,5 @@
+<app-form *ngIf="sharedService.loading$ | async; else content"></app-form>
+<ng-template #content>
 <div class="12/12 text-right my-5">
   <ol class="flex items-center whitespace-nowrap">
     <li class="inline-flex items-center">
@@ -9,7 +11,7 @@
       </a>
     </li>
     <li class="inline-flex items-center">
-      <a class="flex items-center text-sm text-gray-500 hover:text-color-active focus:outline-none focus:text-color-active" routerLink="/details-punto/1">
+      <a class="flex items-center text-sm text-gray-500 hover:text-color-active focus:outline-none focus:text-color-active" routerLink="/details-punto/{{encriptarId(DataTema?.id_punto)}}">
         Detalles punto
         <svg class="flex-shrink-0 mx-2 overflow-visible size-4 text-gray-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="m9 18 6-6-6-6"></path>
@@ -18,18 +20,19 @@
     </li>
     <li class="inline-flex items-center text-sm font-semibold text-gray-800 truncate" aria-current="page">
       Modificar subtema
-    </li>  </ol>
+    </li>  
+  </ol>
 </div>
 <div class="bg-white p-8 border border-gray-200 rounded-lg shadow-lg max-w-2xl mx-auto my-10">
   <h3 class="my-2 text-left">Modificar Subtema</h3>
   <hr class="w-full mb-2 border-hr-color">
-  <form class="grid grid-cols-1 gap-y-6 gap-x-4">
+  <form [formGroup]="FormAltaSubtema" (submit)="UpdateSubtema()" class="grid grid-cols-1 gap-y-6 gap-x-4">
     <!-- Input para el nombre interno del documento -->
     <div class="sm:col-span-2">
       <label for="titulo" class="font-poppins">Tema</label>
       <div
         class="flex items-center border border-input-bord-color py-3 px-4 rounded-lg focus-within:border-input-focus-color focus-within:ring-input-focus-color">
-        <input type="text" id="titulo"
+        <input type="text" id="titulo" value="{{DataTema?.nombre_titulo}}"
           class=" flex-grow border-none focus:ring-0 focus:outline-none text-sm text-dark"
           placeholder="Titulo del subtema" value="Nombre del tema" readonly>
         <div class="hs-tooltip [--trigger:hover] sm:[--placement:right] inline-block ml-2">
@@ -52,12 +55,12 @@
 
     <!-- Input para el nombre interno del documento -->
     <div class="sm:col-span-2">
-      <label for="titulo" class="font-poppins">Titulo</label>
+      <label for="Subtema" class="font-poppins">Subtema</label>
       <div
         class="flex items-center border border-input-bord-color py-3 px-4 rounded-lg focus-within:border-input-focus-color focus-within:ring-input-focus-color">
-        <input type="text" id="titulo"
+        <input type="text" id="Subtema"  formControlName="nombreSubtema" value="{{DataSubtema?.nombre_titulo}}"
           class="tema flex-grow border-none focus:ring-0 focus:outline-none text-sm text-dark"
-          placeholder="Titulo del subtema">
+          placeholder="Subtema del subtema">
         <div class="hs-tooltip [--trigger:hover] sm:[--placement:right] inline-block ml-2">
           <!-- lo del simbolo de interrogacion -->
           <i class="fa-solid fa-question text-gray-500"></i>
@@ -74,11 +77,18 @@
           </div>
         </div>
       </div>
+      <div *ngIf="FormAltaSubtema.get('nombreSubtema')?.invalid && (FormAltaSubtema.get('nombreSubtema')?.dirty || FormAltaSubtema.get('nombreSubtema')?.touched)">
+        <div *ngIf="FormAltaSubtema.get('nombreSubtema')?.errors?.['required']" class="text-sm text-validator-error mt-1">Este campo es requerido.</div>
+        <div *ngIf="FormAltaSubtema.get('nombreSubtema')?.errors?.['minlength']" class="text-sm text-validator-error mt-1">El campo debe tener al menos 5 caracteres.</div>
+        <div *ngIf="FormAltaSubtema.get('nombreSubtema')?.errors?.['maxlength']" class="text-sm text-validator-error mt-1">El campo no puede exceder los 100 caracteres.</div>
+        <div *ngIf="FormAltaSubtema.get('nombreSubtema')?.errors?.['textoInvalido']" class="text-sm text-validator-error mt-1" title="No intentes ingresar caracteres especiales.">El campo no puede contener caracteres no permitidos.</div>
+      </div>
     </div>
+
 
     <!-- Select para seleccionar el trimestre -->
     <div class="sm:col-span-2">
-      <label for="trimestre" class="font-poppins flex items-center">
+      <label for="contenido" class="font-poppins flex items-center">
         Tipo de contenido
         <div class="hs-tooltip [--trigger:hover] sm:[--placement:right] inline-block ml-2">
           <i class="fa-solid fa-question text-gray-500"></i>
@@ -95,11 +105,14 @@
           </div>
         </div>
       </label>
-      <select id="trimestre"
+      <select id="contenido" formControlName="tipoContenido"
       class="sm:p-5 p-4 pe-9 block w-full border-input-bord-color rounded-lg text-sm focus:border-input-focus-color focus:ring-input-focus-color disabled:opacity-50 disabled:pointer-events-none ">
         <option value="1">Estático</option>
         <option value="2">Dinámico</option>
       </select>
+      <div *ngIf="FormAltaSubtema.get('tipoContenido')?.invalid && (FormAltaSubtema.get('tipoContenido')?.dirty || FormAltaSubtema.get('tipoContenido')?.touched)">
+        <div *ngIf="FormAltaSubtema.get('tipoContenido')?.errors?.['required']" class="text-sm text-validator-error mt-1">Este campo es requerido.</div>
+      </div>
     </div>
 
     <!-- Botón de enviar -->

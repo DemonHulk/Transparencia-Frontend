@@ -5,8 +5,9 @@ import { FechaService } from '../../../../services/format/fecha.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertsServiceService } from '../../../../services/alerts/alerts-service.service';
 import { CryptoServiceService } from '../../../../services/cryptoService/crypto-service.service';
-import { Punto, Titulo } from '../../../../services/api-config';
+import { Punto, SubTema, Titulo } from '../../../../services/api-config';
 import { TituloscrudService } from '../../../../services/crud/tituloscrud.service';
+import { SubtituloCrudService } from '../../../../services/crud/subtitulo-crud.service';
 
 @Component({
   selector: 'app-details-punto',
@@ -21,6 +22,7 @@ export class DetailsPuntoComponent {
   DataPunto: any;
   ListPunto: Punto[] = [];
   ListTitulos: Titulo[] = [];
+  ListSubtema: SubTema[] = [];
   data_usuariosacceso: any;
 
   constructor(
@@ -32,7 +34,8 @@ export class DetailsPuntoComponent {
     private encodeService: CryptoServiceService,
     private TituloscrudService: TituloscrudService,
     private router: Router,
-    private PuntocrudService: PuntocrudService
+    private PuntocrudService: PuntocrudService,
+    private SubtituloCrudService: SubtituloCrudService
 
 
   ) {
@@ -71,7 +74,6 @@ export class DetailsPuntoComponent {
       this.GetTitulosPunto(this.id);
   }
 
-// GetOnePuntoService
 
   /* Extraer los datos del area que se esta visualizando el detalle */
   GetOnePuntoService(id: any) {
@@ -108,25 +110,67 @@ export class DetailsPuntoComponent {
     });
   }
 
-    /** Activa un titulo */
-    ActivateTitulo(id: any) {
-      this.flasher.reactivar().then((confirmado) => {
-        if (confirmado) {
+  /** Desactiva un Subtema */
+  DeleteSubtema(id: any) {
+    this.flasher.eliminar().then((confirmado) => {
+      if (confirmado) {
       this.sharedService.setLoading(true);
 
-          // Enviamos la id encriptada
-          const encryptedID = this.encodeService.encryptData(JSON.stringify(id));
-          this.TituloscrudService.ActivateTituloService(encryptedID).subscribe(respuesta => {
-            this.GetTitulosPunto(this.id);
-            this.flasher.success(this.encodeService.decryptData(respuesta).resultado?.data);
-            setTimeout(() => {
-              this.sharedService.setLoading(false);
-              window.HSStaticMethods.autoInit();
-            }, 500);
-          });
-        }
-      });
-    }
+        // Enviamos la id encriptada
+        const encryptedID = this.encodeService.encryptData(JSON.stringify(id));
+        this.SubtituloCrudService.DeleteSubtemaService(encryptedID).subscribe(respuesta => {
+          this.GetTitulosPunto(this.id);
+          this.flasher.success(this.encodeService.decryptData(respuesta).resultado?.data);
+          setTimeout(() => {
+            this.sharedService.setLoading(false);
+            window.HSStaticMethods.autoInit();
+          }, 500);
+        });
+      }
+    });
+  }
+
+
+    /** Activa un Subtema */
+  ActivateSubtema(id: any) {
+    this.flasher.reactivar().then((confirmado) => {
+      if (confirmado) {
+        this.sharedService.setLoading(true);
+
+        // Enviamos la id encriptada
+        const encryptedID = this.encodeService.encryptData(JSON.stringify(id));
+        this.SubtituloCrudService.ActivateSubtemaService(encryptedID).subscribe(respuesta => {
+          this.GetTitulosPunto(this.id);
+          this.flasher.success(this.encodeService.decryptData(respuesta).resultado?.data);
+          setTimeout(() => {
+            this.sharedService.setLoading(false);
+            window.HSStaticMethods.autoInit();
+          }, 500);
+        });
+      }
+    });
+  }
+  
+  
+    /** Activa un titulo */
+  ActivateTitulo(id: any) {
+    this.flasher.reactivar().then((confirmado) => {
+      if (confirmado) {
+        this.sharedService.setLoading(true);
+
+        // Enviamos la id encriptada
+        const encryptedID = this.encodeService.encryptData(JSON.stringify(id));
+        this.TituloscrudService.ActivateTituloService(encryptedID).subscribe(respuesta => {
+          this.GetTitulosPunto(this.id);
+          this.flasher.success(this.encodeService.decryptData(respuesta).resultado?.data);
+          setTimeout(() => {
+            this.sharedService.setLoading(false);
+            window.HSStaticMethods.autoInit();
+          }, 500);
+        });
+      }
+    });
+  }
 
 
   /* Extraer los datos del area que se esta visualizando el detalle */
@@ -136,12 +180,32 @@ export class DetailsPuntoComponent {
       respuesta => {
         this.ListTitulos = this.encodeService.decryptData(respuesta)?.resultado?.data;
         this.sharedService.setLoading(false);
+        // Llama al primer tema al cargar los títulos
+        if (this.ListTitulos.length > 0) {
+          this.GetSubtemasDelTemaService(this.ListTitulos[0].id_titulo);
+        }
       },
       error => {
         this.sharedService.updateErrorLoading(this.el, { message: 'details-punto/'+this.idEncrypt });
       }
     );
   }
+
+  /* extrae Subtemas de un tema especifico */
+  GetSubtemasDelTemaService(id: any) {
+    const encryptedID = this.encodeService.encryptData(JSON.stringify(id));
+    this.SubtituloCrudService.GetSubtemasDelTemaService(encryptedID).subscribe(
+      respuesta => {
+        this.ListSubtema = this.encodeService.decryptData(respuesta)?.resultado?.data;
+        this.sharedService.setLoading(false);
+      },
+      error => {
+        this.sharedService.updateErrorLoading(this.el, { message: 'details-punto/'+this.idEncrypt });
+      }
+    );
+  }
+
+  
 
   getNumbers(): number[] {
     const numbers: number[] = [];
