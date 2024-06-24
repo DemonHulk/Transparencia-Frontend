@@ -1,4 +1,4 @@
-import { Component, Input, SimpleChange, SimpleChanges } from '@angular/core';
+import { Component, ElementRef, Input, SimpleChange, SimpleChanges } from '@angular/core';
 import { TituloscrudService } from '../../../services/crud/tituloscrud.service';
 import { CryptoServiceService } from '../../../services/cryptoService/crypto-service.service';
 import { SharedValuesService } from '../../../services/shared-values.service';
@@ -21,7 +21,8 @@ export class ContenidoPuntoComponent {
   constructor(
     public tituloCrudService: TituloscrudService,
     private encodeService: CryptoServiceService,
-    public sharedService: SharedValuesService
+    public sharedService: SharedValuesService,
+    private el: ElementRef
   ){
     this.sharedService.setLoading(true);
   }
@@ -82,7 +83,8 @@ export class ContenidoPuntoComponent {
         },
         (error) => {
           // Manejo de errores si es necesario
-          console.error("Error al obtener los títulos:", error);
+          this.sharedService.updateErrorLoading(this.el, { message: 'articulo33' });
+
         }
       );
   }
