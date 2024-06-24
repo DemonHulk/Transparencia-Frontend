@@ -31,6 +31,7 @@ import { authGuardGuard } from './auth-guard.guard';
 import { ListEjercicioComponent } from './components/tables/list-ejercicio/list-ejercicio.component';
 import { NewEjercicioComponent } from './components/forms/new-ejercicio/new-ejercicio.component';
 import { EditEjercicioComponent } from './components/forms/edit-ejercicio/edit-ejercicio.component';
+import { PruebapdfComponent } from './components/pruebapdf/pruebapdf.component';
 
 // data indicamos que area puede entrar a las rutas
 // openToall todos los que tengan sesion
@@ -65,6 +66,7 @@ const routes: Routes = [
   {path: 'details-area/:id', component:DetailsAreaComponent, canActivate: [authGuardGuard], data: { allowedAreas: ['1'] }},
   {path: 'details-punto/:id', component:DetailsPuntoComponent, canActivate: [authGuardGuard], data: { openToAll: true } },
   {path: 'details-usuario/:id', component:DetailsUsuarioComponent, canActivate: [authGuardGuard], data: { allowedAreas: ['1'] }},
+  {path: 'pruebapdf', component:PruebapdfComponent, canActivate: [authGuardGuard], data: { allowedAreas: ['1'] }},
   {path: 'new-word/:punto/:tema', component:NewWordComponent, canActivate: [authGuardGuard], data: { openToAll: true }},
   {path: '**', component:PageNotFoundComponent},
 ];

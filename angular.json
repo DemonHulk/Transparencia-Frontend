@@ -36,6 +36,7 @@
             ],
             "styles": [
               "src/styles.css",
+              "node_modules/apexcharts/dist/apexcharts.css",
               "node_modules/primeng/resources/themes/lara-light-blue/theme.css",
               "node_modules/primeng/resources/primeng.min.css"            ],
             "scripts": [
@@ -45,7 +46,11 @@
               "node_modules/preline/dist/combobox.js",
               "node_modules/preline/dist/dropdown.js",
               "node_modules/preline/dist/preline.js",
-              "src/assets/js/ccccd9e8df.js"
+              "src/assets/js/ccccd9e8df.js",
+              
+              "node_modules/lodash/lodash.min.js",
+              "node_modules/apexcharts/dist/apexcharts.min.js",
+              "src/assets/js/hs-apexcharts-helpers.js"
             ]
           },
           "configurations": {
