@@ -31,4 +31,13 @@ export class ContenidoItemComponent {
     return this.fechaService.formatDate(fecha)
   }
 
+  enviarDatos(titulo: any) {
+    const datos = {key:'titulo',titulo:titulo};
+    this.sharedService.sendData(datos);
+  }
+
+  volver(punto: any) {
+    const datos = {key:'punto',punto:punto};
+    this.sharedService.sendData(datos);
+  }
 }

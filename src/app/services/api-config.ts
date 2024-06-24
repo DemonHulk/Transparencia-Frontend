@@ -73,6 +73,7 @@ export class Titulo {
   hora_creacion!: string;
   fecha_actualizado!: string;
   activo!: boolean;
+  visualizar: boolean = false; // Inicialización directa
 }
 
 export class Usuario {

@@ -98,4 +98,11 @@ export class SharedValuesService {
   setLoading(isLoading: boolean): void {
     this.loadingSubject.next(isLoading);
   }
+
+  private dataSubject = new BehaviorSubject<any>(null); // Puedes especificar el tipo de datos en lugar de `any`
+  public data$ = this.dataSubject.asObservable();
+
+  sendData(data: any): void {
+    this.dataSubject.next(data);
+  }
 }

@@ -318,3 +318,6 @@ table{
 }
 
 
+.pointer-events-cursor{
+  cursor: pointer !important;
+}
