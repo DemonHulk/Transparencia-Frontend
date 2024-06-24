@@ -290,11 +290,13 @@ export function validarNombreArchivo(): ValidatorFn {
     // Limpiar y formatear el nombre del archivo según las reglas necesarias
     let nombreFormateado = valor
       .replace(/ {2,}/g, " ") // Reemplazar múltiples espacios en blanco por uno solo
-      .replace(/[^a-zA-Z0-9-_. ]+/g, "") // Permitir letras (sin acentos), números, guiones medios, bajos, puntos y espacios en blanco
-      .replace(/^ +| +$/g, ""); // Eliminar espacios en blanco al principio y al final
+      .replace(/[^a-zA-Z0-9-_. ]+/g, ""); // Permitir letras (sin acentos), números, guiones medios, bajos, puntos y espacios en blanco
 
     // Convertir espacios en blanco en guiones bajos ("_")
     nombreFormateado = nombreFormateado.replace(/ /g, "_");
+
+    // Eliminar guiones bajos consecutivos
+    nombreFormateado = nombreFormateado.replace(/_{2,}/g, "_");
 
     // Manejar el punto y la extensión pdf
     const partes = nombreFormateado.split('.');
@@ -309,7 +311,7 @@ export function validarNombreArchivo(): ValidatorFn {
 
     // Actualizar el valor del control con el nombre de archivo formateado
     if (nombreFormateado !== valor) {
-      control.setValue(nombreFormateado.trim());
+      control.setValue(nombreFormateado.trim(), { emitEvent: false });
       control.markAsDirty();
     }
 

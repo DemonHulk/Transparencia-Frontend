@@ -1,7 +1,7 @@
 import { Component, ElementRef } from '@angular/core';
 import { SharedValuesService } from '../../../services/shared-values.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CryptoServiceService } from '../../../services/cryptoService/crypto-service.service'; 
+import { CryptoServiceService } from '../../../services/cryptoService/crypto-service.service';
 import { Trimestre, markFormGroupTouched, validarNombreArchivo, validarTextoNormal, validarTitulo } from '../../../services/api-config';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ContenidocrudService } from '../../../services/crud/contenidocrud.service';
@@ -33,7 +33,7 @@ export class NewPdfComponent {
     private ContenidocrudService: ContenidocrudService,
     private TrimestrecrudService: TrimestrecrudService,
     private el: ElementRef
-  ) { 
+  ) {
     const extensionesArchivo  = /(\.pdf)$/i;
 
     //Tomas la id de la URL
@@ -60,10 +60,10 @@ export class NewPdfComponent {
       ],
       nombreInterno: ['',
         [
+          validarNombreArchivo(), //Validación personalizada
           Validators.required,
           Validators.minLength(5),
           Validators.maxLength(100),
-          validarNombreArchivo(), //Validación personalizada
         ],
       ],
       descripcion: ['',
@@ -96,7 +96,7 @@ export class NewPdfComponent {
         ],
       ],
       orden: [''
-        
+
       ]
     });
   }
@@ -233,7 +233,7 @@ nuevoArchivo!: File;
 handleFileInputChange(event:any) {
   const inputElement = event.target;
   const files = inputElement.files;
-  
+
   if (files && files.length > 0) {
     const file = files[0];
 
