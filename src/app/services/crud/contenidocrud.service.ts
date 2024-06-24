@@ -88,25 +88,32 @@ export class ContenidocrudService {
   *  Visualizar Documento                                                                            *
   ***************************************************************************************************/
 
-  getPDF(fileName: string): Observable<Blob> {
+  getPDF(fileName: string): Observable<any> {
     return this.clientHttp.get(API_URL + "getDocument/" + fileName, { responseType: 'text' })
       .pipe(
         map(response => {
-          let decryptedResponse = this.encodeService.decryptData(response);
+          const decryptedResponse = this.encodeService.decryptData(response);
           if (decryptedResponse?.resultado?.res) {
-            const byteCharacters = atob(decryptedResponse.resultado.data);
-            const byteNumbers = new Array(byteCharacters.length);
-            for (let i = 0; i < byteCharacters.length; i++) {
-              byteNumbers[i] = byteCharacters.charCodeAt(i);
-            }
-            const byteArray = new Uint8Array(byteNumbers);
-            return new Blob([byteArray], { type: decryptedResponse.resultado.mime });
+            return {
+              data: this.base64ToArrayBuffer(decryptedResponse.resultado.data),
+              mime: decryptedResponse.resultado.mime,
+              filename: decryptedResponse.resultado.filename
+            };
           } else {
             throw new Error(decryptedResponse?.resultado?.data || 'Respuesta inválida del servidor');
           }
         }),
         catchError(error => this.handleError(error, fileName))
       );
+  }
+  
+  private base64ToArrayBuffer(base64: string): ArrayBuffer {
+    const binaryString = window.atob(base64);
+    const bytes = new Uint8Array(binaryString.length);
+    for (let i = 0; i < binaryString.length; i++) {
+      bytes[i] = binaryString.charCodeAt(i);
+    }
+    return bytes.buffer;
   }
   
   private handleError(error: any, fileName: string): Observable<never> {

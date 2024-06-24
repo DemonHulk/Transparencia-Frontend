@@ -263,16 +263,25 @@ export class DetailsPuntoComponent {
     const encryptedID = this.encodeService.encryptData(JSON.stringify(id_titulo));
     this.ContenidocrudService.GetAllContenidoEstaticoService(encryptedID).subscribe(
       respuesta => {
-        /* Desencriptamos la respuesta que nos retorna el backend */
-        this.ListContenidoEstatico = this.encodeService.decryptData(respuesta).resultado?.data.map((contenidoestatico: ContenidoEstatico) => this.addFormattedDate2(contenidoestatico));
-          this.printHTML(this.ListContenidoEstatico[0].contenido);
+        // Desencriptamos la respuesta que nos retorna el backend
+        const decryptedData = this.encodeService.decryptData(respuesta);
+        if (decryptedData?.resultado?.data) {
+          this.ListContenidoEstatico = decryptedData.resultado.data.map((contenidoestatico: ContenidoEstatico) => this.addFormattedDate2(contenidoestatico));
+          // Verifica si this.ListContenidoEstatico tiene al menos un elemento y si ese elemento tiene la propiedad contenido
+          if (this.ListContenidoEstatico.length > 0 && this.ListContenidoEstatico[0].contenido) {
+            this.printHTML(this.ListContenidoEstatico[0].contenido);
+          }
+        } else {
+          this.sharedService.updateErrorLoading(this.el, { message: 'Error al conseguir los datos del contenido estático.' });
+        }
         setTimeout(() => {
           this.sharedService.setLoading(false);
           window.HSStaticMethods.autoInit();
         }, 500);
-        },
+      },
       error => {
-        this.sharedService.updateErrorLoading(this.el, { message: 'Error al cargar el contenido estatico del título'});
+        console.error('Error en la llamada al servicio:', error);
+        this.sharedService.updateErrorLoading(this.el, { message: 'Error al cargar el contenido estático del título.' });
       }
     );
   }
@@ -447,24 +456,34 @@ export class DetailsPuntoComponent {
   openPDF(nombre_interno_documento: any) {
     const encryptedName = this.encodeService.encryptData(JSON.stringify(nombre_interno_documento));
     this.ContenidocrudService.getPDF(encryptedName).subscribe({
-      next: (blob: Blob) => {
-        // Crear un objeto URL
+      next: (response: any) => {
+        const blob = new Blob([response.data], { type: response.mime });
         const url = window.URL.createObjectURL(blob);
         
-        // Abrir el PDF en una nueva pestaña
-        const newWindow = window.open(url, '_blank');
-        
-        // Si la ventana se abrió correctamente, configurar la limpieza del objeto URL
-        if (newWindow) {
-          newWindow.onload = () => {
-            // Esperar un poco antes de revocar la URL para asegurar que el PDF se cargue completamente
-            setTimeout(() => window.URL.revokeObjectURL(url), 1000);
-          };
-        } else {
-          // Si la ventana no se pudo abrir (por ejemplo, bloqueada por un popup blocker),
-          // revocar la URL después de un breve delay
-          setTimeout(() => window.URL.revokeObjectURL(url), 100);
-        }
+        // Crear un elemento <a> oculto para la descarga
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = response.filename || 'documento.pdf';
+        link.style.display = 'none';
+        document.body.appendChild(link);
+  
+        // Abrir el PDF en una nueva pestaña para visualización
+        window.open(url, '_blank');
+  
+        // Agregar un botón o enlace visible para la descarga
+        const downloadButton = document.createElement('button');
+        downloadButton.textContent = 'Descargar PDF';
+        downloadButton.onclick = () => {
+          link.click();
+        };
+        document.body.appendChild(downloadButton);
+  
+        // Limpiar recursos después de un tiempo
+        setTimeout(() => {
+          window.URL.revokeObjectURL(url);
+          document.body.removeChild(link);
+          document.body.removeChild(downloadButton);
+        }, 100);
       },
       error: (error: Error) => {
         this.flasher.error("No se encontró el archivo");

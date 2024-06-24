@@ -99,7 +99,6 @@ ngOnInit(): void {
 
   printHTML() {
     const html = this.editorComponent.editor?.getContent();
-    console.log(html);
 
     // Actualizar el contenido HTML anterior
     this.previousHtmlContent = html || '';
