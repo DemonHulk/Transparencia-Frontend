@@ -130,4 +130,28 @@ export class ContenidocrudService {
   
     return throwError(() => new Error(errorMessage));
   }
+
+  /***************************************************************************************************
+  *  Descargar Documento                                                                             *
+  ***************************************************************************************************/
+  getDowndloadPDF(fileName: any): Observable<Blob> {
+    return this.clientHttp.get(API_URL + "getDocument/" + fileName, { responseType: 'text' })
+      .pipe(
+        map(response => {
+          let decryptedResponse = this.encodeService.decryptData(response);
+          if (decryptedResponse?.resultado?.res) {
+            const byteCharacters = atob(decryptedResponse.resultado.data);
+            const byteNumbers = new Array(byteCharacters.length);
+            for (let i = 0; i < byteCharacters.length; i++) {
+              byteNumbers[i] = byteCharacters.charCodeAt(i);
+            }
+            const byteArray = new Uint8Array(byteNumbers);
+            return new Blob([byteArray], { type: decryptedResponse.resultado.mime || 'application/pdf' });
+          } else {
+            throw new Error(decryptedResponse?.resultado?.data || 'Respuesta inválida del servidor');
+          }
+        }),
+        catchError(error => this.handleError(error, fileName))
+      );
+  }
 }

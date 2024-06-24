@@ -569,7 +569,7 @@
                                     </ng-template>
                                     <ng-template pTemplate="body" let-pdf>
                                       <tr class="divide-x divide-gray-200 max-h-[20px]">
-                                        <td class="px-3 py-2 text-sm text-gray-800" (click)="openPDF(pdf?.nombre_interno_documento)">
+                                        <td class="px-3 py-2 text-sm text-gray-800">
                                           <p class="font-medium text-black">
                                             {{ pdf?.nombre_externo_documento }}
                                           </p>
@@ -598,6 +598,101 @@
                                         </td>
                                         <td class="px-3 py-2 text-sm text-gray-800">
                                           <div class="flex items-center space-x-3.5">
+                                            <!-- Agregar el boton del ojo y el descargar -->
+                                            <button
+                                            (click)="openPDF(pdf?.id_contenido_dinamico)"
+                                            (mouseenter)="mostrar($event.target)"
+                                            (mouseleave)="mostrar($event.target)"
+                                            class="hover:text-primary"
+                                            >
+                                              <!-- User -->
+                                              <div
+                                                class="hs-tooltip [--trigger:hover] sm:[--placement:top] inline-block"
+                                              >
+                                                <div
+                                                  class="hs-tooltip-toggle max-w-xs p-3 flex items-center gap-x-3 bg-white border border-gray-200 rounded-xl shadow-sm"
+                                                >
+                                                  <i class="fa fa-eye" aria-hidden="true"></i>
+                                                  <!-- Popover Content -->
+                                                  <div
+                                                    class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible hidden opacity-0 transition-opacity absolute invisible z-10 max-w-xs w-full bg-white border border-gray-100 text-start rounded-xl shadow-md after:absolute after:top-0 after:-start-4 after:w-4 after:h-full"
+                                                    role="tooltip"
+                                                    data-popper-placement="top"
+                                                  >
+                                                    <!-- Header -->
+                                                    <div
+                                                      class="py-3 px-4 border-b border-gray-200"
+                                                    >
+                                                      <div class="flex items-center gap-x-3">
+                                                        <div class="grow">
+                                                          <h4 class="font-semibold text-gray-800">
+                                                            Mostrar
+                                                          </h4>
+                                                        </div>
+                                                      </div>
+                                                    </div>
+                                                    <ul class="py-3 px-4 space-y-1">
+                                                      <li>
+                                                        <div
+                                                          class="inline-flex items-center gap-x-3 text-sm text-gray-800 text-wrap"
+                                                        >
+                                                          Visualización del archivo
+                                                        </div>
+                                                      </li>
+                                                    </ul>
+                                                  </div>
+                  
+                                                  <!-- End Popover Content -->
+                                                </div>
+                                              </div>
+                                            </button>
+                                            <button
+                                            (click)="downloadPDF(pdf?.id_contenido_dinamico, pdf?.nombre_interno_documento)"
+                                            (mouseenter)="mostrar($event.target)"
+                                            (mouseleave)="mostrar($event.target)"
+                                            class="hover:text-primary"
+                                            >
+                                              <!-- User -->
+                                              <div
+                                                class="hs-tooltip [--trigger:hover] sm:[--placement:top] inline-block"
+                                              >
+                                                <div
+                                                  class="hs-tooltip-toggle max-w-xs p-3 flex items-center gap-x-3 bg-white border border-gray-200 rounded-xl shadow-sm"
+                                                >
+                                                <i class="fa fa-download" aria-hidden="true"></i>
+                                                  <!-- Popover Content -->
+                                                  <div
+                                                    class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible hidden opacity-0 transition-opacity absolute invisible z-10 max-w-xs w-full bg-white border border-gray-100 text-start rounded-xl shadow-md after:absolute after:top-0 after:-start-4 after:w-4 after:h-full"
+                                                    role="tooltip"
+                                                    data-popper-placement="top"
+                                                  >
+                                                    <!-- Header -->
+                                                    <div
+                                                      class="py-3 px-4 border-b border-gray-200"
+                                                    >
+                                                      <div class="flex items-center gap-x-3">
+                                                        <div class="grow">
+                                                          <h4 class="font-semibold text-gray-800">
+                                                            Descarga
+                                                          </h4>
+                                                        </div>
+                                                      </div>
+                                                    </div>
+                                                    <ul class="py-3 px-4 space-y-1">
+                                                      <li>
+                                                        <div
+                                                          class="inline-flex items-center gap-x-3 text-sm text-gray-800 text-wrap"
+                                                        >
+                                                          Descarga directa del archivo
+                                                        </div>
+                                                      </li>
+                                                    </ul>
+                                                  </div>
+                  
+                                                  <!-- End Popover Content -->
+                                                </div>
+                                              </div>
+                                            </button>
                                             <button
                                               routerLink="/edit-pdf/{{ encriptarId(this.id) }}/{{ encriptarId(pdf?.id_contenido_dinamico) }}"
                                               (mouseenter)="mostrar($event.target)"
@@ -940,6 +1035,100 @@
                                         <td class="px-3 py-2 text-sm text-gray-800">
                                           <div class="flex items-center space-x-3.5">
                                             <button
+                                            (click)="openPDF(pdf?.id_contenido_dinamico)"
+                                            (mouseenter)="mostrar($event.target)"
+                                            (mouseleave)="mostrar($event.target)"
+                                            class="hover:text-primary"
+                                            >
+                                              <!-- User -->
+                                              <div
+                                                class="hs-tooltip [--trigger:hover] sm:[--placement:top] inline-block"
+                                              >
+                                                <div
+                                                  class="hs-tooltip-toggle max-w-xs p-3 flex items-center gap-x-3 bg-white border border-gray-200 rounded-xl shadow-sm"
+                                                >
+                                                  <i class="fa fa-eye" aria-hidden="true"></i>
+                                                  <!-- Popover Content -->
+                                                  <div
+                                                    class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible hidden opacity-0 transition-opacity absolute invisible z-10 max-w-xs w-full bg-white border border-gray-100 text-start rounded-xl shadow-md after:absolute after:top-0 after:-start-4 after:w-4 after:h-full"
+                                                    role="tooltip"
+                                                    data-popper-placement="top"
+                                                  >
+                                                    <!-- Header -->
+                                                    <div
+                                                      class="py-3 px-4 border-b border-gray-200"
+                                                    >
+                                                      <div class="flex items-center gap-x-3">
+                                                        <div class="grow">
+                                                          <h4 class="font-semibold text-gray-800">
+                                                            Mostrar
+                                                          </h4>
+                                                        </div>
+                                                      </div>
+                                                    </div>
+                                                    <ul class="py-3 px-4 space-y-1">
+                                                      <li>
+                                                        <div
+                                                          class="inline-flex items-center gap-x-3 text-sm text-gray-800 text-wrap"
+                                                        >
+                                                          Visualización del archivo
+                                                        </div>
+                                                      </li>
+                                                    </ul>
+                                                  </div>
+                  
+                                                  <!-- End Popover Content -->
+                                                </div>
+                                              </div>
+                                            </button>
+                                            <button
+                                            (click)="downloadPDF(pdf?.id_contenido_dinamico, pdf?.nombre_interno_documento)"
+                                            (mouseenter)="mostrar($event.target)"
+                                            (mouseleave)="mostrar($event.target)"
+                                            class="hover:text-primary"
+                                            >
+                                              <!-- User -->
+                                              <div
+                                                class="hs-tooltip [--trigger:hover] sm:[--placement:top] inline-block"
+                                              >
+                                                <div
+                                                  class="hs-tooltip-toggle max-w-xs p-3 flex items-center gap-x-3 bg-white border border-gray-200 rounded-xl shadow-sm"
+                                                >
+                                                <i class="fa fa-download" aria-hidden="true"></i>
+                                                  <!-- Popover Content -->
+                                                  <div
+                                                    class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible hidden opacity-0 transition-opacity absolute invisible z-10 max-w-xs w-full bg-white border border-gray-100 text-start rounded-xl shadow-md after:absolute after:top-0 after:-start-4 after:w-4 after:h-full"
+                                                    role="tooltip"
+                                                    data-popper-placement="top"
+                                                  >
+                                                    <!-- Header -->
+                                                    <div
+                                                      class="py-3 px-4 border-b border-gray-200"
+                                                    >
+                                                      <div class="flex items-center gap-x-3">
+                                                        <div class="grow">
+                                                          <h4 class="font-semibold text-gray-800">
+                                                            Descarga
+                                                          </h4>
+                                                        </div>
+                                                      </div>
+                                                    </div>
+                                                    <ul class="py-3 px-4 space-y-1">
+                                                      <li>
+                                                        <div
+                                                          class="inline-flex items-center gap-x-3 text-sm text-gray-800 text-wrap"
+                                                        >
+                                                          Descarga directa del archivo
+                                                        </div>
+                                                      </li>
+                                                    </ul>
+                                                  </div>
+                  
+                                                  <!-- End Popover Content -->
+                                                </div>
+                                              </div>
+                                            </button>
+                                            <button
                                               (click)="DeleteContenidoDinamico(pdf?.id_contenido_dinamico)"
                                               *ngIf="pdf?.activo"
                                               (mouseenter)="mostrar($event.target)"
@@ -1138,9 +1327,9 @@
                                       pSortableColumn="nombre"
                                     >
                                       <div class="flex hs-tooltip">
-                                        Usuario
+                                        Responsable del contenido
                                         <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-700 text-white text-xs rounded-lg shadow-md" role="tooltip">
-                                          Usuario responsable de la creación del contenido
+                                          Último usuario responsable de las acciones del contenido
                                         </span>
                                       </div>
                                     </th>
@@ -1367,7 +1556,7 @@
                 <!-- Parte para mostrar el contenido estatico -->
                 <div class="border border-2 pb-5 p-3 mb-5 border-gray-200 border-dashed rounded-lg" *ngIf="ListContenidoEstatico.length > 0">
                   <div class="flex justify-between items-center w-full my-4">
-                    <h4 class="text-xl">Información acerca del contenido</h4>
+                    <h4 class="text-xl">Visualización del Contenido</h4>
                     <button
                     *ngIf="ListContenidoEstatico[0]?.activo"
                     routerLink="/new-pdf/1/1" type="button" routerLink="/edit-word/{{ encriptarId(this.id) }}/{{ encriptarId(ListContenidoEstatico[0].id_contenido_estatico)}}"

@@ -453,8 +453,8 @@ export class DetailsPuntoComponent {
   }
 
   // Funcion para visualizar los documentos
-  openPDF(nombre_interno_documento: any) {
-    const encryptedName = this.encodeService.encryptData(JSON.stringify(nombre_interno_documento));
+  openPDF(id_documento_dinamico: any) {
+    const encryptedName = this.encodeService.encryptData(JSON.stringify(id_documento_dinamico));
     this.ContenidocrudService.getPDF(encryptedName).subscribe({
       next: (response: any) => {
         const blob = new Blob([response.data], { type: response.mime });
@@ -490,6 +490,32 @@ export class DetailsPuntoComponent {
       }
     });
   }
+
+
+  // Funcion para descargar el documento
+  downloadPDF(id_documento_interno: any, nombre_interno_documento:string) {
+    const encryptedName = this.encodeService.encryptData(JSON.stringify(id_documento_interno));
+    this.ContenidocrudService.getDowndloadPDF(encryptedName).subscribe({
+      next: (blob: Blob) => {
+        // Crear un objeto URL para el blob
+        const url = window.URL.createObjectURL(blob);
+
+        // Crear un enlace temporal para forzar la descarga del archivo
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = nombre_interno_documento;  // O el nombre que desees para el archivo
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+
+        // Revocar la URL del objeto después de un corto tiempo
+        setTimeout(() => window.URL.revokeObjectURL(url), 1000);
+      },
+      error: (error: Error) => {
+        this.flasher.error("No se encontró el archivo");
+      }
+    });
+  }	
 
 
   /**

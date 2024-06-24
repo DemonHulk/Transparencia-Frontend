@@ -1,6 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { EditorComponent, TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { EditorComponent } from '@tinymce/tinymce-angular';
 import { SharedValuesService } from '../../../services/shared-values.service';
 import { markFormGroupTouched } from '../../../services/api-config';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
