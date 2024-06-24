@@ -31,6 +31,8 @@ import { authGuardGuard } from './auth-guard.guard';
 import { ListEjercicioComponent } from './components/tables/list-ejercicio/list-ejercicio.component';
 import { NewEjercicioComponent } from './components/forms/new-ejercicio/new-ejercicio.component';
 import { EditEjercicioComponent } from './components/forms/edit-ejercicio/edit-ejercicio.component';
+import { EditWordComponent } from './components/forms/edit-word/edit-word.component';
+
 
 // data indicamos que area puede entrar a las rutas
 // openToall todos los que tengan sesion
@@ -39,7 +41,7 @@ const routes: Routes = [
   {path: '', component:Articulo33Component},
   {path: 'login', component:LoginComponent, canActivate: [authGuardGuard]},
   {path: 'articulo33', component:Articulo33Component},
-  {path: 'myprofile/:id', component:MiPerfilComponent, canActivate: [authGuardGuard], data: { openToAll: true } },
+  {path: 'myprofile', component:MiPerfilComponent, canActivate: [authGuardGuard], data: { openToAll: true } },
   {path: 'new-pdf/:punto/:tema', component:NewPdfComponent, canActivate: [authGuardGuard], data: { openToAll: true } },
   {path: 'new-punto', component:NewPuntoComponent , canActivate: [authGuardGuard], data: { allowedAreas: ['1'] }},
   {path: 'new-area', component:NewAreaComponent, canActivate: [authGuardGuard], data: { allowedAreas: ['1'] }},
@@ -54,7 +56,7 @@ const routes: Routes = [
   {path: 'edit-tema/:id', component:EditTemaComponent, canActivate: [authGuardGuard], data: { openToAll: true } },
   {path: 'edit-pdf/:punto/:contenido', component:EditPdfComponent, canActivate: [authGuardGuard], data: { openToAll: true } },
   {path: 'edit-subtema/:tema/:id', component:EditSubtemaComponent, canActivate: [authGuardGuard], data: { openToAll: true } },
-  {path: 'edit-perfil/:id', component:EditPerfilComponent, canActivate: [authGuardGuard], data: { openToAll: true } },
+  {path: 'edit-perfil', component:EditPerfilComponent, canActivate: [authGuardGuard], data: { openToAll: true } },
   {path: 'edit-usuario/:id', component:EditUsuarioComponent, canActivate: [authGuardGuard], data: { allowedAreas: ['1'] }},
   {path: 'edit-ejercicio/:id', component:EditEjercicioComponent, canActivate: [authGuardGuard], data: { allowedAreas: ['1'] }},
   {path: 'areas', component:ListAreasComponent, canActivate: [authGuardGuard], data: { allowedAreas: ['1'] }},
@@ -66,6 +68,7 @@ const routes: Routes = [
   {path: 'details-punto/:id', component:DetailsPuntoComponent, canActivate: [authGuardGuard], data: { openToAll: true } },
   {path: 'details-usuario/:id', component:DetailsUsuarioComponent, canActivate: [authGuardGuard], data: { allowedAreas: ['1'] }},
   {path: 'new-word/:punto/:tema', component:NewWordComponent, canActivate: [authGuardGuard], data: { openToAll: true }},
+  {path: 'edit-word/:punto/:contenido', component:EditWordComponent, canActivate: [authGuardGuard], data: { openToAll: true } },
   {path: '**', component:PageNotFoundComponent},
 ];
 

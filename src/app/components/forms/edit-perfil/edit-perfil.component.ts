@@ -97,60 +97,43 @@ export class EditPerfilComponent {
      * @memberof SharedValuesService
      */
     this.sharedService.changeTitle('Modificar mi información');
-    let idencrypt;
-    //Tomas la id de la URL
-    this.id = this.activateRoute.snapshot.paramMap.get("id");
-    idencrypt = this.id;
-    //Desencriptar la ID
-    this.id = this.encodeService.decodeID(this.id);
-    //Verificar si la ID es null, si es así, redirige a la página de áreas
-    if (this.id === null) {
-      this.router.navigateByUrl("/myprofile");
-    }
+    
     this.sharedService.setLoading(true);
-    this.GetOneUserService(this.id);
+    this.GetOneUserService();
   }
 
-  /* Extraer los datos del usuario mediante su id e ingresarlos en su respectivo campo*/
-  GetOneUserService(id: any) {
-    const encryptedID = this.encodeService.encryptData(JSON.stringify(id));
 
-    this.UsuariocrudService.GetOneUserService(encryptedID).subscribe(
-      (respuesta: any) => {
-        try {
-          // Desencripta la respuesta para obtener los datos del usuario
-          const decryptedData = this.encodeService.decryptData(respuesta);
+/* Extraer los datos del usuario mediante su id e ingresarlos en su respectivo campo*/
+decryptedData:any;
+GetOneUserService() {
+  this.data_user = this.encodeService.desencriptarDatosUsuario()
+  const encryptedID = this.encodeService.encryptData(JSON.stringify(this.data_user?.id_usuario));
+  this.UsuariocrudService.GetOneUserService(encryptedID).subscribe(
+    (respuesta: any) => {
+      /* Enviamos los datos de la respuesta al servicio para desencripatarla */
+      this.decryptedData = this.encodeService.decryptData(respuesta).resultado?.data?.data[0];
 
-          // Verifica si la respuesta y sus datos están presentes y son válidos
-          if (decryptedData && decryptedData.resultado?.data?.data?.length > 0) {
-            this.data_user = decryptedData.resultado.data?.data[0];
+      // Asegúrate de que la data_user sea del tipo Usuario
+      this.FormEditPerfil.patchValue({
+        nombre: this.decryptedData?.nombre,
+        primerApellido: this.decryptedData?.apellido1,
+        segundoApellido: this.decryptedData?.apellido2,
+        telefono: this.decryptedData?.telefono,
+        correo: this.decryptedData?.correo,
+      });
 
-            // Actualiza el título del componente con el nombre del usuario
-            this.sharedService.changeTitle('Modificar usuario: ' + this.data_user?.nombre);
+      this.sharedService.changeTitle('Modificar usuario: ' + this.data_user?.nombreCompleto);
 
-            // Asigna los valores a los controles del formulario FormEditPerfil
-            this.FormEditPerfil.patchValue({
-              nombre: this.data_user?.nombre,
-              primerApellido: this.data_user?.apellido1,
-              segundoApellido: this.data_user?.apellido2,
-              telefono: this.data_user?.telefono,
-              correo: this.data_user?.correo,
-            });
+      /*Indicar que todos los datos se han cargado */
+        this.sharedService.setLoading(false);
+        window.HSStaticMethods.autoInit();
+    },
+    error => {
+      this.sharedService.updateErrorLoading(this.el, { message: 'edit-perfil' });
+    }
+  );
+}
 
-            // Indica que la carga ha finalizado
-            this.sharedService.setLoading(false);
-          } else {
-            this.sharedService.updateErrorLoading(this.el, { message: 'usuario' });
-          }
-        } catch (error) {
-          this.sharedService.updateErrorLoading(this.el, { message: 'usuario' });
-        }
-      },
-      (error) => {
-        this.sharedService.updateErrorLoading(this.el, { message: 'usuario' });
-      }
-    );
-  }
 
 
 
@@ -165,7 +148,7 @@ export class EditPerfilComponent {
       this.mostrarSpinner = true;
 
       const encryptedData = this.encodeService.encryptData(JSON.stringify(this.FormEditPerfil.value));
-      const encryptedID = this.encodeService.encryptData(JSON.stringify(this.id));
+      const encryptedID = this.encodeService.encryptData(JSON.stringify(this.data_user?.id_usuario));
 
       const data = {
         data: encryptedData
