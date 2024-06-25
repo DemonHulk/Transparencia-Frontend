@@ -3,7 +3,7 @@
     <i class="fa fa-arrow-left mx-1" aria-hidden="true"></i>
   </button>
 </div>
-<div class=" flex flex-col my-2" *ngIf="titulo?.tipo_contenido == 2">
+<div class=" flex flex-col my-16" *ngIf="titulo?.tipo_contenido == 2">
   <ng-container *ngIf="titulo.link && titulo?.visualizar == false">
     <h2 *ngIf="titulo.fk_titulos == null" (click)="enviarDatos(titulo)"
       class="text-primary-color text-3xl mb-2 pointer-events-cursor">{{
@@ -129,7 +129,7 @@
   </div>
 </div>
 
-<div class=" flex flex-col my-2" *ngIf="titulo?.tipo_contenido == 1">
+<div class=" flex flex-col my-16" *ngIf="titulo?.tipo_contenido == 1">
   <ng-container *ngIf="titulo.link && titulo?.visualizar == false">
     <h2 *ngIf="titulo.fk_titulos == null" (click)="enviarDatos(titulo)"
       class="text-primary-color text-3xl mb-2 pointer-events-cursor">{{
