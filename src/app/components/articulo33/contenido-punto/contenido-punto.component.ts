@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, SimpleChange, SimpleChanges } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, SimpleChange, SimpleChanges } from '@angular/core';
 import { TituloscrudService } from '../../../services/crud/tituloscrud.service';
 import { CryptoServiceService } from '../../../services/cryptoService/crypto-service.service';
 import { SharedValuesService } from '../../../services/shared-values.service';
@@ -10,14 +10,8 @@ import { Titulo } from '../../../services/api-config';
   templateUrl: './contenido-punto.component.html',
   styleUrl: './contenido-punto.component.css'
 })
-export class ContenidoPuntoComponent {
-  @Input() title: string = 'Manual Gubernamental de Contabilidad (UTC)';
+export class ContenidoPuntoComponent implements OnInit {
   @Input() punto: any;
-
-  get shortTitle(): string {
-    return this.title.length > 20 ? this.title.substring(0,20) + '...' : this.title;
-  }
-
   constructor(
     public tituloCrudService: TituloscrudService,
     private encodeService: CryptoServiceService,
@@ -44,6 +38,8 @@ export class ContenidoPuntoComponent {
 
   private subscription!: Subscription;
   ngOnInit(){
+    window.HSStaticMethods.autoInit();
+
     this.subscription = this.sharedService.data$.subscribe(data => {
       if(data != null){
         if(data.key == 'titulo'){
@@ -80,6 +76,8 @@ export class ContenidoPuntoComponent {
           /* Desencriptamos la respuesta que nos retorna el backend */
           this.titulos = Array.isArray(parsedData) ? parsedData.map(item => this.createTituloInstance(item)) : [this.createTituloInstance(parsedData)];
           this.sharedService.sendData(this.titulos[0]?.id_punto);
+          window.HSStaticMethods.autoInit();
+
         },
         (error) => {
           // Manejo de errores si es necesario
@@ -91,6 +89,4 @@ export class ContenidoPuntoComponent {
   private createTituloInstance(data: any): Titulo {
     return Object.assign(new Titulo(), data);
   }
-
-  descripcion: string = 'El Manual Gubernamental de Contabilidad (UTC) es una guía exhaustiva destinada a estandarizar y mejorar los  procesos contables dentro de las entidades gubernamentales. Este manual establece un conjunto uniforme de principios, normas y procedimientos contables que deben seguir las instituciones públicas para garantizar la transparencia, eficiencia y precisión en la gestión financiera.';
 }

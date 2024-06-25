@@ -68,7 +68,6 @@ ngOnInit(): void {
     }
 
     this.solicitudActiva = true; // Marcar la solicitud como activa
-
     this.PuntocrudService.GetAllPuntosService().subscribe(
       (respuesta: any) => {
         try {
