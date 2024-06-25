@@ -1,0 +1,77 @@
+<app-form *ngIf="sharedService.loading$ | async; else content"></app-form>
+
+<ng-template #content>
+<div class="12/12 text-right my-5">
+    <ol class="flex items-center whitespace-nowrap">
+      <li class="inline-flex items-center">
+        <a class="flex items-center text-sm text-gray-500 hover:text-color-active focus:outline-none focus:text-color-active" routerLink="/puntos">
+          Puntos
+          <svg class="flex-shrink-0 mx-2 overflow-visible size-4 text-gray-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m9 18 6-6-6-6"></path>
+          </svg>
+        </a>
+      </li>
+      <li class="inline-flex items-center">
+        <a class="flex items-center text-sm text-gray-500 hover:text-color-active focus:outline-none focus:text-color-active" routerLink="/details-punto/{{ encriptarId(this.id_punto) }}">
+          Detalles punto
+          <svg class="flex-shrink-0 mx-2 overflow-visible size-4 text-gray-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m9 18 6-6-6-6"></path>
+          </svg>
+        </a>
+      </li>
+      <li class="inline-flex items-center text-sm font-semibold text-gray-800 truncate" aria-current="page">
+        Modificar contenido Estático (Word)
+      </li>  </ol>
+  </div>
+  
+  <div class="w-12/12">
+    <h3>Modificar contenido</h3>
+    <hr class="w-full mb-2 border-hr-color">
+  </div>
+  
+  <form [formGroup]="FormAltaContent" (ngSubmit)="updateContent()">
+  <editor apiKey="d83mhcjyadvqq1juq5fieuemnemagcsj2dbz5v6vls8oah8e"
+          [init]="{
+            language: 'es',
+            plugins: 'link table code',
+            toolbar: 'undo redo | bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat',
+            menubar: 'insert table',
+            table_toolbar: 'tabledelete | tableinsertrowbefore tableinsertrowafter tabledeleterow | tableinsertcolbefore tableinsertcolafter tabledeletecol',
+            style_formats: [
+              { title: 'Tabla sin bordes', selector: 'table', styles: { 'border-style': 'none' } },
+              { title: 'Celda sin fondo', selector: 'td', styles: { 'background-color': 'transparent' } }
+            ]
+          }" formControlName="htmlContent"
+           [ngClass]="{
+            'border-validator-error focus:border-validator-error focus:ring-validator-error': FormAltaContent.get('htmlContent')?.invalid && (FormAltaContent.get('htmlContent')?.dirty || FormAltaContent.get('htmlContent')?.touched)
+            }">
+  </editor>
+  
+    <div *ngIf="FormAltaContent.get('htmlContent')?.invalid && (FormAltaContent.get('htmlContent')?.dirty || FormAltaContent.get('htmlContent')?.touched)">
+      <div *ngIf="FormAltaContent.get('htmlContent')?.errors?.['required']" class="text-sm text-validator-error mt-1">Este campo es requerido.</div>
+      <div *ngIf="FormAltaContent.get('htmlContent')?.errors?.['minlength']" class="text-sm text-validator-error mt-1">El contenido debe tener al menos 3 caracteres.</div>
+    </div>
+  
+   <!-- Botón de enviar -->
+   <div class="sm:col-span-2 flex justify-end py-2">
+      <button type="submit" (click)="printHTML(htmlContent)"
+        class="items-center button-update inline-flex justify-center py-2 px-6 border border-transparent shadow-sm text-sm font-medium rounded-md  ">
+        <i class="fas fa-save mx-1"></i>
+      </button>
+    </div>
+  </form>
+  
+  <!-- Visualizacion del contenido en tiempo real -->
+    <div class="w-12/12">
+      <h4>Previsualización de contenido</h4>
+    </div>
+    <div class="contenido-prev sm:9/12 lg:w-12/12 p-4 mx-0 my-2 max-h-[85vh] text-wrap border-2 pb-5 border-gray-200 border-dashed rounded-lg"  [innerHtml]="htmlContent">
+    </div>
+</ng-template>
+<app-loading-spinner
+[fillPercentage]="porcentajeEnvio"
+[text]="'UTC'"
+[isVisible]="mostrarSpinner"
+[updateText]="mensaje">
+</app-loading-spinner>
+  

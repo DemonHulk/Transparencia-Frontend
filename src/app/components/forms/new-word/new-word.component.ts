@@ -1,7 +1,13 @@
 import { Component, ViewChild } from '@angular/core';
-import { EditorComponent, TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { EditorComponent } from '@tinymce/tinymce-angular';
 import { SharedValuesService } from '../../../services/shared-values.service';
+import { markFormGroupTouched } from '../../../services/api-config';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { CryptoServiceService } from '../../../services/cryptoService/crypto-service.service';
+import { ContenidocrudService } from '../../../services/crud/contenidocrud.service';
+import { HttpEvent, HttpEventType } from '@angular/common/http';
+import { AlertsServiceService } from '../../../services/alerts/alerts-service.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-new-word',
@@ -10,7 +16,50 @@ import { SharedValuesService } from '../../../services/shared-values.service';
 })
 export class NewWordComponent {
 
-  constructor(private sharedService: SharedValuesService) { }
+  FormAltaContent: FormGroup;
+  id_tema:any;
+  id_punto:any;
+  datosUsuario: any;
+  
+  constructor(
+    private sharedService: SharedValuesService,
+    private formulario: FormBuilder,
+    private activateRoute: ActivatedRoute,
+    private CryptoServiceService: CryptoServiceService,
+    private ContenidocrudService: ContenidocrudService,
+    private flasher: AlertsServiceService,
+    private router: Router, // Inyecta el Router
+  ) { 
+    //Tomas la id de la URL
+    this.id_tema = this.activateRoute.snapshot.paramMap.get("tema");
+    this.id_punto = this.activateRoute.snapshot.paramMap.get("punto");
+
+    //Desencriptar la ID
+    this.id_tema = this.CryptoServiceService.decodeID(this.id_tema);
+    this.id_punto = this.CryptoServiceService.decodeID(this.id_punto);
+    this.datosUsuario = this.CryptoServiceService.desencriptarDatosUsuario()
+    //Verificar si la ID es null, si es así, redirige a la página de puntos
+    if (this.id_tema === null) {
+      this.router.navigateByUrl("/puntos");
+    }
+
+
+    this.FormAltaContent = this.formulario.group({
+      htmlContent: ['', [Validators.required, Validators.minLength(10)]],
+      id_titulo: [this.id_tema,
+        [
+          Validators.required,
+        ],
+      ],
+      id_usuario: [this.datosUsuario?.id_usuario,
+        [
+          Validators.required,
+        ],
+      ],
+      orden: [''
+      ]
+    });
+  }
 
   /**
  * Inicializa el componente y establece el título en el servicio de valores compartidos.
@@ -49,7 +98,6 @@ ngOnInit(): void {
 
   printHTML() {
     const html = this.editorComponent.editor?.getContent();
-    console.log(html);
 
     // Actualizar el contenido HTML anterior
     this.previousHtmlContent = html || '';
@@ -151,5 +199,60 @@ tables.forEach(table => {
     this.htmlContent = tempElement.innerHTML;
   }
 
+  /* Variables spinner */
+  porcentajeEnvio: number = 0;
+  mostrarSpinner: boolean = false;
+  mensaje = "Guardando...";
+  insertContent(): any {
+    markFormGroupTouched(this.FormAltaContent);
+    if (this.FormAltaContent.valid) {
+      this.mostrarSpinner = true;
+      const encryptedData = this.CryptoServiceService.encryptData(JSON.stringify(this.FormAltaContent.value));
+      const data = {
+        data: encryptedData
+      };
+      this.ContenidocrudService.InsertContenidoEstaticoService(data).subscribe(
+        (event: HttpEvent<any>) => {
+          switch (event.type) {
+            case HttpEventType.Sent:
+              break;
+            case HttpEventType.ResponseHeader:
+              break;
+            case HttpEventType.UploadProgress:
+              if (event.total !== undefined) {
+                const percentDone = Math.round((100 * event.loaded) / event.total);
+                this.porcentajeEnvio = percentDone;
+                this.mostrarSpinner = true;
+              }
+              break;
+            case HttpEventType.Response:
+              // Manejo de la respuesta encriptada
+              const encryptedResponse = event.body;
+              const decryptedResponse = this.CryptoServiceService.decryptData(encryptedResponse);
+              if (decryptedResponse?.resultado?.res) {
+                this.flasher.success(decryptedResponse?.resultado?.data);
+                this.router.navigate(['/details-punto/'+ this.encriptarId(this.id_punto)]);
+              } else {
+                this.mostrarSpinner = false;
+                this.flasher.error(decryptedResponse?.resultado?.data?.data);
+              }
+              break;
+            default:
+          this.mostrarSpinner = false;
+              break;
+          }
+        },
+        error => {
+          this.mostrarSpinner = false;
+          this.flasher.error("Hubo un error, Intente más tarde o notifique al soporte técnico.");
+        }
+      );
+    } else {
+      this.flasher.error("El formulario no es válido. Por favor, complete todos los campos requeridos correctamente.");
+    }
+  }
 
+  encriptarId(id:any){
+    return this.CryptoServiceService.encodeID(id);
+  }
 }

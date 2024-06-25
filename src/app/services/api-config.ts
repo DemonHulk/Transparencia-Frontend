@@ -75,7 +75,7 @@ export class Titulo {
 }
 
 export class Usuario {
-  id_punto!: string;
+  id_usuario!: string;
   nombre!: string;
   apellido1!: string;
   apellido2!: string;
@@ -90,7 +90,7 @@ export class Usuario {
     correo: string,
     activo: boolean
   ) {
-    this.id_punto = id_punto;
+    this.id_usuario = this.id_usuario;
     this.nombre = nombre;
     this.apellido1 = apellido1;
     this.apellido2 = apellido2;
@@ -119,6 +119,29 @@ export class Trimestre {
   fecha_creacion!: string;
   fecha_actualizado!: string;
   activo!: boolean;
+}
+
+export class PDF {
+  id_contenido_dinamico!: number;
+  nombre_externo_documento!: string;
+  nombre_interno_documento!: string;
+  descripcion!: string;
+  trimestre!: string;
+  fecha_actualizado!: string;
+  activo!: boolean;
+}
+
+export class ContenidoEstatico {
+  id_contenido_estatico!: number;
+  id_usuario!: string;
+  nombre_completo!: string;
+  contenido!: string;
+  orden!: string;
+  trimestre!: string;
+  activo!: boolean;
+  fecha_creacion!: string;
+  hora_creacion!: string;
+  fecha_actualizado!: string;
 }
 
 import { AbstractControl, FormGroup, ValidationErrors, ValidatorFn } from '@angular/forms';
@@ -267,24 +290,37 @@ export function validarNombreArchivo(): ValidatorFn {
     // Limpiar y formatear el nombre del archivo según las reglas necesarias
     let nombreFormateado = valor
       .replace(/ {2,}/g, " ") // Reemplazar múltiples espacios en blanco por uno solo
-      .replace(/[^a-zA-Z0-9-_ ]+/g, "") // Permitir solo letras (sin acentos), números, guiones medios y bajos, y espacios en blanco
-      .replace(/^ +| +$/g, "") // Eliminar espacios en blanco al principio y al final
-
-    // Si el nombre de archivo contiene un punto, agregar automáticamente ".pdf"
-    if (nombreFormateado.includes('.')) {
-      nombreFormateado += '.pdf';
-    }
+      .replace(/[^a-zA-Z0-9-_. ]+/g, ""); // Permitir letras (sin acentos), números, guiones medios, bajos, puntos y espacios en blanco
 
     // Convertir espacios en blanco en guiones bajos ("_")
     nombreFormateado = nombreFormateado.replace(/ /g, "_");
 
+    // Eliminar guiones bajos consecutivos
+    nombreFormateado = nombreFormateado.replace(/_{2,}/g, "_");
+
+    // Manejar el punto y la extensión pdf
+    const partes = nombreFormateado.split('.');
+    if (partes.length > 2) {
+      // Si hay más de un punto, solo conservar el primero y agregar 'pdf'
+      nombreFormateado = partes[0] + '.' + 'pdf';
+    } else if (partes.length === 2) {
+      // Si hay un punto, asegurarse de que la extensión sea 'pdf'
+      nombreFormateado = partes[0] + '.' + (partes[1] === '' ? 'pdf' : 'pdf');
+    }
+    // Si no hay punto, se deja el nombre tal cual
+
     // Actualizar el valor del control con el nombre de archivo formateado
     if (nombreFormateado !== valor) {
-      control.setValue(nombreFormateado.trim()); // Actualizar el valor del control con el nombre de archivo formateado
-      control.markAsDirty(); // Marcar el control como modificado para que Angular actualice la vista
+      control.setValue(nombreFormateado.trim(), { emitEvent: false });
+      control.markAsDirty();
     }
 
-    return null; // No hay errores, el nombre del archivo es válido y está formateado correctamente
+    // Verificar si el nombre original tenía más de un punto
+    if ((valor.match(/\./g) || []).length > 1) {
+      return { 'multiplePuntos': true };
+    }
+
+    return null; // No hay errores, el nombre del archivo es válido
   };
 }
 
