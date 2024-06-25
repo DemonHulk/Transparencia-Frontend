@@ -114,7 +114,6 @@ ngOnInit(): void {
      * @memberof SharedValuesService
      */
     this.sharedService.changeTitle('Registrar un nuevo archivo');
-    this.sharedService.loadScript("/assets/js/validations.js");
     this.GetAllTrimestresService();
 }
 

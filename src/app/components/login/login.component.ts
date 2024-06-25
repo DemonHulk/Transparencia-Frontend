@@ -55,7 +55,6 @@ ngOnInit(): void {
      * @memberof SharedValuesService
      */
     this.sharedService.changeTitle('Ingresar al sistema');
-    this.sharedService.loadScript("/assets/js/validations.js");
 }
 
 
@@ -71,7 +70,7 @@ VerificarUser(): any {
   const data = {
     data: encryptedData
   };
-  
+
   // verificarUser es el metodo creado en el servicio, que es donde enviaremos los datos del formulario y conectarnos al backend
   this.loginService.VerificarUser(data).subscribe(
     (response) => {

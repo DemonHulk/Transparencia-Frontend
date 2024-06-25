@@ -91,7 +91,6 @@ ngOnInit(): void {
      * @param {string} newTitle - El nuevo título a establecer.
      * @memberof SharedValuesService
      */
-    this.sharedService.loadScript("/assets/js/validations.js");
     this.GetOnePuntoService(this.id);
 }
 
