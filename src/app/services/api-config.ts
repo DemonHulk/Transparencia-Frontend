@@ -56,6 +56,7 @@ export class Area {
 export class Punto {
   id_punto!:string;
   nombre_punto!: string;
+  otden_punto!: string;
   fecha_creacion!: string;
   activo!: boolean;
 }
@@ -72,6 +73,7 @@ export class Titulo {
   hora_creacion!: string;
   fecha_actualizado!: string;
   activo!: boolean;
+  visualizar: boolean = false; // Inicialización directa
 }
 
 export class Usuario {
@@ -438,3 +440,103 @@ export function markFormGroupTouched(formGroup: FormGroup): void {
   });
 }
 
+
+export function printHTML(contenido:any):any {
+  const html = contenido || '';
+
+  // Crear un elemento temporal para manipular el contenido HTML
+  const tempElement = document.createElement('div');
+  tempElement.innerHTML = html || '';
+
+  // Buscar todos los elementos con estilo "text-align: center" y agregarles la clase "text-center"
+  const elementsWithCenterAlign = tempElement.querySelectorAll('[style*="text-align: center;"]');
+  elementsWithCenterAlign.forEach(element => {
+    element.classList.add('text-center');
+  });
+
+  const elementsWithLeftAlign = tempElement.querySelectorAll('[style*="text-align: left;"]');
+  elementsWithLeftAlign.forEach(element => {
+    element.classList.add('text-left');
+  });
+
+  const elementsWithRightAlign = tempElement.querySelectorAll('[style*="text-align: right;"]');
+  elementsWithRightAlign.forEach(element => {
+    element.classList.add('text-right');
+  });
+
+  const elementsWithUnderline = tempElement.querySelectorAll('[style*="text-decoration: underline;"]');
+  elementsWithUnderline.forEach(element => {
+    element.classList.add('underline');
+  });
+
+  // Seleccionar todas las tablas dentro del contenido HTML
+ // Seleccionar todas las tablas en tempElement
+const tables = tempElement.querySelectorAll('table');
+
+tables.forEach(table => {
+  // Añadir las clases específicas a la tabla
+  table.classList.add('w-full', 'table-auto', 'table-satic');
+
+  // Crear el contenedor principal (flexDiv) y asignar las clases correspondientes
+  const flexDiv = document.createElement('div');
+  flexDiv.classList.add('flex', 'flex-col', 'mb-5');
+
+  // Crear el primer div (outerDiv) y asignar las clases correspondientes
+  const outerDiv = document.createElement('div');
+  outerDiv.classList.add('-m-1.5', 'overflow-x-auto');
+
+  // Crear el segundo div (innerDiv1) y asignar las clases correspondientes
+  const innerDiv1 = document.createElement('div');
+  innerDiv1.classList.add('p-1.5', 'min-w-full', 'inline-block', 'align-middle');
+
+  // Crear el tercer div (innerDiv2) y asignar las clases correspondientes
+  const innerDiv2 = document.createElement('div');
+  innerDiv2.classList.add('border', 'rounded-lg', 'overflow-hidden', 'my-2');
+
+  // Clonar la tabla original y asignarle la clase correspondiente
+  const clonedTable:any = table.cloneNode(true);
+  clonedTable.classList.add('min-w-full', 'divide-y');
+
+  // Agregar la tabla clonada a innerDiv2
+  innerDiv2.appendChild(clonedTable);
+
+  // Anidar los divs
+  innerDiv1.appendChild(innerDiv2);
+  outerDiv.appendChild(innerDiv1);
+  flexDiv.appendChild(outerDiv);
+
+  // Reemplazar la tabla original con flexDiv
+  table.replaceWith(flexDiv);
+
+  // Seleccionar todos los th dentro de la tabla clonada
+
+  // Seleccionar el primer tr dentro de la tabla clonada y agregar clase
+  const firstRow = innerDiv2.querySelector('tr');
+  if (firstRow) {
+    firstRow.classList.add('bg-table-header-color', 'text-left','divide-x','divide-y', 'divide-gray-200','rounded-lg');
+
+    // Seleccionar todos los td dentro del primer tr
+    const firstRowTds = firstRow.querySelectorAll('td');
+    firstRowTds.forEach(td => {
+      td.classList.add('px-6', 'text-start', 'py-3', 'text-xs', 'text-white', 'uppercase');
+    });
+  }
+
+  //Sleeccionas los demas tr
+  const tableTRCells = innerDiv2.querySelectorAll('tr:not(:first-child)');
+  tableTRCells.forEach(tr => {
+    tr.classList.add('divide-x','divide-y', 'divide-gray-200');
+  });
+
+  // Seleccionar todos los td dentro de la tabla, excepto el primer tr
+  const tableDataCells = innerDiv2.querySelectorAll('tr:not(:first-child) td');
+  tableDataCells.forEach(td => {
+    td.classList.add('text-gray-800', 'text-sm', 'px-3', 'py-2');
+  });
+
+});
+
+
+  // Asignar el contenido modificado a la propiedad htmlContent
+ return tempElement.innerHTML;
+}

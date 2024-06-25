@@ -46,25 +46,43 @@
   <div class="flex flex-col sm:flex-row">
     <div class="w-full sm:w-4 md:w-3/12 lg:w-3/12 my-2 lista-puntos max-h-[85vh] overflow-y-auto">
       <div class="flex flex-col">
-        <button type="button" title="1.- Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad,
-          suscipit illum."
-          class="inline-flex text-elipsis active  h-[50px] hover:h-full p-3  text-white items-center gap-x-2 py-3 px-4 text-sm text-start font-medium border border-gray-200 -mt-px first:rounded-t-lg first:mt-0 last:rounded-b-lg focus:z-10 disabled:opacity-50 disabled:pointer-events-none">
-          <p>1.- Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad,
-            suscipit illum.</p>
-        </button>
-        <button *ngFor="let number of getNumbers()" type="button" title="{{ number + 1 }}.- Lorem ipsum dolor sit amet consectetur adipisicing
-          elit. Ad, suscipit illum."
+        <button *ngFor="let punto of ListPuntos" type="button"
+          title="{{ punto?.orden_punto }}.- {{punto?.nombre_punto}}" (click)="cambiarPunto(punto?.id_punto)"
+          [ngClass]="{'active text-white hover:text-white': punto?.id_punto == puntoSeleccionado}"
           class="inline-flex text-elipsis h-[50px] items-center gap-x-2 py-3 px-4 text-sm text-start font-medium border border-gray-200 text-gray-800 hover:text-primary-color -mt-px first:rounded-t-lg first:mt-0 last:rounded-b-lg focus:z-10 disabled:opacity-50 disabled:pointer-events-none">
-
-          <p >{{ number + 1 }}.- Lorem ipsum dolor sit amet consectetur adipisicing
-            elit. Ad, suscipit illum.</p>
+          <p>{{ punto?.orden_punto }}.- {{punto?.nombre_punto}}</p>
         </button>
       </div>
+      <ng-container *ngIf="ListPuntos.length === 0">
+        <div class="flex flex-auto flex-col justify-center items-center p-4 md:p-5 border h-screen">
+          <svg class="size-10 text-gray-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round"
+            stroke-linejoin="round">
+            <line x1="22" x2="2" y1="12" y2="12"></line>
+            <path
+              d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z">
+            </path>
+            <line x1="6" x2="6.01" y1="16" y2="16"></line>
+            <line x1="10" x2="10.01" y1="16" y2="16"></line>
+          </svg>
+          <p class="mt-2 text-sm text-gray-800">
+            No hay información disponible.
+          </p>
+        </div>
+      </ng-container>
     </div>
+    <div
+      class="w-full sm:9/12 lg:w-12/12 mx-0 my-2 max-h-[85vh] overflow-y-auto border-2 pb-5 border-gray-200 border-dashed rounded-lg">
+      <ng-container *ngIf="loadingCompleted == false; else content">
+        <div class="p-4">
+          <app-contenido-punto-skeleton></app-contenido-punto-skeleton>
+        </div>
+      </ng-container>
 
-    <div class="w-full sm:9/12 lg:w-12/12 mx-0 my-2 max-h-[85vh] overflow-y-auto border-2 pb-5 border-gray-200 border-dashed rounded-lg" >
-      <!-- Navigation Toggle -->
-        <app-contenido-punto ></app-contenido-punto>
+      <ng-template #content>
+        <app-contenido-punto [punto]="cambiarContenidoPunto()"></app-contenido-punto>
+      </ng-template>
+
     </div>
   </div>
 </section>
@@ -87,19 +105,28 @@
   </div>
   <div class="w-full 12/12 my-2 overflow-y-auto max-h-[85vh]">
     <div class="flex flex-col">
-      <button type="button" title="1.- Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad,
-        suscipit illum."
-        class="inline-flex text-elipsis active  h-[50px] hover:h-full p-3  text-white items-center gap-x-2 py-3 px-4 text-sm text-start font-medium border border-gray-200 -mt-px first:rounded-t-lg first:mt-0 last:rounded-b-lg focus:z-10 disabled:opacity-50 disabled:pointer-events-none">
-        <p>1.- Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad,
-          suscipit illum.</p>
-      </button>
-      <button *ngFor="let number of getNumbers()" type="button" title="{{ number + 1 }}.- Lorem ipsum dolor sit amet consectetur adipisicing
-        elit. Ad, suscipit illum."
+      <button *ngFor="let punto of ListPuntos" type="button" title="{{ punto?.orden_punto }}.- {{punto?.nombre_punto}}"
+        (click)="cambiarPunto(punto?.id_punto)"
+        [ngClass]="{'active text-white hover:text-white': punto?.id_punto == puntoSeleccionado}"
         class="inline-flex text-elipsis h-[50px] items-center gap-x-2 py-3 px-4 text-sm text-start font-medium border border-gray-200 text-gray-800 hover:text-primary-color -mt-px first:rounded-t-lg first:mt-0 last:rounded-b-lg focus:z-10 disabled:opacity-50 disabled:pointer-events-none">
-
-        <p >{{ number + 1 }}.- Lorem ipsum dolor sit amet consectetur adipisicing
-          elit. Ad, suscipit illum.</p>
+        <p>{{ punto?.orden_punto }}.- {{punto?.nombre_punto}}</p>
       </button>
     </div>
+    <ng-container *ngIf="ListPuntos.length === 0">
+      <div class="flex flex-auto flex-col justify-center items-center p-4 md:p-5 border h-screen">
+        <svg class="size-10 text-gray-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+          fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="22" x2="2" y1="12" y2="12"></line>
+          <path
+            d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z">
+          </path>
+          <line x1="6" x2="6.01" y1="16" y2="16"></line>
+          <line x1="10" x2="10.01" y1="16" y2="16"></line>
+        </svg>
+        <p class="mt-2 text-sm text-gray-800">
+          No hay información disponible.
+        </p>
+      </div>
+    </ng-container>
   </div>
 </div>

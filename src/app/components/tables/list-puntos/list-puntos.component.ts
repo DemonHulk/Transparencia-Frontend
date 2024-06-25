@@ -56,26 +56,26 @@ export class ListPuntosComponent {
   }
 
   // Para cuando es usuario administrador
-  GetAllPuntosService() {
-    this.PuntocrudService.GetAllPuntosService().subscribe(
-      (respuesta: any) => {
-        try {
-          this.ListPuntos = this.encodeService.decryptData(respuesta).resultado?.data.map((punto: Punto) => this.addFormattedDate(punto));
-          this.ListActivePuntos = this.ListPuntos.filter(punto => punto.activo == true);
-          this.ListInactivePuntos = this.ListPuntos.filter(punto => punto.activo == false);
-          setTimeout(() => {
-            this.sharedService.setLoading(false);
-            window.HSStaticMethods.autoInit();
-          }, 500);
-        } catch {
+    GetAllPuntosService() {
+      this.PuntocrudService.GetAllPuntosService().subscribe(
+        (respuesta: any) => {
+          try {
+            this.ListPuntos = this.encodeService.decryptData(respuesta).resultado?.data.map((punto: Punto) => this.addFormattedDate(punto));
+            this.ListActivePuntos = this.ListPuntos.filter(punto => punto.activo == true);
+            this.ListInactivePuntos = this.ListPuntos.filter(punto => punto.activo == false);
+            setTimeout(() => {
+              this.sharedService.setLoading(false);
+              window.HSStaticMethods.autoInit();
+            }, 500);
+          } catch {
+            this.sharedService.updateErrorLoading(this.el, { message: 'puntos' });
+          }
+        },
+        () => {
           this.sharedService.updateErrorLoading(this.el, { message: 'puntos' });
         }
-      },
-      () => {
-        this.sharedService.updateErrorLoading(this.el, { message: 'puntos' });
-      }
-    );
-  }
+      );
+    }
 
 
   // Para cuando es usuario normal
