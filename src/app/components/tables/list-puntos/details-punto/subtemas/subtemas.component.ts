@@ -28,7 +28,7 @@ export class SubtemasComponent {
     private encodeService: CryptoServiceService,
     private flasher: AlertsServiceService,
   ){
-
+    this.sharedService.setLoading(true);
     this.sharedService.changeTitle('Administrar subtemas del tema: ');
 
      //Tomas la id de la URL
@@ -49,8 +49,6 @@ export class SubtemasComponent {
      if (this.idTema === null) {
       this.router.navigateByUrl("/details-punto/"+this.idPuntoEncrypt);
     }
-
-     this.sharedService.setLoading(true);
-
+    this.sharedService.setLoading(false);
   }
 }
