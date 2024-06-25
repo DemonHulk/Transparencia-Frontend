@@ -1,0 +1,164 @@
+<div class="12/12 text-right my-5">
+  <ol class="flex items-center whitespace-nowrap">
+    <li class="inline-flex items-center">
+      <a class="flex items-center text-sm text-gray-500 hover:text-color-active focus:outline-none focus:text-color-active" routerLink="/puntos">
+        Puntos
+        <svg class="flex-shrink-0 mx-2 overflow-visible size-4 text-gray-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m9 18 6-6-6-6"></path>
+        </svg>
+      </a>
+    </li>
+    <li class="inline-flex items-center">
+      <a class="flex items-center text-sm text-gray-500 hover:text-color-active focus:outline-none focus:text-color-active" routerLink="/details-punto/{{idPuntoEncrypt}}">
+        Detalles punto
+        <svg class="flex-shrink-0 mx-2 overflow-visible size-4 text-gray-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m9 18 6-6-6-6"></path>
+        </svg>
+      </a>
+    </li>
+    <li class="inline-flex items-center text-sm font-semibold text-gray-800 truncate" aria-current="page">
+      Administrar subtemas de "Nombre titulo"
+    </li>
+  </ol>
+</div>
+
+<div class="w-12/12">
+  <h3 class="text-2xl">Nombre del tema</h3>
+  <hr>
+</div>
+<div class="w-12/12 my-4">
+  <h4 class="text-xl">Subtemas del tema</h4>
+</div>
+<div class="12/12 text-right">
+
+  <button type="button" routerLink="/new-subtema/{{idTemaEncrypt}}"
+    class="button-secondary py-3 my-2 mx-2 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-primary-color text-white hover:bg-primary-color-90 disabled:opacity-50 disabled:pointer-events-none">
+    <i class="fa fa-plus" aria-hidden="true"></i>
+    Agregar subtema
+  </button>
+  </div>
+<div class="border border-2 pb-5 p-3 mb-5 border-gray-200 border-dashed rounded-lg">
+  <div class="hs-accordion-group">
+    <div class="hs-accordion active" id="hs-basic-with-arrow-heading-one">
+      <button class="hs-accordion-toggle hs-accordion-active:text-primary-color-90 py-3 inline-flex items-center gap-x-3 w-full font-semibold text-start text-gray-800 hover:text-gray-500 rounded-lg disabled:opacity-50 disabled:pointer-events-none" aria-controls="hs-basic-with-arrow-collapse-one">
+        <svg class="hs-accordion-active:hidden block size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m6 9 6 6 6-6"></path>
+        </svg>
+        <svg class="hs-accordion-active:block hidden size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m18 15-6-6-6 6"></path>
+        </svg>
+        Subtema 1
+      </button>
+      <div id="hs-basic-with-arrow-collapse-one" class="hs-accordion-content w-full overflow-hidden transition-[height] duration-300" aria-labelledby="hs-basic-with-arrow-heading-one">
+        <div class="12/12 text-right">
+
+          <button type="button" routerLink="/new-subtema/idsubtema"
+            class="button-secondary py-3 my-2 mx-2 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-primary-color text-white hover:bg-primary-color-90 disabled:opacity-50 disabled:pointer-events-none">
+            <i class="fa fa-plus" aria-hidden="true"></i>
+            Agregar subtema
+          </button>
+
+          <button type="button"
+          routerLink="/edit-subtema/1/1"
+            class="button-secondary py-3 my-2 mx-2 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-primary-color text-white hover:bg-primary-color-90 disabled:opacity-50 disabled:pointer-events-none">
+            <i class="fas fa-edit"></i>
+            Modificar subtema
+          </button>
+
+          <button type="button"
+            class="button-secondary py-3 my-2 mx-2 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-primary-color text-white hover:bg-primary-color-90 disabled:opacity-50 disabled:pointer-events-none">
+            <i class="fa fa-trash" aria-hidden="true"></i>
+            Desactivar subtema
+          </button>
+
+          <button type="button"
+            class="button-secondary py-3 my-2 mx-2 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-primary-color text-white hover:bg-primary-color-90 disabled:opacity-50 disabled:pointer-events-none">
+            <i class="fa-solid fa-arrow-rotate-left"></i>
+
+            Reactivar subtema
+          </button>
+
+        </div>
+        <div class="border overflow-hidden">
+          <table class="min-w-full divide-y divide-gray-200 ">
+            <thead>
+              <tr>
+                <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Tipo de contenido</th>
+                <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Ultima actualización</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200">
+              <tr>
+                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">
+                  <label for="trimestre" class="font-poppins flex items-center">
+                    Dinámico
+                    <div class="hs-tooltip [--trigger:hover] sm:[--placement:right] inline-block ml-2">
+                      <i class="fa-solid fa-question text-gray-500"></i>
+                      <div class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible hidden opacity-0 transition-opacity absolute invisible z-10 max-w-xs w-full bg-white border border-gray-100 text-start rounded-xl shadow-md after:absolute after:top-0 after:-start-4 after:w-4 after:h-full" role="tooltip">
+                        <ul class="py-3 px-4 space-y-1">
+                          <li>
+                            <div class="inline-flex items-center gap-x-3 text-sm text-gray-800 text-wrap">
+                              <p>En nuestro sistema, esto sucede cuando los usuarios suben archivos PDF. Cada vez que alguien sube un nuevo archivo, este se añade y aparece automáticamente en el sistema, sin que tú tengas que hacer nada para que esto ocurra.</p>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </label>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">
+                  fecha aqui
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="flex flex-auto flex-col justify-center items-center p-4 md:p-5 border h-72 my-4">
+          <svg class="size-10 text-gray-500 dark:text-neutral-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="22" x2="2" y1="12" y2="12"></line>
+            <path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"></path>
+            <line x1="6" x2="6.01" y1="16" y2="16"></line>
+            <line x1="10" x2="10.01" y1="16" y2="16"></line>
+          </svg>
+          <p class="mt-2 text-sm text-gray-800 dark:text-neutral-300">
+            Sin contenido para mostrar
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="hs-accordion" id="hs-basic-with-arrow-heading-two">
+      <button class="hs-accordion-toggle hs-accordion-active:text-primary-color-90 py-3 inline-flex items-center gap-x-3 w-full font-semibold text-start text-gray-800 hover:text-gray-500 rounded-lg disabled:opacity-50 disabled:pointer-events-none" aria-controls="hs-basic-with-arrow-collapse-two">
+        <svg class="hs-accordion-active:hidden block size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m6 9 6 6 6-6"></path>
+        </svg>
+        <svg class="hs-accordion-active:block hidden size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m18 15-6-6-6 6"></path>
+        </svg>
+        Subtema 2
+      </button>
+      <div id="hs-basic-with-arrow-collapse-two" class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300" aria-labelledby="hs-basic-with-arrow-heading-two">
+        <p class="text-gray-800">
+          <em>This is the third item's accordion body.</em> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions.
+        </p>
+      </div>
+    </div>
+
+    <div class="hs-accordion" id="hs-basic-with-arrow-heading-three">
+      <button class="hs-accordion-toggle hs-accordion-active:text-primary-color-90 py-3 inline-flex items-center gap-x-3 w-full font-semibold text-start text-gray-800 hover:text-gray-500 rounded-lg disabled:opacity-50 disabled:pointer-events-none" aria-controls="hs-basic-with-arrow-collapse-three">
+        <svg class="hs-accordion-active:hidden block size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m6 9 6 6 6-6"></path>
+        </svg>
+        <svg class="hs-accordion-active:block hidden size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m18 15-6-6-6 6"></path>
+        </svg>
+        Subtema 3
+      </button>
+      <div id="hs-basic-with-arrow-collapse-three" class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300" aria-labelledby="hs-basic-with-arrow-heading-three">
+        <p class="text-gray-800">
+          <em>This is the third item's accordion body.</em> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

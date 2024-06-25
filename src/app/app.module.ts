@@ -52,6 +52,7 @@ import { ErrorLoadingComponent } from './partials/error-loading/error-loading.co
 import { EditWordComponent } from './components/forms/edit-word/edit-word.component';
 import { ContenidoItemComponent } from './components/articulo33/contenido-punto/contenido-item/contenido-item.component';
 import { ContenidoPuntoSkeletonComponent } from './components/skeleton/contenido-punto-skeleton/contenido-punto-skeleton.component';
+import { SubtemasComponent } from './components/tables/list-puntos/details-punto/subtemas/subtemas.component';
 
 @NgModule({
   declarations: [
@@ -96,6 +97,7 @@ import { ContenidoPuntoSkeletonComponent } from './components/skeleton/contenido
     EditWordComponent,
     ContenidoItemComponent,
     ContenidoPuntoSkeletonComponent,
+    SubtemasComponent,
 
   ],
   imports: [

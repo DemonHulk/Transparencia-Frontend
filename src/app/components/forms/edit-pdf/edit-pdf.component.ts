@@ -6,7 +6,7 @@ import { AlertsServiceService } from '../../../services/alerts/alerts-service.se
 import { CryptoServiceService } from '../../../services/cryptoService/crypto-service.service';
 import { ContenidocrudService } from '../../../services/crud/contenidocrud.service';
 import { TrimestrecrudService } from '../../../services/crud/trimestrecrud.service';
-import { Trimestre, markFormGroupTouched, validarNombreArchivo, validarTextoNormal, validarTitulo } from '../../../services/api-config';
+import { Trimestre, validarNombreArchivo, validarTextoNormal, validarTitulo } from '../../../services/api-config';
 import { HttpEvent, HttpEventType } from '@angular/common/http';
 
 @Component({
@@ -92,13 +92,13 @@ export class EditPdfComponent {
         [
           Validators.required,
         ],
-        
+
       ],
       id_titulo: [this.datosUsuario?.id_titulo,
         [
           Validators.required,
         ],
-        
+
       ]
     });
    }
@@ -116,7 +116,6 @@ export class EditPdfComponent {
      * @memberof SharedValuesService
      */
     this.sharedService.changeTitle('Modificar archivo');
-    this.sharedService.loadScript("/assets/js/validations.js");
     this.sharedService.setLoading(true);
     this.GetOnecontenidoDinamicoService(this.id_contenido_dinamico);
     this.GetAllTrimestresService();
@@ -236,7 +235,7 @@ nuevoArchivo!: File;
 handleFileInputChange(event:any) {
   const inputElement = event.target;
   const files = inputElement.files;
-  
+
   if (files && files.length > 0) {
     const file = files[0];
 

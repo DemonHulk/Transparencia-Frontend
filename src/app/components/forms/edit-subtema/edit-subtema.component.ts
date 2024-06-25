@@ -22,6 +22,5 @@ ngOnInit(): void {
      * @memberof SharedValuesService
      */
     this.sharedService.changeTitle('Modificar subtema para el tema: Nombre tema');
-    this.sharedService.loadScript("/assets/js/validations.js");
 }
 }

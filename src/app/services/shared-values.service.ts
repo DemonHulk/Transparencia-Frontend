@@ -1,4 +1,3 @@
-import { isPlatformBrowser } from '@angular/common';
 import { ApplicationRef, ComponentFactoryResolver, ComponentRef, ElementRef, Inject, Injectable, Injector, PLATFORM_ID, Renderer2, RendererFactory2, SecurityContext, Type, ViewContainerRef, createComponent } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { ErrorLoadingComponent } from '../partials/error-loading/error-loading.component';
@@ -51,31 +50,13 @@ export class SharedValuesService {
   }
 
   updateErrorLoading(el: ElementRef, data: any): void {
+    window.scrollTo(0, 0);
     const safeHtmlContent = this.getComponentHtml(ErrorLoadingComponent, data);
     el.nativeElement.innerHTML = this.sanitizer.sanitize(SecurityContext.HTML, safeHtmlContent) || '';
   }
-  public loadScript(scriptUrl: string): Promise<void> {
-    return new Promise<void>((resolve, reject) => {
-      if (isPlatformBrowser(this.platformId)) {
-        const scriptElement = document.createElement('script');
-        scriptElement.src = scriptUrl;
-        scriptElement.onload = () => {
-          resolve();
-        };
-        scriptElement.onerror = (error) => {
-          reject(error);
-        };
-        document.head.appendChild(scriptElement);
-      } else {
-        // Manejo de la carga de scripts en el servidor
-        // Aquí puedes realizar una acción alternativa, como enviar una advertencia al servidor de que no se puede cargar el script
-        console.warn('No se puede cargar el script en el servidor.');
-        resolve();
-      }
-    });
-  }
 
   changeTitle(title: string) {
+    window.scrollTo(0, 0);
     this.titleSource.next(title);
   }
 

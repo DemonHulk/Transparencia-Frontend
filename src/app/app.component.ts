@@ -19,6 +19,7 @@ export class AppComponent {
     this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
         setTimeout(() => {
+          window.scrollTo(0, 0);
           window.HSStaticMethods.autoInit();
         }, 1000);
       }
