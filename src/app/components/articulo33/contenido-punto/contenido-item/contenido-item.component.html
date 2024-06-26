@@ -152,7 +152,7 @@
       <div class="-m-1.5 overflow-x-auto">
         <div *ngIf="titulo.contenido && titulo.contenido.length > 0 && titulo.link == false || titulo?.visualizar">
           <div *ngFor="let contenido of titulo.contenido">
-            <div [innerHTML]="convertirHTML(contenido.contenido)"></div>
+            <div [innerHTML]="sanitizeHtml(contenido.contenido)"></div>
             <!-- Aquí puedes mostrar otros campos de contenido si es necesario -->
           </div>
         </div>

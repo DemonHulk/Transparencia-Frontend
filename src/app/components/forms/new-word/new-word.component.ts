@@ -17,8 +17,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class NewWordComponent {
 
   FormAltaContent: FormGroup;
-  id_tema:any;
-  id_punto:any;
+  id_tema: any;
+  id_punto: any;
   datosUsuario: any;
 
   constructor(
@@ -47,14 +47,14 @@ export class NewWordComponent {
     this.FormAltaContent = this.formulario.group({
       htmlContent: ['', [Validators.required, Validators.minLength(10)]],
       id_titulo: [this.id_tema,
-        [
-          Validators.required,
-        ],
+      [
+        Validators.required,
+      ],
       ],
       id_usuario: [this.datosUsuario?.id_usuario,
-        [
-          Validators.required,
-        ],
+      [
+        Validators.required,
+      ],
       ],
       orden: [''
       ]
@@ -66,7 +66,7 @@ export class NewWordComponent {
  *
  * @returns {void}
  */
-ngOnInit(): void {
+  ngOnInit(): void {
     /**
      * Llama al método changeTitle del servicio de valores compartidos para actualizar el título.
      *
@@ -74,7 +74,7 @@ ngOnInit(): void {
      * @memberof SharedValuesService
      */
     this.sharedService.changeTitle('Registrar nuevo contenido');
-}
+  }
 
 
   @ViewChild(EditorComponent) editorComponent!: EditorComponent;
@@ -106,104 +106,149 @@ ngOnInit(): void {
     const tempElement = document.createElement('div');
     tempElement.innerHTML = html || '';
 
+    // Función para agregar clase sin espacios en blanco
+    const addClassWithoutSpaces = (element: Element, className: string) => {
+      element.classList.add(className.trim());
+    };
+
     // Buscar todos los elementos con estilo "text-align: center" y agregarles la clase "text-center"
     const elementsWithCenterAlign = tempElement.querySelectorAll('[style*="text-align: center;"]');
     elementsWithCenterAlign.forEach(element => {
-      element.classList.add('text-center');
+      addClassWithoutSpaces(element, 'text-center');
     });
 
     const elementsWithLeftAlign = tempElement.querySelectorAll('[style*="text-align: left;"]');
     elementsWithLeftAlign.forEach(element => {
-      element.classList.add('text-left');
+      addClassWithoutSpaces(element, 'text-left');
     });
 
     const elementsWithRightAlign = tempElement.querySelectorAll('[style*="text-align: right;"]');
     elementsWithRightAlign.forEach(element => {
-      element.classList.add('text-right');
+      addClassWithoutSpaces(element, 'text-right');
     });
 
     const elementsWithUnderline = tempElement.querySelectorAll('[style*="text-decoration: underline;"]');
     elementsWithUnderline.forEach(element => {
-      element.classList.add('underline');
+      addClassWithoutSpaces(element, 'underline');
+    });
+
+    const ulElements = tempElement.querySelectorAll('ul');
+    ulElements.forEach(ul => {
+      addClassWithoutSpaces(ul, 'contenido-lista');
+    });
+
+    const aElements = tempElement.querySelectorAll('a');
+    aElements.forEach(a => {
+      addClassWithoutSpaces(a, 'contenido-link');
     });
 
     // Seleccionar todas las tablas dentro del contenido HTML
-   // Seleccionar todas las tablas en tempElement
-const tables = tempElement.querySelectorAll('table');
+    const tables = tempElement.querySelectorAll('table');
 
-tables.forEach(table => {
-  // Añadir las clases específicas a la tabla
-  table.classList.add('w-full', 'table-auto', 'table-satic');
+    tables.forEach(table => {
+      // Añadir las clases específicas a la tabla
+      addClassWithoutSpaces(table, 'w-full');
+      addClassWithoutSpaces(table, 'table-auto');
+      addClassWithoutSpaces(table, 'table-satic');
 
-  // Crear el contenedor principal (flexDiv) y asignar las clases correspondientes
-  const flexDiv = document.createElement('div');
-  flexDiv.classList.add('flex', 'flex-col', 'mb-5');
+      // Crear el contenedor principal (flexDiv) y asignar las clases correspondientes
+      const flexDiv = document.createElement('div');
+      addClassWithoutSpaces(flexDiv, 'flex');
+      addClassWithoutSpaces(flexDiv, 'flex-col');
+      addClassWithoutSpaces(flexDiv, 'mb-5');
 
-  // Crear el primer div (outerDiv) y asignar las clases correspondientes
-  const outerDiv = document.createElement('div');
-  outerDiv.classList.add('-m-1.5', 'overflow-x-auto');
+      // Crear el primer div (outerDiv) y asignar las clases correspondientes
+      const outerDiv = document.createElement('div');
+      addClassWithoutSpaces(outerDiv, '-m-1.5');
+      addClassWithoutSpaces(outerDiv, 'overflow-x-auto');
 
-  // Crear el segundo div (innerDiv1) y asignar las clases correspondientes
-  const innerDiv1 = document.createElement('div');
-  innerDiv1.classList.add('p-1.5', 'min-w-full', 'inline-block', 'align-middle');
+      // Crear el segundo div (innerDiv1) y asignar las clases correspondientes
+      const innerDiv1 = document.createElement('div');
+      addClassWithoutSpaces(innerDiv1, 'p-1.5');
+      addClassWithoutSpaces(innerDiv1, 'min-w-full');
+      addClassWithoutSpaces(innerDiv1, 'inline-block');
+      addClassWithoutSpaces(innerDiv1, 'align-middle');
 
-  // Crear el tercer div (innerDiv2) y asignar las clases correspondientes
-  const innerDiv2 = document.createElement('div');
-  innerDiv2.classList.add('border', 'rounded-lg', 'overflow-hidden', 'my-2');
+      // Crear el tercer div (innerDiv2) y asignar las clases correspondientes
+      const innerDiv2 = document.createElement('div');
+      addClassWithoutSpaces(innerDiv2, 'border');
+      addClassWithoutSpaces(innerDiv2, 'rounded-lg');
+      addClassWithoutSpaces(innerDiv2, 'overflow-hidden');
+      addClassWithoutSpaces(innerDiv2, 'my-2');
 
-  // Clonar la tabla original y asignarle la clase correspondiente
-  const clonedTable:any = table.cloneNode(true);
-  clonedTable.classList.add('min-w-full', 'divide-y');
+      // Clonar la tabla original y asignarle la clase correspondiente
+      const clonedTable: any = table.cloneNode(true);
+      addClassWithoutSpaces(clonedTable, 'min-w-full');
+      addClassWithoutSpaces(clonedTable, 'divide-y');
 
-  // Agregar la tabla clonada a innerDiv2
-  innerDiv2.appendChild(clonedTable);
+      // Agregar la tabla clonada a innerDiv2
+      innerDiv2.appendChild(clonedTable);
 
-  // Anidar los divs
-  innerDiv1.appendChild(innerDiv2);
-  outerDiv.appendChild(innerDiv1);
-  flexDiv.appendChild(outerDiv);
+      // Anidar los divs
+      innerDiv1.appendChild(innerDiv2);
+      outerDiv.appendChild(innerDiv1);
+      flexDiv.appendChild(outerDiv);
 
-  // Reemplazar la tabla original con flexDiv
-  table.replaceWith(flexDiv);
+      // Reemplazar la tabla original con flexDiv
+      table.replaceWith(flexDiv);
 
-  // Seleccionar todos los th dentro de la tabla clonada
+      // Seleccionar todos los th dentro de la tabla clonada
 
-  // Seleccionar el primer tr dentro de la tabla clonada y agregar clase
-  const firstRow = innerDiv2.querySelector('tr');
-  if (firstRow) {
-    firstRow.classList.add('bg-table-header-color', 'text-left','divide-x','divide-y', 'divide-gray-200','rounded-lg');
+      // Seleccionar el primer tr dentro de la tabla clonada y agregar clase
+      const firstRow = innerDiv2.querySelector('tr');
+      if (firstRow) {
+        addClassWithoutSpaces(firstRow, 'bg-table-header-color');
+        addClassWithoutSpaces(firstRow, 'text-left');
+        addClassWithoutSpaces(firstRow, 'divide-x');
+        addClassWithoutSpaces(firstRow, 'divide-y');
+        addClassWithoutSpaces(firstRow, 'divide-gray-200');
+        addClassWithoutSpaces(firstRow, 'rounded-lg');
 
-    // Seleccionar todos los td dentro del primer tr
-    const firstRowTds = firstRow.querySelectorAll('td');
-    firstRowTds.forEach(td => {
-      td.classList.add('px-6', 'text-start', 'py-3', 'text-xs', 'text-white', 'uppercase');
+        // Seleccionar todos los td dentro del primer tr
+        const firstRowTds = firstRow.querySelectorAll('td');
+        firstRowTds.forEach(td => {
+          addClassWithoutSpaces(td, 'px-6');
+          addClassWithoutSpaces(td, 'text-start');
+          addClassWithoutSpaces(td, 'py-3');
+          addClassWithoutSpaces(td, 'text-xs');
+          addClassWithoutSpaces(td, 'text-white');
+          addClassWithoutSpaces(td, 'uppercase');
+        });
+      }
+
+      // Seleccionar los demás tr
+      const tableTRCells = innerDiv2.querySelectorAll('tr:not(:first-child)');
+      tableTRCells.forEach(tr => {
+        addClassWithoutSpaces(tr, 'divide-x');
+        addClassWithoutSpaces(tr, 'divide-y');
+        addClassWithoutSpaces(tr, 'divide-gray-200');
+      });
+
+      // Seleccionar todos los td dentro de la tabla, excepto el primer tr
+      const tableDataCells = innerDiv2.querySelectorAll('tr:not(:first-child) td');
+      tableDataCells.forEach(td => {
+        addClassWithoutSpaces(td, 'text-gray-800');
+        addClassWithoutSpaces(td, 'text-sm');
+        addClassWithoutSpaces(td, 'px-3');
+        addClassWithoutSpaces(td, 'py-2');
+      });
     });
-  }
-
-  //Sleeccionas los demas tr
-  const tableTRCells = innerDiv2.querySelectorAll('tr:not(:first-child)');
-  tableTRCells.forEach(tr => {
-    tr.classList.add('divide-x','divide-y', 'divide-gray-200');
-  });
-
-  // Seleccionar todos los td dentro de la tabla, excepto el primer tr
-  const tableDataCells = innerDiv2.querySelectorAll('tr:not(:first-child) td');
-  tableDataCells.forEach(td => {
-    td.classList.add('text-gray-800', 'text-sm', 'px-3', 'py-2');
-  });
-
-});
-
 
     // Asignar el contenido modificado a la propiedad htmlContent
     this.htmlContent = tempElement.innerHTML;
+
   }
+
+
 
   /* Variables spinner */
   porcentajeEnvio: number = 0;
   mostrarSpinner: boolean = false;
   mensaje = "Guardando...";
   insertContent(): any {
+    this.FormAltaContent.patchValue({
+      htmlContent: this.htmlContent
+    });
     markFormGroupTouched(this.FormAltaContent);
     if (this.FormAltaContent.valid) {
       this.mostrarSpinner = true;
@@ -231,14 +276,14 @@ tables.forEach(table => {
               const decryptedResponse = this.CryptoServiceService.decryptData(encryptedResponse);
               if (decryptedResponse?.resultado?.res) {
                 this.flasher.success(decryptedResponse?.resultado?.data);
-                this.router.navigate(['/details-punto/'+ this.encriptarId(this.id_punto)]);
+                this.router.navigate(['/details-punto/' + this.encriptarId(this.id_punto)]);
               } else {
                 this.mostrarSpinner = false;
                 this.flasher.error(decryptedResponse?.resultado?.data?.data);
               }
               break;
             default:
-          this.mostrarSpinner = false;
+              this.mostrarSpinner = false;
               break;
           }
         },
@@ -252,7 +297,7 @@ tables.forEach(table => {
     }
   }
 
-  encriptarId(id:any){
+  encriptarId(id: any) {
     return this.CryptoServiceService.encodeID(id);
   }
 }

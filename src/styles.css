@@ -321,3 +321,24 @@ table{
 .pointer-events-cursor{
   cursor: pointer !important;
 }
+
+/* Define la clase contenido-lista */
+.contenido-lista {
+  list-style-type: disc; /* Aplica el estilo de viñeta (bullet) a las listas no ordenadas */
+  padding-left: 20px; /* Añade un padding a la izquierda para alinear las viñetas */
+}
+
+/* Aplica el estilo de viñeta a todos los elementos <li> dentro de la lista con la clase contenido-lista */
+.contenido-lista li {
+  position: relative; /* Necesario para posicionar el contenido de la viñeta */
+}
+
+.contenido-link {
+  text-decoration: underline;
+  color: rgba(var(--secondary-color),1) !important;
+}
+
+.contenido-link:hover {
+  text-decoration: underline;
+  color: rgba(var(--secondary-color),0.8) !important;
+}

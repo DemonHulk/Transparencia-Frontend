@@ -23,18 +23,18 @@
         Modificar contenido Estático (Word)
       </li>  </ol>
   </div>
-  
+
   <div class="w-12/12">
     <h3>Modificar contenido</h3>
     <hr class="w-full mb-2 border-hr-color">
   </div>
-  
+
   <form [formGroup]="FormAltaContent" (ngSubmit)="updateContent()">
   <editor apiKey="d83mhcjyadvqq1juq5fieuemnemagcsj2dbz5v6vls8oah8e"
           [init]="{
             language: 'es',
-            plugins: 'link table code',
-            toolbar: 'undo redo | bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat',
+            plugins: 'link table code lists',
+            toolbar: 'undo redo | bold italic underline | bullist | alignleft aligncenter alignright alignjustify | removeformat',
             menubar: 'insert table',
             table_toolbar: 'tabledelete | tableinsertrowbefore tableinsertrowafter tabledeleterow | tableinsertcolbefore tableinsertcolafter tabledeletecol',
             style_formats: [
@@ -43,15 +43,15 @@
             ]
           }" formControlName="htmlContent"
            [ngClass]="{
-            'border-validator-error focus:border-validator-error focus:ring-validator-error': FormAltaContent.get('htmlContent')?.invalid && (FormAltaContent.get('htmlContent')?.dirty || FormAltaContent.get('htmlContent')?.touched)
+            'border-validator-error   focus:border-validator-error focus:ring-validator-error': FormAltaContent.get('htmlContent')?.invalid && (FormAltaContent.get('htmlContent')?.dirty || FormAltaContent.get('htmlContent')?.touched)
             }">
   </editor>
-  
+
     <div *ngIf="FormAltaContent.get('htmlContent')?.invalid && (FormAltaContent.get('htmlContent')?.dirty || FormAltaContent.get('htmlContent')?.touched)">
       <div *ngIf="FormAltaContent.get('htmlContent')?.errors?.['required']" class="text-sm text-validator-error mt-1">Este campo es requerido.</div>
       <div *ngIf="FormAltaContent.get('htmlContent')?.errors?.['minlength']" class="text-sm text-validator-error mt-1">El contenido debe tener al menos 3 caracteres.</div>
     </div>
-  
+
    <!-- Botón de enviar -->
    <div class="sm:col-span-2 flex justify-end py-2">
       <button type="submit" (click)="printHTML(htmlContent)"
@@ -60,7 +60,7 @@
       </button>
     </div>
   </form>
-  
+
   <!-- Visualizacion del contenido en tiempo real -->
     <div class="w-12/12">
       <h4>Previsualización de contenido</h4>
@@ -74,4 +74,3 @@
 [isVisible]="mostrarSpinner"
 [updateText]="mensaje">
 </app-loading-spinner>
-  
