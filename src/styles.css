@@ -107,8 +107,9 @@ h6 {
 
 /* Altura del html */
 html {
-  min-height: 100vh;
+  min-height: 100vh !important;
 }
+
 
 /*Body*/
 body {
@@ -290,8 +291,8 @@ input[type="checkbox"] {
 }
 
 .contenido-prev {
+  max-width: 98vw;
   word-wrap: break-word; /* Permite que las palabras se rompan automáticamente */
-  max-width: auto; /* Establece el ancho máximo automáticamente */
   flex-wrap: wrap; /* Permite que el contenido se ajuste al contenedor */
 }
 
@@ -320,4 +321,25 @@ table{
 
 .pointer-events-cursor{
   cursor: pointer !important;
+}
+
+/* Define la clase contenido-lista */
+.contenido-lista {
+  list-style-type: disc; /* Aplica el estilo de viñeta (bullet) a las listas no ordenadas */
+  padding-left: 20px; /* Añade un padding a la izquierda para alinear las viñetas */
+}
+
+/* Aplica el estilo de viñeta a todos los elementos <li> dentro de la lista con la clase contenido-lista */
+.contenido-lista li {
+  position: relative; /* Necesario para posicionar el contenido de la viñeta */
+}
+
+.contenido-link {
+  text-decoration: underline;
+  color: rgba(var(--secondary-color),1) !important;
+}
+
+.contenido-link:hover {
+  text-decoration: underline;
+  color: rgba(var(--secondary-color),0.8) !important;
 }

@@ -2,7 +2,6 @@ import { Component, Input, OnInit } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { FechaService } from '../../../../services/format/fecha.service';
 import { SharedValuesService } from '../../../../services/shared-values.service';
-import { printHTML } from '../../../../services/api-config';
 import { CryptoServiceService } from '../../../../services/cryptoService/crypto-service.service';
 import { ContenidocrudService } from '../../../../services/crud/contenidocrud.service';
 import { AlertsServiceService } from '../../../../services/alerts/alerts-service.service';
@@ -97,7 +96,4 @@ export class ContenidoItemComponent  implements OnInit {
     });
   }
 
-  convertirHTML(contenido:any){
-   return this.sanitizeHtml(printHTML(contenido));
-  }
 }

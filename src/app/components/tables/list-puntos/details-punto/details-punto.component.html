@@ -1253,11 +1253,11 @@
       </ng-container>
 
       <ng-container *ngIf="tema?.tipo_contenido === 1">
-        <div class="w-12/12">
+        <div class="w-12/12 ">
           <div class="flex flex-col">
             <div class="-m-1.5 overflow-x-auto">
               <div class="p-1.5 min-w-full inline-block align-middle">
-                <div class="border overflow-hidden">
+                <div class="border overflow-hidden ">
                   <table class="min-w-full divide-y divide-gray-200">
                     <thead>
                       <tr>
@@ -1294,7 +1294,7 @@
                 <div class="w-12/12 my-4">
                   <h4 class="text-xl">Contenido del tema</h4>
                 </div>
-                <div class="border border-2 pb-5 p-3 mb-5 border-gray-200 border-dashed rounded-lg">
+                <div class="contenido-prev border border-2 pb-5 p-3 mb-5 border-gray-200 border-dashed rounded-lg">
                   <div class="12/12 text-right" *ngIf="ListContenidoEstatico.length == 0">
                     <button routerLink="/new-word/{{ encriptarId(this.id) }}/{{encriptarId(tema?.id_titulo)}}" type="button"
                       class="py-1 my-1 mx-1 button-secondary px-1 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-primary-color text-white hover:bg-primary-color-90 disabled:opacity-50 disabled:pointer-events-none">
@@ -1554,7 +1554,7 @@
                   </div>
                 </div>
                 <!-- Parte para mostrar el contenido estatico -->
-                <div class="border border-2 pb-5 p-3 mb-5 border-gray-200 border-dashed rounded-lg" *ngIf="ListContenidoEstatico.length > 0">
+                <div class="contenido-prev p-4 border-2 pb-5 border-gray-200 border-dashed rounded-lg" *ngIf="ListContenidoEstatico.length > 0">
                   <div class="flex justify-between items-center w-full my-4">
                     <h4 class="text-xl">Visualización del Contenido</h4>
                     <button
@@ -1565,14 +1565,7 @@
                       Modificar contenido
                     </button>
                   </div>
-                  <div class="flex flex-col">
-                    <div class="-m-1.5 overflow-x-auto">
-                      <div class="p-1.5 min-w-full inline-block align-middle">
-                        <div class="border overflow-hidden p-3">
-                          <div [innerHTML]="getSafeHtml(this.htmlContent)"></div>
-                        </div>
-                      </div>
-                    </div>
+                  <div class="contenido-prev" [innerHTML]="getSafeHtml(this.htmlContent)">
                   </div>
                 </div>
               </div>

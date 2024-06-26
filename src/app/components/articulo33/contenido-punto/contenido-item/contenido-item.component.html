@@ -149,14 +149,12 @@
       Ultima actualización: {{ addFormattedDate(titulo.fecha_actualizado) }}
     </div>
     <div class="flex flex-col">
-      <div class="-m-1.5 overflow-x-auto">
+      <div class="">
         <div *ngIf="titulo.contenido && titulo.contenido.length > 0 && titulo.link == false || titulo?.visualizar">
           <div *ngFor="let contenido of titulo.contenido">
-            <div [innerHTML]="convertirHTML(contenido.contenido)"></div>
-            <!-- Aquí puedes mostrar otros campos de contenido si es necesario -->
+            <div [innerHTML]="sanitizeHtml(contenido.contenido)"></div>
           </div>
         </div>
-
         <div
           *ngIf="titulo.contenido && titulo.contenido.length === 0 && titulo.link == false || titulo.contenido && titulo.contenido.length === 0 && titulo?.visualizar ">
           <div class="min-h-60 flex flex-col bg-white rounded-xl">
