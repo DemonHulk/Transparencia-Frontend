@@ -72,7 +72,7 @@
       </ng-container>
     </div>
     <div
-      class="w-full sm:9/12 lg:w-12/12 mx-0 my-2 max-h-[85vh] overflow-y-auto border-2 pb-5 border-gray-200 border-dashed rounded-lg">
+      class="w-full sm:9/12 lg:w-12/12 mx-0 my-2 overflow-y-auto border-2 pb-5 border-gray-200 border-dashed contenido-prev rounded-lg">
       <ng-container *ngIf="loadingCompleted == false; else content">
         <div class="p-4">
           <app-contenido-punto-skeleton></app-contenido-punto-skeleton>
@@ -103,7 +103,7 @@
       </svg>
     </button>
   </div>
-  <div class="w-full 12/12 my-2 overflow-y-auto max-h-[85vh]">
+  <div class="w-full 12/12 my-2 overflow-y-auto">
     <div class="flex flex-col">
       <button *ngFor="let punto of ListPuntos" type="button" title="{{ punto?.orden_punto }}.- {{punto?.nombre_punto}}"
         (click)="cambiarPunto(punto?.id_punto)"

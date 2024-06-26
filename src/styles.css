@@ -107,8 +107,9 @@ h6 {
 
 /* Altura del html */
 html {
-  min-height: 100vh;
+  min-height: 100vh !important;
 }
+
 
 /*Body*/
 body {
@@ -290,8 +291,8 @@ input[type="checkbox"] {
 }
 
 .contenido-prev {
+  max-width: 98vw;
   word-wrap: break-word; /* Permite que las palabras se rompan automáticamente */
-  max-width: auto; /* Establece el ancho máximo automáticamente */
   flex-wrap: wrap; /* Permite que el contenido se ajuste al contenedor */
 }
 
