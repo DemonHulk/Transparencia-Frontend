@@ -164,7 +164,6 @@ export class NewSubtemaComponent {
     this.TituloscrudService.GetOneTituloService(encryptedID).subscribe(
       respuesta => {
         this.DataTema = this.encodeService.decryptData(respuesta)?.resultado?.data || [];
-        console.log(this.DataTema);
         this.FormAltaSubtema.patchValue({
           titulo: this.DataTema.id_titulo,
           punto: this.DataTema.id_punto
