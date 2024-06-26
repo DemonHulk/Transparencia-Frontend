@@ -237,9 +237,21 @@
     Agregar subtema
   </button>
   </div>
+
+  <div *ngIf="ListSubtema.length === 0" class="flex flex-auto flex-col justify-center items-center p-4 md:p-5 border h-72 my-4">
+    <svg class="size-10 text-gray-500 dark:text-neutral-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="22" x2="2" y1="12" y2="12"></line>
+      <path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"></path>
+      <line x1="6" x2="6.01" y1="16" y2="16"></line>
+      <line x1="10" x2="10.01" y1="16" y2="16"></line>
+    </svg>
+    <p class="mt-2 text-sm text-gray-800 dark:text-neutral-300">
+      Sin contenido para mostrar
+    </p>
+  </div>
 <div *ngFor="let Subtema of ListSubtema" class="border border-2 pb-5 p-3 mb-5 border-gray-200 border-dashed rounded-lg">
   <div class="hs-accordion-group">
-    <div class="hs-accordion" id="hs-basic-with-arrow-heading-one">
+    <div class="hs-accordion active" id="hs-basic-with-arrow-heading-one">
       <button class="hs-accordion-toggle hs-accordion-active:text-primary-color-90 py-3 inline-flex items-center gap-x-3 w-full font-semibold text-start text-gray-800 hover:text-gray-500 rounded-lg disabled:opacity-50 disabled:pointer-events-none" aria-controls="hs-basic-with-arrow-collapse-one">
         <svg class="hs-accordion-active:hidden block size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="m6 9 6 6 6-6"></path>
@@ -290,7 +302,7 @@
             <tbody class="divide-y divide-gray-200">
               <tr>
                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">
-                  <label for="trimestre" class="font-poppins flex items-center">
+                  <label for="trimestre" class="font-poppins flex items-center" *ngIf="Tema.tipo_contenido == 2">
                     Dinámico
                     <div class="hs-tooltip [--trigger:hover] sm:[--placement:right] inline-block ml-2">
                       <i class="fa-solid fa-question text-gray-500"></i>
@@ -299,6 +311,23 @@
                           <li>
                             <div class="inline-flex items-center gap-x-3 text-sm text-gray-800 text-wrap">
                               <p>En nuestro sistema, esto sucede cuando los usuarios suben archivos PDF. Cada vez que alguien sube un nuevo archivo, este se añade y aparece automáticamente en el sistema, sin que tú tengas que hacer nada para que esto ocurra.</p>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </label>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800" *ngIf="Tema.tipo_contenido == 1">
+                  <label for="trimestre" class="font-poppins flex items-center">
+                    Estático
+                    <div class="hs-tooltip [--trigger:hover] sm:[--placement:right] inline-block ml-2">
+                      <i class="fa-solid fa-question text-gray-500"></i>
+                      <div class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible hidden opacity-0 transition-opacity absolute invisible z-10 max-w-xs w-full bg-white border border-gray-100 text-start rounded-xl shadow-md after:absolute after:top-0 after:-start-4 after:w-4 after:h-full" role="tooltip">
+                        <ul class="py-3 px-4 space-y-1">
+                          <li>
+                            <div class="inline-flex items-center gap-x-3 text-sm text-gray-800 text-wrap">
+                              <p>El contenido estático es el que tú mismo puedes crear y modificar manualmente en el sistema. Piensa en él como si estuvieras usando un programa parecido a Word. Puedes añadir texto, imágenes y otros elementos a tu documento. Una vez que lo guardas, el contenido no cambiará a menos que tú decidas editarlo nuevamente.</p>
                             </div>
                           </li>
                         </ul>
