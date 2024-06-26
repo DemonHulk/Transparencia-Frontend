@@ -10,6 +10,10 @@ export class TituloscrudService {
 
   constructor(private clientHttp:HttpClient) { }
 
+    /**extrae los datos del titulo*/
+    GetOneTituloService(id:any): Observable<any> {
+      return this.clientHttp.get(API_URL+"titulo/" + id, { responseType: 'text' })
+    }
 
     /**Inserta un titulo dentro de un punto que viene en el formulario*/
   InsertTitulosService(formulario: any): Observable<any> {
