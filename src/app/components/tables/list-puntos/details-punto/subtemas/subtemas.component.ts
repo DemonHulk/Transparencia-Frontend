@@ -45,6 +45,7 @@ export class SubtemasComponent {
      this.idTema = this.activateRoute.snapshot.paramMap.get("tema");
      this.idTemaEncrypt = this.idTema;
 
+
      //Desencriptar la ID
      this.idPunto = this.encodeService.decodeID(this.idPunto);
      this.idTema = this.encodeService.decodeID(this.idTema);
@@ -64,7 +65,6 @@ export class SubtemasComponent {
 
     this.GetTitulosPunto(this.idTema);
     this.GetSubtemasDelTemaService(this.idTema);
-
   }
 
 
@@ -106,7 +106,6 @@ export class SubtemasComponent {
 
   /** Desactiva un Subtema */
   DeleteSubtema(id: any) {
-    console.log(id)
     this.flasher.eliminar().then((confirmado) => {
       if (confirmado) {
       this.sharedService.setLoading(true);
