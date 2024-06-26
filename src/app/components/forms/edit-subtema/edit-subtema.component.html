@@ -121,3 +121,10 @@
     </div>
   </form>
 </div>
+
+<app-loading-spinner
+  [fillPercentage]="porcentajeEnvio"
+  [text]="'UTC'"
+  [isVisible]="mostrarSpinner"
+  [updateText]="mensaje">
+</app-loading-spinner>
