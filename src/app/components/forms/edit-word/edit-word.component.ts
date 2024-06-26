@@ -9,6 +9,7 @@ import { HttpEvent, HttpEventType } from '@angular/common/http';
 import { AlertsServiceService } from '../../../services/alerts/alerts-service.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FechaService } from '../../../services/format/fecha.service';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-edit-word',
@@ -31,7 +32,8 @@ export class EditWordComponent {
     private FechaService: FechaService,
     private flasher: AlertsServiceService,
     private el: ElementRef,
-    private router: Router, // Inyecta el Router
+    private router: Router,
+    private sanitizer: DomSanitizer
   ) {
     //Tomas la id de la URL
     this.id_contenido_estatico = this.activateRoute.snapshot.paramMap.get("contenido");
@@ -127,6 +129,10 @@ ngAfterViewChecked() {
       });
     }
   }
+}
+
+getSafeHtml(html: string): SafeHtml {
+  return this.sanitizer.bypassSecurityTrustHtml(html);
 }
 
 
