@@ -251,9 +251,9 @@
   </div>
   <div *ngFor="let Subtema of ListSubtema;let i = index" [ngClass]="{'active': isActive(i)}" type="button"
   class="border border-2 pb-5 p-3 mb-5 border-gray-200 border-dashed rounded-lg">
-    <div class="hs-accordion-group active">
-      <div class="hs-accordion active" id="hs-basic-with-arrow-heading-one">
-        <button class="hs-accordion-toggle hs-accordion-active:text-primary-color-90 py-3 inline-flex items-center gap-x-3 w-full font-semibold text-start text-gray-800 hover:text-gray-500 rounded-lg disabled:opacity-50 disabled:pointer-events-none" aria-controls="hs-basic-with-arrow-collapse-one" (click)="onTemaSeleccionado(Subtema?.id_titulo, Subtema?.tipo_contenido, i)">
+    <div class="hs-accordion-group ">
+      <div class="hs-accordion " id="hs-basic-with-arrow-heading-{{i}}">
+        <button class="hs-accordion-toggle hs-accordion-active:text-primary-color-90 py-3 inline-flex items-center gap-x-3 w-full font-semibold text-start text-gray-800 hover:text-gray-500 rounded-lg disabled:opacity-50 disabled:pointer-events-none" aria-controls="hs-basic-with-arrow-collapse-{{i}}" (click)="onTemaSeleccionado(Subtema?.id_titulo, Subtema?.tipo_contenido, i)">
           <svg class="hs-accordion-active:hidden block size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="m6 9 6 6 6-6"></path>
           </svg>
@@ -262,7 +262,7 @@
           </svg>
           {{Subtema?.nombre_titulo}}
         </button>
-        <div id="hs-basic-with-arrow-collapse-one" class="hs-accordion-content w-full overflow-hidden transition-[height] duration-300" aria-labelledby="hs-basic-with-arrow-heading-one">
+        <div id="hs-basic-with-arrow-collapse-{{i}}" class="hs-accordion-content hidden full overflow-hidden transition-[height] duration-300" aria-labelledby="hs-basic-with-arrow-heading-{{i}}">
           <div class="12/12 text-right">
 
             <button type="button" routerLink="/new-subtema/idsubtema"
