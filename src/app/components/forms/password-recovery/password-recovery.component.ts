@@ -54,7 +54,7 @@ export class PasswordRecoveryComponent {
   /* Variables spinner */
   porcentajeEnvio: number = 0;
   mostrarSpinner: boolean = false;
-  mensaje = "Guardando...";
+  mensaje = "Actualizando...";
   recuperarPassword(): void {
     markFormGroupTouched(this.FormRecuperarPassword);
 

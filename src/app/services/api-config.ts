@@ -266,7 +266,7 @@ export function validarTitulo(): ValidatorFn {
     // Limpiar y formatear el texto según las reglas necesarias
     let textoFormateado = valor
       .replace(/ {2,}/g, " ") // Reemplazar varios espacios en blanco seguidos por uno solo
-      .replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ0-9()\-,. ]+/g, "") // Permitir letras, números, paréntesis, guiones, comas y puntos
+      .replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ0-9()\-, ]+/g, "") // Permitir letras, números, paréntesis, guiones, comas y puntos
       .replace(/^[^a-zA-ZáéíóúÁÉÍÓÚñÑ0-9()\-,. ]+|[^a-zA-ZáéíóúÁÉÍÓÚñÑ0-9()\-,. ]+$/g, ""); // Eliminar caracteres no permitidos al principio o al final
 
       textoFormateado = capitalizeWords(textoFormateado);

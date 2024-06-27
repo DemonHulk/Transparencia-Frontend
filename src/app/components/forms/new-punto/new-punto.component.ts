@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { AlertsServiceService } from '../../../services/alerts/alerts-service.service';
 import { CryptoServiceService } from '../../../services/cryptoService/crypto-service.service';
 import { PuntocrudService } from '../../../services/crud/puntocrud.service';
-import { Area,  markFormGroupTouched, validarNombre } from '../../../services/api-config';
+import { Area,  markFormGroupTouched, validarTitulo } from '../../../services/api-config';
 import { AreaCrudService } from '../../../services/crud/areacrud.service';
 import { HttpEvent, HttpEventType } from '@angular/common/http';
 
@@ -34,7 +34,7 @@ export class NewPuntoComponent {
     this.FormAltaPunto = this.formulario.group({
       nombrePunto: ['',
         [
-          validarNombre(true), //Validación personalizada
+          validarTitulo(), //Validación personalizada
           Validators.required,
           Validators.minLength(5),
           Validators.maxLength(100)
