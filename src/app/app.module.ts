@@ -53,6 +53,9 @@ import { EditWordComponent } from './components/forms/edit-word/edit-word.compon
 import { ContenidoItemComponent } from './components/articulo33/contenido-punto/contenido-item/contenido-item.component';
 import { ContenidoPuntoSkeletonComponent } from './components/skeleton/contenido-punto-skeleton/contenido-punto-skeleton.component';
 import { SubtemasComponent } from './components/tables/list-puntos/details-punto/subtemas/subtemas.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { AdministrarOrdenComponent } from './components/tables/list-puntos/administrar-orden/administrar-orden.component';
+
 
 @NgModule({
   declarations: [
@@ -98,6 +101,7 @@ import { SubtemasComponent } from './components/tables/list-puntos/details-punto
     ContenidoItemComponent,
     ContenidoPuntoSkeletonComponent,
     SubtemasComponent,
+    AdministrarOrdenComponent,
 
   ],
   imports: [
@@ -112,7 +116,8 @@ import { SubtemasComponent } from './components/tables/list-puntos/details-punto
     InputTextModule,
     PaginatorModule,
     OverlayModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    DragDropModule
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -6,6 +6,7 @@ import { Punto, TooltipManager } from '../../../services/api-config';
 import { CryptoServiceService } from '../../../services/cryptoService/crypto-service.service';
 import { FechaService } from '../../../services/format/fecha.service';
 import { AlertsServiceService } from '../../../services/alerts/alerts-service.service';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-list-puntos',
@@ -189,4 +190,5 @@ export class ListPuntosComponent {
       this.sesionActiva = false;
     }
   }
+
 }
