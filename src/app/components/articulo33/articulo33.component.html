@@ -44,7 +44,7 @@
   </div>
 
   <div class="flex flex-col sm:flex-row">
-    <div class="w-full sm:w-4 md:w-3/12 lg:w-3/12 my-2 lista-puntos max-h-[85vh] overflow-y-auto">
+    <div class="w-full sm:w-4 md:w-3/12 lg:w-3/12 my-2 lista-puntos overflow-y-auto">
       <div class="flex flex-col">
         <button *ngFor="let punto of ListPuntos" type="button"
           title="{{ punto?.orden_punto }}.- {{punto?.nombre_punto}}" (click)="cambiarPunto(punto?.id_punto)"
