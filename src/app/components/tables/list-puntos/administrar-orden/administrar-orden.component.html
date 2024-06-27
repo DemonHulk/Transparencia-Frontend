@@ -19,7 +19,7 @@
   <h3 class="text-2xl">Ordenar puntos</h3>
 </div>
 <div cdkDropList (cdkDropListDropped)="drop($event)">
-  <div *ngFor="let punto of ListActivePuntos" cdkDrag>
+  <div *ngFor="let punto of ListActivePuntos" cdkDrag class="border rounded-xl shadow-sm p-6 my-2 hover:border-secondary-color hover:border-secondary-color hover:ring-secondary-color">
     Orden: {{punto.orden_punto}}.- {{punto.nombre_punto}}
   </div>
 </div>
