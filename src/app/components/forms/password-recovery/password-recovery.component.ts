@@ -1,20 +1,20 @@
 import { Component } from '@angular/core';
+import { HttpEvent, HttpEventType } from '@angular/common/http';
+import { markFormGroupTouched, validarCorreoUTDelacosta, validarTelefono } from '../../../services/api-config';
+import { CryptoServiceService } from '../../../services/cryptoService/crypto-service.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SharedValuesService } from '../../../services/shared-values.service';
 import { Router } from '@angular/router';
 import { AlertsServiceService } from '../../../services/alerts/alerts-service.service';
-import { CryptoServiceService } from '../../../services/cryptoService/crypto-service.service';
-import { markFormGroupTouched, validarTelefono } from '../../../services/api-config';
-import { EjerciciocrudService } from '../../../services/crud/ejerciciocrud.service';
-import { HttpEvent, HttpEventType } from '@angular/common/http';
+import { RecoveryPasswordService } from '../../../services/login/recovery-password.service';
 
 @Component({
-  selector: 'app-new-ejercicio',
-  templateUrl: './new-ejercicio.component.html',
-  styleUrl: './new-ejercicio.component.css'
+  selector: 'app-password-recovery',
+  templateUrl: './password-recovery.component.html',
+  styleUrl: './password-recovery.component.css'
 })
-export class NewEjercicioComponent {
-  FormAltaEjercicio:FormGroup;
+export class PasswordRecoveryComponent {
+  FormRecuperarPassword:FormGroup;
 
   constructor(
     private sharedService: SharedValuesService,
@@ -22,15 +22,15 @@ export class NewEjercicioComponent {
     private router: Router, // Inyecta el Router
     private flasher: AlertsServiceService,
     private CryptoServiceService: CryptoServiceService,
-    private EjercicioCrudServuce: EjerciciocrudService
+    private RecoveryPasswordService: RecoveryPasswordService
   ) {
-    this.FormAltaEjercicio = this.formulario.group({
-      ejercicio: ['',
+    this.FormRecuperarPassword = this.formulario.group({
+      correo: ['',
         [
-          validarTelefono(), //Validación personalizada
+          validarCorreoUTDelacosta(), //Validación personalizada
           Validators.required,
           Validators.minLength(4),
-          Validators.maxLength(4)
+          Validators.maxLength(100),
         ],
       ]
     });
@@ -49,25 +49,25 @@ export class NewEjercicioComponent {
        * @param {string} newTitle - El nuevo título a establecer.
        * @memberof SharedValuesService
        */
-      this.sharedService.changeTitle('Registrar un nuevo ejercicio');
+      this.sharedService.changeTitle('Recuperar Contraseña');
   }
   /* Variables spinner */
   porcentajeEnvio: number = 0;
   mostrarSpinner: boolean = false;
   mensaje = "Guardando...";
-  SaveEjercicio(): void {
-    markFormGroupTouched(this.FormAltaEjercicio);
+  recuperarPassword(): void {
+    markFormGroupTouched(this.FormRecuperarPassword);
 
-    if (this.FormAltaEjercicio.valid) {
+    if (this.FormRecuperarPassword.valid) {
       this.mostrarSpinner = true; // Mostrar spinner de carga
 
-      const encryptedData = this.CryptoServiceService.encryptData(JSON.stringify(this.FormAltaEjercicio.value));
+      const encryptedData = this.CryptoServiceService.encryptData(JSON.stringify(this.FormRecuperarPassword.value));
 
       const data = {
         data: encryptedData
       };
 
-      this.EjercicioCrudServuce.InsertEjercicioService(data).subscribe(
+      this.RecoveryPasswordService.recuperarPassword(data).subscribe(
         (event: HttpEvent<any>) => {
           switch (event.type) {
             case HttpEventType.Sent:
@@ -84,7 +84,7 @@ export class NewEjercicioComponent {
               const decryptedResponse = this.CryptoServiceService.decryptData(encryptedResponse);
               if (decryptedResponse?.resultado?.res) {
                 this.flasher.success(decryptedResponse?.resultado?.data);
-                this.router.navigate(['/ejercicios']);
+                this.router.navigate(['/login']);
               } else {
                 this.flasher.error(decryptedResponse?.resultado?.data || 'No se recibió una respuesta válida');
               }
@@ -92,13 +92,13 @@ export class NewEjercicioComponent {
               break;
             default:
               this.mostrarSpinner = false;
-              this.flasher.error("Hubo un error, Intente más tarde o notifique al soporte técnico.");
+              this.flasher.error("Hubo un error, Intente más tarde o notifique al soporte técnico primero.");
               break;
           }
         },
         error => {
           this.mostrarSpinner = false; // Ocultar spinner en caso de error
-          this.flasher.error("Hubo un error, Intente más tarde o notifique al soporte técnico.");
+          this.flasher.error("Hubo un error, Intente más tarde o notifique al soporte técnico segundo.");
         }
       );
     } else {
@@ -106,4 +106,3 @@ export class NewEjercicioComponent {
     }
   }
 }
-

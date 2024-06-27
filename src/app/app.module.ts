@@ -55,6 +55,7 @@ import { ContenidoPuntoSkeletonComponent } from './components/skeleton/contenido
 import { SubtemasComponent } from './components/tables/list-puntos/details-punto/subtemas/subtemas.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { AdministrarOrdenComponent } from './components/tables/list-puntos/administrar-orden/administrar-orden.component';
+import { PasswordRecoveryComponent } from './components/forms/password-recovery/password-recovery.component';
 
 
 @NgModule({
@@ -102,7 +103,7 @@ import { AdministrarOrdenComponent } from './components/tables/list-puntos/admin
     ContenidoPuntoSkeletonComponent,
     SubtemasComponent,
     AdministrarOrdenComponent,
-
+    PasswordRecoveryComponent,
   ],
   imports: [
     BrowserModule,
