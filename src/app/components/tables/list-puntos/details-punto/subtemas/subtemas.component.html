@@ -254,7 +254,7 @@
 
   <div class="w-full bg-white rounded-lg shadow-md ">
   <div class="hs-accordion-group" >
-    <div class="hs-accordion border border-2 pb-5 p-3 mb-5 border-gray-200 border-dashed rounded-lg" id="hs-basic-heading-{{i}}" *ngFor="let Subtema of ListSubtema; let i = index">
+    <div class="hs-accordion  border-2 pb-5 p-3 mb-5 border-gray-200 border-dashed rounded-lg" id="hs-basic-heading-{{i}}" *ngFor="let Subtema of ListSubtema; let i = index">
       <button class="hs-accordion-toggle hs-accordion-active:text-primary-color-90 py-3 inline-flex items-center gap-x-3 w-full font-semibold text-start text-gray-800 hover:text-gray-500 rounded-lg disabled:opacity-50 disabled:pointer-events-none" aria-controls="hs-basic-collapse-1" (click)="onTemaSeleccionado(Subtema?.id_titulo, Subtema?.tipo_contenido, i)">
         <svg class="hs-accordion-active:hidden block size-4" xmlns="http://www.w3.org/2000/svg" width="24"
           height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -336,7 +336,7 @@
                     <div class="w-12/12 my-4">
                       <h4 class="text-xl">Contenido del tema</h4>
                     </div>
-                    <div class="contenido-prev border border-2 pb-5 p-3 mb-5 border-gray-200 border-dashed rounded-lg">
+                    <div class="contenido-prev  border-2 pb-5 p-3 mb-5 border-gray-200 border-dashed rounded-lg">
                       <div class="12/12 text-right" *ngIf="ListContenidoEstatico.length == 0">
                         <button routerLink="/new-word/{{ encriptarId(this.Subtema?.id_punto) }}/{{encriptarId(Subtema?.id_titulo)}}" type="button"
                           class="py-1 my-1 mx-1 button-secondary px-1 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-primary-color text-white hover:bg-primary-color-90 disabled:opacity-50 disabled:pointer-events-none">
@@ -658,7 +658,7 @@
                     <div class="w-12/12 my-4">
                       <h4 class="text-xl">Contenido del tema</h4>
                     </div>
-                    <div class="border border-2 pb-5 p-3 mb-5 border-gray-200 border-dashed rounded-lg">
+                    <div class=" border-2 pb-5 p-3 mb-5 border-gray-200 border-dashed rounded-lg">
                       <div class="rounded-sm border border-stroke bg-white px-5 pb-2.5 pt-6 shadow-default   sm:px-7.5 xl:pb-1">
                         <!-- Inicio del codigo de la tabla contenido dinamico -->
                         <div class="max-w-full">
