@@ -271,6 +271,23 @@
               </button>
             </div>
           </div>
+          <div
+            class="flex flex-col  text-right w-full"
+            *ngIf="ListActivePuntos && ListActivePuntos.length > 0"
+          >
+
+            <div class="w-full">
+              <button
+                routerLink="/administrar-orden-puntos"
+                type="button"
+                *ngIf="administrador"
+                class="py-3 my-2 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent button-secondary text-white hover:bg-primary-color-90 disabled:opacity-50 disabled:pointer-events-none"
+              >
+              <i class="fa-solid fa-gear"></i>
+                Administrar orden puntos
+              </button>
+            </div>
+          </div>
         </div>
         <div class="flex flex-col mb-5">
           <div class="-m-1.5 overflow-x-auto">
@@ -814,5 +831,3 @@
   </div>
 </div>
 </ng-template>
-
-

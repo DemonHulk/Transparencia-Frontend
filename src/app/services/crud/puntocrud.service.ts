@@ -48,4 +48,12 @@ export class PuntocrudService {
     GetPuntosUserService(id:any){
       return this.clientHttp.get(API_URL+"puntoUser/"+ id, { responseType: 'text' })
     }
+
+    UpdateOrderService(data:any): Observable<any> {
+      const req = new HttpRequest('POST',API_URL + "orderPuntos", data, {
+        reportProgress: true,
+        responseType: 'text'
+      });
+      return this.clientHttp.request(req);
+    }
 }

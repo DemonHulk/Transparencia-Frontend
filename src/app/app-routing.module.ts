@@ -33,6 +33,7 @@ import { NewEjercicioComponent } from './components/forms/new-ejercicio/new-ejer
 import { EditEjercicioComponent } from './components/forms/edit-ejercicio/edit-ejercicio.component';
 import { EditWordComponent } from './components/forms/edit-word/edit-word.component';
 import { SubtemasComponent } from './components/tables/list-puntos/details-punto/subtemas/subtemas.component';
+import { AdministrarOrdenComponent } from './components/tables/list-puntos/administrar-orden/administrar-orden.component';
 
 
 // data indicamos que area puede entrar a las rutas
@@ -71,6 +72,7 @@ const routes: Routes = [
   {path: 'new-word/:punto/:tema', component:NewWordComponent, canActivate: [authGuardGuard], data: { openToAll: true }},
   {path: 'edit-word/:punto/:contenido', component:EditWordComponent, canActivate: [authGuardGuard], data: { openToAll: true } },
   {path: 'administrar-subtemas/:punto/:tema', component:SubtemasComponent, canActivate: [authGuardGuard], data: { openToAll: true } },
+  {path: 'administrar-orden-puntos', component:AdministrarOrdenComponent, canActivate: [authGuardGuard], data: { allowedAreas: ['1'] }},
 
   {path: '**', component:PageNotFoundComponent},
 ];
