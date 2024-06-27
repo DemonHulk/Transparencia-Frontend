@@ -236,7 +236,7 @@
                     type="text"
                     placeholder="Ingresa tu busqueda"
                     value=""
-                    data-hs-combo-box-input="" 
+                    data-hs-combo-box-input=""
                   />
                 </div>
 
@@ -283,7 +283,7 @@
                   [rows]="5"
                   currentPageReportTemplate="Mostrando {first} al {last} de {totalRecords} registros"
                   [showCurrentPageReport]="true"
-                  [globalFilterFields]="['nombre_punto', 'fecha_string']"
+                  [globalFilterFields]="['orden_punto','nombre_punto', 'fecha_string']"
                   [tableStyleClass]="'min-w-full divide-y'"
                   [resizableColumns]="true"
                 >
@@ -291,7 +291,16 @@
                     <tr
                       class="divide-x divide-gray-200 bg-table-header-color rounded-lg"
                     >
-                      <th
+                    <th
+                        scope="col"
+                        class="px-6 py-3 text-start text-xs text-white uppercase bg-table-header-color"
+                        pSortableColumn="orden_punto"
+                      >
+                        <div class="flex">
+                          Orden <p-sortIcon field="orden_punto"></p-sortIcon>
+                        </div>
+                      </th>
+                    <th
                         scope="col"
                         class="px-6 py-3 text-start text-xs text-white uppercase bg-table-header-color"
                         pSortableColumn="nombre_punto"
@@ -322,7 +331,12 @@
                     <tr class="divide-x divide-gray-200">
                       <td class="px-3 py-2 text-sm text-gray-800">
                         <p class="font-medium text-black">
-                          {{ punto.nombre_punto }}
+                         {{punto.orden_punto}}
+                        </p>
+                      </td>
+                      <td class="px-3 py-2 text-sm text-gray-800">
+                        <p class="font-medium text-black">
+                         {{ punto.nombre_punto }}
                         </p>
                       </td>
                       <td class="px-3 py-2 text-sm text-gray-800">
