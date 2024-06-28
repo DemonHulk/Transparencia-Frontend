@@ -34,6 +34,7 @@ import { EditWordComponent } from './components/forms/edit-word/edit-word.compon
 import { SubtemasComponent } from './components/tables/list-puntos/details-punto/subtemas/subtemas.component';
 import { PasswordRecoveryComponent } from './components/forms/password-recovery/password-recovery.component';
 import { AdministrarOrdenComponent } from './components/tables/list-puntos/administrar-orden/administrar-orden.component';
+import { AcercaDeComponent } from './components/acerca-de/acerca-de.component';
 
 
 // data indicamos que area puede entrar a las rutas
@@ -71,8 +72,9 @@ const routes: Routes = [
   {path: 'new-word/:punto/:tema', component:NewWordComponent, canActivate: [authGuardGuard], data: { openToAll: true }},
   {path: 'edit-word/:punto/:contenido', component:EditWordComponent, canActivate: [authGuardGuard], data: { openToAll: true } },
   {path: 'administrar-subtemas/:punto/:tema', component:SubtemasComponent, canActivate: [authGuardGuard], data: { openToAll: true } },
-  {path: 'password-recovery', component:PasswordRecoveryComponent},
+  {path: 'acerca-de', component:AcercaDeComponent},
   {path: 'administrar-orden-puntos', component:AdministrarOrdenComponent, canActivate: [authGuardGuard], data: { allowedAreas: ['1'] }},
+  
 
   {path: '**', component:PageNotFoundComponent},
 ];
