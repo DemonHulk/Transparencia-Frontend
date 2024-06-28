@@ -53,5 +53,9 @@ export class TituloscrudService {
     return this.clientHttp.get(API_URL + "titulosCompletos/" + id, { responseType: 'text' });
   }
 
+  GetSubtitulosByTitulo(id: any): Observable<any> {
+    return this.clientHttp.get(API_URL + "subtitulosPortPunto/" + id, { responseType: 'text' });
+  }
+
 
 }

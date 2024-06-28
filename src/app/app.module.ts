@@ -56,6 +56,8 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { AdministrarOrdenComponent } from './components/tables/list-puntos/administrar-orden/administrar-orden.component';
 import { PasswordRecoveryComponent } from './components/forms/password-recovery/password-recovery.component';
 import { AcercaDeComponent } from './components/acerca-de/acerca-de.component';
+import { ContenidoSubtemaComponent } from './components/tables/list-puntos/details-punto/subtemas/contenido-subtema/contenido-subtema.component';
+import { SubtemaItemComponent } from './components/tables/list-puntos/details-punto/subtemas/contenido-subtema/subtema-item/subtema-item.component';
 
 
 @NgModule({
@@ -104,6 +106,8 @@ import { AcercaDeComponent } from './components/acerca-de/acerca-de.component';
     AdministrarOrdenComponent,
     PasswordRecoveryComponent,
     AcercaDeComponent,
+    ContenidoSubtemaComponent,
+    SubtemaItemComponent,
   ],
   imports: [
     BrowserModule,
