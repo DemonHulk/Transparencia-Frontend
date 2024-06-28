@@ -1,10 +1,12 @@
 import { Component, ElementRef } from '@angular/core';
 import { SharedValuesService } from '../../services/shared-values.service';
-import { Punto, Titulo } from '../../services/api-config';
+import { Punto, Titulo, validarTitulo } from '../../services/api-config';
 import { PuntocrudService } from '../../services/crud/puntocrud.service';
 import { CryptoServiceService } from '../../services/cryptoService/crypto-service.service';
 import { FechaService } from '../../services/format/fecha.service';
-import { Subscription } from 'rxjs';
+import { Subscription, debounceTime, switchMap } from 'rxjs';
+import { FormControl } from '@angular/forms';
+import { ContenidocrudService } from '../../services/crud/contenidocrud.service';
 
 @Component({
   selector: 'app-articulo33',
@@ -16,6 +18,7 @@ export class Articulo33Component {
   constructor(public sharedService: SharedValuesService,
     private PuntocrudService: PuntocrudService,
     private encodeService: CryptoServiceService,
+    private ContenidocrudService: ContenidocrudService,
     private el: ElementRef,
     private FechaService: FechaService,
   ) {
@@ -28,6 +31,11 @@ export class Articulo33Component {
  * @returns {void}
  */
   private subscription!: Subscription;
+  searchControl = new FormControl('', [
+    validarTitulo()
+  ]);
+  results: any[] = [];
+  showDropdown = false;
 
 ngOnInit(): void {
     /**
@@ -44,6 +52,29 @@ ngOnInit(): void {
         this.puntoSeleccionado = data;
       }
     });
+
+    this.searchControl.valueChanges.pipe(
+      debounceTime(300) // Retraso de 300ms para evitar peticiones en cada tecla
+  ).subscribe(value => {
+      if (value && value.trim().length > 0) {
+          this.ContenidocrudService.searchPDF({data: this.encodeService.encryptData(JSON.stringify(value))})
+              .subscribe(results => {
+                  if (results.body != undefined) {
+                      const dataDecrypt = this.encodeService.decryptData(results.body);
+                      if (dataDecrypt.estado && dataDecrypt.resultado.data.length > 0) {
+                          this.results = dataDecrypt.resultado.data;
+                          this.showDropdown = true; // Mostrar el dropdown
+                      } else {
+                          this.results = [];
+                          this.showDropdown = false; // Ocultar el dropdown
+                      }
+                  }
+              });
+      } else {
+          this.results = [];
+          this.showDropdown = false; // Ocultar el dropdown si el valor no es válido
+      }
+  });
 }
 
 
@@ -52,9 +83,28 @@ ngOnInit(): void {
   cambiarPunto(punto: any) {
     if (punto > 0 && !this.solicitudActiva) { // Verificar que el punto sea válido y no haya solicitud activa
       this.puntoSeleccionado = punto;
+      window.scroll(0,0);
       this.cambiarContenidoPunto();
+      this.buscar = null;
+      this.buscarContenido();
     }
   }
+
+  buscar:any = null;
+  cambiarPuntoBusqueda(punto:any, titulo:any){
+    this.buscar = null;
+    this.buscarContenido();
+    setTimeout(() => {
+      if (punto > 0 && !this.solicitudActiva && titulo != '') { // Verificar que el punto sea válido y no haya solicitud activa
+        this.puntoSeleccionado = punto;
+        this.buscar = titulo;
+        this.buscarContenido();
+        this.cambiarContenidoPunto();
+      }
+    }, 100);
+  }
+
+
 
   loadingCompleted: boolean = false;
   solicitudActiva: boolean = false;
@@ -109,6 +159,20 @@ ngOnInit(): void {
 
   cambiarContenidoPunto(){
     return this.puntoSeleccionado;
+  }
+
+  buscarContenido(){
+    return this.buscar;
+  }
+
+
+
+  onBlur() {
+    setTimeout(() => this.showDropdown = false, 200);
+  }
+
+  onFocus() {
+    this.showDropdown = this.results.length > 0;
   }
 
 }

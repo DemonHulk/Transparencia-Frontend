@@ -1,10 +1,11 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, SimpleChange, SimpleChanges } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { FechaService } from '../../../../services/format/fecha.service';
 import { SharedValuesService } from '../../../../services/shared-values.service';
 import { CryptoServiceService } from '../../../../services/cryptoService/crypto-service.service';
 import { ContenidocrudService } from '../../../../services/crud/contenidocrud.service';
 import { AlertsServiceService } from '../../../../services/alerts/alerts-service.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-contenido-item',
@@ -13,28 +14,28 @@ import { AlertsServiceService } from '../../../../services/alerts/alerts-service
 })
 export class ContenidoItemComponent  implements OnInit {
   @Input() titulo: any;
+  @Input() buscar: any = null;
 
   constructor(private sanitizer: DomSanitizer,
     private fechaService: FechaService,
     public sharedService: SharedValuesService,
     private encodeService: CryptoServiceService,
     private ContenidocrudService: ContenidocrudService,
+    private el:ElementRef,
     private flasher: AlertsServiceService
   ) {
     window.HSStaticMethods.autoInit();
 
    }
+  private subscription!: Subscription;
    ngOnInit(){
       setTimeout(() => {
         window.HSStaticMethods.autoInit();
-      })
+        if(this.buscar != null){
+          this.scrollToTitle(this.buscar);
+        }
+      });
    }
-
-
-   ngOnAfterViewInit(){
-    window.HSStaticMethods.autoInit();
-   }
-
 
   sanitizeHtml(html: string): SafeHtml {
     return this.sanitizer.bypassSecurityTrustHtml(html);
@@ -93,6 +94,43 @@ export class ContenidoItemComponent  implements OnInit {
       error: (error: Error) => {
         this.flasher.error("No se encontró el archivo");
       }
+    });
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+      if (changes['buscar']){
+        const buscarChange: SimpleChange = changes['buscar'];
+
+            this.scrollToTitle(this.buscar);
+        }
+
+
+  }
+
+  scrollToTitle(texto: any) {
+    setTimeout(() => {
+      const headings = this.el.nativeElement.querySelectorAll('h2');
+      headings.forEach((heading: HTMLElement) => {
+        if (heading.textContent && heading.textContent.trim() === texto) {
+          // Obtener las coordenadas del elemento
+          const rect = heading.getBoundingClientRect();
+          // Calcular la posición de scroll
+          const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+          const elementTop = rect.top + scrollTop;
+
+          // Ajustar para el header fijo (ajusta este valor según tu diseño)
+          const headerHeight = 60; // Por ejemplo, si tu header tiene 60px de alto
+
+          // Calcular la posición final de scroll
+          const targetScrollPosition = elementTop - headerHeight - 40; // 20px de margen adicional
+
+          // Realizar el scroll
+          window.scrollTo({
+            top: targetScrollPosition,
+            behavior: 'smooth'
+          });
+        }
+      });
     });
   }
 

@@ -12,6 +12,8 @@ import { Titulo } from '../../../services/api-config';
 })
 export class ContenidoPuntoComponent implements OnInit {
   @Input() punto: any;
+  @Input() buscar: any = null;
+
   constructor(
     public tituloCrudService: TituloscrudService,
     private encodeService: CryptoServiceService,
@@ -25,15 +27,28 @@ export class ContenidoPuntoComponent implements OnInit {
     if(this.punto != undefined){
       if (changes['punto']) {
         const puntoChange: SimpleChange = changes['punto'];
+        const buscarChange: SimpleChange = changes['buscar'];
+
         this.sharedService.setLoading(true);
         if(puntoChange.currentValue > 0){
         this.sharedService.setLoading(true);
           this.getTitulosByPunto(puntoChange.currentValue);
+          if(buscarChange){
+            this.buscar = buscarChange.currentValue;
+          }
+
         }
+      }
+      if (changes['buscar']){
+        const buscarChange: SimpleChange = changes['buscar'];
+
+            this.scrollToTitle(buscarChange.currentValue);
+
       }
     }else{
       this.sharedService.setLoading(true);
     }
+
   }
 
   private subscription!: Subscription;
@@ -57,6 +72,11 @@ export class ContenidoPuntoComponent implements OnInit {
 
       }
     });
+
+    if(this.buscar != null){
+
+      this.scrollToTitle(this.buscar);
+    }
   }
 
   titulos: any ;
@@ -88,5 +108,32 @@ export class ContenidoPuntoComponent implements OnInit {
   }
   private createTituloInstance(data: any): Titulo {
     return Object.assign(new Titulo(), data);
+  }
+
+  scrollToTitle(texto: any) {
+    setTimeout(() => {
+      const headings = this.el.nativeElement.querySelectorAll('h2');
+      headings.forEach((heading: HTMLElement) => {
+        if (heading.textContent && heading.textContent.trim() === texto) {
+          // Obtener las coordenadas del elemento
+          const rect = heading.getBoundingClientRect();
+          // Calcular la posición de scroll
+          const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+          const elementTop = rect.top + scrollTop;
+
+          // Ajustar para el header fijo (ajusta este valor según tu diseño)
+          const headerHeight = 60; // Por ejemplo, si tu header tiene 60px de alto
+
+          // Calcular la posición final de scroll
+          const targetScrollPosition = elementTop - headerHeight - 40; // 20px de margen adicional
+
+          // Realizar el scroll
+          window.scrollTo({
+            top: targetScrollPosition,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
   }
 }

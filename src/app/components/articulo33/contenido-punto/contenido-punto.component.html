@@ -3,7 +3,7 @@
   <ng-template #content>
     <ng-container *ngIf="titulos?.length > 0">
       <ng-container *ngFor="let titulo of titulos">
-        <app-contenido-item [titulo]="titulo"></app-contenido-item>
+        <app-contenido-item [titulo]="titulo" [buscar]="buscar"></app-contenido-item>
       </ng-container>
     </ng-container>
     <ng-container *ngIf="titulos?.length == 0">
