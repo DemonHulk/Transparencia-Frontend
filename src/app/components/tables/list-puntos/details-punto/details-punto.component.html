@@ -1307,7 +1307,7 @@
                     <div class="max-w-full">
                       <div class="flex flex-col mb-5" *ngIf="ListContenidoEstatico.length > 0">
                         <div class="w-12/12 my-4">
-                          <h4 class="text-xl">Informacion acerca del contenido</h4>
+                          <h4 class="text-xl">Información acerca del contenido</h4>
                         </div>
                         <div class="-m-1.5 overflow-x-auto">
                           <div class="p-1.5 min-w-full inline-block align-middle">
@@ -1330,6 +1330,18 @@
                                         Responsable del contenido
                                         <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-700 text-white text-xs rounded-lg shadow-md" role="tooltip">
                                           Último usuario responsable de las acciones del contenido
+                                        </span>
+                                      </div>
+                                    </th>
+                                    <th
+                                      scope="col"
+                                      class="px-6 py-3 text-start text-xs text-white uppercase bg-table-header-color"
+                                      pSortableColumn="nombre"
+                                    >
+                                      <div class="flex hs-tooltip">
+                                        Área del Responsable del contenido
+                                        <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-700 text-white text-xs rounded-lg shadow-md" role="tooltip">
+                                          Departamento del responsable de las acciones del contenido
                                         </span>
                                       </div>
                                     </th>
@@ -1368,7 +1380,10 @@
                                 <ng-template pTemplate="body" let-contenidoEstatico>
                                   <tr class="divide-x divide-gray-200">
                                     <td class="px-3 py-2 text-sm text-gray-800">
-                                      {{ contenidoEstatico.nombre_completo }}
+                                      {{ contenidoEstatico.correo }}
+                                    </td>
+                                    <td class="px-3 py-2 text-sm text-gray-800">
+                                      {{ contenidoEstatico.nombre_area }}
                                     </td>
                                     <td class="px-3 py-2 text-sm text-gray-800">
                                       {{FormatearDate(contenidoEstatico?.fecha_creacion)}}

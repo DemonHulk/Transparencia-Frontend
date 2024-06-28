@@ -111,6 +111,7 @@ SaveUsuario(): void {
             this.mostrarSpinner = false; // Ocultar spinner al finalizar
             break;
           default:
+            this.mostrarSpinner = false; // Ocultar spinner al finalizar
             this.flasher.error("Hubo un error, Intente más tarde o notifique al soporte técnico.");
             break;
         }
