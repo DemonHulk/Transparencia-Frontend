@@ -1,6 +1,6 @@
 import { Component, ElementRef } from '@angular/core';
 import { SharedValuesService } from '../../services/shared-values.service';
-import { Punto, Titulo } from '../../services/api-config';
+import { Punto, Titulo, validarTitulo } from '../../services/api-config';
 import { PuntocrudService } from '../../services/crud/puntocrud.service';
 import { CryptoServiceService } from '../../services/cryptoService/crypto-service.service';
 import { FechaService } from '../../services/format/fecha.service';
@@ -31,7 +31,9 @@ export class Articulo33Component {
  * @returns {void}
  */
   private subscription!: Subscription;
-  searchControl = new FormControl('');
+  searchControl = new FormControl('', [
+    validarTitulo()
+  ]);
   results: any[] = [];
   showDropdown = false;
 
