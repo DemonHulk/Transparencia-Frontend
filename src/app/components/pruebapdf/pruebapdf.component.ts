@@ -17,171 +17,219 @@ export class PruebapdfComponent {
   constructor() {}
 
   async imprimirReporte(): Promise<void> {
-    const datosVideos = [
+    const datosTransparencia = [
       {
-        titulo_video: 'Buen taquillo',
-        num_vistas: 'enrique segoviano',
-        nombre_canal: 'Masomenos',
+        titulo_reporte: 'Informe de Presupuesto Anual',
+        departamento: 'Finanzas',
+        responsable: 'María González',
         fecha: '2024-06-23',
         hora: '14:30',
         privacidad: 0,
-        descripcion: 'Un desastre culinario que parece haber sido hecho con los ingredientes equivocados y sin ningún cuidado, como si alguien hubiera intentado hacer un taco pero terminó siendo un desastre total.',
-        peso: 15728640, // 15 MB
-        extension: 'mp4'
+        descripcion: 'Reporte detallado del presupuesto anual de la institución, incluyendo ingresos, gastos y proyecciones para el próximo año fiscal.',
+        tamano: 15728640, // 15 MB
+        extension: 'pdf'
       },
       {
-        titulo_video: 'Taquillo masomenos',
-        num_vistas: 'Calle hidalgo',
-        nombre_canal: 'Dos tres',
+        titulo_reporte: 'Resultados Académicos Semestrales',
+        departamento: 'Asuntos Académicos',
+        responsable: 'Juan Pérez',
         fecha: '2024-06-22',
         hora: '10:15',
         privacidad: 1,
-        descripcion: 'Una expresión informal que denota algo que está muy mal hecho, decepcionante o inútil, como un trabajo mal ejecutado o una situación desfavorable que causa molestia o frustración.Una expresión informal que denota algo que está muy mal hecho, decepcionante o inútil, como un trabajo mal ejecutado o una situación desfavorable que causa molestia o frustración.',
-        peso: 20971520, // 20 MB
-        extension: 'avi'
+        descripcion: 'Análisis comprensivo de los resultados académicos del semestre, incluyendo estadísticas de rendimiento estudiantil, tasas de aprobación y áreas de mejora identificadas.',
+        tamano: 20971520, // 20 MB
+        extension: 'xlsx'
       },
+      {
+        titulo_reporte: 'Informe de Balance Trimestral',
+        departamento: 'Contabilidad',
+        responsable: 'Luis Martínez',
+        fecha: '2024-06-25',
+        hora: '09:00',
+        privacidad: 0,
+        descripcion: 'Informe detallado del balance trimestral de la empresa, incluyendo análisis de activos, pasivos y resultados financieros.',
+        tamano: 10485760, // 10 MB
+        extension: 'pdf'
+      },
+      
     ];
-      // Convertir la imagen a dataURL
-      const logoDataURL = await this.getImageDataURL('assets/img/utc.jpeg');
-      
-
+    
+    // Convertir la imagen a dataURL
+    const logoDataURL = await this.getImageDataURL('assets/img/utc.jpeg');
+    
     const documentDefinition = {
-      
       header: (currentPage: number, pageCount: number) => {
         return {
           columns: [
             {
               image: logoDataURL,
-              width: 100,
-              height: 40,
+              width: 80,
+              height: 30,
               alignment: 'left' as const
             },
             {
               stack: [
-                { text: 'Resumen', style: 'headerTitle' },
-                { text: 'Sistema de la chingada', style: 'headerSubtitle' },
+                { text: 'Transparencia Institucional' as string, style: 'headerTitle' },
+                { text: 'Sistema de Gestión de Informes' as string, style: 'headerSubtitle' },
               ],
               alignment: 'center' as const,
+              margin: [0, 0, 0, 0] as [number, number, number, number],
+              width: '*'
             },
             {
               stack: [
-                { text: 'Fecha de emisión: ' + new Date().toLocaleDateString(), style: 'headerDate' },
-                { text: 'Página ' + currentPage.toString() + ' de ' + pageCount.toString(), style: 'headerPage' },
+                { text: 'Fecha de emisión: ' as string + new Date().toLocaleDateString(), style: 'headerDate' },
+                { text: 'Página ' as string + currentPage.toString() + ' de ' + pageCount.toString(), style: 'headerPage' },
               ],
               alignment: 'right' as const,
               width: 'auto'
             }
           ],
-          margin: [20, 10, 20, 20] as [number, number, number, number]
+          margin: [20, 7, 20, 20] as [number, number, number, number]
         };
       },
       content: [
         { text: '\n\n' },
         { 
-          text: 'Reporte de tacos de cagada' as string, 
+          text: 'Reporte de Transparencia Institucional' as string, 
           style: 'headerContent', 
-          margin: [0, 40, 0, 20] as [number, number, number, number] 
-        },
-    
-        // Primera tabla: Datos generales de los videos
+          margin: [0, 10, 0, 10] as [number, number, number, number] 
+        }, 
+  
+        // Tabla principal con información resumida
         {
           table: {
             headerRows: 1,
-            widths: ['auto', '*', 'auto', 'auto', 'auto', 'auto', 'auto'],
+            widths: ['auto', '*', 'auto', 'auto', 'auto'],
             body: [
               [
-                { text: '#', style: 'tableHeader', fillColor: '#dddddd' },
-                { text: 'Título del taco', style: 'tableHeader', fillColor: '#dddddd' },
-                { text: 'Direccion del taco', style: 'tableHeader', fillColor: '#dddddd' },
-                { text: 'Cagada', style: 'tableHeader', fillColor: '#dddddd' },
-                { text: 'Fecha del taco', style: 'tableHeader', fillColor: '#dddddd' },
-                { text: 'Hora del taco', style: 'tableHeader', fillColor: '#dddddd' },
-                { text: 'Privacidad', style: 'tableHeader', fillColor: '#dddddd' },
+                { text: '#',                  style: 'tableHeader' },
+                { text: 'Título del Reporte', style: 'tableHeader' },
+                { text: 'Departamento',       style: 'tableHeader' },
+                { text: 'Fecha y hora',       style: 'tableHeader' },
+                { text: 'Privacidad',         style: 'tableHeader' },
               ],
-              ...datosVideos.map((video, index) => [
-                { text: (index + 1).toString(), style: 'cellDescription', alignment: 'center', fillColor: index % 2 === 0 ? '#f2f2f2' : null },
-                { text: video.titulo_video, style: 'cellDescription', fillColor: index % 2 === 0 ? '#f2f2f2' : null },
-                { text: video.num_vistas.toString(), style: 'cellDescription', fillColor: index % 2 === 0 ? '#f2f2f2' : null },
-                { text: video.nombre_canal, style: 'cellDescription', fillColor: index % 2 === 0 ? '#f2f2f2' : null },
-                { text: video.fecha, style: 'cellDescription', fillColor: index % 2 === 0 ? '#f2f2f2' : null },
-                { text: video.hora, style: 'cellDescription', fillColor: index % 2 === 0 ? '#f2f2f2' : null },
-                { text: video.privacidad === 0 ? 'Público' : 'Privado', style: 'cellDescription', fillColor: index % 2 === 0 ? '#f2f2f2' : null },
+              ...datosTransparencia.map((reporte, index) => [
+                { text: (index + 1).toString(),                           style: 'cellContent', alignment: 'center' },
+                { text: reporte.titulo_reporte,                           style: 'cellContent' },
+                { text: reporte.departamento,                             style: 'cellContent' },
+                { text: `${reporte.fecha} ${reporte.hora}`,               style: 'cellContent' },
+                { text: reporte.privacidad === 0 ? 'Público' : 'Privado', style: 'cellContent' },
               ]),
             ],
           },
-          margin: [0, 0, 0, 30] as [number, number, number, number]
-        },
-    
-        // Segunda tabla: Detalles adicionales de los videos
-        {
-          table: {
-            headerRows: 1,
-            widths: ['auto', '*', 'auto', 'auto'],
-            body: [
-              [
-                { text: '#', style: 'tableHeader', fillColor: '#dddddd' },
-                { text: 'Descripción', style: 'tableHeader', fillColor: '#dddddd' },
-                { text: 'Peso (KG)', style: 'tableHeader', fillColor: '#dddddd' },
-                { text: 'Extensión', style: 'tableHeader', fillColor: '#dddddd' },
-              ],
-              ...datosVideos.map((video, index) => [
-                { text: (index + 1).toString(), style: 'cellDescription', alignment: 'center', fillColor: index % 2 === 0 ? '#f2f2f2' : null },
-                { text: video.descripcion, style: 'cellDescription', fillColor: index % 2 === 0 ? '#f2f2f2' : null },
-                { text: (video.peso / 1024 / 1024).toFixed(2), style: 'cellDescription', fillColor: index % 2 === 0 ? '#f2f2f2' : null },
-                { text: video.extension, style: 'cellDescription', fillColor: index % 2 === 0 ? '#f2f2f2' : null },
-              ]),
-            ],
+          layout: {
+            hLineWidth: (i: number, node: any) => (i === 0 || i === node.table.body.length) ? 2 : 1,
+            vLineWidth: () => 0,
+            hLineColor: () => '#E7E6E6',
+            fillColor: (rowIndex: number) => (rowIndex % 2 === 0) ? '#F2F2F2' : null,
+            paddingTop: () => 5,
+            paddingBottom: () => 5,
+            // Evitar que las filas se dividan entre páginas
+            dontBreakRows: true,
           },
+          margin: [0, 10, 0, 20] as [number, number, number, number]  // Ajusta el margen superior e inferior según tus necesidades
         },
+  
+        // Detalles individuales de cada reporte
+        ...datosTransparencia.map((reporte, index) => [
+          {
+            text: `Detalle del Reporte #${index + 1}` as string,
+            style: 'subheader',
+            margin: [0, 5, 0, 5] as [number, number, number, number] 
+          },
+          {
+            table: {
+              
+              widths: ['30%', '70%'],
+              body: [
+                [{ text: 'Título',       style: 'tableHeader' }, { text: reporte.titulo_reporte,                           style: 'cellContent' }],
+                [{ text: 'Departamento', style: 'tableHeader' }, { text: reporte.departamento,                             style: 'cellContent' }],
+                [{ text: 'Responsable',  style: 'tableHeader' }, { text: reporte.responsable,                              style: 'cellContent' }],
+                [{ text: 'Fecha y Hora', style: 'tableHeader' }, { text: `${reporte.fecha} ${reporte.hora}`,               style: 'cellContent' }],
+                [{ text: 'Privacidad',   style: 'tableHeader' }, { text: reporte.privacidad === 0 ? 'Público' : 'Privado', style: 'cellContent' }],
+                [{ text: 'Descripción',  style: 'tableHeader' }, { text: reporte.descripcion,                              style: 'cellContent' }],
+                [{ text: 'Tamaño (MB)',  style: 'tableHeader' }, { text: (reporte.tamano / 1024 / 1024).toFixed(2),        style: 'cellContent' }],
+                [{ text: 'Extensión',    style: 'tableHeader' }, { text: reporte.extension,                                style: 'cellContent' }],
+              ]
+            },
+            layout: {
+              hLineWidth: (i: number, node: any) => (i === 0 || i === node.table.body.length) ? 2 : 1,
+              vLineWidth: () => 0,
+              hLineColor: () => '#E7E6E6',
+              fillColor: (rowIndex: number) => (rowIndex % 2 === 0) ? '#F2F2F2' : null,
+              paddingTop: () => 5,
+              paddingBottom: () => 5,
+              // Evitar que las filas se dividan entre páginas
+              dontBreakRows: true,
+            },
+            margin: [0, 0, 0, 20] as [number, number, number, number] 
+          }
+        ]).flat(),
       ],
       styles: {
         headerTitle: {
-          fontSize: 15,
+          fontSize: 14,
           bold: true,
           color: '#8C8888',
-          margin: [70, 0, 0, 0] as [number, number, number, number] 
+          alignment: 'center' as const,
+          margin: [0, 0, 0, 0] as [number, number, number, number] 
         },
         headerSubtitle: {
-          fontSize: 10,  // Aumenta este número para hacer la fuente más grande
-          bold: true,
+          fontSize: 10,
           color: '#8C8888',
-          margin: [70, 0, 0, 0] as [number, number, number, number] 
+          alignment: 'center' as const,
+          margin: [0, 0, 0, 0] as [number, number, number, number] 
         },
         headerDate: {
           fontSize: 8,
-          bold: true,
           color: '#8C8888',
         },
         headerPage: {
-          fontSize: 8,  // Aumenta este número para hacer la fuente más grande
-          bold: true,
+          fontSize: 8,
           color: '#8C8888',
         },
         headerContent: {
           fontSize: 18,
           bold: true,
+          color: '#8C8888',
           alignment: 'center' as const,
         },
         tableHeader: {
           bold: true,
-          fontSize: 12,
-          color: 'black',
-          fillColor: '#dddddd'
+          fontSize: 11,
+          color: 'white',
+          fillColor: '#00796B'
         },
-        cellDescription: {
+        cellContent: {
           fontSize: 10,
           lineHeight: 1.2,
+          color: '#333333',
+        },
+        subheader: {
+          fontSize: 14,
+          bold: true,
+          color: '#00796B',
+          margin: [0, 15, 0, 5] as [number, number, number, number] 
         },
       },
     };
-    
-    
-    
   
     const pdfDoc = pdfMake.createPdf(documentDefinition);
     pdfDoc.open();
-
   }
+  
+  
+  
+
+
+
+
+
+
+
+
+
 
   private async getImageDataURL(url: string): Promise<string> {
     return new Promise<string>((resolve, reject) => {
@@ -191,17 +239,13 @@ export class PruebapdfComponent {
         canvas.width = img.width;
         canvas.height = img.height;
   
-        // Obtener el contexto 2D del canvas
         const ctx = canvas.getContext('2d');
         if (!ctx) {
           reject(new Error('Failed to get 2D context of canvas.'));
           return;
         }
   
-        // Dibujar la imagen en el canvas
         ctx.drawImage(img, 0, 0);
-  
-        // Obtener el dataURL de la imagen
         const dataURL = canvas.toDataURL('image/jpeg');
         resolve(dataURL);
       };
@@ -211,6 +255,8 @@ export class PruebapdfComponent {
       img.src = url;
     });
   }
+
+  
   
   
   
@@ -316,10 +362,9 @@ export class PruebapdfComponent {
       reader.onload = () => resolve(reader.result as string);
       reader.onerror = reject;
       reader.readAsDataURL(blob);
-    });
-  }
- 
+ });
+}
+
 
 
 }
-
