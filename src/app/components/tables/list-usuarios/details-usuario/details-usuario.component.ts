@@ -69,7 +69,7 @@ export class DetailsUsuarioComponent {
           /* Enviamos los datos de la respuesta al servicio para desencriptarla */
           this.data_user = this.encodeService.decryptData(respuesta).resultado?.data?.data[0];
           this.listUsuarios = [this.encodeService.decryptData(respuesta).resultado?.data?.data[0]];
-          this.sharedService.changeTitle('Información detallada del usuario: ' + this.data_user?.nombre);
+          this.sharedService.changeTitle('Información detallada del usuario: ' + this.data_user?.correo);
 
           /* Indicar que todos los datos se han cargado */
           setTimeout(() => {

@@ -117,9 +117,6 @@ export class DetailsAreaComponent {
           this.listUsuariosAcceso = this.encodeService.decryptData(respuesta).resultado?.data?.data.map((data: any) =>
             new Usuario(
               data.id_punto,
-              data.nombre,
-              data.apellido1,
-              data.apellido2,
               data.correo,
               data.activo
             )
