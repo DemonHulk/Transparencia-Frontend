@@ -19,20 +19,27 @@
           </div>
           <input
             class="py-3 ps-10 pe-4 w-full border-gray-200 rounded-lg text-sm focus:border-primary-color focus:ring-primary-color disabled:opacity-50 disabled:pointer-events-none"
-            type="text" placeholder="Escribe tu busqueda" value="" data-hs-combo-box-input="" />
+            type="text" placeholder="Escribe tu búsqueda" [formControl]="searchControl" (blur)="onBlur()" (focus)="onFocus()"/>
         </div>
 
         <!-- SearchBox Dropdown -->
-        <div class="absolute z-50 w-full bg-white border border-gray-200 rounded-lg" style="display: none"
-          data-hs-combo-box-output="">
+        <div *ngIf="showDropdown" class="absolute z-50 w-full bg-white border border-gray-200 rounded-lg">
           <div
-            class="max-h-72 rounded-b-lg overflow-hidden overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300"
-            data-hs-combo-box-output-items-wrapper=""></div>
+            class="max-h-80 rounded-b-lg overflow-hidden overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300">
+            <div *ngFor="let result of results" class="p-4 hover:bg-gray-100 pointer-events-cursor"
+              (click)="cambiarPuntoBusqueda(result?.id_punto, result?.nombre_titulo)"
+            >
+              <p><i class="fa-solid fa-file-pdf"></i> {{ result.nombre_externo_documento }}</p>
+              <small>Punto {{result.orden_punto}}.- {{result.nombre_punto}}</small><br>
+              <small class="ml-3">Tema: {{result.nombre_titulo}}</small>
+            </div>
+          </div>
         </div>
         <!-- End SearchBox Dropdown -->
       </div>
       <!-- End SearchBox -->
     </div>
+
 
   </div>
   <div class="w-full flex justify-end">
@@ -80,7 +87,7 @@
       </ng-container>
 
       <ng-template #content>
-        <app-contenido-punto [punto]="cambiarContenidoPunto()"></app-contenido-punto>
+        <app-contenido-punto [punto]="cambiarContenidoPunto()" [buscar]="buscarContenido()"></app-contenido-punto>
       </ng-template>
 
     </div>

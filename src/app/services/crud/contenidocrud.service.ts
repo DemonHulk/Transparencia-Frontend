@@ -13,7 +13,7 @@ export class ContenidocrudService {
   constructor(private clientHttp:HttpClient, private encodeService: CryptoServiceService, private flasher: AlertsServiceService) { }
 /***************************************************************************************************
 *  CONTENIDO DINAMICO                                                                               *
-***************************************************************************************************/ 
+***************************************************************************************************/
   /**EXTRAE TODO EL CONTENIDO DINAMICO ESTE ACTIVO O INACTIVO */
   GetAllContenidoDinamicoService(id:any){
     return this.clientHttp.get(API_URL+"contenidoDinamico/"+id, { responseType: 'text' })
@@ -22,7 +22,7 @@ export class ContenidocrudService {
   GetOneContenidoDinamicoService(id:any){
     return this.clientHttp.get(API_URL+"onecontenidoDinamico/"+id, { responseType: 'text' });
   }
-  
+
   InsertContenidoDinamicoService(formData: FormData): Observable<any> {
     const req = new HttpRequest('POST', API_URL + 'contenidoDinamico', formData, {
       reportProgress: true,
@@ -51,15 +51,15 @@ export class ContenidocrudService {
   /***************************************************************************************************
   *  CONTENIDO ESTATICO                                                                              *
   ***************************************************************************************************/
- 
+
   GetAllContenidoEstaticoService(id:any){
     return this.clientHttp.get(API_URL+"contenidoEstatico/"+id, { responseType: 'text' })
-  } 
+  }
 
   GetOneContenidoEstaticoService(id:any){
     return this.clientHttp.get(API_URL+"oneContenidoEstatico/"+id, { responseType: 'text' });
   }
-  
+
   InsertContenidoEstaticoService(formulario: any): Observable<any> {
     const req = new HttpRequest('POST',API_URL + "contenidoEstatico", formulario, {
       reportProgress: true,
@@ -106,7 +106,7 @@ export class ContenidocrudService {
         catchError(error => this.handleError(error, fileName))
       );
   }
-  
+
   private base64ToArrayBuffer(base64: string): ArrayBuffer {
     const binaryString = window.atob(base64);
     const bytes = new Uint8Array(binaryString.length);
@@ -115,19 +115,19 @@ export class ContenidocrudService {
     }
     return bytes.buffer;
   }
-  
+
   private handleError(error: any, fileName: string): Observable<never> {
     let errorMessage = 'Ocurrió un error desconocido';
-    
+
     if (error instanceof HttpErrorResponse) {
       errorMessage = `Error HTTP: ${error.status}, ${error.statusText}`;
     } else if (error instanceof Error) {
       errorMessage = error.message;
     }
-  
+
     // Añadir información adicional
     errorMessage += ` - Archivo: ${fileName}`;
-  
+
     return throwError(() => new Error(errorMessage));
   }
 
@@ -154,4 +154,15 @@ export class ContenidocrudService {
         catchError(error => this.handleError(error, fileName))
       );
   }
+
+
+    /***************************************************************************************************
+  *  Buscar DOCUMENTO                                                                           *
+  ***************************************************************************************************/
+    searchPDF(data: any): Observable<any> {
+      const req = new HttpRequest('POST',API_URL + "buscarPDF", data, {
+        responseType: 'text'
+      });
+      return this.clientHttp.request(req);
+    }
 }
