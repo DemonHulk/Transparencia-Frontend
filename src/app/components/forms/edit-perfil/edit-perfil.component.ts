@@ -34,29 +34,6 @@ export class EditPerfilComponent {
 
   ) {
     this.FormEditPerfil = this.formulario.group({
-      nombre: ['',
-        [
-          validarNombre(true), // Aplica el validador personalizado, el true significa que no debe estar vacio
-          Validators.required,
-          Validators.minLength(4),
-          Validators.maxLength(100)
-        ],
-      ],
-      primerApellido: ['',
-        [
-          validarNombre(true), // Aplica el validador personalizado, el true significa que no debe estar vacio
-          Validators.required,
-          Validators.minLength(4),
-          Validators.maxLength(100)
-        ],
-      ],
-      segundoApellido: ['',
-        [
-          validarNombre(false), // Aplica el validador personalizado, el false significa que puede estar vacio
-          Validators.minLength(4),
-          Validators.maxLength(100)
-        ],
-      ],
       correo: ['',
         [
           validarCorreoUTDelacosta(), // Aplica el validador personalizado
@@ -65,14 +42,6 @@ export class EditPerfilComponent {
           Validators.maxLength(100),
         ],
 
-      ],
-      telefono: ['',
-        [
-          validarTelefono(), // Aplica el validador personalizado
-          Validators.required,
-          Validators.minLength(10),
-          Validators.maxLength(10)
-        ]
       ],
       password: ['',
         [
@@ -115,10 +84,6 @@ GetOneUserService() {
 
       // Asegúrate de que la data_user sea del tipo Usuario
       this.FormEditPerfil.patchValue({
-        nombre: this.decryptedData?.nombre,
-        primerApellido: this.decryptedData?.apellido1,
-        segundoApellido: this.decryptedData?.apellido2,
-        telefono: this.decryptedData?.telefono,
         correo: this.decryptedData?.correo,
       });
 

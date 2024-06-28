@@ -36,29 +36,6 @@ export class EditUsuarioComponent implements OnInit {
 
   ) {
     this.FormAltaUsuario = this.formulario.group({
-      nombre: ['',
-        [
-          validarNombre(true), // Aplica el validador personalizado, el true significa que no debe estar vacio
-          Validators.required,
-          Validators.minLength(4),
-          Validators.maxLength(100)
-        ],
-      ],
-      primerApellido: ['',
-        [
-          validarNombre(true), // Aplica el validador personalizado, el true significa que no debe estar vacio
-          Validators.required,
-          Validators.minLength(4),
-          Validators.maxLength(100)
-        ],
-      ],
-      segundoApellido: ['',
-        [
-          validarNombre(false), // Aplica el validador personalizado, el false significa que puede estar vacio
-          Validators.minLength(4),
-          Validators.maxLength(100)
-        ],
-      ],
       correo: ['',
         [
           validarCorreoUTDelacosta(), // Aplica el validador personalizado
@@ -67,14 +44,6 @@ export class EditUsuarioComponent implements OnInit {
           Validators.maxLength(100),
         ],
 
-      ],
-      telefono: ['',
-        [
-          validarTelefono(), // Aplica el validador personalizado
-          Validators.required,
-          Validators.minLength(10),
-          Validators.maxLength(10)
-        ]
       ],
       password: ['',
         [
@@ -142,10 +111,6 @@ ngOnInit(): void {
             // Asignar los valores recuperados al formulario FormAltaUsuario
             this.FormAltaUsuario.patchValue({
               id_usuario: this.data_user.id_usuario,
-              nombre: this.data_user.nombre,
-              primerApellido: this.data_user.apellido1,
-              segundoApellido: this.data_user.apellido2,
-              telefono: this.data_user.telefono,
               correo: this.data_user.correo,
               id_area: this.data_user.id_area,
               nombre_area: this.data_user.nombre_area

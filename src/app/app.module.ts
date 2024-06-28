@@ -27,7 +27,6 @@ import { NewTemaComponent } from './components/forms/new-tema/new-tema.component
 import { EditTemaComponent } from './components/forms/edit-tema/edit-tema.component';
 import { NewSubtemaComponent } from './components/forms/new-subtema/new-subtema.component';
 import { EditSubtemaComponent } from './components/forms/edit-subtema/edit-subtema.component';
-import { MiPerfilComponent } from './components/mi-perfil/mi-perfil.component';
 import { EditPerfilComponent } from './components/forms/edit-perfil/edit-perfil.component';
 import { ListUsuariosComponent } from './components/tables/list-usuarios/list-usuarios.component';
 import { DetailsUsuarioComponent } from './components/tables/list-usuarios/details-usuario/details-usuario.component';
@@ -85,7 +84,6 @@ import { PasswordRecoveryComponent } from './components/forms/password-recovery/
     EditTemaComponent,
     NewSubtemaComponent,
     EditSubtemaComponent,
-    MiPerfilComponent,
     EditPerfilComponent,
     ListUsuariosComponent,
     DetailsUsuarioComponent,

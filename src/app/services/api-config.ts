@@ -78,31 +78,19 @@ export class Titulo {
 
 export class Usuario {
   id_usuario!: string;
-  nombre!: string;
-  apellido1!: string;
-  apellido2!: string;
   correo!: string;
   activo!: boolean;
 
   constructor(
     id_punto: string,
-    nombre: string,
-    apellido1: string,
-    apellido2: string,
     correo: string,
     activo: boolean
   ) {
     this.id_usuario = this.id_usuario;
-    this.nombre = nombre;
-    this.apellido1 = apellido1;
-    this.apellido2 = apellido2;
     this.correo = correo;
     this.activo = activo;
   }
 
-  get nombreCompleto(): string {
-    return `${this.nombre} ${this.apellido1} ${this.apellido2}`;
-  }
 }
 
 export class Ejercicio {

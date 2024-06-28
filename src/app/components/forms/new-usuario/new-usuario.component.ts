@@ -29,29 +29,6 @@ export class NewUsuarioComponent {
     private el:ElementRef
   ) {
     this.FormAltaUsuario = this.formulario.group({
-      nombre: ['',
-        [
-          validarNombre(true), // Aplica el validador personalizado, el true significa que no debe estar vacio
-          Validators.required,
-          Validators.minLength(4),
-          Validators.maxLength(100)
-        ],
-      ],
-      primerApellido: ['',
-        [
-          validarNombre(true), // Aplica el validador personalizado, el true significa que no debe estar vacio
-          Validators.required,
-          Validators.minLength(4),
-          Validators.maxLength(100)
-        ],
-      ],
-      segundoApellido: ['',
-        [
-          validarNombre(false), // Aplica el validador personalizado, el false significa que puede estar vacio
-          Validators.minLength(4),
-          Validators.maxLength(100)
-        ],
-      ],
       correo: ['',
         [
           validarCorreoUTDelacosta(), //Aplica el validador personalizado
@@ -60,14 +37,6 @@ export class NewUsuarioComponent {
           Validators.maxLength(100),
         ],
 
-      ],
-      telefono: ['',
-        [
-          validarTelefono(),// Aplica el validador personalizado
-          Validators.required,
-          Validators.minLength(10),
-          Validators.maxLength(10)
-        ]
       ],
       password: ['',
         [
@@ -142,6 +111,7 @@ SaveUsuario(): void {
             this.mostrarSpinner = false; // Ocultar spinner al finalizar
             break;
           default:
+            this.mostrarSpinner = false; // Ocultar spinner al finalizar
             this.flasher.error("Hubo un error, Intente más tarde o notifique al soporte técnico.");
             break;
         }

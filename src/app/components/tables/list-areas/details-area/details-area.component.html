@@ -254,15 +254,7 @@
               <tr
                 class="divide-x divide-gray-200 bg-table-header-color rounded-lg"
               >
-                <th
-                  scope="col"
-                  class="px-6 py-3 text-start text-xs text-white uppercase bg-table-header-color"
-                  pSortableColumn="nombreCompleto"
-                >
-                  <div class="flex">
-                    Nombre del usuario <p-sortIcon field="nombreCompleto"></p-sortIcon>
-                  </div>
-                </th>
+                
                 <th
                   scope="col"
                   class="px-6 py-3 text-start text-xs text-white uppercase bg-table-header-color"
@@ -287,9 +279,7 @@
             </ng-template>
             <ng-template pTemplate="body" let-usuario>
               <tr class="divide-x divide-gray-200">
-                <td class="px-3 py-2 text-sm text-gray-800">
-                    {{ usuario.nombreCompleto }}
-                </td>
+
                 <td class="px-3 py-2 text-sm text-gray-800">
                   {{usuario.correo}}
                 </td>

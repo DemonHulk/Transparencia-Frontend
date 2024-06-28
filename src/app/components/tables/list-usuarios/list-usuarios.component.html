@@ -279,7 +279,7 @@
                   [rows]="5"
                   currentPageReportTemplate="Mostrando {first} al {last} de {totalRecords} registros"
                   [showCurrentPageReport]="true"
-                  [globalFilterFields]="['nombre', 'apellido1', 'apellido2', 'nombre_area']"
+                  [globalFilterFields]="['correo','nombre_area']"
                   [tableStyleClass]="'min-w-full divide-y'"
                   [resizableColumns]="true"
                 >
@@ -290,10 +290,10 @@
                       <th
                         scope="col"
                         class="px-6 py-3 text-start text-xs text-white uppercase bg-table-header-color"
-                        pSortableColumn="nombre"
+                        pSortableColumn="correo"
                       >
                         <div class="flex">
-                          Nombre Usuario <p-sortIcon field="nombre"></p-sortIcon>
+                          Correo Usuario <p-sortIcon field="correo"></p-sortIcon>
                         </div>
                       </th>
                       <th
@@ -318,7 +318,7 @@
                     <tr class="divide-x divide-gray-200">
                       <td class="px-3 py-2 text-sm text-gray-800">
                         <p class="font-medium text-black">
-                          {{ getNombreCompleto(user) }}
+                          {{ user.correo }}
                         </p>
                       </td>
                       <td class="px-3 py-2 text-sm text-gray-800">
@@ -364,7 +364,7 @@
                                         class="inline-flex items-center gap-x-3 text-sm text-gray-800 text-wrap"
                                       >
                                         Información detallada del usuario
-                                        {{ user.nombre }}
+                                        {{ user.correo }}
                                       </div>
                                     </li>
                                   </ul>
@@ -632,7 +632,7 @@
                   [rows]="5"
                   currentPageReportTemplate="Mostrando {first} al {last} de {totalRecords} registros"
                   [showCurrentPageReport]="true"
-                  [globalFilterFields]="['nombre','apellido1', 'apellido2', 'nombre_area']"
+                  [globalFilterFields]="['correo', 'nombre_area']"
                   [tableStyleClass]="'min-w-full divide-y'"
                   [resizableColumns]="true"
                 >
@@ -643,10 +643,10 @@
                       <th
                         scope="col"
                         class="px-6 py-3 text-start text-xs text-white uppercase bg-table-header-color"
-                        pSortableColumn="nombre"
+                        pSortableColumn="correo"
                       >
                         <div class="flex">
-                          Nombre Usuario <p-sortIcon field="nombre"></p-sortIcon>
+                          Correo Usuario <p-sortIcon field="correo"></p-sortIcon>
                         </div>
                       </th>
                       <th
@@ -671,7 +671,7 @@
                     <tr class="divide-x divide-gray-200">
                       <td class="px-3 py-2 text-sm text-gray-800">
                         <p class="font-medium text-black">
-                          {{ user.nombre }} {{ user.apellido1 }} {{ user.apellido2 }}
+                          {{user.correo}}
                         </p>
                       </td>
                       <td class="px-3 py-2 text-sm text-gray-800">
@@ -717,7 +717,7 @@
                                         class="inline-flex items-center gap-x-3 text-sm text-gray-800 text-wrap"
                                       >
                                         Información detallada del usuario
-                                        {{ user.nombre }}
+                                        {{ user.correo }}
                                       </div>
                                     </li>
                                   </ul>

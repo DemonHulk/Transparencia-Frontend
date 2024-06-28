@@ -20,7 +20,6 @@ import { NewTemaComponent } from './components/forms/new-tema/new-tema.component
 import { EditTemaComponent } from './components/forms/edit-tema/edit-tema.component';
 import { NewSubtemaComponent } from './components/forms/new-subtema/new-subtema.component';
 import { EditSubtemaComponent } from './components/forms/edit-subtema/edit-subtema.component';
-import { MiPerfilComponent } from './components/mi-perfil/mi-perfil.component';
 import { EditPerfilComponent } from './components/forms/edit-perfil/edit-perfil.component';
 import { ListUsuariosComponent } from './components/tables/list-usuarios/list-usuarios.component';
 import { DetailsUsuarioComponent } from './components/tables/list-usuarios/details-usuario/details-usuario.component';
@@ -44,7 +43,6 @@ const routes: Routes = [
   {path: '', component:Articulo33Component},
   {path: 'login', component:LoginComponent, canActivate: [authGuardGuard]},
   {path: 'articulo33', component:Articulo33Component},
-  {path: 'myprofile', component:MiPerfilComponent, canActivate: [authGuardGuard], data: { openToAll: true } },
   {path: 'new-pdf/:punto/:tema', component:NewPdfComponent, canActivate: [authGuardGuard], data: { openToAll: true } },
   {path: 'new-punto', component:NewPuntoComponent , canActivate: [authGuardGuard], data: { allowedAreas: ['1'] }},
   {path: 'new-area', component:NewAreaComponent, canActivate: [authGuardGuard], data: { allowedAreas: ['1'] }},
