@@ -54,7 +54,6 @@ import { ContenidoPuntoSkeletonComponent } from './components/skeleton/contenido
 import { SubtemasComponent } from './components/tables/list-puntos/details-punto/subtemas/subtemas.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { AdministrarOrdenComponent } from './components/tables/list-puntos/administrar-orden/administrar-orden.component';
-import { PasswordRecoveryComponent } from './components/forms/password-recovery/password-recovery.component';
 import { AcercaDeComponent } from './components/acerca-de/acerca-de.component';
 import { ContenidoSubtemaComponent } from './components/tables/list-puntos/details-punto/subtemas/contenido-subtema/contenido-subtema.component';
 import { RecursiveNavItemComponent } from './components/tables/list-puntos/details-punto/subtemas/recursive-nav-item/recursive-nav-item.component';
@@ -104,7 +103,6 @@ import { RecursiveNavItemComponent } from './components/tables/list-puntos/detai
     ContenidoPuntoSkeletonComponent,
     SubtemasComponent,
     AdministrarOrdenComponent,
-    PasswordRecoveryComponent,
     AcercaDeComponent,
     ContenidoSubtemaComponent,
     RecursiveNavItemComponent,

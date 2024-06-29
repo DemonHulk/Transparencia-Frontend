@@ -357,7 +357,7 @@
                 <div class="w-12/12 my-4">
                   <h4 class="text-xl">Contenido del tema</h4>
                 </div>
-                <div class="border border-2 pb-5 p-3 mb-5 border-gray-200 border-dashed rounded-lg">
+                <div class="border-2 pb-5 p-3 mb-5 border-gray-200 border-dashed rounded-lg">
                   <div class="rounded-sm border border-stroke bg-white px-5 pb-2.5 pt-6 shadow-default   sm:px-7.5 xl:pb-1">
                     <!-- Inicio del codigo de la tabla contenido dinamico -->
                     <div class="max-w-full">
@@ -600,7 +600,7 @@
                                           <div class="flex items-center space-x-3.5">
                                             <!-- Agregar el boton del ojo y el descargar -->
                                             <button
-                                            (click)="openPDF(pdf?.id_contenido_dinamico)"
+                                            (click)="openPDF(pdf?.id_contenido_dinamico, pdf?.nombre_interno_documento)"
                                             (mouseenter)="mostrar($event.target)"
                                             (mouseleave)="mostrar($event.target)"
                                             class="hover:text-primary"
@@ -1035,7 +1035,7 @@
                                         <td class="px-3 py-2 text-sm text-gray-800">
                                           <div class="flex items-center space-x-3.5">
                                             <button
-                                            (click)="openPDF(pdf?.id_contenido_dinamico)"
+                                            (click)="openPDF(pdf?.id_contenido_dinamico, pdf?.nombre_interno_documento)"
                                             (mouseenter)="mostrar($event.target)"
                                             (mouseleave)="mostrar($event.target)"
                                             class="hover:text-primary"
