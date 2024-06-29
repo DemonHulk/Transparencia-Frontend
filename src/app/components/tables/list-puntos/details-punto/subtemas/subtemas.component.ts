@@ -6,8 +6,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { CryptoServiceService } from '../../../../../services/cryptoService/crypto-service.service';
 import { AlertsServiceService } from '../../../../../services/alerts/alerts-service.service';
 import { TituloscrudService } from '../../../../../services/crud/tituloscrud.service';
-import { finalize } from 'rxjs';
-import { Titulo } from '../../../../../services/api-config';
+import { Subscription, finalize } from 'rxjs';
 
 @Component({
   selector: 'app-subtemas',
@@ -53,15 +52,29 @@ export class SubtemasComponent {
      if (this.idTema === null) {
       this.router.navigateByUrl("/details-punto/"+this.idPuntoEncrypt);
     }
-    this.sharedService.setLoading(false);
   }
+  private subscription!: Subscription;
+
 
   ngOnInit(){
     this.getTitulosByPunto();
+    this.subscription = this.sharedService.data$.subscribe(data => {
+      if(data != null){
+        if(data.key == 'cargarInfo'){
+          if(data.bool){
+          this.sharedService.setLoading(true);
+
+            this.getTitulosByPunto();
+          }
+        }
+
+      }
+    });
+
   }
 
   titulo: any;
-  subtitulos: any = [];
+  subtitulo: any = [];  // Inicializar como un arreglo vacío
 
   getTitulosByPunto() {
     const encryptedID = this.encodeService.encryptData(JSON.stringify(this.idTema));
@@ -74,13 +87,12 @@ export class SubtemasComponent {
       )
       .subscribe(
         (respuesta: any) => {
-          const parsedData = this.encodeService.decryptData(respuesta).subtitulos;
-          this.titulo = this.encodeService.decryptData(respuesta).titulo;
-          /* Desencriptamos la respuesta que nos retorna el backend */
-          this.subtitulos = Array.isArray(parsedData) ? parsedData.map(item => this.createTituloInstance(item)) : [this.createTituloInstance(parsedData)]
-          window.HSStaticMethods.autoInit();
-          this.sharedService.changeTitle('Administrar subtemas de '+this.titulo?.nombre_titulo);
+          const decryptedResponse = this.encodeService.decryptData(respuesta);
+          this.titulo = decryptedResponse.titulo;
 
+          this.subtitulo = JSON.parse(decryptedResponse.subtitulos)[0];
+          window.HSStaticMethods.autoInit();
+          this.sharedService.changeTitle('Administrar subtemas de ' + this.titulo?.nombre_titulo);
         },
         (error) => {
           // Manejo de errores si es necesario
@@ -88,7 +100,6 @@ export class SubtemasComponent {
         }
       );
   }
-  private createTituloInstance(data: any): Titulo {
-    return Object.assign(new Titulo(), data);
-  }
+
+
 }

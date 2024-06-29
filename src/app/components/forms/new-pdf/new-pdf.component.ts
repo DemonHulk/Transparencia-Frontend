@@ -8,6 +8,7 @@ import { ContenidocrudService } from '../../../services/crud/contenidocrud.servi
 import { HttpEvent, HttpEventType } from '@angular/common/http';
 import { AlertsServiceService } from '../../../services/alerts/alerts-service.service';
 import { TrimestrecrudService } from '../../../services/crud/trimestrecrud.service';
+import { TituloscrudService } from '../../../services/crud/tituloscrud.service';
 
 @Component({
   selector: 'app-new-pdf',
@@ -17,12 +18,16 @@ import { TrimestrecrudService } from '../../../services/crud/trimestrecrud.servi
 export class NewPdfComponent {
 
   id_tema:any;
+  id_subtema:any;
   id_punto:any;
+  id_temaEnviar: any;
   FormAltaContenido:FormGroup;
   ListTrimestres: (Trimestre & { fecha_string: string })[] = [];
   ListActiveTrimestres: (Trimestre & { fecha_string: string })[] = [];
   ListInactiveTrimestres: (Trimestre & { fecha_string: string })[] = [];
   datosUsuario: any;
+  es_tema: boolean = false;
+  idTemaEncrypt:any;
   constructor(
     private sharedService: SharedValuesService,
     private activateRoute: ActivatedRoute,
@@ -32,22 +37,61 @@ export class NewPdfComponent {
     private encodeService: CryptoServiceService,
     private ContenidocrudService: ContenidocrudService,
     private TrimestrecrudService: TrimestrecrudService,
+    private TituloscrudService: TituloscrudService,
     private el: ElementRef
   ) {
     const extensionesArchivo  = /(\.pdf)$/i;
+// Obtener el parámetro 'punto' de ambas rutas
+this.id_punto = this.activateRoute.snapshot.paramMap.get('punto');
 
-    //Tomas la id de la URL
-    this.id_tema = this.activateRoute.snapshot.paramMap.get("tema");
-    this.id_punto = this.activateRoute.snapshot.paramMap.get("punto");
+// Verificar si estamos en la ruta con 'tema' o con 'subtema'
+if (this.activateRoute.snapshot.paramMap.has('tema') && !this.activateRoute.snapshot.paramMap.has('subtema')) {
+  this.id_tema = this.activateRoute.snapshot.paramMap.get('tema');
+  // Desencriptar ID de tema y punto
+  this.id_tema = this.encodeService.decodeID(this.id_tema);
+  this.id_punto = this.encodeService.decodeID(this.id_punto);
+  this.datosUsuario = this.encodeService.desencriptarDatosUsuario();
 
-    //Desencriptar la ID
-    this.id_tema = this.encodeService.decodeID(this.id_tema);
-    this.id_punto = this.encodeService.decodeID(this.id_punto);
-    this.datosUsuario = this.encodeService.desencriptarDatosUsuario()
-    //Verificar si la ID es null, si es así, redirige a la página de puntos
-    if (this.id_tema === null) {
+  this.id_temaEnviar = this.id_tema;
+  this.es_tema = true;
+
+  // Verificar si la ID es null, si es así, redirige a la página de puntos
+  if (this.id_tema === null) {
+    this.router.navigateByUrl('/puntos');
+  }
+} else if (this.activateRoute.snapshot.paramMap.has('subtema') &&  this.activateRoute.snapshot.paramMap.has('tema')) {
+  this.id_subtema = this.activateRoute.snapshot.paramMap.get('subtema');
+  this.id_tema = this.activateRoute.snapshot.paramMap.get('tema');
+  // Desencriptar ID de tema y punto
+  this.id_tema = this.encodeService.decodeID(this.id_tema);
+  // Desencriptar ID de subtema y punto
+  this.id_subtema = this.encodeService.decodeID(this.id_subtema);
+  this.id_punto = this.encodeService.decodeID(this.id_punto);
+  this.datosUsuario = this.encodeService.desencriptarDatosUsuario();
+  this.id_temaEnviar = this.id_subtema;
+  // Verificar si la ID es null, si es así, redirige a la página de puntos
+   //Verificar si la ID es null, si es así, redirige a la página de puntos
+    if (this.id_punto === null) {
       this.router.navigateByUrl("/puntos");
     }
+    if (this.id_tema === null) {
+      this.router.navigateByUrl("/details-punto/" + this.encriptarId(this.id_punto));
+    }
+
+    if (this.id_subtema === null) {
+      this.router.navigateByUrl("/details-punto/" + this.encriptarId(this.id_punto));
+      this.router.navigateByUrl('/administrar-subtemas/' + this.encriptarId(this.id_punto) + '/' + this.encriptarId(this.id_tema));
+    }
+
+    this.TituloscrudService.GetTitulosPadre(this.encodeService.encryptData(JSON.stringify(this.id_tema))).subscribe(
+      respuesta => {
+        this.idTemaEncrypt = this.encodeService.encodeID(this.encodeService.decryptData(respuesta)?.resultado.id_titulo);
+
+      },
+      error => {
+      }
+    );
+}
 
     this.FormAltaContenido = this.formulario.group({
       nombreExterno: ['',
@@ -85,7 +129,7 @@ export class NewPdfComponent {
           Validators.required,
         ],
       ],
-      id_titulo: [this.id_tema,
+      id_titulo: [this.id_temaEnviar,
         [
           Validators.required,
         ],
@@ -168,7 +212,11 @@ private sendRequest(formData: FormData) {
           const decryptedResponse = this.encodeService.decryptData(encryptedResponse);
           if (decryptedResponse?.resultado?.res) {
             this.flasher.success(decryptedResponse?.resultado?.data);
-            this.router.navigate(['/details-punto/'+ this.encriptarId(this.id_punto)]);
+            if(this.es_tema){
+              this.router.navigate(['/details-punto/' + this.encriptarId(this.id_punto)]);
+            }else{
+              this.router.navigateByUrl('/administrar-subtemas/' + this.encriptarId(this.id_punto) + '/' + this.idTemaEncrypt);
+            }
           } else {
             this.flasher.error(decryptedResponse?.resultado?.data);
           }

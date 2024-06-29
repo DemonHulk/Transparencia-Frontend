@@ -29,9 +29,6 @@ export class EditTemaComponent {
     private encodeService: CryptoServiceService,
     private router: Router,
     private TituloscrudService: TituloscrudService
-
-
-
   ) {
 
     //Tomas la id de la URL
@@ -117,7 +114,7 @@ export class EditTemaComponent {
   /* Variables spinner */
   porcentajeEnvio: number = 0;
   mostrarSpinner: boolean = false;
-  mensaje = "Guardando...";
+  mensaje = "Actualizando...";
 
   UpdateTema(): void {
     markFormGroupTouched(this.FormAltaTema);

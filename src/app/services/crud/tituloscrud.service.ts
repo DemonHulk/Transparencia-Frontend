@@ -20,9 +20,21 @@ export class TituloscrudService {
     return this.clientHttp.request(req);
   }
 
+  InsertSubtituloService(formulario: any): Observable<any> {
+    const req = new HttpRequest('POST', API_URL + 'subtitulo', formulario, {
+      reportProgress: true,
+      responseType: 'text'
+    });
+    return this.clientHttp.request(req);
+  }
+
   /**extrae los titulos de un punto*/
   GetTitulosPunto(id:any): Observable<any> {
     return this.clientHttp.get(API_URL+"titulosdepunto/" + id, { responseType: 'text' })
+  }
+
+  GetTitulosPadre(id:any): Observable<any> {
+    return this.clientHttp.get(API_URL+"tituloPadre/" + id, { responseType: 'text' })
   }
 
   /**extrae los datos de un titulo + nombre del punto a que pertenece e id*/
@@ -49,12 +61,25 @@ export class TituloscrudService {
     return this.clientHttp.request(req);
   }
 
+  UpdateSubtituloService(formulario: any, id: any): Observable<any> {
+    const req = new HttpRequest('PUT', API_URL + "subtitulo/"+ id, formulario, {
+      reportProgress: true,
+      responseType: 'text'
+    });
+    return this.clientHttp.request(req);
+  }
+
   GetTitulosByPunto(id: any): Observable<any> {
     return this.clientHttp.get(API_URL + "titulosCompletos/" + id, { responseType: 'text' });
   }
 
   GetSubtitulosByTitulo(id: any): Observable<any> {
-    return this.clientHttp.get(API_URL + "subtitulosPortPunto/" + id, { responseType: 'text' });
+    return this.clientHttp.get(API_URL + "subtitulosPorTema/" + id, { responseType: 'text' });
+  }
+
+
+  GetTituloById(id:any): Observable<any> {
+    return this.clientHttp.get(API_URL+"titulo/" + id, { responseType: 'text' })
   }
 
 

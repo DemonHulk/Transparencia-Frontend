@@ -57,7 +57,6 @@ import { AdministrarOrdenComponent } from './components/tables/list-puntos/admin
 import { PasswordRecoveryComponent } from './components/forms/password-recovery/password-recovery.component';
 import { AcercaDeComponent } from './components/acerca-de/acerca-de.component';
 import { ContenidoSubtemaComponent } from './components/tables/list-puntos/details-punto/subtemas/contenido-subtema/contenido-subtema.component';
-import { SubtemaItemComponent } from './components/tables/list-puntos/details-punto/subtemas/contenido-subtema/subtema-item/subtema-item.component';
 
 
 @NgModule({
@@ -107,7 +106,6 @@ import { SubtemaItemComponent } from './components/tables/list-puntos/details-pu
     PasswordRecoveryComponent,
     AcercaDeComponent,
     ContenidoSubtemaComponent,
-    SubtemaItemComponent,
   ],
   imports: [
     BrowserModule,
