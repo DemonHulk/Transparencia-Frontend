@@ -107,9 +107,11 @@ export class ContenidoItemComponent  implements OnInit {
 
   }
 
-  scrollToTitle(texto: any) {
+  scrollToTitle(texto: string) {
     setTimeout(() => {
-      const headings = this.el.nativeElement.querySelectorAll('h2');
+      // Seleccionar elementos 'h2' y 'h4'
+      const headings = this.el.nativeElement.querySelectorAll('h2, h4');
+
       headings.forEach((heading: HTMLElement) => {
         if (heading.textContent && heading.textContent.trim() === texto) {
           // Obtener las coordenadas del elemento
@@ -133,5 +135,6 @@ export class ContenidoItemComponent  implements OnInit {
       });
     });
   }
+
 
 }
