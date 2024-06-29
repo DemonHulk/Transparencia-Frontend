@@ -1,4 +1,4 @@
-<div class="hs-accordion" id="hs-basic-with-arrow-heading-one">
+<div class="hs-accordion contenido-prev" id="hs-basic-with-arrow-heading-one">
   <button class="hs-accordion-toggle hs-accordion-active:text-primary-color-90 py-3 inline-flex items-center gap-x-3 w-full font-semibold text-start text-gray-800 hover:text-gray-500 rounded-lg disabled:opacity-50 disabled:pointer-events-none" aria-controls="hs-basic-with-arrow-collapse-one">
     <svg class="hs-accordion-active:hidden block size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <path d="m6 9 6 6 6-6"></path>
@@ -42,8 +42,8 @@
     <ng-container *ngIf="subtitulo?.tipo_contenido === 2">
       <div class="w-12/12">
         <div class="flex flex-col">
-          <div class="-m-1.5 overflow-x-auto">
-            <div class="p-1.5 min-w-full inline-block align-middle">
+          <div class="-m-1.5 ">
+            <div class="p-1.5 contenido-prev">
               <div class="border overflow-hidden">
                 <table class="min-w-full divide-y divide-gray-200 ">
                   <thead>
@@ -81,8 +81,8 @@
               <div class="w-12/12 my-4">
                 <h4 class="text-xl">Contenido del tema</h4>
               </div>
-              <div class="border border-2 pb-5 p-3 mb-5 border-gray-200 border-dashed rounded-lg">
-                <div class="rounded-sm border border-stroke bg-white px-5 pb-2.5 pt-6 shadow-default   sm:px-7.5 xl:pb-1">
+              <div class="p-1">
+                <div class="rounded-sm border border-stroke bg-white px-5 pb-2.5 pt-6 shadow-default overflow-x-auto   sm:px-7.5 xl:pb-1">
                   <!-- Inicio del codigo de la tabla contenido dinamico -->
                   <div class="max-w-full">
                     <div class="border-b border-gray-200">
@@ -978,8 +978,8 @@
     <ng-container *ngIf="subtitulo?.tipo_contenido === 1">
       <div class="w-12/12 ">
         <div class="flex flex-col">
-          <div class="-m-1.5 overflow-x-auto">
-            <div class="p-1.5 min-w-full inline-block align-middle">
+          <div class="-m-1.5 ">
+            <div class="p-1.5 contenido-prev">
               <div class="border overflow-hidden ">
                 <table class="min-w-full divide-y divide-gray-200">
                   <thead>
@@ -1017,7 +1017,7 @@
               <div class="w-12/12 my-4">
                 <h4 class="text-xl">Contenido del tema</h4>
               </div>
-              <div class="contenido-prev border border-2 pb-5 p-3 mb-5 border-gray-200 border-dashed rounded-lg">
+              <div class="contenido-prev border border-2 pb-5 p-3 mb-5 border-gray-200 rounded-lg overflow-x-auto">
                 <div class="12/12 text-right" *ngIf="subtitulo.contenido.length == 0">
                   <a type="button" routerLink="/new-word-subtema/{{idPuntoEncrypt}}/{{encriptarId(subtitulo.fk_titulos)}}/{{encriptarId(subtitulo.id_titulo)}}"
                     class="py-1 my-1 mx-1 button-secondary px-1 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-primary-color text-white hover:bg-primary-color-90 disabled:opacity-50 disabled:pointer-events-none">
@@ -1026,20 +1026,20 @@
                   </a>
                 </div>
 
-                <div class=" flex-col justify-center items-center p-3 md:p-3">
-                  <div class="max-w-full">
+                <div class=" flex-col justify-center items-center p-3 md:p-3 ">
+                  <div class="max-w-full ">
                     <div class="flex flex-col mb-5" *ngIf="subtitulo.contenido.length > 0">
                       <div class="w-12/12 my-4">
                         <h4 class="text-xl">Información acerca del contenido</h4>
                       </div>
                       <div class="-m-1.5 overflow-x-auto">
-                        <div class="p-1.5 min-w-full inline-block align-middle">
-                          <div class="border rounded-lg overflow-hidden my-2">
+                        <div class="p-1.5 min-w-full inline-block align-middle ">
+                          <div class="border rounded-lg overflow-hidden my-2 ">
                             <p-table
                               [value]="subtitulo.contenido"
                               [showCurrentPageReport]="true"
                               [globalFilterFields]="['nombre', 'apellido1', 'apellido2']"
-                              [tableStyleClass]="'min-w-full divide-y'"
+                              [tableStyleClass]="'min-w-full divide-y '"
                               [resizableColumns]="true"
                             >
                               <ng-template pTemplate="header">
@@ -1292,20 +1292,19 @@
                 </div>
               </div>
               <!-- Parte para mostrar el contenido estatico -->
-              <div class="contenido-prev p-4 border-2 pb-5 my-3 border-gray-200 border-dashed rounded-lg" *ngIf="subtitulo.contenido.length > 0">
-                <div class="flex justify-between items-center w-full my-4">
+              <div class="p-4 border-2 pb-5 my-3 border-gray-200 rounded-lg " *ngIf="subtitulo.contenido.length > 0">
+                <div class="flex justify-between items-center w-full my-4 ">
                   <h4 class="text-xl">Visualización del Contenido</h4>
                   <a
                   *ngIf="subtitulo.contenido[0]?.activo"
                    type="button" routerLink="/edit-word-subtema/{{idPuntoEncrypt}}/{{ encriptarId(subtitulo.id_titulo) }}/{{ encriptarId(subtitulo.contenido[0].id_contenido_estatico)}}"
-                    class="py-3 my-2 mx-2 button-secondary px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-primary-color text-white hover:bg-primary-color-90 disabled:opacity-50 disabled:pointer-events-none">
+                    class="py-3  my-2 mx-2 button-secondary px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-primary-color text-white hover:bg-primary-color-90 disabled:opacity-50 disabled:pointer-events-none">
                     <i class="fas fa-edit"></i>
                     Modificar contenido
                   </a>
                 </div>
 
                 <div class="contenido-prev" [innerHTML]="getSafeHtml(subtitulo.contenido[0].contenido)">
-
                 </div>
               </div>
             </div>
@@ -1320,12 +1319,12 @@
 <ng-container *ngIf="subtitulo.subtitulos && subtitulo.subtitulos.length > 0">
 
   <ng-container *ngFor="let subtituloitem of subtitulo.subtitulos">
-    <div class="border border-2 pb-5 p-3 mb-5 border-gray-200 border-dashed rounded-lg">
+    <div class="border border-2 pb-5 p-3 mb-5 border-gray-200 border-separate rounded-lg">
+
       <div class="hs-accordion-group">
         <app-contenido-subtema [subtitulo]="subtituloitem"></app-contenido-subtema>
       </div>
-    </div>
-
+      </div>
   </ng-container>
 </ng-container>
 <ng-container *ngIf="subtitulo.length === 0">
