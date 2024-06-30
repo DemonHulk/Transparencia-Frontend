@@ -344,13 +344,12 @@
                           </p>
                         </td>
                         <td class="px-3 py-2 text-sm max-w-[600px] text-gray-800 hs-tooltip text-elipsis">
-                          <p>{{ historial?.descripcion }}</p>
+                          <p [innerHTML]="historial.descripcion"></p>
                           <div
                             class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible hidden opacity-0 transition-opacity absolute invisible z-10 max-w-xs bg-white border border-gray-100 text-start rounded-lg shadow-md mt-2 left-1/2 transform -translate-x-1/2"
                             role="tooltip">
                             <div class="py-3 px-4 text-wrap">
-                              <p class="mt-2 text-sm text-gray-600 text-wrap">
-                                {{historial?.descripcion}}
+                              <p class="mt-2 text-sm text-gray-600 text-wrap" [innerHTML]="historial.descripcion">
                               </p>
                             </div>
                           </div>
@@ -638,13 +637,13 @@
                           </p>
                         </td>
                         <td class="px-3 py-2 text-sm max-w-[600px] text-gray-800 hs-tooltip text-elipsis">
-                          <p>{{ historial?.descripcion }}</p>
+                          <p [innerHTML]="historial.descripcion"></p>
                           <div
                             class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible hidden opacity-0 transition-opacity absolute invisible z-10 max-w-xs bg-white border border-gray-100 text-start rounded-lg shadow-md mt-2 left-1/2 transform -translate-x-1/2"
                             role="tooltip">
                             <div class="py-3 px-4 text-wrap">
-                              <p class="mt-2 text-sm text-gray-600 text-wrap">
-                                {{historial?.descripcion}}
+                              <p class="mt-2 text-sm text-gray-600 text-wrap" [innerHTML]="historial.descripcion">
+                                
                               </p>
                             </div>
                           </div>

@@ -6,6 +6,7 @@ import { HistorialcrudService } from '../../../services/crud/historialcrud.servi
 import { Historial, TooltipManager } from '../../../services/api-config';
 import { AlertsServiceService } from '../../../services/alerts/alerts-service.service';
 import { Table } from 'primeng/table';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 
 
@@ -32,7 +33,7 @@ export class ListHistorialComponent {
     private flasher: AlertsServiceService,
     private HistorialcrudService: HistorialcrudService,
     private el: ElementRef,
-    
+    private sanitizer: DomSanitizer
   ){
     this.sharedService.setLoading(true);
   }
@@ -174,4 +175,9 @@ export class ListHistorialComponent {
   encriptarId(id:any){
     return this.CryptoServiceService.encodeID(id);
   }
+
+  sanitizeDescription(description: string): SafeHtml {
+    return this.sanitizer.bypassSecurityTrustHtml(description);
+  }
+  
 }
