@@ -168,8 +168,7 @@ transform h-full max-w-xs w-full z-[80] bg-white border-s" tabindex="-1">
               Departamento responsable: {{mensaje.nombre_area}}
             </p>
             <hr>
-            <p class="text-gray-80">
-              {{ mensaje.descripcion }}
+            <p class="text-gray-80" [innerHTML]="mensaje.descripcion">
             </p>
           </div>
         </div>

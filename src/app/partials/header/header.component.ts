@@ -4,6 +4,7 @@ import { SharedValuesService } from '../../services/shared-values.service';
 import { FechaService } from '../../services/format/fecha.service'; 
 import { Historial } from '../../services/api-config';
 import { HistorialcrudService } from '../../services/crud/historialcrud.service';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 
 @Component({
@@ -27,6 +28,7 @@ export class HeaderComponent implements OnInit{
     private FechaService: FechaService,
     private HistorialcrudService: HistorialcrudService,
     private el: ElementRef,
+    private sanitizer: DomSanitizer
     
   ){}
 
@@ -111,6 +113,10 @@ export class HeaderComponent implements OnInit{
       fecha_string: this.FechaService.formatDate(historial.fecha_actualizado),
       tiempo_transcurrido: this.calcularDiferenciaTiempo(historial.fecha_creacion, historial.hora_creacion)
     };
+  }
+
+  sanitizeDescription(description: string): SafeHtml {
+    return this.sanitizer.bypassSecurityTrustHtml(description);
   }
 
   calcularDiferenciaTiempo(fecha_creacion: string, hora_creacion: string): string {
