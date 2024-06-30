@@ -1,0 +1,22 @@
+<li class="hs-accordion min-h-[60px] border items-center" [id]="'accordion-' + item.id_titulo">
+  <button
+    (click)="onItemClick()"
+     [ngClass]="{'bg-secondary-color': isActive(), 'font-bold': isActive(),'text-white': isActive()}"
+    class="hs-accordion-toggle  flex items-center gap-x-3.5 py-2 px-2.5 text-sm  hover:border-secondary-color w-full  min-h-[60px]">
+    {{item.nombre_titulo}}
+    <svg *ngIf="item.subtitulos && item.subtitulos.length > 0" class="w-3 h-3 ml-auto hs-accordion-active:rotate-180" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+
+  <div [id]="'accordion-child-' + item.id_titulo" class="hs-accordion-content w-full overflow-hidden transition-[height] duration-300 hidden" *ngIf="item.subtitulos && item.subtitulos.length > 0">
+    <ul>
+      <app-recursive-nav-item
+        *ngFor="let subtitulo of item.subtitulos"
+        [item]="subtitulo"
+        [activeItemId]="activeItemId"
+        (itemSelected)="itemSelected.emit($event)">
+      </app-recursive-nav-item>
+    </ul>
+  </div>
+</li>

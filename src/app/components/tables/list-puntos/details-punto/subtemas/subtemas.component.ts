@@ -7,6 +7,7 @@ import { CryptoServiceService } from '../../../../../services/cryptoService/cryp
 import { AlertsServiceService } from '../../../../../services/alerts/alerts-service.service';
 import { TituloscrudService } from '../../../../../services/crud/tituloscrud.service';
 import { Subscription, finalize } from 'rxjs';
+import { HSAccordion } from 'preline';
 
 @Component({
   selector: 'app-subtemas',
@@ -62,19 +63,22 @@ export class SubtemasComponent {
       if(data != null){
         if(data.key == 'cargarInfo'){
           if(data.bool){
-          this.sharedService.setLoading(true);
 
-            this.getTitulosByPunto();
+            this.loadContent(this.activeItemId);
           }
         }
 
       }
+    });
+    document.addEventListener('DOMContentLoaded', function () {
+      HSAccordion.autoInit();
     });
 
   }
 
   titulo: any;
   subtitulo: any = [];  // Inicializar como un arreglo vacío
+  activeItemId: string | number | null = null;
 
   getTitulosByPunto() {
     const encryptedID = this.encodeService.encryptData(JSON.stringify(this.idTema));
@@ -91,6 +95,10 @@ export class SubtemasComponent {
           this.titulo = decryptedResponse.titulo;
 
           this.subtitulo = JSON.parse(decryptedResponse.subtitulos)[0];
+          this.activeItemId = this.subtitulo.subtitulos ? this.subtitulo.subtitulos[0].id_titulo: null;
+          if(this.activeItemId != null){
+            this.loadContent(this.activeItemId);
+          }
           window.HSStaticMethods.autoInit();
           this.sharedService.changeTitle('Administrar subtemas de ' + this.titulo?.nombre_titulo);
         },
@@ -101,5 +109,38 @@ export class SubtemasComponent {
       );
   }
 
+  selectedItem: any; // El ítem seleccionado actualmente
+  itemFlag: any;
+
+  onItemSelected(item: any) {
+    this.selectedItem = item;
+    if(item != this.activeItemId){
+      this.loadContent(item);
+      this.activeItemId = item;
+    }
+  }
+
+  contenidoSubtema: any;
+
+  loadContent(item: any) {
+    const encryptedID = this.encodeService.encryptData(JSON.stringify(item));
+    this.TituloscrudService.GetSubtituloData(encryptedID)
+      .pipe(
+        finalize(() => {
+          // Código que se ejecuta siempre, independientemente de si hubo éxito o error
+          this.sharedService.setLoading(false);
+        })
+      )
+      .subscribe(
+        (respuesta: any) => {
+          const decryptedResponse = this.encodeService.decryptData(respuesta);
+          this.contenidoSubtema = decryptedResponse.resultado;
+        },
+        (error) => {
+          // Manejo de errores si es necesario
+          this.sharedService.updateErrorLoading(this.el, { message: "/administrar-subtemas/"+this.idPuntoEncrypt+"/"+this.idTema });
+        }
+      );
+  }
 
 }

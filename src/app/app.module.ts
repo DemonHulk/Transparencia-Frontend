@@ -57,6 +57,7 @@ import { AdministrarOrdenComponent } from './components/tables/list-puntos/admin
 import { PasswordRecoveryComponent } from './components/forms/password-recovery/password-recovery.component';
 import { AcercaDeComponent } from './components/acerca-de/acerca-de.component';
 import { ContenidoSubtemaComponent } from './components/tables/list-puntos/details-punto/subtemas/contenido-subtema/contenido-subtema.component';
+import { RecursiveNavItemComponent } from './components/tables/list-puntos/details-punto/subtemas/recursive-nav-item/recursive-nav-item.component';
 
 
 @NgModule({
@@ -106,6 +107,7 @@ import { ContenidoSubtemaComponent } from './components/tables/list-puntos/detai
     PasswordRecoveryComponent,
     AcercaDeComponent,
     ContenidoSubtemaComponent,
+    RecursiveNavItemComponent,
   ],
   imports: [
     BrowserModule,

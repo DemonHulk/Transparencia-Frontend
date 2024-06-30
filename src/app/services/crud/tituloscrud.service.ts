@@ -37,6 +37,10 @@ export class TituloscrudService {
     return this.clientHttp.get(API_URL+"tituloPadre/" + id, { responseType: 'text' })
   }
 
+  GetSubtituloData(id:any): Observable<any> {
+    return this.clientHttp.get(API_URL+"subtituloData/" + id, { responseType: 'text' })
+  }
+
   /**extrae los datos de un titulo + nombre del punto a que pertenece e id*/
   GettitulosmaspuntoService(id:any): Observable<any> {
     return this.clientHttp.get(API_URL+"titulosmaspunto/" + id, { responseType: 'text' })
