@@ -29,16 +29,15 @@
  * @tailwind utilities;
  * Esta línea se utiliza para importar las reglas de utilidad de CSS desde el marco Tailwind CSS. Asegura que las reglas de utilidad como flex, grid y margin se apliquen de manera consistente a lo largo del proyecto.
  */
-@layer tailwind-base, primeng, tailwind-utilities;
-
-@layer tailwind-base {
-    @tailwind base;
-}
-
-@layer tailwind-utilities {
-    @tailwind components;
-    @tailwind utilities;
-}
+ @layer tailwind-base, primeng, tailwind-utilities;
+ @layer tailwind-base {
+ @tailwind base;
+ }
+ @layer primeng;
+ @layer tailwind-utilities {
+ @tailwind components;
+ @tailwind utilities;
+ }
 
 
 /* Colores */
