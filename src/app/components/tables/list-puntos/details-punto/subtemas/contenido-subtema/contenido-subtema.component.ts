@@ -79,12 +79,13 @@ window.HSStaticMethods.autoInit();
   ActivateTitulo(id: any) {
     this.flasher.reactivar().then((confirmado) => {
       if (confirmado) {
+        this.sharedService.setLoading(true);
 
 
         // Enviamos la id encriptada
         const encryptedID = this.encodeService.encryptData(JSON.stringify(id));
         this.TituloscrudService.ActivateTituloService(encryptedID).subscribe(respuesta => {
-          this.flasher.success(this.encodeService.decryptData(respuesta).resultado?.data);
+          this.flasher.success("Subtema activado");
           setTimeout(() => {
           this.sharedService.sendData({key:'cargarInfo', bool: true});
 
@@ -98,12 +99,13 @@ window.HSStaticMethods.autoInit();
   DeleteTitulo(id: any) {
     this.flasher.eliminar().then((confirmado) => {
       if (confirmado) {
+        this.sharedService.setLoading(true);
 
 
         // Enviamos la id encriptada
         const encryptedID = this.encodeService.encryptData(JSON.stringify(id));
         this.TituloscrudService.DeleteTituloService(encryptedID).subscribe(respuesta => {
-          this.flasher.success(this.encodeService.decryptData(respuesta).resultado?.data);
+          this.flasher.success("Subtema desactivado");
           setTimeout(() => {
             this.sharedService.sendData({key:'cargarInfo', bool: true});
             this.sharedService.setLoading(false);
