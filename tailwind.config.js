@@ -1,8 +1,9 @@
-/** @type {import('tailwindcss').Config} */
+// tailwind.config.js
 module.exports = {
-  content: ["./src/**/*.{html,js}",
-  './node_modules/preline/preline.js',
-  'node_modules/preline/dist/*.js',
+  mode: 'jit',
+  content: [
+    "./src/**/*.{html,js,ts,jsx,tsx}",
+    "./node_modules/preline/dist/*.js",
   ],
   theme: {
     extend: {
@@ -13,14 +14,22 @@ module.exports = {
         'input-bord-color': '#E5E7EB',
         'input-focus-color': '#000',
         'secondary-color': '#04847C',
-        'color-active':'#47B0A4',
-        'hr-color':'#47B0A4',
-        'validator-error':'#EF4444'
+        'color-active': '#47B0A4',
+        'hr-color': '#47B0A4',
+        'validator-error': '#EF4444'
       },
     },
   },
   plugins: [
-    require('@tailwindcss/forms'),
-    require('preline/plugin')
+    require('@tailwindcss/forms')({
+      strategy: 'class',
+    }),
+    require('preline/plugin'),
   ],
-}
+  variants: {
+    extend: {
+      backgroundColor: ['active', 'hover'],
+      textColor: ['active', 'hover'],
+    },
+  },
+};

@@ -50,13 +50,11 @@ export class SharedValuesService {
   }
 
   updateErrorLoading(el: ElementRef, data: any): void {
-    window.scrollTo(0, 0);
     const safeHtmlContent = this.getComponentHtml(ErrorLoadingComponent, data);
     el.nativeElement.innerHTML = this.sanitizer.sanitize(SecurityContext.HTML, safeHtmlContent) || '';
   }
 
   changeTitle(title: string) {
-    window.scrollTo(0, 0);
     this.titleSource.next(title);
   }
 
