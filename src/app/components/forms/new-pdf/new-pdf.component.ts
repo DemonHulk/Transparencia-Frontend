@@ -46,6 +46,8 @@ this.id_punto = this.activateRoute.snapshot.paramMap.get('punto');
 
 // Verificar si estamos en la ruta con 'tema' o con 'subtema'
 if (this.activateRoute.snapshot.paramMap.has('tema') && !this.activateRoute.snapshot.paramMap.has('subtema')) {
+  this.es_tema = true;
+
   this.id_tema = this.activateRoute.snapshot.paramMap.get('tema');
   // Desencriptar ID de tema y punto
   this.id_tema = this.encodeService.decodeID(this.id_tema);
@@ -53,7 +55,6 @@ if (this.activateRoute.snapshot.paramMap.has('tema') && !this.activateRoute.snap
   this.datosUsuario = this.encodeService.desencriptarDatosUsuario();
 
   this.id_temaEnviar = this.id_tema;
-  this.es_tema = true;
 
   // Verificar si la ID es null, si es así, redirige a la página de puntos
   if (this.id_tema === null) {

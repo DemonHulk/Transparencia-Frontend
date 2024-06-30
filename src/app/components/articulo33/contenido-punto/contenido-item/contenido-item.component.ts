@@ -100,11 +100,8 @@ export class ContenidoItemComponent  implements OnInit {
   ngOnChanges(changes: SimpleChanges) {
       if (changes['buscar']){
         const buscarChange: SimpleChange = changes['buscar'];
-
             this.scrollToTitle(this.buscar);
         }
-
-
   }
 
   scrollToTitle(texto: string) {
