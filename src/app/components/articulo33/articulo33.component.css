@@ -1,29 +1,3 @@
-@media (min-width: 639px) {
-  .hs-dropdown-menu {
-    width: 100vw;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-  .btn-puntos{
-    display: none;
-  }
-
-  .lista-puntos{
-    display: block;
-  }
-
-}
-
-@media (max-width: 768px) {
-
-  .lista-puntos{
-    display: none;
-  }
-  .btn-puntos{
-    display: block;
-  }
-
-}
 
 @media (max-width: 1023px) {
   .btn-sidebar{
