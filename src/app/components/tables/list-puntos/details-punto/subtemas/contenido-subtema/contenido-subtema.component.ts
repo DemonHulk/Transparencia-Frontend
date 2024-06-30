@@ -57,6 +57,8 @@ export class ContenidoSubtemaComponent {
       const subtituloChange: SimpleChange = changes['subtitulo'];
       this.subtitulo = subtituloChange.currentValue;
       this.calcularPdf();
+      this.idTema = this.subtitulo.id_titulo;
+      this.idTemaEncrypt = this.encodeService.encodeID(this.subtitulo.id_titulo);
       setTimeout(() => {
         window.HSStaticMethods.autoInit();
         });
@@ -66,14 +68,11 @@ export class ContenidoSubtemaComponent {
     setTimeout(() => {
     window.HSStaticMethods.autoInit();
     });
-
     // Verificar que this.subtitulo no sea undefined antes de asignar valores
     if (this.subtitulo) {
       this.idTema = this.subtitulo.id_titulo;
       this.idTemaEncrypt = this.encodeService.encodeID(this.subtitulo.id_titulo);
     }
-
-
   }
 
   calcularPdf(){
