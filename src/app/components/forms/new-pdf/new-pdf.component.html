@@ -1,5 +1,5 @@
 <div class="12/12 text-right my-5">
-  <ol class="flex items-center whitespace-nowrap">
+  <ol class="flex items-center whitespace-nowrap" *ngIf="es_tema">
     <li class="inline-flex items-center">
       <a class="flex items-center text-sm text-gray-500 hover:text-color-active focus:outline-none focus:text-color-active" routerLink="/puntos">
         Puntos
@@ -18,12 +18,51 @@
     </li>
     <li class="inline-flex items-center text-sm font-semibold text-gray-800 truncate" aria-current="page">
       Nuevo documento
-    </li>  </ol>
+    </li>
+  </ol>
+  <ol class="flex items-center whitespace-nowrap" *ngIf="!es_tema">
+    <li class="inline-flex items-center">
+      <a class="flex items-center text-sm text-gray-500 hover:text-color-active focus:outline-none focus:text-color-active"
+        routerLink="/puntos">
+        Puntos
+        <svg class="flex-shrink-0 mx-2 overflow-visible size-4 text-gray-400" xmlns="http://www.w3.org/2000/svg"
+          width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path d="m9 18 6-6-6-6"></path>
+        </svg>
+      </a>
+    </li>
+    <li class="inline-flex items-center">
+      <a class="flex items-center text-sm text-gray-500 hover:text-color-active focus:outline-none focus:text-color-active"
+        routerLink="/details-punto/{{encriptarId(id_punto)}}">
+        Detalles punto
+        <svg class="flex-shrink-0 mx-2 overflow-visible size-4 text-gray-400" xmlns="http://www.w3.org/2000/svg"
+          width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path d="m9 18 6-6-6-6"></path>
+        </svg>
+      </a>
+    </li>
+    <li class="inline-flex items-center">
+      <a class="flex items-center text-sm text-gray-500 hover:text-color-active focus:outline-none focus:text-color-active"
+        routerLink="/administrar-subtemas/{{encriptarId(id_punto)}}/{{idTemaEncrypt}}">
+        Administrar subtemas
+        <svg class="flex-shrink-0 mx-2 overflow-visible size-4 text-gray-400" xmlns="http://www.w3.org/2000/svg"
+          width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path d="m9 18 6-6-6-6"></path>
+        </svg>
+      </a>
+    </li>
+    <li class="inline-flex items-center text-sm font-semibold text-gray-800 truncate" aria-current="page">
+      Nuevo documento
+    </li>
+  </ol>
 </div>
 <div class="bg-white p-8 border border-gray-200 rounded-lg shadow-lg max-w-2xl mx-auto my-10">
   <h3 class="my-2 text-left">Nuevo Documento</h3>
   <hr class="w-full mb-2 border-hr-color">
-  <form class="grid grid-cols-1 gap-y-6 gap-x-4" [formGroup]="FormAltaContenido" (ngSubmit)="SaveContenido()"> 
+  <form class="grid grid-cols-1 gap-y-6 gap-x-4" [formGroup]="FormAltaContenido" (ngSubmit)="SaveContenido()">
     <!-- Input para el nombre interno del documento -->
     <div class="sm:col-span-2">
       <label for="nombreExterno" class="font-poppins">Nombre Externo del Documento</label>
@@ -168,7 +207,7 @@
         <div *ngIf="FormAltaContenido.get('archivo')?.errors?.['pattern']" class="text-sm text-validator-error mt-1">El archivo seleccionado no es un pdf valido.</div>
       </div>
     </div>
-    
+
 
     <!-- Select para seleccionar el trimestre -->
     <div class="sm:col-span-2">

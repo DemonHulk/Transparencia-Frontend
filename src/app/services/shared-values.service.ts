@@ -1,4 +1,4 @@
-import { ApplicationRef, ComponentFactoryResolver, ComponentRef, ElementRef, Inject, Injectable, Injector, PLATFORM_ID, Renderer2, RendererFactory2, SecurityContext, Type, ViewContainerRef, createComponent } from '@angular/core';
+import { ApplicationRef, ComponentRef, ElementRef, Inject, Injectable, Injector, PLATFORM_ID, Renderer2, RendererFactory2, SecurityContext, Type, createComponent } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { ErrorLoadingComponent } from '../partials/error-loading/error-loading.component';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
@@ -15,7 +15,6 @@ export class SharedValuesService {
 
   constructor(
     private rendererFactory: RendererFactory2,
-    private componentFactoryResolver: ComponentFactoryResolver,
     private appRef: ApplicationRef,
     private injector: Injector,
     private sanitizer: DomSanitizer,
@@ -50,13 +49,11 @@ export class SharedValuesService {
   }
 
   updateErrorLoading(el: ElementRef, data: any): void {
-    window.scrollTo(0, 0);
     const safeHtmlContent = this.getComponentHtml(ErrorLoadingComponent, data);
     el.nativeElement.innerHTML = this.sanitizer.sanitize(SecurityContext.HTML, safeHtmlContent) || '';
   }
 
   changeTitle(title: string) {
-    window.scrollTo(0, 0);
     this.titleSource.next(title);
   }
 

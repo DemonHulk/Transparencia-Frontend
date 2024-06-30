@@ -5,6 +5,8 @@ import { FechaService } from '../../../../../services/format/fecha.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { CryptoServiceService } from '../../../../../services/cryptoService/crypto-service.service';
 import { AlertsServiceService } from '../../../../../services/alerts/alerts-service.service';
+import { TituloscrudService } from '../../../../../services/crud/tituloscrud.service';
+import { Subscription, finalize } from 'rxjs';
 
 @Component({
   selector: 'app-subtemas',
@@ -27,9 +29,10 @@ export class SubtemasComponent {
     private router: Router,
     private encodeService: CryptoServiceService,
     private flasher: AlertsServiceService,
+    private TituloscrudService: TituloscrudService,
+
   ){
     this.sharedService.setLoading(true);
-    this.sharedService.changeTitle('Administrar subtemas del tema: ');
 
      //Tomas la id de la URL
      this.idPunto = this.activateRoute.snapshot.paramMap.get("punto");
@@ -49,6 +52,54 @@ export class SubtemasComponent {
      if (this.idTema === null) {
       this.router.navigateByUrl("/details-punto/"+this.idPuntoEncrypt);
     }
-    this.sharedService.setLoading(false);
   }
+  private subscription!: Subscription;
+
+
+  ngOnInit(){
+    this.getTitulosByPunto();
+    this.subscription = this.sharedService.data$.subscribe(data => {
+      if(data != null){
+        if(data.key == 'cargarInfo'){
+          if(data.bool){
+          this.sharedService.setLoading(true);
+
+            this.getTitulosByPunto();
+          }
+        }
+
+      }
+    });
+
+  }
+
+  titulo: any;
+  subtitulo: any = [];  // Inicializar como un arreglo vacío
+
+  getTitulosByPunto() {
+    const encryptedID = this.encodeService.encryptData(JSON.stringify(this.idTema));
+    this.TituloscrudService.GetSubtitulosByTitulo(encryptedID)
+      .pipe(
+        finalize(() => {
+          // Código que se ejecuta siempre, independientemente de si hubo éxito o error
+          this.sharedService.setLoading(false);
+        })
+      )
+      .subscribe(
+        (respuesta: any) => {
+          const decryptedResponse = this.encodeService.decryptData(respuesta);
+          this.titulo = decryptedResponse.titulo;
+
+          this.subtitulo = JSON.parse(decryptedResponse.subtitulos)[0];
+          window.HSStaticMethods.autoInit();
+          this.sharedService.changeTitle('Administrar subtemas de ' + this.titulo?.nombre_titulo);
+        },
+        (error) => {
+          // Manejo de errores si es necesario
+          this.sharedService.updateErrorLoading(this.el, { message: "/administrar-subtemas/"+this.idPuntoEncrypt+"/"+this.idTema });
+        }
+      );
+  }
+
+
 }

@@ -33,9 +33,6 @@ export class NewTemaComponent {
     private router: Router,
     private PuntocrudService: PuntocrudService,
     private TituloscrudService: TituloscrudService
-
-
-
   ) {
 
     //Tomas la id de la URL

@@ -29,16 +29,15 @@
  * @tailwind utilities;
  * Esta línea se utiliza para importar las reglas de utilidad de CSS desde el marco Tailwind CSS. Asegura que las reglas de utilidad como flex, grid y margin se apliquen de manera consistente a lo largo del proyecto.
  */
-@layer tailwind-base, primeng, tailwind-utilities;
-
-@layer tailwind-base {
-    @tailwind base;
-}
-
-@layer tailwind-utilities {
-    @tailwind components;
-    @tailwind utilities;
-}
+ @layer tailwind-base, primeng, tailwind-utilities;
+ @layer tailwind-base {
+ @tailwind base;
+ }
+ @layer primeng;
+ @layer tailwind-utilities {
+ @tailwind components;
+ @tailwind utilities;
+ }
 
 
 /* Colores */
@@ -291,9 +290,19 @@ input[type="checkbox"] {
 }
 
 .contenido-prev {
-  max-width: 98vw;
-  word-wrap: break-word; /* Permite que las palabras se rompan automáticamente */
-  flex-wrap: wrap; /* Permite que el contenido se ajuste al contenedor */
+  max-width: 98vw !important;
+  word-wrap: break-word !important; /* Permite que las palabras se rompan automáticamente */
+  flex-wrap: wrap !important; /* Permite que el contenido se ajuste al contenedor */
+  overflow: auto !important;
+  box-sizing: border-box !important;
+  flex-wrap: wrap !important;
+}
+.p-datatable-wrapper{
+  overflow-x: auto !important;
+}
+table, p-table{
+  overflow-x: auto !important;
+  color: rebeccapurple !important;
 }
 
 tr > .p-element svg{
@@ -342,4 +351,10 @@ table{
 .contenido-link:hover {
   text-decoration: underline;
   color: rgba(var(--secondary-color),0.8) !important;
+}
+
+.h6-ellipsis {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }

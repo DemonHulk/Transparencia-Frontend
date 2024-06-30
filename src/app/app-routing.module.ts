@@ -32,7 +32,6 @@ import { NewEjercicioComponent } from './components/forms/new-ejercicio/new-ejer
 import { EditEjercicioComponent } from './components/forms/edit-ejercicio/edit-ejercicio.component';
 import { EditWordComponent } from './components/forms/edit-word/edit-word.component';
 import { SubtemasComponent } from './components/tables/list-puntos/details-punto/subtemas/subtemas.component';
-import { PasswordRecoveryComponent } from './components/forms/password-recovery/password-recovery.component';
 import { AdministrarOrdenComponent } from './components/tables/list-puntos/administrar-orden/administrar-orden.component';
 import { AcercaDeComponent } from './components/acerca-de/acerca-de.component';
 
@@ -45,11 +44,12 @@ const routes: Routes = [
   {path: 'login', component:LoginComponent, canActivate: [authGuardGuard]},
   {path: 'articulo33', component:Articulo33Component},
   {path: 'new-pdf/:punto/:tema', component:NewPdfComponent, canActivate: [authGuardGuard], data: { openToAll: true } },
+  {path: 'new-pdf-subtema/:punto/:tema/:subtema', component:NewPdfComponent, canActivate: [authGuardGuard], data: { openToAll: true } },
   {path: 'new-punto', component:NewPuntoComponent , canActivate: [authGuardGuard], data: { allowedAreas: ['1'] }},
   {path: 'new-area', component:NewAreaComponent, canActivate: [authGuardGuard], data: { allowedAreas: ['1'] }},
   {path: 'new-trimestre', component:NewTrimestreComponent, canActivate: [authGuardGuard], data: { allowedAreas: ['1'] }},
   {path: 'new-tema/:punto', component:NewTemaComponent, canActivate: [authGuardGuard], data: { openToAll: true } },
-  {path: 'new-subtema/:tema', component:NewSubtemaComponent, canActivate: [authGuardGuard], data: { openToAll: true } },
+  {path: 'new-subtema/:punto/:tema', component:NewSubtemaComponent, canActivate: [authGuardGuard], data: { openToAll: true } },
   {path: 'new-usuario', component:NewUsuarioComponent, canActivate: [authGuardGuard], data: { allowedAreas: ['1'] }},
   {path: 'new-ejercicio', component:NewEjercicioComponent, canActivate: [authGuardGuard], data: { allowedAreas: ['1'] }},
   {path: 'edit-area/:id', component:EditAreaComponent, canActivate: [authGuardGuard], data: { allowedAreas: ['1'] }},
@@ -57,7 +57,8 @@ const routes: Routes = [
   {path: 'edit-punto/:id', component:EditPuntoComponent, canActivate: [authGuardGuard], data: { allowedAreas: ['1'] }},
   {path: 'edit-tema/:id', component:EditTemaComponent, canActivate: [authGuardGuard], data: { openToAll: true } },
   {path: 'edit-pdf/:punto/:contenido', component:EditPdfComponent, canActivate: [authGuardGuard], data: { openToAll: true } },
-  {path: 'edit-subtema/:tema/:id', component:EditSubtemaComponent, canActivate: [authGuardGuard], data: { openToAll: true } },
+  {path: 'edit-pdf-subtema/:punto/:tema/:contenido', component:EditPdfComponent, canActivate: [authGuardGuard], data: { openToAll: true } },
+  {path: 'edit-subtema/:punto/:tema/:id', component:EditSubtemaComponent, canActivate: [authGuardGuard], data: { openToAll: true } },
   {path: 'edit-perfil', component:EditPerfilComponent, canActivate: [authGuardGuard], data: { openToAll: true } },
   {path: 'edit-usuario/:id', component:EditUsuarioComponent, canActivate: [authGuardGuard], data: { allowedAreas: ['1'] }},
   {path: 'edit-ejercicio/:id', component:EditEjercicioComponent, canActivate: [authGuardGuard], data: { allowedAreas: ['1'] }},
@@ -70,11 +71,13 @@ const routes: Routes = [
   {path: 'details-punto/:id', component:DetailsPuntoComponent, canActivate: [authGuardGuard], data: { openToAll: true } },
   {path: 'details-usuario/:id', component:DetailsUsuarioComponent, canActivate: [authGuardGuard], data: { allowedAreas: ['1'] }},
   {path: 'new-word/:punto/:tema', component:NewWordComponent, canActivate: [authGuardGuard], data: { openToAll: true }},
+  {path: 'new-word-subtema/:punto/:tema/:subtema', component:NewWordComponent, canActivate: [authGuardGuard], data: { openToAll: true }},
   {path: 'edit-word/:punto/:contenido', component:EditWordComponent, canActivate: [authGuardGuard], data: { openToAll: true } },
+  {path: 'edit-word-subtema/:punto/:subtema/:contenido', component:EditWordComponent, canActivate: [authGuardGuard], data: { openToAll: true }},
   {path: 'administrar-subtemas/:punto/:tema', component:SubtemasComponent, canActivate: [authGuardGuard], data: { openToAll: true } },
   {path: 'acerca-de', component:AcercaDeComponent},
   {path: 'administrar-orden-puntos', component:AdministrarOrdenComponent, canActivate: [authGuardGuard], data: { allowedAreas: ['1'] }},
-  
+
 
   {path: '**', component:PageNotFoundComponent},
 ];
