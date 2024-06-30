@@ -152,10 +152,12 @@ export class DetailsPuntoComponent {
       respuesta => {
         this.ListTitulos = this.encodeService.decryptData(respuesta)?.resultado?.data;
         this.sharedService.setLoading(false);
-        if(this.tituloSeleccionado > 0){
-          this.onTemaSeleccionado(this.tituloSeleccionado, this.tipoContenidoSeleccionado, this.temaSeleccionado);
-        }else{
-          this.onTemaSeleccionado(this.ListTitulos[0].id_titulo, this.ListTitulos[0].tipo_contenido, 0);
+        if(this.ListTitulos && this.ListTitulos.length > 0){
+          if(this.tituloSeleccionado > 0){
+            this.onTemaSeleccionado(this.tituloSeleccionado, this.tipoContenidoSeleccionado, this.temaSeleccionado);
+          }else{
+            this.onTemaSeleccionado(this.ListTitulos[0].id_titulo, this.ListTitulos[0].tipo_contenido, 0);
+          }
         }
       },
       error => {

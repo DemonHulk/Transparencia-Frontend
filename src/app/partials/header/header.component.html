@@ -84,7 +84,93 @@
           <a class="font-medium mx-3" routerLink="/articulo33" *ngIf="sesionActiva" (click)="cerrarSesion()">Cerrar sesión</a>
         </div>
       </div>
+      <a type="button" *ngIf="administrador"
+      (click)="GetAllHistorialNoVistoService()"
+        class="m-1 ms-0 py-3 px-4 inline-flex items-center gap-x-2 text-sm rounded-lg border border-transparent
+        disabled:pointer-events-none relative"
+        data-hs-overlay="#hs-overlay-right"
+        [title]="mensajesNuevos">
+        Notificaciones 
+        <span *ngIf="mensajesNuevos" class="bg-red-500 rounded-full h-2 w-2 absolute right-0 top-0 mr-1 mt-1"></span>
+      </a>
     </div>
   </nav>
 </header>
 
+<div id="hs-overlay-right" class="hs-overlay hs-overlay-open:translate-x-0 hidden translate-x-full fixed top-0 end-0 transition-all duration-300 transform h-full max-w-lg w-full z-[80] bg-white border-s" tabindex="-1">
+  <div class="flex justify-between items-center py-3 px-4 border-b">
+    <div> 
+      <h3 class="font-bold text-gray-800 ">
+      Notificaciones
+    </h3>
+    <a routerLink="/historial" class="hover:text-gray-500">ver más <i class="fa-solid fa-circle-chevron-down"></i></a>
+    </div>
+    
+    <button type="button" class="flex justify-center items-center size-7 text-sm font-semibold rounded-full border border-transparent text-gray-800 hover:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-white">
+      <span class="sr-only">Close modal</span>
+      <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M18 6 6 18"></path>
+        <path d="m6 6 12 12"></path>
+      </svg>
+    </button>
+  </div>
+  <div class="p-4">
+    <!-- Inicio de acordeones -->
+    <ng-container *ngIf="ListHistorialActivos?.length === 0">
+      <div class="min-h-60 flex flex-col bg-white rounded-xl">
+        <div
+          class="flex flex-auto flex-col justify-center items-center p-4 md:p-5"
+        >
+          <svg
+            class="size-10 text-gray-500"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <line x1="22" x2="2" y1="12" y2="12"></line>
+            <path
+              d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"
+            ></path>
+            <line x1="6" x2="6.01" y1="16" y2="16"></line>
+            <line x1="10" x2="10.01" y1="16" y2="16"></line>
+          </svg>
+          <p class="mt-2 text-sm text-gray-800">
+            No hay nuevas modificaciónes.
+          </p>
+        </div>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="ListHistorialActivos?.length! > 0">
+      <div class="hs-accordion-group">
+        <div *ngFor="let mensaje of ListHistorialActivos" class="hs-accordion" [id]="'hs-basic-with-arrow-heading-' + mensaje.id_historial">
+          <button class="hs-accordion-toggle hs-accordion-active:text-blue-600 py-3 inline-flex items-center gap-x-3 w-full font-semibold text-start 
+          text-gray-800 hover:text-gray-500 rounded-lg disabled:opacity-50 disabled:pointer-events-none" 
+          [attr.aria-controls]="'hs-basic-with-arrow-collapse-' + mensaje.id_historial"
+          (click)="VerMensaje(mensaje.id_historial)"
+          >
+            <svg class="hs-accordion-active:hidden block size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m6 9 6 6 6-6"></path>
+            </svg>
+            <svg class="hs-accordion-active:block hidden size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m18 15-6-6-6 6"></path>
+            </svg>
+            {{ mensaje.accion }} - Hace {{ mensaje.tiempo_transcurrido }}
+          </button>
+          <div [id]="'hs-basic-with-arrow-collapse-' + mensaje.id_historial" class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300" [attr.aria-labelledby]="'hs-basic-with-arrow-heading-' + mensaje.id_historial">
+            <p class="text-gray-80">
+              {{ mensaje.descripcion }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    
+    <!-- Fin de acordeones -->
+  </div>
+</div>

@@ -57,6 +57,7 @@ import { AdministrarOrdenComponent } from './components/tables/list-puntos/admin
 import { AcercaDeComponent } from './components/acerca-de/acerca-de.component';
 import { ContenidoSubtemaComponent } from './components/tables/list-puntos/details-punto/subtemas/contenido-subtema/contenido-subtema.component';
 import { RecursiveNavItemComponent } from './components/tables/list-puntos/details-punto/subtemas/recursive-nav-item/recursive-nav-item.component';
+import { ListHistorialComponent } from './components/tables/list-historial/list-historial.component';
 
 
 @NgModule({
@@ -104,8 +105,6 @@ import { RecursiveNavItemComponent } from './components/tables/list-puntos/detai
     SubtemasComponent,
     AdministrarOrdenComponent,
     AcercaDeComponent,
-    ContenidoSubtemaComponent,
-    RecursiveNavItemComponent,
   ],
   imports: [
     BrowserModule,
