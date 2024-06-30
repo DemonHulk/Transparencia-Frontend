@@ -600,7 +600,7 @@
                                           <div class="flex items-center space-x-3.5">
                                             <!-- Agregar el boton del ojo y el descargar -->
                                             <button
-                                            (click)="openPDF(pdf?.id_contenido_dinamico, pdf?.nombre_interno_documento)"
+                                            (click)="openPDF(pdf?.id_contenido_dinamico)"
                                             (mouseenter)="mostrar($event.target)"
                                             (mouseleave)="mostrar($event.target)"
                                             class="hover:text-primary"
@@ -1035,7 +1035,7 @@
                                         <td class="px-3 py-2 text-sm text-gray-800">
                                           <div class="flex items-center space-x-3.5">
                                             <button
-                                            (click)="openPDF(pdf?.id_contenido_dinamico, pdf?.nombre_interno_documento)"
+                                            (click)="openPDF(pdf?.id_contenido_dinamico)"
                                             (mouseenter)="mostrar($event.target)"
                                             (mouseleave)="mostrar($event.target)"
                                             class="hover:text-primary"

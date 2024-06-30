@@ -33,7 +33,9 @@ export class ListHistorialComponent {
     private HistorialcrudService: HistorialcrudService,
     private el: ElementRef,
     
-  ){}
+  ){
+    this.sharedService.setLoading(true);
+  }
 
   ngOnInit(): void {
     //  Buscamos si existen nuevos mensajes del historial

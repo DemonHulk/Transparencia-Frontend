@@ -153,6 +153,7 @@ export class HeaderComponent implements OnInit{
       setTimeout(() => {
           this.sharedService.setLoading(false);
         window.HSStaticMethods.autoInit();
+        this.mensajesNuevos = false;
       }, 500);
     });
   }

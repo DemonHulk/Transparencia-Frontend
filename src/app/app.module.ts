@@ -105,6 +105,9 @@ import { ListHistorialComponent } from './components/tables/list-historial/list-
     SubtemasComponent,
     AdministrarOrdenComponent,
     AcercaDeComponent,
+    ListHistorialComponent,
+    ContenidoSubtemaComponent,
+    RecursiveNavItemComponent
   ],
   imports: [
     BrowserModule,

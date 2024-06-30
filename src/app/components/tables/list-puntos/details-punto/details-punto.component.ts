@@ -357,12 +357,10 @@ export class DetailsPuntoComponent {
   }
 
   // Funcion para visualizar los documentos
-  openPDF(id_documento_dinamico: any, nombre_interno_documento: string) {
-    console.log(nombre_interno_documento);
+  openPDF(id_documento_dinamico: any) {
     const encryptedName = this.encodeService.encryptData(JSON.stringify(id_documento_dinamico));
     this.ContenidocrudService.getPDF(encryptedName).subscribe({
       next: (response: any) => {
-        console.log(response);
         
         // Convertir los datos a Uint8Array si no lo son ya
         const uint8Array = response.data instanceof Uint8Array ? response.data : new Uint8Array(response.data);
