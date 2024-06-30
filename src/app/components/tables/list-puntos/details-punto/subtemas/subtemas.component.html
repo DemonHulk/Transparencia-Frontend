@@ -238,13 +238,13 @@
   <ng-container *ngIf="subtitulo.subtitulos && subtitulo.subtitulos.length > 0; else content">
     <div class="flex h-screen overflow-hidden">
       <!-- Sidebar -->
-      <div class="w-64 bg-white border-r border-gray-200 border">
+      <div class="w-64 bg-white border-r border-gray-200 border lista-puntos">
         <div class="h-full flex flex-col">
           <div class="px-6 py-4">
             <a class="text-xl font-semibold dark:text-white" href="#" aria-label="Brand">Subtemas</a>
           </div>
 
-          <nav class="flex-1 overflow-y-auto">
+          <nav class="flex-1 overflow-y-auto ">
             <ul class="hs-accordion-group" data-hs-accordion-always-open>
               <app-recursive-nav-item *ngFor="let subtituloItem of subtitulo.subtitulos" [item]="subtituloItem"
                 [activeItemId]="activeItemId" (itemSelected)="onItemSelected($event)">
@@ -264,6 +264,18 @@
               class="button-secondary py-3 my-2 mx-2 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-primary-color text-white hover:bg-primary-color-90 disabled:opacity-50 disabled:pointer-events-none">
               <i class="fa fa-plus" aria-hidden="true"></i>
               Agregar subtema
+            </button>
+            <div class="w-full flex justify-end">
+              <button type="button"
+                class="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent button-secondary btn-puntos disabled:opacity-50 disabled:pointer-events-none"
+                data-hs-overlay="#offcanvas-puntos">
+                Mostrar puntos
+              </button>
+            </div>
+            <button type="button" id="boton-persistente" class="btn-puntos" data-hs-overlay="#offcanvas-puntos">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M11 7l-5 5 5 5M13 7l5 5-5 5" />
+              </svg>
             </button>
           </div>
           <!-- Aquí va el contenido de tu página -->
@@ -286,6 +298,7 @@
         <i class="fa fa-plus" aria-hidden="true"></i>
         Agregar subtema
       </button>
+
     </div>
     <div
       class="flex flex-auto flex-col justify-center items-center p-4 md:p-5 h-screen border-dashed border-2 mb-4 rounded-lg">
@@ -307,3 +320,51 @@
 
 
 </ng-template>
+
+<div id="offcanvas-puntos"
+  class="hs-overlay hs-overlay-open:translate-x-0 hidden -translate-x-full fixed top-0 start-0 transition-all duration-300 transform h-full max-w-xs w-full z-[80] bg-white border-e"
+  tabindex="-1">
+  <div class="flex justify-between items-center py-3 px-4 border-b">
+    <h3 class="font-bold text-gray-800">Subtemas</h3>
+    <button type="button"
+      class="flex justify-center items-center size-7 text-sm font-semibold rounded-full border border-transparent text-gray-800 hover:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none"
+      data-hs-overlay="#offcanvas-puntos">
+      <span class="sr-only">Close modal</span>
+      <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M18 6 6 18"></path>
+        <path d="m6 6 12 12"></path>
+      </svg>
+    </button>
+  </div>
+  <div class="offcanvas-content flex-grow">
+    <div class="w-full my-2">
+      <div class="flex flex-col ">
+        <nav class="flex-1 overflow-y-auto ">
+          <ul class="hs-accordion-group" data-hs-accordion-always-open>
+            <app-recursive-nav-item *ngFor="let subtituloItem of subtitulo.subtitulos" [item]="subtituloItem"
+              [activeItemId]="activeItemId" (itemSelected)="onItemSelected($event)">
+            </app-recursive-nav-item>
+          </ul>
+        </nav>
+      </div>
+      <ng-container *ngIf="subtitulo.subtitulos && subtitulo.subtitulos.length === 0">
+        <div class="flex flex-auto flex-col justify-center items-center p-4 md:p-5 border h-screen">
+          <svg class="size-10 text-gray-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round"
+            stroke-linejoin="round">
+            <line x1="22" x2="2" y1="12" y2="12"></line>
+            <path
+              d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z">
+            </path>
+            <line x1="6" x2="6.01" y1="16" y2="16"></line>
+            <line x1="10" x2="10.01" y1="16" y2="16"></line>
+          </svg>
+          <p class="mt-2 text-sm text-gray-800">
+            No hay información disponible.
+          </p>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>
