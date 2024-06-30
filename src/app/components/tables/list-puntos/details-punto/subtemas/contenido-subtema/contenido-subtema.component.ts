@@ -40,7 +40,6 @@ export class ContenidoSubtemaComponent {
     private encodeService: CryptoServiceService,
 
   ){
-    window.HSStaticMethods.autoInit();
 
      //Tomas la id de la URL
      this.idPunto = this.activateRoute.snapshot.paramMap.get("punto");
@@ -52,8 +51,7 @@ export class ContenidoSubtemaComponent {
   ListpdfsInactivos: (PDF & { fecha_string: string })[] = [];
 
   ngOnInit() {
-    window.HSStaticMethods.autoInit();
-
+window.HSStaticMethods.autoInit();
     // Verificar que this.subtitulo no sea undefined antes de asignar valores
     if (this.subtitulo) {
         this.idTema = this.subtitulo.id_titulo;
@@ -91,7 +89,6 @@ export class ContenidoSubtemaComponent {
           this.sharedService.sendData({key:'cargarInfo', bool: true});
 
             this.sharedService.setLoading(false);
-            window.HSStaticMethods.autoInit();
           }, 500);
         });
       }
@@ -110,7 +107,6 @@ export class ContenidoSubtemaComponent {
           setTimeout(() => {
             this.sharedService.sendData({key:'cargarInfo', bool: true});
             this.sharedService.setLoading(false);
-            window.HSStaticMethods.autoInit();
           }, 500);
         });
       }
@@ -236,7 +232,6 @@ export class ContenidoSubtemaComponent {
           setTimeout(() => {
 
             this.sharedService.setLoading(false);
-            window.HSStaticMethods.autoInit();
           }, 500);
         });
       }
@@ -256,7 +251,6 @@ export class ContenidoSubtemaComponent {
           setTimeout(() => {
 
             this.sharedService.setLoading(false);
-            window.HSStaticMethods.autoInit();
           }, 500);
         });
       }
@@ -276,7 +270,6 @@ export class ContenidoSubtemaComponent {
 
             setTimeout(() => {
               this.sharedService.setLoading(false);
-              window.HSStaticMethods.autoInit();
             }, 500);
           });
         }
@@ -294,7 +287,6 @@ export class ContenidoSubtemaComponent {
 
             setTimeout(() => {
               this.sharedService.setLoading(false);
-              window.HSStaticMethods.autoInit();
             }, 500);
           });
         }
