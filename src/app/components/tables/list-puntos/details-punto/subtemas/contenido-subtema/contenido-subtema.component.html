@@ -6,7 +6,13 @@
     <svg class="hs-accordion-active:block hidden size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <path d="m18 15-6-6-6 6"></path>
     </svg>
-     {{subtitulo?.nombre_titulo}}
+     <p class=" rounded-full  bg-opacity-10 px-3 py-1 text-sm font-medium"
+      [title]="subtitulo?.activo ? 'Activo' : 'Inactivo'"
+        [ngClass]="{'bg-green-500 text-green-500': subtitulo?.activo, 'bg-red-500 text-red-500': !subtitulo?.activo}"
+      >
+      {{subtitulo?.nombre_titulo}}
+
+      </p>
   </button>
   <div id="hs-basic-with-arrow-collapse-one" class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300" aria-labelledby="hs-basic-with-arrow-heading-one">
     <div class="12/12 text-right">
