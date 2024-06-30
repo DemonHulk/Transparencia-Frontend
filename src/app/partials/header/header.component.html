@@ -82,11 +82,11 @@
           </div>
           <a type="button" *ngIf="administrador"
                     (click)="GetAllHistorialNoVistoService()"
-                      class="m-1 ms-0 py-3 px-4 inline-flex items-center gap-x-2 text-sm rounded-lg border border-transparent
-                      disabled:pointer-events-none relative pointer-events-cursor"
-                      data-hs-overlay="#hs-overlay-right">
+                      class="flex items-center relative w-fullfont-medium mx-3 pointer-events-cursor"
+                      data-hs-overlay="#hs-overlay-right"
+                      >
                       Notificaciones 
-                      <span *ngIf="mensajesNuevos" class="bg-red-500 rounded-full h-2 w-2 absolute right-0 top-0 mr-1 mt-1"></span>
+                      <span *ngIf="mensajesNuevos" class="bg-red-500 rounded-full h-2 w-2  right-0 top-0 mb-1 ml-1 mr-1 mt-1"></span>
                   </a>
           <a class="font-medium mx-3" routerLink="/login" routerLinkActive="underline" *ngIf="!sesionActiva">Iniciar sesión</a>
           <a class="font-medium mx-3" routerLink="/articulo33" *ngIf="sesionActiva" (click)="cerrarSesion()">Cerrar sesión</a>
