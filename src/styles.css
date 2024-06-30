@@ -385,7 +385,11 @@ table{
   height: 24px;
   fill: white;
 }
-
+.svg-puntos{
+  width: 24px;
+  height: 24px;
+  fill: white;
+}
 
 @media (max-width: 768px) {
 
