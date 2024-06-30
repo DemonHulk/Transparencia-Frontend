@@ -137,6 +137,7 @@ export class ContenidoEstatico {
 export class Historial {
   id_historial!: number;
   accion!: string;
+  nombre_area!: string;
   tabla!: string;
   id_registro!: number;
   descripcion!: string;

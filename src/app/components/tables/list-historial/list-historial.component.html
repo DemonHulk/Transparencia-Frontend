@@ -264,7 +264,7 @@
                     [rows]="5"
                     currentPageReportTemplate="Mostrando {first} al {last} de {totalRecords} registros"
                     [showCurrentPageReport]="true"
-                    [globalFilterFields]="['accion', 'descripcion', 'fecha_string']"
+                    [globalFilterFields]="['accion', 'descripcion', 'nombre_area', 'fecha_string']"
                     [tableStyleClass]="'min-w-full divide-y'"
                     [resizableColumns]="true"
                   >
@@ -279,6 +279,15 @@
                         >
                           <div class="flex">
                             Accion <p-sortIcon field="accion"></p-sortIcon>
+                          </div>
+                        </th>
+                        <th
+                          scope="col"
+                          class="px-6 py-3 text-start text-xs text-white uppercase bg-table-header-color"
+                          pSortableColumn="nombre_area"
+                        >
+                          <div class="flex">
+                            Área Responsable <p-sortIcon field="nombre_area"></p-sortIcon>
                           </div>
                         </th>
                         <th
@@ -316,10 +325,22 @@
                           </p>
                         </td>
                         <td class="px-3 py-2 text-sm text-gray-800">
-                            <p class="font-medium text-black">
-                              {{ historial.descripcion }}
-                            </p>
-                          </td>
+                          <p class="font-medium text-black">
+                            {{ historial.nombre_area }}
+                          </p>
+                        </td>
+                        <td class="px-3 py-2 text-sm max-w-[600px] text-gray-800 hs-tooltip text-elipsis">
+                          <p>{{ historial?.descripcion }}</p>
+                          <div
+                            class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible hidden opacity-0 transition-opacity absolute invisible z-10 max-w-xs bg-white border border-gray-100 text-start rounded-lg shadow-md mt-2 left-1/2 transform -translate-x-1/2"
+                            role="tooltip">
+                            <div class="py-3 px-4 text-wrap">
+                              <p class="mt-2 text-sm text-gray-600 text-wrap">
+                                {{historial?.descripcion}}
+                              </p>
+                            </div>
+                          </div>
+                        </td>
                         <td class="px-3 py-2 text-sm text-gray-800">
                           {{ historial.fecha_string }}
                         </td>
@@ -537,7 +558,7 @@
                     [rows]="5"
                     currentPageReportTemplate="Mostrando {first} al {last} de {totalRecords} registros"
                     [showCurrentPageReport]="true"
-                    [globalFilterFields]="['accion', 'fecha_string']"
+                    [globalFilterFields]="['accion', 'descripcion', 'nombre_area',  'fecha_string']"
                     [tableStyleClass]="'min-w-full divide-y'"
                     [resizableColumns]="true"
                   >
@@ -552,6 +573,24 @@
                         >
                           <div class="flex">
                             Acción <p-sortIcon field="accion"></p-sortIcon>
+                          </div>
+                        </th>
+                        <th
+                          scope="col"
+                          class="px-6 py-3 text-start text-xs text-white uppercase bg-table-header-color"
+                          pSortableColumn="nombre_area"
+                        >
+                          <div class="flex">
+                            Área Responsable <p-sortIcon field="nombre_area"></p-sortIcon>
+                          </div>
+                        </th>
+                        <th
+                          scope="col"
+                          class="px-6 py-3 text-start text-xs text-white uppercase bg-table-header-color"
+                          pSortableColumn="descripcion"
+                        >
+                          <div class="flex">
+                            Descripción <p-sortIcon field="descripcion"></p-sortIcon>
                           </div>
                         </th>
                         <th
@@ -576,8 +615,25 @@
                       <tr class="divide-x divide-gray-200">
                         <td class="px-3 py-2 text-sm text-gray-800">
                           <p class="font-medium text-black">
+                            {{ historial.accion }}
+                          </p>
+                        </td>
+                        <td class="px-3 py-2 text-sm text-gray-800">
+                          <p class="font-medium text-black">
                             {{ historial.nombre_area }}
                           </p>
+                        </td>
+                        <td class="px-3 py-2 text-sm max-w-[600px] text-gray-800 hs-tooltip text-elipsis">
+                          <p>{{ historial?.descripcion }}</p>
+                          <div
+                            class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible hidden opacity-0 transition-opacity absolute invisible z-10 max-w-xs bg-white border border-gray-100 text-start rounded-lg shadow-md mt-2 left-1/2 transform -translate-x-1/2"
+                            role="tooltip">
+                            <div class="py-3 px-4 text-wrap">
+                              <p class="mt-2 text-sm text-gray-600 text-wrap">
+                                {{historial?.descripcion}}
+                              </p>
+                            </div>
+                          </div>
                         </td>
                         <td class="px-3 py-2 text-sm text-gray-800">
                           {{ historial.fecha_string }}

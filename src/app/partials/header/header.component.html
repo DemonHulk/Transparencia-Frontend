@@ -80,19 +80,19 @@
               </div>
             </div>
           </div>
+          <a type="button" *ngIf="administrador"
+                    (click)="GetAllHistorialNoVistoService()"
+                      class="m-1 ms-0 py-3 px-4 inline-flex items-center gap-x-2 text-sm rounded-lg border border-transparent
+                      disabled:pointer-events-none relative"
+                      data-hs-overlay="#hs-overlay-right"
+                      [title]="mensajesNuevos">
+                      Notificaciones 
+                      <span *ngIf="mensajesNuevos" class="bg-red-500 rounded-full h-2 w-2 absolute right-0 top-0 mr-1 mt-1"></span>
+                  </a>
           <a class="font-medium mx-3" routerLink="/login" routerLinkActive="underline" *ngIf="!sesionActiva">Iniciar sesión</a>
           <a class="font-medium mx-3" routerLink="/articulo33" *ngIf="sesionActiva" (click)="cerrarSesion()">Cerrar sesión</a>
         </div>
       </div>
-      <a type="button" *ngIf="administrador"
-      (click)="GetAllHistorialNoVistoService()"
-        class="m-1 ms-0 py-3 px-4 inline-flex items-center gap-x-2 text-sm rounded-lg border border-transparent
-        disabled:pointer-events-none relative"
-        data-hs-overlay="#hs-overlay-right"
-        [title]="mensajesNuevos">
-        Notificaciones 
-        <span *ngIf="mensajesNuevos" class="bg-red-500 rounded-full h-2 w-2 absolute right-0 top-0 mr-1 mt-1"></span>
-      </a>
     </div>
   </nav>
 </header>
@@ -160,9 +160,13 @@
             <svg class="hs-accordion-active:block hidden size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="m18 15-6-6-6 6"></path>
             </svg>
-            {{ mensaje.accion }} - Hace {{ mensaje.tiempo_transcurrido }}
+             Se realizó la siguiente acción {{ mensaje.accion }} - Hace {{ mensaje.tiempo_transcurrido }}
           </button>
           <div [id]="'hs-basic-with-arrow-collapse-' + mensaje.id_historial" class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300" [attr.aria-labelledby]="'hs-basic-with-arrow-heading-' + mensaje.id_historial">
+            <p class="text-gray-80">
+              Departamento responsable: {{mensaje.nombre_area}}
+            </p>
+            <hr>
             <p class="text-gray-80">
               {{ mensaje.descripcion }}
             </p>

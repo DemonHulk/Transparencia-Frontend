@@ -24,6 +24,8 @@ export class EditSubtemaComponent {
   porcentajeEnvio: number = 0;
   mostrarSpinner: boolean = false;
   mensaje = "Actualizando...";
+  datosUsuario: any;
+
   constructor(public sharedService: SharedValuesService,
     private activateRoute: ActivatedRoute,
     private router: Router,
@@ -32,8 +34,9 @@ export class EditSubtemaComponent {
     private el: ElementRef,
     private TituloscrudService: TituloscrudService,
     private flasher: AlertsServiceService,
-    private encodeService: CryptoServiceService,
+    private encodeService: CryptoServiceService
   ) {
+    this.datosUsuario = this.encodeService.desencriptarDatosUsuario();
     this.FormAltaSubtema = this.formulario.group({
       nombreTitulo: ['',
         [
@@ -58,7 +61,11 @@ export class EditSubtemaComponent {
         [
           Validators.required,
         ],
-
+        ],
+        id_usuario: [this.datosUsuario?.id_usuario,
+          [
+            Validators.required,
+          ],
         ]
     });
 
@@ -82,7 +89,6 @@ ngOnInit(): void {
     this.idSubtema = this.activateRoute.snapshot.paramMap.get("id");
     this.idPunto = this.activateRoute.snapshot.paramMap.get("punto");
     this.idPuntoEncrypt = this.idPunto;
-
     this.idTema = this.activateRoute.snapshot.paramMap.get("tema");
     this.idTemaEncrypt = this.idTema;
 

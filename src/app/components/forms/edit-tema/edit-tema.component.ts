@@ -19,7 +19,7 @@ export class EditTemaComponent {
   ListTitulo: any;
   data_usuariosacceso: any;
   FormAltaTema:FormGroup;
-
+  datosUsuario: any;
   constructor(
     public sharedService: SharedValuesService,
     public formulario: FormBuilder,
@@ -34,7 +34,7 @@ export class EditTemaComponent {
     //Tomas la id de la URL
     this.id = this.activateRoute.snapshot.paramMap.get("id");
     this.idEncrypt = this.id;
-
+    this.datosUsuario = this.encodeService.desencriptarDatosUsuario();
     //Desencriptar la ID
     this.id = this.encodeService.decodeID(this.id);
 
@@ -67,7 +67,12 @@ export class EditTemaComponent {
         [
           Validators.required,
         ],
-      ]
+      ],
+      id_usuario: [this.datosUsuario?.id_usuario,
+        [
+          Validators.required,
+        ],
+      ],
     });
 
   }

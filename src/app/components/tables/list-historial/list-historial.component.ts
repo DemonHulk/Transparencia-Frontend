@@ -111,7 +111,7 @@ export class ListHistorialComponent {
         const encryptedID = this.CryptoServiceService.encryptData(JSON.stringify(id));
         this.HistorialcrudService.DeleteHistorialService(encryptedID).subscribe(respuesta => {
           this.GetAllHistorialService();
-          this.flasher.success(this.CryptoServiceService.decryptData(respuesta).resultado?.data?.data);
+          this.flasher.success(this.CryptoServiceService.decryptData(respuesta).resultado?.data);
         });
       }
     });
@@ -124,7 +124,7 @@ export class ListHistorialComponent {
         const encryptedID = this.CryptoServiceService.encryptData(JSON.stringify(id));
         this.HistorialcrudService.ActivateHistorialService(encryptedID).subscribe(respuesta => {
           this.GetAllHistorialService();
-          this.flasher.success(this.CryptoServiceService.decryptData(respuesta).resultado?.data?.data);
+          this.flasher.success(this.CryptoServiceService.decryptData(respuesta).resultado?.data);
         });
       }
     });

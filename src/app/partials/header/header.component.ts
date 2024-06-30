@@ -101,14 +101,14 @@ export class HeaderComponent implements OnInit{
         }, 500);
       },
       (error) => {
-        this.sharedService.updateErrorLoading(this.el, { message: 'articulo33' });
+        // this.sharedService.updateErrorLoading(this.el, { message: 'articulo33' });
       }
     );
   }
   private addFormattedDate(historial: Historial): Historial & { fecha_string: string } {
     return {
       ...historial,
-      fecha_string: this.FechaService.formatDate(historial.fecha_creacion),
+      fecha_string: this.FechaService.formatDate(historial.fecha_actualizado),
       tiempo_transcurrido: this.calcularDiferenciaTiempo(historial.fecha_creacion, historial.hora_creacion)
     };
   }
