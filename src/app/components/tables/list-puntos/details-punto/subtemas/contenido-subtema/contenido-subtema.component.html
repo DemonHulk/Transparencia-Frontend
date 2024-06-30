@@ -1,4 +1,6 @@
-<h4 class="font-bold text-gray-900">{{subtitulo?.nombre_titulo}}</h4>
+<h4 class="rounded-full  bg-opacity-10 px-3 py-1 text-sm font-medium"
+   [ngClass]="{'bg-green-500 text-green-500': subtitulo?.activo, 'bg-red-500 text-red-500': !subtitulo?.activo}"
+>{{subtitulo?.nombre_titulo}}</h4>
 
     <div class="12/12 text-right">
 
