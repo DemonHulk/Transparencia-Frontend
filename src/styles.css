@@ -463,4 +463,5 @@ table{
 .hs-tooltip-content{
   height: auto !important;
   width: auto !important;
+  z-index: 100;
 }
