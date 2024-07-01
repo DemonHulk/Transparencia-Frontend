@@ -9,6 +9,7 @@ import { HttpEvent, HttpEventType } from '@angular/common/http';
 import { AlertsServiceService } from '../../../services/alerts/alerts-service.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TituloscrudService } from '../../../services/crud/tituloscrud.service';
+import { RawEditorOptions, Editor } from 'tinymce';
 
 @Component({
   selector: 'app-new-word',
@@ -119,6 +120,24 @@ export class NewWordComponent {
      * @memberof SharedValuesService
      */
     this.sharedService.changeTitle('Registrar nuevo contenido');
+
+
+    // Sobrescribir el método global de copia del portapapeles
+    document.addEventListener('copy', (e: ClipboardEvent) => {
+      e.preventDefault();
+      if (e.clipboardData) {
+        e.clipboardData.setData('text/plain', window.getSelection()?.toString() || '');
+      }
+    });
+
+    // Sobrescribir el método global de pegado del portapapeles
+    document.addEventListener('paste', (e: ClipboardEvent) => {
+      e.preventDefault();
+      if (e.clipboardData) {
+        const text = e.clipboardData.getData('text/plain');
+        document.execCommand('insertText', false, text);
+      }
+    });
   }
 
 
@@ -350,4 +369,43 @@ export class NewWordComponent {
   encriptarId(id: any) {
     return this.CryptoServiceService.encodeID(id);
   }
+
+  editorConfig: RawEditorOptions = {
+    language: 'es',
+    plugins: 'link table code lists paste',
+    toolbar: 'undo redo | bold italic underline | bullist | alignleft aligncenter alignright alignjustify | removeformat',
+    menubar: 'insert table',
+    table_toolbar: 'tabledelete | tableinsertrowbefore tableinsertrowafter tabledeleterow | tableinsertcolbefore tableinsertcolafter tabledeletecol',
+    style_formats: [
+      { title: 'Tabla sin bordes', selector: 'table', styles: { 'border-style': 'none' } },
+      { title: 'Celda sin fondo', selector: 'td', styles: { 'background-color': 'transparent' } }
+    ],
+    paste_data_images: false,
+    paste_as_text: true,
+    images_upload_handler: (blobInfo: any, progress: (percent: number) => void) => {
+      return Promise.reject('No se permiten imágenes');
+    },
+    setup: (editor: Editor) => {
+      editor.on('BeforeSetContent', (e) => {
+        e.content = this.removeImgTags(e.content);
+      });
+
+      editor.on('PastePreProcess', (e) => {
+        e.content = this.removeImgTags(e.content);
+      });
+
+      editor.on('drop', (e) => {
+        e.preventDefault();
+      });
+
+      editor.on('dragover', (e) => {
+        e.preventDefault();
+      });
+    }
+  };
+
+  removeImgTags(content: string): string {
+    return content.replace(/<img[^>]*>/g, '');
+  }
+
 }

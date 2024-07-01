@@ -70,21 +70,12 @@
 
   <form [formGroup]="FormAltaContent" (ngSubmit)="updateContent()">
   <editor apiKey="d83mhcjyadvqq1juq5fieuemnemagcsj2dbz5v6vls8oah8e"
-          [init]="{
-            language: 'es',
-            plugins: 'link table code lists',
-            toolbar: 'undo redo | bold italic underline | bullist | alignleft aligncenter alignright alignjustify | removeformat',
-            menubar: 'insert table',
-            table_toolbar: 'tabledelete | tableinsertrowbefore tableinsertrowafter tabledeleterow | tableinsertcolbefore tableinsertcolafter tabledeletecol',
-            style_formats: [
-              { title: 'Tabla sin bordes', selector: 'table', styles: { 'border-style': 'none' } },
-              { title: 'Celda sin fondo', selector: 'td', styles: { 'background-color': 'transparent' } }
-            ]
-          }" formControlName="htmlContent"
-           [ngClass]="{
-            'border-validator-error   focus:border-validator-error focus:ring-validator-error': FormAltaContent.get('htmlContent')?.invalid && (FormAltaContent.get('htmlContent')?.dirty || FormAltaContent.get('htmlContent')?.touched)
-            }">
-  </editor>
+  [init]="editorConfig"
+  formControlName="htmlContent"
+  [ngClass]="{
+    'border-validator-error focus:border-validator-error focus:ring-validator-error': FormAltaContent.get('htmlContent')?.invalid && (FormAltaContent.get('htmlContent')?.dirty || FormAltaContent.get('htmlContent')?.touched)
+  }">
+</editor>
 
     <div *ngIf="FormAltaContent.get('htmlContent')?.invalid && (FormAltaContent.get('htmlContent')?.dirty || FormAltaContent.get('htmlContent')?.touched)">
       <div *ngIf="FormAltaContent.get('htmlContent')?.errors?.['required']" class="text-sm text-validator-error mt-1">Este campo es requerido.</div>
