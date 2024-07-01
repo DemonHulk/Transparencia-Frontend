@@ -1,0 +1,13 @@
+.hs-tooltip-content{
+  word-wrap: break-word !important; /* Permite que las palabras se rompan automáticamente */
+  flex-wrap: wrap !important; /* Permite que el contenido se ajuste al contenedor */
+  box-sizing: border-box !important;
+  flex-wrap: wrap !important;
+}
+
+.text-wrap{
+  text-wrap: wrap !important;
+  word-wrap: break-word; /* Permite que las palabras se rompan automáticamente */
+  max-width: auto; /* Establece el ancho máximo automáticamente */
+  flex-wrap: wrap; /* Permite que el contenido se ajuste al contenedor */
+}
