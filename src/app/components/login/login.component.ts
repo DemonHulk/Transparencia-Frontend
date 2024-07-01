@@ -90,7 +90,6 @@ VerificarUser(): any {
     },
     (error) => {
       // Manejar el error critico
-      console.log(error);
       this.flasher.error("Hubo un error, Intente más tarde o notifique al soporte técnico.");
     }
   );

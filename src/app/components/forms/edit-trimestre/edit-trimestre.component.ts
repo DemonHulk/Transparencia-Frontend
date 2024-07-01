@@ -98,13 +98,13 @@ GetOneTrimestreService(id: any) {
           this.data_trimestre = decryptedData.resultado.data[0];
 
           // Actualizar el título del componente con el nombre del trimestre
-          this.sharedService.changeTitle('Modificar Trimestre: ' + this.data_trimestre?.trimestre);
+          this.sharedService.changeTitle('Modificar Trimestre: ' + this.data_trimestre?.trimestre +' '+this.data_trimestre?.ejercicio);
 
           // Asignar los valores recuperados al formulario FormAltaTrimestre
           this.FormAltaTrimestre.patchValue({
             id_trimestre: this.data_trimestre?.id_trimestre,
             trimestre: this.data_trimestre?.trimestre,
-            ejercicio: this.data_trimestre?.id_ejercicio
+            ejercicio: this.data_trimestre?.ejercicio_estado ? this.data_trimestre?.id_ejercicio: ''
           });
         } else {
           this.sharedService.updateErrorLoading(this.el, { message: 'edit-trimestre/'+this.idEncrypt });
@@ -170,7 +170,6 @@ GetOneTrimestreService(id: any) {
           }
         },
         error => {
-          console.log(error);
           this.mostrarSpinner = false; // Ocultar spinner en caso de error
           this.flasher.error("Hubo un error, Intente más tarde o notifique al soporte técnico.");
         }

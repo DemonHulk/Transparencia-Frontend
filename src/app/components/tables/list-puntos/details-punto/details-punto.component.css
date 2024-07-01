@@ -15,5 +15,4 @@
   word-wrap: break-word; /* Permite que las palabras se rompan automáticamente */
   max-width: auto; /* Establece el ancho máximo automáticamente */
   flex-wrap: wrap; /* Permite que el contenido se ajuste al contenedor */
-
 }

@@ -7,7 +7,6 @@ import { CryptoServiceService } from '../../../../../services/cryptoService/cryp
 import { AlertsServiceService } from '../../../../../services/alerts/alerts-service.service';
 import { TituloscrudService } from '../../../../../services/crud/tituloscrud.service';
 import { Subscription, finalize } from 'rxjs';
-import { HSAccordion } from 'preline';
 
 @Component({
   selector: 'app-subtemas',
@@ -69,9 +68,6 @@ export class SubtemasComponent {
         }
 
       }
-    });
-    document.addEventListener('DOMContentLoaded', function () {
-      HSAccordion.autoInit();
     });
 
   }

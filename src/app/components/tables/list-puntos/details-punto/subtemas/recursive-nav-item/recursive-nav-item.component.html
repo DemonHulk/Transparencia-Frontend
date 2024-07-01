@@ -4,8 +4,8 @@
      [ngClass]="{'bg-secondary-color': isActive(), 'font-bold': isActive(),'text-white': isActive()}"
     class="hs-accordion-toggle  flex items-center gap-x-3.5 py-2 px-2.5 text-sm  hover:border-secondary-color w-full  min-h-[60px]">
     {{item.nombre_titulo}}
-    <svg *ngIf="item.subtitulos && item.subtitulos.length > 0" class="w-3 h-3 ml-auto hs-accordion-active:rotate-180" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <svg *ngIf="item.subtitulos && item.subtitulos.length > 0" class="w-10 h-10 ml-auto hs-accordion-active:rotate-180" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
   </button>
 

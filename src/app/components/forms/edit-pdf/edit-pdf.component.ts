@@ -162,7 +162,7 @@ export class EditPdfComponent {
               nombreExterno: this.data_contenido?.nombre_externo_documento,
               nombreInterno: this.data_contenido?.nombre_interno_documento,
               descripcion: this.data_contenido?.descripcion,
-              id_trimestre: this.data_contenido?.id_trimestre,
+              id_trimestre: this.data_contenido.trimestre_estado ?  this.data_contenido?.id_trimestre : '',
               id_titulo: this.data_contenido?.id_titulo
             });
             this.sharedService.setLoading(false);

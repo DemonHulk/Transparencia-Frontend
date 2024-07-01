@@ -16,7 +16,7 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
   styleUrl: './list-historial.component.css'
 })
 export class ListHistorialComponent {
-  
+
   @ViewChild('dtActive') dtActive: Table | undefined;
   @ViewChild('dtInactive') dtInactive: Table | undefined;
 
@@ -25,7 +25,7 @@ export class ListHistorialComponent {
   ListHistorialInactivos: (Historial)[] = [];
   mensajesNuevos: boolean = false;
 
-  
+
   constructor(
     private CryptoServiceService: CryptoServiceService,
     public sharedService: SharedValuesService,
@@ -36,6 +36,8 @@ export class ListHistorialComponent {
     private sanitizer: DomSanitizer
   ){
     this.sharedService.setLoading(true);
+    this.sharedService.changeTitle('Historial de notificaciones');
+
   }
 
   ngOnInit(): void {
@@ -50,11 +52,11 @@ export class ListHistorialComponent {
       (respuesta: any) => {
         /* Desencriptamos la respuesta que nos retorna el backend */
         this.ListHistorial = this.CryptoServiceService.decryptData(respuesta).resultado?.map((historial: Historial) => this.addFormattedDate(historial));
-        
+
         // Filtrar las áreas activas
         this.ListHistorialActivos = this.ListHistorial.filter(historial => historial.activo === true);
         this.ListHistorialInactivos = this.ListHistorial.filter(historial => historial.activo === false);
-        
+
         // Indicar que todos los datos se han cargado
         setTimeout(() => {
           this.sharedService.setLoading(false);
@@ -132,7 +134,7 @@ export class ListHistorialComponent {
       }
     });
   }
-  
+
   /**
   * Actualiza la fecha de formato YYYY-MM-DD a
   */
@@ -156,7 +158,7 @@ export class ListHistorialComponent {
 
   mostrar(elemento: any): void {
     // Verifica si el elemento recibido es un botón
-    if (elemento.tagName.toLowerCase() === 'button') {
+    if (elemento.tagName.toLowerCase() === 'button' || elemento.tagName.toLowerCase() === 'a' ) {
       const tooltipElement = elemento.querySelector('.hs-tooltip');
       if (tooltipElement) {
         tooltipElement.classList.toggle('show');
@@ -179,5 +181,5 @@ export class ListHistorialComponent {
   sanitizeDescription(description: string): SafeHtml {
     return this.sanitizer.bypassSecurityTrustHtml(description);
   }
-  
+
 }

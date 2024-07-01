@@ -1,10 +1,11 @@
-import { ChangeDetectorRef, Component, ElementRef, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CryptoServiceService } from '../../services/cryptoService/crypto-service.service';
 import { SharedValuesService } from '../../services/shared-values.service';
-import { FechaService } from '../../services/format/fecha.service'; 
+import { FechaService } from '../../services/format/fecha.service';
 import { Historial } from '../../services/api-config';
 import { HistorialcrudService } from '../../services/crud/historialcrud.service';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -27,9 +28,9 @@ export class HeaderComponent implements OnInit{
     private sharedService: SharedValuesService,
     private FechaService: FechaService,
     private HistorialcrudService: HistorialcrudService,
-    private el: ElementRef,
+    private router: Router,
     private sanitizer: DomSanitizer
-    
+
   ){}
 
   ngOnInit(): void {
@@ -44,6 +45,9 @@ export class HeaderComponent implements OnInit{
     this.GetAllHistorialNoVistoService();
   }
 
+  isActive(route: string): boolean {
+    return this.router.url === route;
+  }
 
   // Función para verificar si la sesón esta activa
   verificarSesion() {
@@ -65,17 +69,17 @@ export class HeaderComponent implements OnInit{
         this.sesionActiva = false;
     }
   }
-  
+
   // Función para cerrar sesión
   cerrarSesion() {
     // Eliminar los datos del usuario del localStorage
     localStorage.removeItem('user');
-  
+
     // Actualizar el estado de la sesión
     this.sesionActiva = false;
     this.administrador = false;
 
-  
+
     // Reiniciar las variables de sesión después de un ciclo de cambios
     this.cdr.markForCheck();
   }
@@ -90,7 +94,7 @@ export class HeaderComponent implements OnInit{
       (respuesta: any) => {
         /* Desencriptamos la respuesta que nos retorna el backend */
         this.ListHistorial = this.CryptoServiceService.decryptData(respuesta).resultado?.map((historial: Historial) => this.addFormattedDate(historial));
-        
+
         // Filtrar las áreas activas
         this.ListHistorialActivos = this.ListHistorial.filter(historial => historial.visto === false);
         if(this.ListHistorialActivos[0] != null){

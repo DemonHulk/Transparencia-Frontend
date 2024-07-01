@@ -3,7 +3,7 @@
     <div class="12/12 text-right my-5 pointer-events-none mb-3">
       <ol class="flex items-center whitespace-nowrap animate-pulse">
         <li class="inline-flex items-center">
-          <a class="flex items-center  text-sm text-gray-500 hover:text-color-active focus:outline-none focus:text-color-active" routerLink="/areas">
+          <a class="flex items-center  text-sm text-gray-500 hover:text-color-active focus:outline-none focus:text-color-active" href="/areas">
             <div class="h-2.5 bg-gray-200 rounded-full w-28 animate-pulse"></div>
             <svg class="flex-shrink-0 mx-2 overflow-visible size-4 text-gray-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="m9 18 6-6-6-6"></path>
@@ -201,7 +201,7 @@
 <div class="12/12 text-right my-5">
   <ol class="flex items-center whitespace-nowrap">
     <li class="inline-flex items-center">
-      <a class="flex items-center text-sm text-gray-500 hover:text-color-active focus:outline-none focus:text-color-active" routerLink="/puntos">
+      <a class="flex items-center text-sm text-gray-500 hover:text-color-active focus:outline-none focus:text-color-active" href="/puntos">
         Puntos
         <svg class="flex-shrink-0 mx-2 overflow-visible size-4 text-gray-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="m9 18 6-6-6-6"></path>
@@ -260,15 +260,15 @@
   <h3 class="text-2xl">Contenido del punto</h3>
 </div>
 <div class="12/12 text-right">
-  <button type="button" routerLink="/new-tema/{{encriptarId(DataPunto?.id_punto)}}"
+  <a type="button" href="/new-tema/{{encriptarId(DataPunto?.id_punto)}}"
     class="py-3 my-2 button-secondary  px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-primary-color text-white hover:bg-primary-color-90 disabled:opacity-50 disabled:pointer-events-none ">
     <i class="fa fa-plus" aria-hidden="true"></i>
     Agregar tema
-  </button>
+  </a>
 </div>
 <ng-container *ngIf="ListTitulos.length > 0">
   <nav class="relative z-0 flex border rounded-xl overflow-hidden" aria-label="Tabs" role="tablist">
-    <button *ngFor="let tema of ListTitulos;let i = index" [ngClass]="{'active': isActive(i)}" type="button" (click)="onTemaSeleccionado(tema?.id_titulo, tema?.tipo_contenido, i)"
+    <a *ngFor="let tema of ListTitulos;let i = index" [ngClass]="{'active': isActive(i)}" type="button" (click)="onTemaSeleccionado(tema?.id_titulo, tema?.tipo_contenido, i)"
       class="text-elipsis hs-tab-active:border-b-primary-color hs-tab-active:text-gray-900  relative min-w-0 flex-1 bg-white first:border-s-0 border-s border-b-2 py-4 px-4 text-gray-500 hover:text-gray-700 text-sm font-medium text-center overflow-hidden hover:bg-gray-50 focus:z-10 focus:outline-none focus:text-primary-color disabled:opacity-50 disabled:pointer-events-none  hs-tooltip [--trigger:hover] inline-block"
       id="bar-with-underline-item-1" [attr.data-hs-tab]="'#bar-with-underline-' + i"
       [attr.aria-controls]="'bar-with-underline-' + i" role="tab">
@@ -281,45 +281,45 @@
       <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-3 px-4 bg-white border text-sm text-gray-600 rounded-lg shadow-md" role="tooltip">
         {{tema?.nombre_titulo}}
       </span>
-    </button>
+    </a>
   </nav>
   <div class="mt-3">
     <div *ngFor="let tema of ListTitulos;let i = index" id="bar-with-underline-{{i}}" [ngClass]="{'hidden': i !== 0}"
       role="tabpanel" aria-labelledby="bar-with-underline-item-1">
       <div class="12/12 text-right">
 
-        <button type="button" routerLink="/administrar-subtemas/{{idEncrypt}}/{{encriptarId(tema.id_titulo)}}"
+        <a type="button" href="/administrar-subtemas/{{idEncrypt}}/{{encriptarId(tema.id_titulo)}}"
         class="button-secondary py-3 my-2 mx-2 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-primary-color text-white hover:bg-primary-color-90 disabled:opacity-50 disabled:pointer-events-none">
         <i class="fa-solid fa-gear"></i>
         Administrar subtemas
-      </button>
+      </a>
 
-        <button type="button" routerLink="/edit-tema/{{encriptarId(tema.id_titulo)}}"
+        <a type="button" href="/edit-tema/{{encriptarId(tema.id_titulo)}}"
           class="button-secondary py-3 my-2 mx-2 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-primary-color text-white hover:bg-primary-color-90 disabled:opacity-50 disabled:pointer-events-none">
           <i class="fas fa-edit"></i>
           Modificar tema
-        </button>
+        </a>
 
-        <button type="button" *ngIf="tema.activo == true"
+        <a type="button" *ngIf="tema.activo == true"
           (click)="DeleteTitulo(tema.id_titulo)"
           class="button-secondary py-3 my-2 mx-2 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-primary-color text-white hover:bg-primary-color-90 disabled:opacity-50 disabled:pointer-events-none">
           <i class="fa fa-trash" aria-hidden="true"></i>
           Desactivar tema
-        </button>
+        </a>
 
-        <button type="button" *ngIf="tema.activo == false"
+        <a type="button" *ngIf="tema.activo == false"
           (click)="ActivateTitulo(tema.id_titulo)"
           class="button-secondary py-3 my-2 mx-2 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-primary-color text-white hover:bg-primary-color-90 disabled:opacity-50 disabled:pointer-events-none">
           <i class="fa-solid fa-arrow-rotate-left" aria-hidden="true"></i>
           Activar tema
-        </button>
+        </a>
 
       </div>
       <ng-container *ngIf="tema?.tipo_contenido === 2">
         <div class="w-12/12">
           <div class="flex flex-col">
             <div class="-m-1.5 overflow-x-auto">
-              <div class="p-1.5 min-w-full inline-block align-middle">
+              <div class="p-1.5 container-prev">
                 <div class="border overflow-hidden">
                   <table class="min-w-full divide-y divide-gray-200 ">
                     <thead>
@@ -363,7 +363,7 @@
                     <div class="max-w-full">
                       <div class="border-b border-gray-200">
                         <nav class="flex space-x-1" aria-label="Tabs" role="tablist">
-                          <button
+                          <a
                             type="button"
                             class="hs-tab-active:font-semibold hs-tab-active:border-color-active hs-tab-active:text-color-active py-4 px-1 inline-flex items-center gap-x-2 border-b-2 border-transparent text-sm whitespace-nowrap text-gray-500 hover:text-color-active focus:outline-none focus:text-color-active disabled:opacity-50 disabled:pointer-events-none active"
                             [id]="'tabs-with-icons-item-todos-'+i"
@@ -372,8 +372,8 @@
                             role="tab"
                           >
                             Todos
-                          </button>
-                          <button
+                          </a>
+                          <a
                             type="button"
                             class="hs-tab-active:font-semibold hs-tab-active:border-color-active hs-tab-active:text-color-active py-4 px-1 inline-flex items-center gap-x-2 border-b-2 border-transparent text-sm whitespace-nowrap text-gray-500 hover:text-color-active focus:outline-none focus:text-color-active disabled:opacity-50 disabled:pointer-events-none"
                             [id]="'tabs-with-icons-item-papelera-'+i"
@@ -381,7 +381,7 @@
                             [attr.aria-controls]="'tabs-with-icons-papelera-'+i"
                           >
                             Papelera
-                          </button>
+                          </a>
                         </nav>
                       </div>
 
@@ -396,15 +396,15 @@
                               class="flex flex-col text-right w-full"
                             >
                             <div class="12/12 text-right">
-                              <button
-                              routerLink="/new-area"
+                              <a
+                              href="/new-area"
                               type="button"
-                              routerLink="/new-pdf/{{ encriptarId(this.id) }}/{{encriptarId(tema?.id_titulo)}}"
+                              href="/new-pdf/{{ encriptarId(this.id) }}/{{encriptarId(tema?.id_titulo)}}"
                               class="py-3 my-2 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent button-secondary text-white hover:bg-primary-color-90 disabled:opacity-50 disabled:pointer-events-none"
                             >
                               <i class="fa fa-plus" aria-hidden="true"></i>
                               Registrar pdf
-                            </button>
+                            </a>
                             </div>
                             </div>
                           <div class="min-h-60 flex flex-col bg-white rounded-xl">
@@ -492,15 +492,15 @@
                               class="flex flex-col lg:w-5/12 sm:w-12/12 md:w-5/12 text-right w-full"
                             >
                               <div class="w-full">
-                                <button
-                                  routerLink="/new-area"
+                                <a
+                                  href="/new-area"
                                   type="button"
-                                  routerLink="/new-pdf/{{ encriptarId(this.id) }}/{{encriptarId(tema.id_titulo)}}"
+                                  href="/new-pdf/{{ encriptarId(this.id) }}/{{encriptarId(tema.id_titulo)}}"
                                   class="py-3 my-2 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent button-secondary text-white hover:bg-primary-color-90 disabled:opacity-50 disabled:pointer-events-none"
                                 >
                                   <i class="fa fa-plus" aria-hidden="true"></i>
                                   Registrar pdf
-                                </button>
+                                </a>
                               </div>
                             </div>
                           </div>
@@ -569,29 +569,76 @@
                                     </ng-template>
                                     <ng-template pTemplate="body" let-pdf>
                                       <tr class="divide-x divide-gray-200 max-h-[20px]">
-                                        <td class="px-3 py-2 text-sm text-gray-800">
-                                          <p class="font-medium text-black">
-                                            {{ pdf?.nombre_externo_documento }}
-                                          </p>
-                                          <p class="text-sm">
-                                            {{ pdf?.nombre_interno_documento }}
-                                          </p>
-                                        </td>
-                                        <td class="px-3 py-2 text-sm max-w-[300px] text-gray-800 hs-tooltip text-elipsis">
-                                          <p>{{ pdf?.descripcion }}</p>
-                                          <div
-                                            class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible hidden opacity-0 transition-opacity absolute invisible z-10 max-w-xs bg-white border border-gray-100 text-start rounded-lg shadow-md mt-2 left-1/2 transform -translate-x-1/2"
-                                            role="tooltip">
-                                            <div class="py-3 px-4 text-wrap">
-                                              <span class="block text-lg font-bold text-gray-800">{{ pdf?.nombre_externo_documento }}</span>
-                                              <p class="mt-2 text-sm text-gray-600 text-wrap">
-                                                {{pdf?.descripcion}}
+                                        <td class="px-3 py-2 text-sm text-gray-800 text-elipsis max-w-[300px] text-center">
+
+                                          <button (mouseenter)="mostrar($event.target)" (mouseleave)="mostrar($event.target)"
+                                          class="hover:text-primary text-center">
+                                          <!-- User -->
+                                          <div class="hs-tooltip [--trigger:hover] sm:[--placement:top] inline-block text-center">
+                                            <div class="hs-tooltip-toggle text-elipsis max-w-[300px] text-center">
+                                              <p class="font-medium text-black">
+                                                {{ pdf?.nombre_externo_documento }}
                                               </p>
+                                              <p class="text-sm">
+                                                {{ pdf?.nombre_interno_documento }}
+                                              </p>
+                                              <!-- Popover Content -->
+                                              <div
+                                                class="hs-tooltip-content text-wrap hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible hidden opacity-0 transition-opacity absolute invisible z-10 max-w-xs w-full bg-white border border-gray-100 text-start rounded-xl shadow-md after:absolute after:top-0 after:-start-4 after:w-4 after:h-full"
+                                                role="tooltip">
+                                                <ul class="py-3 px-4 space-y-1">
+                                                  <li>
+                                                    <div class="inline-flex gap-x-3 text-sm text-gray-800 text-wrap">
+                                                      <p class=" text-black font-bold">
+                                                        {{ pdf?.nombre_externo_documento }}
+                                                      </p>
+                                                      <hr>
+                                                      <p class="text-sm">
+                                                        {{ pdf?.nombre_interno_documento }}
+                                                      </p>
+                                                    </div>
+                                                  </li>
+                                                </ul>
+                                              </div>
+                                              <!-- End Popover Content -->
                                             </div>
                                           </div>
+                                          </button>
+                                        </td>
+                                        <td class="px-3 py-2 text-sm max-w-[300px] text-gray-800 hs-tooltip ">
+                                          <button (mouseenter)="mostrar($event.target)" (mouseleave)="mostrar($event.target)"
+                                          class="hover:text-primary">
+                                          <!-- User -->
+                                          <div class="hs-tooltip [--trigger:hover] sm:[--placement:top] inline-block">
+                                            <div class="hs-tooltip-toggle text-elipsis max-w-[300px]">
+                                              <p >{{ pdf?.descripcion }}</p>
+                                              <!-- Popover Content -->
+                                              <div
+                                                class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible hidden opacity-0 transition-opacity absolute invisible z-10 max-w-xs w-full bg-white border border-gray-100 text-start rounded-xl shadow-md after:absolute after:top-0 after:-start-4 after:w-4 after:h-full"
+                                                role="tooltip">
+                                                <ul class="py-3 px-4 space-y-1">
+                                                  <li>
+                                                    <div class="inline-flex items-center gap-x-3 text-sm text-gray-800 text-wrap">
+                                                      <p class="mt-2 text-sm text-gray-600 text-wrap"
+                                                       >
+                                                      {{ pdf?.descripcion }}
+                                                    </div>
+                                                  </li>
+                                                </ul>
+                                              </div>
+                                              <!-- End Popover Content -->
+                                            </div>
+                                          </div>
+                                          </button>
                                         </td>
                                         <td class="px-3 py-2 text-sm text-gray-800">
-                                          {{ pdf?.trimestre }}
+                                          <p *ngIf="pdf.trimestre_estado">
+                                            {{ pdf.trimestre }}
+                                          </p>
+                                          <p *ngIf="!pdf.trimestre_estado" title="El trimestre esta desactivado"
+                                            class=" rounded-full  bg-opacity-10 px-3 py-1 text-sm font-medium bg-red-500 text-red-500">
+                                            {{ pdf.trimestre }}
+                                          </p>
                                         </td>
                                         <td class="px-3 py-2 text-sm text-gray-800">
                                           {{pdf?.fecha_string}}
@@ -599,7 +646,7 @@
                                         <td class="px-3 py-2 text-sm text-gray-800">
                                           <div class="flex items-center space-x-3.5">
                                             <!-- Agregar el boton del ojo y el descargar -->
-                                            <button
+                                            <a
                                             (click)="openPDF(pdf?.id_contenido_dinamico)"
                                             (mouseenter)="mostrar($event.target)"
                                             (mouseleave)="mostrar($event.target)"
@@ -645,8 +692,8 @@
                                                   <!-- End Popover Content -->
                                                 </div>
                                               </div>
-                                            </button>
-                                            <button
+                                            </a>
+                                            <a
                                             (click)="downloadPDF(pdf?.id_contenido_dinamico, pdf?.nombre_interno_documento)"
                                             (mouseenter)="mostrar($event.target)"
                                             (mouseleave)="mostrar($event.target)"
@@ -692,9 +739,9 @@
                                                   <!-- End Popover Content -->
                                                 </div>
                                               </div>
-                                            </button>
-                                            <button
-                                              routerLink="/edit-pdf/{{ encriptarId(this.id) }}/{{ encriptarId(pdf?.id_contenido_dinamico) }}"
+                                            </a>
+                                            <a
+                                              href="/edit-pdf/{{ encriptarId(this.id) }}/{{ encriptarId(pdf?.id_contenido_dinamico) }}"
                                               (mouseenter)="mostrar($event.target)"
                                               (mouseleave)="mostrar($event.target)"
                                               class="hover:text-primary"
@@ -738,8 +785,8 @@
                                                   <!-- End Popover Content -->
                                                 </div>
                                               </div>
-                                            </button>
-                                            <button
+                                            </a>
+                                            <a
                                               (click)="DeleteContenidoDinamico(pdf?.id_contenido_dinamico)"
                                               *ngIf="pdf?.activo"
                                               (mouseenter)="mostrar($event.target)"
@@ -786,8 +833,8 @@
                                                   <!-- End Popover Content -->
                                                 </div>
                                               </div>
-                                            </button>
-                                            <button
+                                            </a>
+                                            <a
                                               *ngIf="!pdf.activo"
                                               (click)="ActivateContenidoDinamico(pdf?.id_contenido_dinamico)"
                                               (mouseenter)="mostrar($event.target)"
@@ -834,7 +881,7 @@
                                                   <!-- End Popover Content -->
                                                 </div>
                                               </div>
-                                            </button>
+                                            </a>
                                           </div>
                                         </td>
                                       </tr>
@@ -1005,36 +1052,84 @@
                                     </ng-template>
                                     <ng-template pTemplate="body" let-pdf>
                                       <tr class="divide-x divide-gray-200">
-                                        <td class="px-3 py-2 text-sm text-gray-800">
-                                          <p class="font-medium text-black">
-                                            {{ pdf?.nombre_externo_documento }}
-                                          </p>
-                                          <p class="text-sm">
-                                            {{ pdf?.nombre_interno_documento }}
-                                          </p>
-                                        </td>
-                                        <td class="px-3 py-2 text-sm max-w-[300px] text-gray-800 hs-tooltip text-elipsis">
-                                          <p>{{ pdf?.descripcion }}</p>
-                                          <div
-                                            class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible hidden opacity-0 transition-opacity absolute invisible z-10 max-w-xs bg-white border border-gray-100 text-start rounded-lg shadow-md mt-2 left-1/2 transform -translate-x-1/2"
-                                            role="tooltip">
-                                            <div class="py-3 px-4 text-wrap">
-                                              <span class="block text-lg font-bold text-gray-800">{{ pdf?.nombre_externo_documento }}</span>
-                                              <p class="mt-2 text-sm text-gray-600 text-wrap">
-                                                {{pdf?.descripcion}}
+                                        <td class="px-3 py-2 text-sm text-gray-800 text-elipsis max-w-[300px] text-center">
+
+                                          <button (mouseenter)="mostrar($event.target)" (mouseleave)="mostrar($event.target)"
+                                          class="hover:text-primary text-center">
+                                          <!-- User -->
+                                          <div class="hs-tooltip [--trigger:hover] sm:[--placement:top] inline-block text-center">
+                                            <div class="hs-tooltip-toggle text-elipsis max-w-[300px] text-center">
+                                              <p class="font-medium text-black">
+                                                {{ pdf?.nombre_externo_documento }}
                                               </p>
+                                              <p class="text-sm">
+                                                {{ pdf?.nombre_interno_documento }}
+                                              </p>
+                                              <!-- Popover Content -->
+                                              <div
+                                                class="hs-tooltip-content text-wrap hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible hidden opacity-0 transition-opacity absolute invisible z-10 max-w-xs w-full bg-white border border-gray-100 text-start rounded-xl shadow-md after:absolute after:top-0 after:-start-4 after:w-4 after:h-full"
+                                                role="tooltip">
+                                                <ul class="py-3 px-4 space-y-1">
+                                                  <li>
+                                                    <div class="inline-flex gap-x-3 text-sm text-gray-800 text-wrap">
+                                                      <p class=" text-black font-bold">
+                                                        {{ pdf?.nombre_externo_documento }}
+                                                      </p>
+                                                      <hr>
+                                                      <p class="text-sm">
+                                                        {{ pdf?.nombre_interno_documento }}
+                                                      </p>
+                                                    </div>
+                                                  </li>
+                                                </ul>
+                                              </div>
+                                              <!-- End Popover Content -->
                                             </div>
                                           </div>
+                                          </button>
+                                        </td>
+                                        <td class="px-3 py-2 text-sm max-w-[300px] text-gray-800 hs-tooltip ">
+                                          <button (mouseenter)="mostrar($event.target)" (mouseleave)="mostrar($event.target)"
+                                          class="hover:text-primary">
+                                          <!-- User -->
+                                          <div class="hs-tooltip [--trigger:hover] sm:[--placement:top] inline-block">
+                                            <div class="hs-tooltip-toggle text-elipsis max-w-[300px]">
+                                              <p >{{ pdf?.descripcion }}</p>
+                                              <!-- Popover Content -->
+                                              <div
+                                                class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible hidden opacity-0 transition-opacity absolute invisible z-10 max-w-xs w-full bg-white border border-gray-100 text-start rounded-xl shadow-md after:absolute after:top-0 after:-start-4 after:w-4 after:h-full"
+                                                role="tooltip">
+                                                <ul class="py-3 px-4 space-y-1">
+                                                  <li>
+                                                    <div class="inline-flex items-center gap-x-3 text-sm text-gray-800 text-wrap">
+                                                      <p class="mt-2 text-sm text-gray-600 text-wrap"
+                                                       >
+                                                      {{ pdf?.descripcion }}
+                                                       </p>
+                                                    </div>
+                                                  </li>
+                                                </ul>
+                                              </div>
+                                              <!-- End Popover Content -->
+                                            </div>
+                                          </div>
+                                          </button>
                                         </td>
                                         <td class="px-3 py-2 text-sm text-gray-800">
-                                          {{ pdf?.trimestre }}
+                                          <p *ngIf="pdf.trimestre_estado">
+                                            {{ pdf.trimestre }}
+                                          </p>
+                                          <p *ngIf="!pdf.trimestre_estado" title="El trimestre esta desactivado"
+                                            class=" rounded-full  bg-opacity-10 px-3 py-1 text-sm font-medium bg-red-500 text-red-500">
+                                            {{ pdf.trimestre }}
+                                          </p>
                                         </td>
                                         <td class="px-3 py-2 text-sm text-gray-800">
                                           {{ pdf?.fecha_string }}
                                         </td>
                                         <td class="px-3 py-2 text-sm text-gray-800">
                                           <div class="flex items-center space-x-3.5">
-                                            <button
+                                            <a
                                             (click)="openPDF(pdf?.id_contenido_dinamico)"
                                             (mouseenter)="mostrar($event.target)"
                                             (mouseleave)="mostrar($event.target)"
@@ -1080,8 +1175,8 @@
                                                   <!-- End Popover Content -->
                                                 </div>
                                               </div>
-                                            </button>
-                                            <button
+                                            </a>
+                                            <a
                                             (click)="downloadPDF(pdf?.id_contenido_dinamico, pdf?.nombre_interno_documento)"
                                             (mouseenter)="mostrar($event.target)"
                                             (mouseleave)="mostrar($event.target)"
@@ -1127,8 +1222,8 @@
                                                   <!-- End Popover Content -->
                                                 </div>
                                               </div>
-                                            </button>
-                                            <button
+                                            </a>
+                                            <a
                                               (click)="DeleteContenidoDinamico(pdf?.id_contenido_dinamico)"
                                               *ngIf="pdf?.activo"
                                               (mouseenter)="mostrar($event.target)"
@@ -1175,8 +1270,8 @@
                                                   <!-- End Popover Content -->
                                                 </div>
                                               </div>
-                                            </button>
-                                            <button
+                                            </a>
+                                            <a
                                               *ngIf="!pdf.activo"
                                               (click)="ActivateContenidoDinamico(pdf?.id_contenido_dinamico)"
                                               (mouseenter)="mostrar($event.target)"
@@ -1223,7 +1318,7 @@
                                                   <!-- End Popover Content -->
                                                 </div>
                                               </div>
-                                            </button>
+                                            </a>
                                           </div>
                                         </td>
                                       </tr>
@@ -1253,10 +1348,10 @@
       </ng-container>
 
       <ng-container *ngIf="tema?.tipo_contenido === 1">
-        <div class="w-12/12 ">
+        <div class="w-12/12 my-2">
           <div class="flex flex-col">
             <div class="-m-1.5 overflow-x-auto">
-              <div class="p-1.5 min-w-full inline-block align-middle">
+              <div class="p-1.5 container-prev">
                 <div class="border overflow-hidden ">
                   <table class="min-w-full divide-y divide-gray-200">
                     <thead>
@@ -1296,11 +1391,11 @@
                 </div>
                 <div class="contenido-prev border border-2 pb-5 p-3 mb-5 border-gray-200 border-dashed rounded-lg">
                   <div class="12/12 text-right" *ngIf="ListContenidoEstatico.length == 0">
-                    <button routerLink="/new-word/{{ encriptarId(this.id) }}/{{encriptarId(tema?.id_titulo)}}" type="button"
+                    <a href="/new-word/{{ encriptarId(this.id) }}/{{encriptarId(tema?.id_titulo)}}" type="button"
                       class="py-1 my-1 mx-1 button-secondary px-1 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-primary-color text-white hover:bg-primary-color-90 disabled:opacity-50 disabled:pointer-events-none">
                       <i class="fa fa-plus" aria-hidden="true"></i>
                       Agregar contenido
-                    </button>
+                    </a>
                   </div>
 
                   <div class=" flex-col justify-center items-center p-3 md:p-3">
@@ -1393,9 +1488,9 @@
                                     </td>
                                     <td class="px-3 py-2 text-sm text-gray-800">
                                       <div class="flex items-center space-x-3.5">
-                                        <button
+                                        <a
                                           *ngIf="contenidoEstatico?.activo"
-                                          routerLink="/edit-word/{{ encriptarId(this.id) }}/{{ encriptarId(contenidoEstatico?.id_contenido_estatico)}}"
+                                          href="/edit-word/{{ encriptarId(this.id) }}/{{ encriptarId(contenidoEstatico?.id_contenido_estatico)}}"
                                           (mouseenter)="mostrar($event.target)"
                                           (mouseleave)="mostrar($event.target)"
                                           class="hover:text-primary"
@@ -1439,8 +1534,8 @@
                                               <!-- End Popover Content -->
                                             </div>
                                           </div>
-                                        </button>
-                                        <button
+                                        </a>
+                                        <a
                                           (click)="DeleteContenidoEstatico(contenidoEstatico?.id_contenido_estatico)"
                                           *ngIf="contenidoEstatico?.activo"
                                           (mouseenter)="mostrar($event.target)"
@@ -1487,8 +1582,8 @@
                                               <!-- End Popover Content -->
                                             </div>
                                           </div>
-                                        </button>
-                                        <button
+                                        </a>
+                                        <a
                                           *ngIf="!contenidoEstatico.activo"
                                           (click)="ActivateContenidoEstatico(contenidoEstatico?.id_contenido_estatico)"
                                           (mouseenter)="mostrar($event.target)"
@@ -1535,7 +1630,7 @@
                                               <!-- End Popover Content -->
                                             </div>
                                           </div>
-                                        </button>
+                                        </a>
                                       </div>
                                     </td>
                                   </tr>
@@ -1572,13 +1667,13 @@
                 <div class="contenido-prev p-4 border-2 pb-5 border-gray-200 border-dashed rounded-lg" *ngIf="ListContenidoEstatico.length > 0">
                   <div class="flex justify-between items-center w-full my-4">
                     <h4 class="text-xl">Visualización del Contenido</h4>
-                    <button
+                    <a
                     *ngIf="ListContenidoEstatico[0]?.activo"
-                    routerLink="/new-pdf/1/1" type="button" routerLink="/edit-word/{{ encriptarId(this.id) }}/{{ encriptarId(ListContenidoEstatico[0].id_contenido_estatico)}}"
+                    href="/new-pdf/1/1" type="button" href="/edit-word/{{ encriptarId(this.id) }}/{{ encriptarId(ListContenidoEstatico[0].id_contenido_estatico)}}"
                       class="py-3 my-2 mx-2 button-secondary px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-primary-color text-white hover:bg-primary-color-90 disabled:opacity-50 disabled:pointer-events-none">
                       <i class="fas fa-edit"></i>
                       Modificar contenido
-                    </button>
+                    </a>
                   </div>
                   <div class="contenido-prev" [innerHTML]="getSafeHtml(this.htmlContent)">
                   </div>

@@ -9,3 +9,9 @@ header{
   }
 
 }
+
+@media (max-width: 718px) {
+  img{
+    display: none;
+  }
+}
