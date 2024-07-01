@@ -152,10 +152,12 @@ export class DetailsPuntoComponent {
       respuesta => {
         this.ListTitulos = this.encodeService.decryptData(respuesta)?.resultado?.data;
         this.sharedService.setLoading(false);
-        if(this.tituloSeleccionado > 0){
-          this.onTemaSeleccionado(this.tituloSeleccionado, this.tipoContenidoSeleccionado, this.temaSeleccionado);
-        }else{
-          this.onTemaSeleccionado(this.ListTitulos[0].id_titulo, this.ListTitulos[0].tipo_contenido, 0);
+        if(this.ListTitulos && this.ListTitulos.length > 0){
+          if(this.tituloSeleccionado > 0){
+            this.onTemaSeleccionado(this.tituloSeleccionado, this.tipoContenidoSeleccionado, this.temaSeleccionado);
+          }else{
+            this.onTemaSeleccionado(this.ListTitulos[0].id_titulo, this.ListTitulos[0].tipo_contenido, 0);
+          }
         }
       },
       error => {
@@ -359,40 +361,48 @@ export class DetailsPuntoComponent {
     const encryptedName = this.encodeService.encryptData(JSON.stringify(id_documento_dinamico));
     this.ContenidocrudService.getPDF(encryptedName).subscribe({
       next: (response: any) => {
-        const blob = new Blob([response.data], { type: response.mime });
+        
+        // Convertir los datos a Uint8Array si no lo son ya
+        const uint8Array = response.data instanceof Uint8Array ? response.data : new Uint8Array(response.data);
+        
+        // Crear un blob con los datos del PDF
+        const blob = new Blob([uint8Array], { type: response.mime });
+        
+        // Crear un objeto URL para el blob
         const url = window.URL.createObjectURL(blob);
-
-        // Crear un elemento <a> oculto para la descarga
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = response.filename || 'documento.pdf';
-        link.style.display = 'none';
-        document.body.appendChild(link);
-
-        // Abrir el PDF en una nueva pestaña para visualización
-        window.open(url, '_blank');
-
-        // Agregar un botón o enlace visible para la descarga
-        const downloadButton = document.createElement('button');
-        downloadButton.textContent = 'Descargar PDF';
-        downloadButton.onclick = () => {
-          link.click();
-        };
-        document.body.appendChild(downloadButton);
-
+        
+        // Abrir una nueva ventana con el PDF
+        const win = window.open('', '_blank');
+        if (win) {
+          win.document.write(`
+            <html>
+              <head>
+                <title>${response.filename}</title>
+                <style>
+                  body { margin: 0; padding: 0; height: 100vh; }
+                  object { width: 100%; height: 100%; }
+                </style>
+              </head>
+              <body>
+                <object data="${url}" type="${response.mime}">
+                  <embed src="${url}" type="${response.mime}" />
+                </object>
+              </body>
+            </html>
+          `);
+          win.document.close();
+        } else {
+          this.flasher.error("No se pudo abrir una nueva ventana. Asegúrate de que no esté bloqueada por el navegador.");
+        }
+        
         // Limpiar recursos después de un tiempo
-        setTimeout(() => {
-          window.URL.revokeObjectURL(url);
-          document.body.removeChild(link);
-          document.body.removeChild(downloadButton);
-        }, 100);
+        setTimeout(() => window.URL.revokeObjectURL(url), 60000);
       },
       error: (error: Error) => {
         this.flasher.error("No se encontró el archivo");
       }
     });
   }
-
 
   // Funcion para descargar el documento
   downloadPDF(id_documento_interno: any, nombre_interno_documento:string) {

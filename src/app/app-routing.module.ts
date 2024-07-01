@@ -34,6 +34,7 @@ import { EditWordComponent } from './components/forms/edit-word/edit-word.compon
 import { SubtemasComponent } from './components/tables/list-puntos/details-punto/subtemas/subtemas.component';
 import { AdministrarOrdenComponent } from './components/tables/list-puntos/administrar-orden/administrar-orden.component';
 import { AcercaDeComponent } from './components/acerca-de/acerca-de.component';
+import { ListHistorialComponent} from './components/tables/list-historial/list-historial.component';
 
 
 // data indicamos que area puede entrar a las rutas
@@ -78,6 +79,7 @@ const routes: Routes = [
   {path: 'acerca-de', component:AcercaDeComponent},
   {path: 'administrar-orden-puntos', component:AdministrarOrdenComponent, canActivate: [authGuardGuard], data: { allowedAreas: ['1'] }},
 
+  {path: 'historial', component:ListHistorialComponent, canActivate: [authGuardGuard], data: { allowedAreas: ['1'] }},
 
   {path: '**', component:PageNotFoundComponent},
 ];

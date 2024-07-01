@@ -1,6 +1,7 @@
-import { Component} from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef} from '@angular/core';
 import { Router, Event, NavigationEnd } from '@angular/router';
 import { IStaticMethods } from 'preline';
+
 declare global {
   interface Window {
     HSStaticMethods: IStaticMethods;
@@ -12,6 +13,7 @@ declare global {
   styleUrl: './app.component.css'
 })
 export class AppComponent {
+
   constructor(private router: Router) {
 
   }

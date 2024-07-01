@@ -23,7 +23,7 @@ export class NewSubtemaComponent {
   porcentajeEnvio: number = 0;
   mostrarSpinner: boolean = false;
   mensaje = "Guardando...";
-
+  datosUsuario: any;
   constructor(private sharedService: SharedValuesService,
     private activateRoute: ActivatedRoute,
     private router: Router,
@@ -32,8 +32,9 @@ export class NewSubtemaComponent {
     private el: ElementRef,
     private TituloscrudService: TituloscrudService,
     private flasher: AlertsServiceService,
-    private encodeService: CryptoServiceService,
+    private encodeService: CryptoServiceService
   ) {
+    this.datosUsuario = this.encodeService.desencriptarDatosUsuario();
     this.FormAltaSubtema = this.formulario.group({
       nombreTitulo: ['',
         [
@@ -52,16 +53,19 @@ export class NewSubtemaComponent {
       [
         Validators.required,
       ],
-
+      
       ],
       titulo: [this.idTema,
       [
         Validators.required,
       ],
-
-      ]
+      ],
+      id_usuario: [this.datosUsuario?.id_usuario,
+        [
+          Validators.required,
+        ],
+      ],
     });
-
   }
 
   /**

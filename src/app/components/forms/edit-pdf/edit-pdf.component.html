@@ -217,7 +217,7 @@
   [ngClass]="{
     'border-validator-error focus:border-validator-error focus:ring-validator-error': FormAltaContenido.get('id_trimestre')?.invalid && (FormAltaContenido.get('id_trimestre')?.dirty || FormAltaContenido.get('id_trimestre')?.touched)
     }">
-    <option value="" selected>Selecciona un ejercicio</option>
+    <option value="" selected>Selecciona un trimestre</option>
     <option *ngFor="let trimestre of ListActiveTrimestres" [value]="trimestre.id_trimestre">
         {{ trimestre.trimestre }} {{ trimestre.ejercicio }}
       </option>

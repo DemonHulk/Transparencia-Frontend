@@ -22,6 +22,7 @@ export class NewTemaComponent {
   ListPunto: Punto[] = [];
   data_usuariosacceso: any;
   FormAltaTema:FormGroup;
+  datosUsuario: any;
 
   constructor(
     public sharedService: SharedValuesService,
@@ -38,7 +39,7 @@ export class NewTemaComponent {
     //Tomas la id de la URL
     this.id = this.activateRoute.snapshot.paramMap.get("punto");
     this.idEncrypt = this.id;
-
+    this.datosUsuario = this.encodeService.desencriptarDatosUsuario();
     //Desencriptar la ID
     this.id = this.encodeService.decodeID(this.id);
 
@@ -71,7 +72,12 @@ export class NewTemaComponent {
         [
           Validators.required,
         ],
-      ]
+      ],
+      id_usuario: [this.datosUsuario?.id_usuario,
+        [
+          Validators.required,
+        ],
+      ],
     });
 
   }

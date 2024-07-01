@@ -134,6 +134,21 @@ export class ContenidoEstatico {
   fecha_actualizado!: string;
 }
 
+export class Historial {
+  id_historial!: number;
+  accion!: string;
+  nombre_area!: string;
+  tabla!: string;
+  id_registro!: number;
+  descripcion!: string;
+  visto!: boolean;
+  activo!: boolean;
+  fecha_creacion!: string;
+  hora_creacion!: string;
+  fecha_actualizado!: string;
+  tiempo_transcurrido!: string;
+}
+
 import { AbstractControl, FormGroup, ValidationErrors, ValidatorFn } from '@angular/forms';
 
 export function validarTextoNormal(): ValidatorFn {

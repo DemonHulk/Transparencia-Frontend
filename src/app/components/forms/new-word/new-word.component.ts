@@ -329,7 +329,7 @@ export class NewWordComponent {
 
               } else {
                 this.mostrarSpinner = false;
-                this.flasher.error(decryptedResponse?.resultado?.data?.data);
+                this.flasher.error(decryptedResponse?.resultado?.data);
               }
               break;
             default:
