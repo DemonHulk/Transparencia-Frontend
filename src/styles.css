@@ -184,6 +184,10 @@ h6 {
   }
 }
 
+a{
+  cursor: pointer !important;
+}
+
 .button-secondary,  .button-back, .button-reload  {
   background-color: rgba(var(--secondary-color),1) !important;
   border-radius: 10px !important ;

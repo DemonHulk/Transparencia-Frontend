@@ -2,13 +2,13 @@
   <div class="max-w-full ">
     <div class="border-b border-gray-200 animate-pulse">
       <nav class="flex space-x-1">
-        <button type="button" class="font-semibold border-color-active text-color-active py-4 px-1 inline-flex items-center gap-x-2 border-b-2 border-transparent text-sm whitespace-nowrap  hover:text-color-active focus:outline-none focus:text-color-active disabled:opacity-50 disabled:pointer-events-none active" >
+        <a type="button" class="font-semibold border-color-active text-color-active py-4 px-1 inline-flex items-center gap-x-2 border-b-2 border-transparent text-sm whitespace-nowrap  hover:text-color-active focus:outline-none focus:text-color-active disabled:opacity-50 disabled:pointer-events-none active" >
           <p class="h-2.5 bg-gray-200 rounded-full  w-20"></p>
 
-        </button>
-        <button type="button" class="py-4 px-1 inline-flex items-center gap-x-2 border-b-2 border-transparent text-sm whitespace-nowrap text-gray-500 hover:text-primary-color focus:outline-none focus:text-primary-color disabled:opacity-50 disabled:pointer-events-none">
+        </a>
+        <a type="button" class="py-4 px-1 inline-flex items-center gap-x-2 border-b-2 border-transparent text-sm whitespace-nowrap text-gray-500 hover:text-primary-color focus:outline-none focus:text-primary-color disabled:opacity-50 disabled:pointer-events-none">
           <p class="h-2.5 bg-gray-200 rounded-full  w-20"></p>
-        </button>
+        </a>
       </nav>
     </div>
     <div class="mt-3">
@@ -39,11 +39,11 @@
           </div>
           <div class="flex flex-col lg:w-5/12 sm:w-12/12 md:w-5/12 text-right w-full">
             <div class="w-full">
-              <button type="button"
+              <a type="button"
             class="py-3 my-2  px-4 inline-flex  button-secondary items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-primary-color text-white hover:bg-primary-color-90 disabled:opacity-50 disabled:pointer-events-none">
             <i class="fa fa-plus animate-pulse" aria-hidden="true"></i>
             <p class="h-2.5 bg-gray-200 rounded-full  w-28 animate-pulse"></p>
-          </button>
+          </a>
             </div>
           </div>
         </div>
@@ -128,7 +128,7 @@
   <div class="max-w-full">
     <div class="border-b border-gray-200">
       <nav class="flex space-x-1" aria-label="Tabs" role="tablist">
-        <button
+        <a
           type="button"
           class="hs-tab-active:font-semibold hs-tab-active:border-color-active hs-tab-active:text-color-active py-4 px-1 inline-flex items-center gap-x-2 border-b-2 border-transparent text-sm whitespace-nowrap text-gray-500 hover:text-color-active focus:outline-none focus:text-color-active disabled:opacity-50 disabled:pointer-events-none active"
           id="tabs-with-icons-item-1"
@@ -137,8 +137,8 @@
           role="tab"
         >
           Todos
-        </button>
-        <button
+        </a>
+        <a
           type="button"
           class="hs-tab-active:font-semibold hs-tab-active:border-color-active hs-tab-active:text-color-active py-4 px-1 inline-flex items-center gap-x-2 border-b-2 border-transparent text-sm whitespace-nowrap text-gray-500 hover:text-color-active focus:outline-none focus:text-color-active disabled:opacity-50 disabled:pointer-events-none"
           id="tabs-with-icons-item-2"
@@ -147,7 +147,7 @@
           role="tab"
         >
           Papelera
-        </button>
+        </a>
       </nav>
     </div>
 
@@ -162,14 +162,14 @@
             class="flex flex-col text-right w-full"
           >
             <div class="w-full">
-              <button
-                routerLink="/new-ejercicio"
+              <a
+                href="/new-ejercicio"
                 type="button"
                 class="py-3 my-2 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent button-secondary text-white hover:bg-primary-color-90 disabled:opacity-50 disabled:pointer-events-none"
               >
                 <i class="fa fa-plus" aria-hidden="true"></i>
                 Registrar Ejercicio
-              </button>
+              </a>
             </div>
           </div>
         <div class="min-h-60 flex flex-col bg-white rounded-xl">
@@ -257,14 +257,14 @@
             class="flex flex-col lg:w-5/12 sm:w-12/12 md:w-5/12 text-right w-full"
           >
             <div class="w-full">
-              <button
-                routerLink="/new-ejercicio"
+              <a
+                href="/new-ejercicio"
                 type="button"
                 class="py-3 my-2 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent button-secondary text-white hover:bg-primary-color-90 disabled:opacity-50 disabled:pointer-events-none"
               >
                 <i class="fa fa-plus" aria-hidden="true"></i>
                 Registrar Ejercicio
-              </button>
+              </a>
             </div>
           </div>
         </div>
@@ -326,8 +326,8 @@
                       </td>
                       <td class="px-3 py-2 text-sm text-gray-800">
                         <div class="flex items-center space-x-3.5">
-                          <button
-                            routerLink="/edit-ejercicio/{{ encriptarId(ejercicio.id_ejercicio) }}"
+                          <a
+                            href="/edit-ejercicio/{{ encriptarId(ejercicio.id_ejercicio) }}"
                             (mouseenter)="mostrar($event.target)"
                             (mouseleave)="mostrar($event.target)"
                             class="hover:text-primary"
@@ -371,8 +371,8 @@
                                 <!-- End Popover Content -->
                               </div>
                             </div>
-                          </button>
-                          <button
+                          </a>
+                          <a
                             (click)="DeleteEjercicio(ejercicio.id_ejercicio)"
                             *ngIf="ejercicio.activo"
                             (mouseenter)="mostrar($event.target)"
@@ -419,8 +419,8 @@
                                 <!-- End Popover Content -->
                               </div>
                             </div>
-                          </button>
-                          <button
+                          </a>
+                          <a
                             *ngIf="!ejercicio.activo"
                             (click)="ActivateEjercicio(ejercicio.id_ejercicio)"
                             (mouseenter)="mostrar($event.target)"
@@ -467,7 +467,7 @@
                                 <!-- End Popover Content -->
                               </div>
                             </div>
-                          </button>
+                          </a>
                         </div>
                       </td>
                     </tr>
@@ -631,7 +631,7 @@
                       </td>
                       <td class="px-3 py-2 text-sm text-gray-800">
                         <div class="flex items-center space-x-3.5">
-                          <button
+                          <a
                             *ngIf="!ejercicio.activo"
                             (click)="ActivateEjercicio(ejercicio.id_ejercicio)"
                             (mouseenter)="mostrar($event.target)"
@@ -678,7 +678,7 @@
                                 <!-- End Popover Content -->
                               </div>
                             </div>
-                          </button>
+                          </a>
                         </div>
                       </td>
                     </tr>

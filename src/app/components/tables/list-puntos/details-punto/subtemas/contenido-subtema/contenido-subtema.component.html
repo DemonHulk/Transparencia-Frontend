@@ -4,31 +4,31 @@
 
     <div class="12/12 text-right">
 
-      <button type="button" routerLink="/new-subtema/{{idPuntoEncrypt}}/{{idTemaEncrypt}}"
+      <a type="button" href="/new-subtema/{{idPuntoEncrypt}}/{{idTemaEncrypt}}"
       class="button-secondary py-3 my-2 mx-2 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-primary-color text-white hover:bg-primary-color-90 disabled:opacity-50 disabled:pointer-events-none">
       <i class="fa fa-plus" aria-hidden="true"></i>
       Agregar subtema
-    </button>
+    </a>
 
-      <button type="button"
-      routerLink="/edit-subtema/{{idPuntoEncrypt}}/{{encriptarId(subtitulo?.fk_titulos)}}/{{encriptarId(subtitulo.id_titulo)}}"
+      <a type="button"
+      href="/edit-subtema/{{idPuntoEncrypt}}/{{encriptarId(subtitulo?.fk_titulos)}}/{{encriptarId(subtitulo.id_titulo)}}"
         class="button-secondary py-3 my-2 mx-2 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-primary-color text-white hover:bg-primary-color-90 disabled:opacity-50 disabled:pointer-events-none">
         <i class="fas fa-edit"></i>
         Modificar subtema
-      </button>
+      </a>
 
-      <button type="button" *ngIf="subtitulo.activo" (click)="DeleteTitulo(subtitulo.id_titulo)"
+      <a type="button" *ngIf="subtitulo.activo" (click)="DeleteTitulo(subtitulo.id_titulo)"
         class="button-secondary py-3 my-2 mx-2 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-primary-color text-white hover:bg-primary-color-90 disabled:opacity-50 disabled:pointer-events-none">
         <i class="fa fa-trash" aria-hidden="true"></i>
         Desactivar subtema
-      </button>
+      </a>
 
-      <button type="button" *ngIf="!subtitulo.activo" (click)="ActivateTitulo(subtitulo.id_titulo)"
+      <a type="button" *ngIf="!subtitulo.activo" (click)="ActivateTitulo(subtitulo.id_titulo)"
         class="button-secondary py-3 my-2 mx-2 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-primary-color text-white hover:bg-primary-color-90 disabled:opacity-50 disabled:pointer-events-none">
         <i class="fa-solid fa-arrow-rotate-left"></i>
 
         Reactivar subtema
-      </button>
+      </a>
 
     </div>
 
@@ -80,7 +80,7 @@
                   <div class="max-w-full">
                     <div class="border-b border-gray-200">
                       <nav class="flex space-x-1" aria-label="Tabs" role="tablist">
-                        <button
+                        <a
                           type="button"
                           class="hs-tab-active:font-semibold hs-tab-active:border-color-active hs-tab-active:text-color-active py-4 px-1 inline-flex items-center gap-x-2 border-b-2 border-transparent text-sm whitespace-nowrap text-gray-500 hover:text-color-active focus:outline-none focus:text-color-active disabled:opacity-50 disabled:pointer-events-none active"
                           [id]="'tabs-with-icons-item-todos-'+subtitulo?.id_titulo"
@@ -89,8 +89,8 @@
                           role="tab"
                         >
                           Todos
-                        </button>
-                        <button
+                        </a>
+                        <a
                           type="button"
                           class="hs-tab-active:font-semibold hs-tab-active:border-color-active hs-tab-active:text-color-active py-4 px-1 inline-flex items-center gap-x-2 border-b-2 border-transparent text-sm whitespace-nowrap text-gray-500 hover:text-color-active focus:outline-none focus:text-color-active disabled:opacity-50 disabled:pointer-events-none"
                           [id]="'tabs-with-icons-item-papelera-'+subtitulo?.id_titulo"
@@ -98,7 +98,7 @@
                           [attr.aria-controls]="'tabs-with-icons-papelera-'+subtitulo?.id_titulo"
                         >
                           Papelera
-                        </button>
+                        </a>
                       </nav>
                     </div>
 
@@ -116,7 +116,7 @@
                             <a
                             type="button"
 
-                            routerLink="/new-pdf-subtema/{{idPuntoEncrypt}}/{{ encriptarId(subtitulo?.fk_titulos) }}/{{encriptarId(subtitulo?.id_titulo)}}"
+                            href="/new-pdf-subtema/{{idPuntoEncrypt}}/{{ encriptarId(subtitulo?.fk_titulos) }}/{{encriptarId(subtitulo?.id_titulo)}}"
                             class="py-3 my-2 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent button-secondary text-white hover:bg-primary-color-90 disabled:opacity-50 disabled:pointer-events-none"
                           >
                             <i class="fa fa-plus" aria-hidden="true"></i>
@@ -209,14 +209,14 @@
                             class="flex flex-col lg:w-5/12 sm:w-12/12 md:w-5/12 text-right w-full"
                           >
                             <div class="w-full">
-                              <button
-                                type="button"
-                                routerLink="/new-pdf-subtema/{{idPuntoEncrypt}}/{{ encriptarId(subtitulo?.fk_titulos) }}/{{encriptarId(subtitulo?.id_titulo)}}"
+                              <a
+                                type="link"
+                                href="/new-pdf-subtema/{{idPuntoEncrypt}}/{{ encriptarId(subtitulo?.fk_titulos) }}/{{encriptarId(subtitulo?.id_titulo)}}"
                                 class="py-3 my-2 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent button-secondary text-white hover:bg-primary-color-90 disabled:opacity-50 disabled:pointer-events-none"
                               >
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 Registrar pdf
-                              </button>
+                              </a>
                             </div>
                           </div>
                         </div>
@@ -321,7 +321,7 @@
                                       <td class="px-3 py-2 text-sm text-gray-800">
                                         <div class="flex items-center space-x-3.5">
                                           <!-- Agregar el boton del ojo y el descargar -->
-                                          <button
+                                          <a
                                           (click)="openPDF(pdf?.id_contenido_dinamico)"
                                           (mouseenter)="mostrar($event.target)"
                                           (mouseleave)="mostrar($event.target)"
@@ -367,8 +367,8 @@
                                                 <!-- End Popover Content -->
                                               </div>
                                             </div>
-                                          </button>
-                                          <button
+                                          </a>
+                                          <a
                                           (click)="downloadPDF(pdf?.id_contenido_dinamico, pdf?.nombre_interno_documento)"
                                           (mouseenter)="mostrar($event.target)"
                                           (mouseleave)="mostrar($event.target)"
@@ -414,9 +414,9 @@
                                                 <!-- End Popover Content -->
                                               </div>
                                             </div>
-                                          </button>
+                                          </a>
                                           <a
-                                            routerLink="/edit-pdf-subtema/{{idPuntoEncrypt}}/{{ encriptarId(subtitulo?.fk_titulos) }}/{{ encriptarId(pdf?.id_contenido_dinamico) }}"
+                                            href="/edit-pdf-subtema/{{idPuntoEncrypt}}/{{ encriptarId(subtitulo?.fk_titulos) }}/{{ encriptarId(pdf?.id_contenido_dinamico) }}"
                                             (mouseenter)="mostrar($event.target)"
                                             (mouseleave)="mostrar($event.target)"
                                             class="hover:text-primary"
@@ -461,7 +461,7 @@
                                               </div>
                                             </div>
                                           </a>
-                                          <button
+                                          <a
                                             (click)="DeleteContenidoDinamico(pdf?.id_contenido_dinamico)"
                                             *ngIf="pdf?.activo"
                                             (mouseenter)="mostrar($event.target)"
@@ -508,8 +508,8 @@
                                                 <!-- End Popover Content -->
                                               </div>
                                             </div>
-                                          </button>
-                                          <button
+                                          </a>
+                                          <a
                                             *ngIf="!pdf.activo"
                                             (click)="ActivateContenidoDinamico(pdf?.id_contenido_dinamico)"
                                             (mouseenter)="mostrar($event.target)"
@@ -556,7 +556,7 @@
                                                 <!-- End Popover Content -->
                                               </div>
                                             </div>
-                                          </button>
+                                          </a>
                                         </div>
                                       </td>
                                     </tr>
@@ -762,7 +762,7 @@
                                       </td>
                                       <td class="px-3 py-2 text-sm text-gray-800">
                                         <div class="flex items-center space-x-3.5">
-                                          <button
+                                          <a
                                           (click)="openPDF(pdf?.id_contenido_dinamico)"
                                           (mouseenter)="mostrar($event.target)"
                                           (mouseleave)="mostrar($event.target)"
@@ -808,8 +808,8 @@
                                                 <!-- End Popover Content -->
                                               </div>
                                             </div>
-                                          </button>
-                                          <button
+                                          </a>
+                                          <a
                                           (click)="downloadPDF(pdf?.id_contenido_dinamico, pdf?.nombre_interno_documento)"
                                           (mouseenter)="mostrar($event.target)"
                                           (mouseleave)="mostrar($event.target)"
@@ -855,8 +855,8 @@
                                                 <!-- End Popover Content -->
                                               </div>
                                             </div>
-                                          </button>
-                                          <button
+                                          </a>
+                                          <a
                                             (click)="DeleteContenidoDinamico(pdf?.id_contenido_dinamico)"
                                             *ngIf="pdf?.activo"
                                             (mouseenter)="mostrar($event.target)"
@@ -903,8 +903,8 @@
                                                 <!-- End Popover Content -->
                                               </div>
                                             </div>
-                                          </button>
-                                          <button
+                                          </a>
+                                          <a
                                             *ngIf="!pdf.activo"
                                             (click)="ActivateContenidoDinamico(pdf?.id_contenido_dinamico)"
                                             (mouseenter)="mostrar($event.target)"
@@ -951,7 +951,7 @@
                                                 <!-- End Popover Content -->
                                               </div>
                                             </div>
-                                          </button>
+                                          </a>
                                         </div>
                                       </td>
                                     </tr>
@@ -1024,7 +1024,7 @@
               </div>
               <div class="contenido-prev border border-2 pb-5 p-3 mb-5 border-gray-200 rounded-lg overflow-x-auto">
                 <div class="12/12 text-right" *ngIf="subtitulo.contenido.length == 0">
-                  <a type="button" routerLink="/new-word-subtema/{{idPuntoEncrypt}}/{{encriptarId(subtitulo?.fk_titulos)}}/{{encriptarId(subtitulo.id_titulo)}}"
+                  <a type="button" href="/new-word-subtema/{{idPuntoEncrypt}}/{{encriptarId(subtitulo?.fk_titulos)}}/{{encriptarId(subtitulo.id_titulo)}}"
                     class="py-1 my-1 mx-1 button-secondary px-1 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-primary-color text-white hover:bg-primary-color-90 disabled:opacity-50 disabled:pointer-events-none">
                     <i class="fa fa-plus" aria-hidden="true"></i>
                     Agregar contenido
@@ -1123,7 +1123,7 @@
                                     <div class="flex items-center space-x-3.5">
                                       <a
                                         *ngIf="subtitulo.contenido[0]?.activo"
-                                        routerLink="/edit-word-subtema/{{idPuntoEncrypt}}/{{ encriptarId(subtitulo.id_titulo) }}/{{ encriptarId(subtitulo.contenido[0].id_contenido_estatico)}}"
+                                        href="/edit-word-subtema/{{idPuntoEncrypt}}/{{ encriptarId(subtitulo.id_titulo) }}/{{ encriptarId(subtitulo.contenido[0].id_contenido_estatico)}}"
                                         (mouseenter)="mostrar($event.target)"
                                         (mouseleave)="mostrar($event.target)"
                                         class="hover:text-primary"
@@ -1168,7 +1168,7 @@
                                           </div>
                                         </div>
                                       </a>
-                                      <button
+                                      <a
                                         (click)="DeleteContenidoEstatico(contenidoEstatico?.id_contenido_estatico)"
                                         *ngIf="subtitulo.contenido[0]?.activo"
                                         (mouseenter)="mostrar($event.target)"
@@ -1215,8 +1215,8 @@
                                             <!-- End Popover Content -->
                                           </div>
                                         </div>
-                                      </button>
-                                      <button
+                                      </a>
+                                      <a
                                         *ngIf="!subtitulo.contenido[0]?.activo"
                                         (click)="ActivateContenidoEstatico(contenidoEstatico?.id_contenido_estatico)"
                                         (mouseenter)="mostrar($event.target)"
@@ -1263,7 +1263,7 @@
                                             <!-- End Popover Content -->
                                           </div>
                                         </div>
-                                      </button>
+                                      </a>
                                     </div>
                                   </td>
                                 </tr>
@@ -1302,7 +1302,7 @@
                   <h4 class="text-xl">Visualización del Contenido</h4>
                   <a
                   *ngIf="subtitulo.contenido[0]?.activo"
-                   type="button" routerLink="/edit-word-subtema/{{idPuntoEncrypt}}/{{ encriptarId(subtitulo.id_titulo) }}/{{ encriptarId(subtitulo.contenido[0].id_contenido_estatico)}}"
+                   type="button" href="/edit-word-subtema/{{idPuntoEncrypt}}/{{ encriptarId(subtitulo.id_titulo) }}/{{ encriptarId(subtitulo.contenido[0].id_contenido_estatico)}}"
                     class="py-3  my-2 mx-2 button-secondary px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-primary-color text-white hover:bg-primary-color-90 disabled:opacity-50 disabled:pointer-events-none">
                     <i class="fas fa-edit"></i>
                     Modificar contenido

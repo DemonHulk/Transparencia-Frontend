@@ -53,7 +53,7 @@
             <a class="text-xl font-bold text-white" routerLink="">TRANSPARENCIA</a>
           </div>
 
-          <a class="font-medium mx-3" routerLink="/articulo33" routerLinkActive="underline">Articulo 33</a>
+          <a class="font-medium mx-3" href="/articulo33" [ngClass]="{'underline': isActive('/articulo33')}" >Articulo 33</a>
 
           <div class="hs-dropdown [--strategy:static] sm:[--strategy:absolute] [--adaptive:none] sm:[--trigger:hover] ">
             <button type="button" class="flex items-center w-fullfont-medium mx-3" *ngIf="sesionActiva">
@@ -68,8 +68,7 @@
               class="hs-dropdown-menu transition-[opacity,margin] duration-[0.1ms] md:duration-[150ms] hs-dropdown-open:opacity-100 opacity-0 w-full hidden z-10 top-full start-0 min-w-60 bg-white md:shadow-2xl rounded-lg py-2 md:p-4 before:absolute before:-top-5 before:start-0 before:w-full before:h-5">
               <div class="md:grid md:grid-cols-2 lg:grid-cols-2 gap-4">
                 <div class="flex flex-col mx-1 md:mx-0">
-                  <a class="group flex gap-x-5 hover:bg-gray-100 rounded-lg p-4" routerLink="/puntos"
-                    routerLinkActive="bg-gray-100">
+                  <a class="group flex gap-x-5 hover:bg-gray-100 rounded-lg p-4" href="/puntos" [ngClass]="{'bg-gray-100': isActive('/puntos')}">
                     <svg class="flex-shrink-0 size-5 mt-1 text-primary-color" xmlns="http://www.w3.org/2000/svg"
                       width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                       stroke-linecap="round" stroke-linejoin="round">
@@ -82,8 +81,7 @@
                     </div>
                   </a>
 
-                  <a class="group flex gap-x-5 hover:bg-gray-100 rounded-lg p-4" routerLink="/areas"
-                    routerLinkActive="bg-gray-100" *ngIf="administrador">
+                  <a class="group flex gap-x-5 hover:bg-gray-100 rounded-lg p-4"  href="/areas" [ngClass]="{'bg-gray-100': isActive('/areas')}" *ngIf="administrador">
                     <svg class="flex-shrink-0 size-5 mt-1 text-primary-color" xmlns="http://www.w3.org/2000/svg"
                       width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                       stroke-linecap="round" stroke-linejoin="round">
@@ -98,8 +96,7 @@
                     </div>
                   </a>
 
-                  <a class="group flex gap-x-5 hover:bg-gray-100 rounded-lg p-4" routerLink="/trimestres"
-                    routerLinkActive="bg-gray-100" *ngIf="administrador">
+                  <a class="group flex gap-x-5 hover:bg-gray-100 rounded-lg p-4" href="/trimestres" [ngClass]="{'bg-gray-100': isActive('/trimestres')}" *ngIf="administrador">
                     <svg class="flex-shrink-0 size-5 mt-1 text-primary-color" xmlns="http://www.w3.org/2000/svg"
                       width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                       stroke-linecap="round" stroke-linejoin="round">
@@ -116,8 +113,7 @@
                 </div>
 
                 <div class="flex flex-col mx-1 md:mx-0">
-                  <a class="group flex gap-x-5 hover:bg-gray-100 rounded-lg p-4" routerLink="/usuarios"
-                    routerLinkActive="bg-gray-100" *ngIf="administrador">
+                  <a class="group flex gap-x-5 hover:bg-gray-100 rounded-lg p-4"  href="/usuarios" [ngClass]="{'bg-gray-100': isActive('/usuarios')}" *ngIf="administrador">
                     <svg class="flex-shrink-0 size-5 mt-1 text-primary-color" xmlns="http://www.w3.org/2000/svg"
                       width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                       stroke-linecap="round" stroke-linejoin="round">
@@ -133,8 +129,7 @@
                     </div>
                   </a>
 
-                  <a class="group flex gap-x-5 hover:bg-gray-100 rounded-lg p-4" routerLink="/ejercicios"
-                    routerLinkActive="bg-gray-100" *ngIf="administrador">
+                  <a class="group flex gap-x-5 hover:bg-gray-100 rounded-lg p-4" href="/ejercicios" [ngClass]="{'bg-gray-100': isActive('/ejercicios')}" *ngIf="administrador">
                     <svg class="flex-shrink-0 size-5 mt-1 text-primary-color" xmlns="http://www.w3.org/2000/svg"
                       width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                       stroke-linecap="round" stroke-linejoin="round">
@@ -174,8 +169,7 @@
             <span *ngIf="mensajesNuevos"
               class="bg-red-500 rounded-full h-2 w-2  right-0 top-0 mb-1 ml-1 mr-1 mt-1"></span>
           </a>
-          <a class="font-medium mx-3" routerLink="/login" routerLinkActive="underline" *ngIf="!sesionActiva">Iniciar
-            sesión</a>
+          <a class="font-medium mx-3" href="/login" [ngClass]="{'underline': isActive('/login')}" *ngIf="!sesionActiva">Iniciar sesión</a>
           <a class="font-medium mx-3" routerLink="/articulo33" *ngIf="sesionActiva" (click)="cerrarSesion()">Cerrar
             sesión</a>
         </div>
@@ -184,7 +178,7 @@
   </nav>
 </header>
 
-<div id="hs-overlay-right" class="hs-overlay hs-overlay-open:translate-x-0 hidden translate-x-full fixed top-0 end-0 transition-all duration-300 
+<div id="hs-overlay-right" class="hs-overlay hs-overlay-open:translate-x-0 hidden translate-x-full fixed top-0 end-0 transition-all duration-300
 transform h-full max-w-xs w-full z-[80] bg-white border-s" tabindex="-1">
   <div class="flex justify-between items-center py-3 px-4 border-b">
     <div>
@@ -194,7 +188,7 @@ transform h-full max-w-xs w-full z-[80] bg-white border-s" tabindex="-1">
       <a routerLink="/historial" class="hover:text-gray-500">ver más <i class="fa-solid fa-circle-chevron-down"></i></a>
     </div>
 
-    <button type="button" class="flex justify-center items-center size-7 text-sm font-semibold rounded-full border border-transparent 
+    <button type="button" class="flex justify-center items-center size-7 text-sm font-semibold rounded-full border border-transparent
     text-gray-800 hover:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none"
       data-hs-overlay="#hs-overlay-right">
       <span class="sr-only">Close modal</span>
@@ -230,7 +224,7 @@ transform h-full max-w-xs w-full z-[80] bg-white border-s" tabindex="-1">
       <div class="hs-accordion-group">
         <div *ngFor="let mensaje of ListHistorialActivos" class="hs-accordion"
           [id]="'hs-basic-with-arrow-heading-' + mensaje.id_historial">
-          <button class="hs-accordion-toggle hs-accordion-active:text-blue-600 py-3 inline-flex items-center gap-x-3 w-full font-semibold text-start 
+          <button class="hs-accordion-toggle hs-accordion-active:text-blue-600 py-3 inline-flex items-center gap-x-3 w-full font-semibold text-start
           text-gray-800 hover:text-gray-500 rounded-lg disabled:opacity-50 disabled:pointer-events-none"
             [attr.aria-controls]="'hs-basic-with-arrow-collapse-' + mensaje.id_historial"
             (click)="VerMensaje(mensaje.id_historial)">
@@ -265,17 +259,17 @@ transform h-full max-w-xs w-full z-[80] bg-white border-s" tabindex="-1">
 </div>
 
 
-<div id="hs-overlay-right" class="hs-overlay hs-overlay-open:translate-x-0 hidden translate-x-full fixed top-0 end-0 transition-all duration-300 
+<div id="hs-overlay-right" class="hs-overlay hs-overlay-open:translate-x-0 hidden translate-x-full fixed top-0 end-0 transition-all duration-300
 transform h-full max-w-xs w-full z-[80] bg-white border-s" tabindex="-1">
   <div class="flex justify-between items-center py-3 px-4 border-b">
-    <div> 
+    <div>
       <h3 class="font-bold text-gray-800 ">
       Notificaciones
     </h3>
     <a routerLink="/historial" class="hover:text-gray-500">ver más <i class="fa-solid fa-circle-chevron-down"></i></a>
     </div>
-    
-    <button  type="button" class="flex justify-center items-center size-7 text-sm font-semibold rounded-full border border-transparent 
+
+    <button  type="button" class="flex justify-center items-center size-7 text-sm font-semibold rounded-full border border-transparent
     text-gray-800 hover:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none"  data-hs-overlay="#hs-overlay-right">
       <span class="sr-only">Close modal</span>
       <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -315,8 +309,8 @@ transform h-full max-w-xs w-full z-[80] bg-white border-s" tabindex="-1">
     <ng-container *ngIf="ListHistorialActivos?.length! > 0">
       <div class="hs-accordion-group">
         <div *ngFor="let mensaje of ListHistorialActivos" class="hs-accordion" [id]="'hs-basic-with-arrow-heading-' + mensaje.id_historial">
-          <button class="hs-accordion-toggle hs-accordion-active:text-blue-600 py-3 inline-flex items-center gap-x-3 w-full font-semibold text-start 
-          text-gray-800 hover:text-gray-500 rounded-lg disabled:opacity-50 disabled:pointer-events-none" 
+          <button class="hs-accordion-toggle hs-accordion-active:text-blue-600 py-3 inline-flex items-center gap-x-3 w-full font-semibold text-start
+          text-gray-800 hover:text-gray-500 rounded-lg disabled:opacity-50 disabled:pointer-events-none"
           [attr.aria-controls]="'hs-basic-with-arrow-collapse-' + mensaje.id_historial"
           (click)="VerMensaje(mensaje.id_historial)"
           >
@@ -339,7 +333,7 @@ transform h-full max-w-xs w-full z-[80] bg-white border-s" tabindex="-1">
         </div>
       </div>
     </ng-container>
-    
+
     <!-- Fin de acordeones -->
   </div>
 </div>
