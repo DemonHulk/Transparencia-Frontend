@@ -36,11 +36,7 @@ import { NewWordComponent } from './components/forms/new-word/new-word.component
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
-import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
-import { InputTextModule } from 'primeng/inputtext';
-import { PaginatorModule } from 'primeng/paginator';
-import { OverlayModule } from 'primeng/overlay';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ListEjercicioComponent } from './components/tables/list-ejercicio/list-ejercicio.component';
 import { NewEjercicioComponent } from './components/forms/new-ejercicio/new-ejercicio.component';
@@ -116,11 +112,7 @@ import { ListHistorialComponent } from './components/tables/list-historial/list-
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    ButtonModule,
     TableModule,
-    InputTextModule,
-    PaginatorModule,
-    OverlayModule,
     BrowserAnimationsModule,
     DragDropModule
   ],
