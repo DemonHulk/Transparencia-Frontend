@@ -170,7 +170,6 @@ GetOneTrimestreService(id: any) {
           }
         },
         error => {
-          console.log(error);
           this.mostrarSpinner = false; // Ocultar spinner en caso de error
           this.flasher.error("Hubo un error, Intente más tarde o notifique al soporte técnico.");
         }

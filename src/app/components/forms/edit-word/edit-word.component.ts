@@ -57,7 +57,6 @@ export class EditWordComponent {
       );
 
       this.es_tema = true;
-      console.log("es tema ")
     }
 
     //Desencriptar la ID

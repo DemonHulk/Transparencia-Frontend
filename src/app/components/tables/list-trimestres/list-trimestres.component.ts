@@ -82,7 +82,6 @@ export class ListTrimestresComponent {
         // Enviamos la id encriptada
         const encryptedID = this.encodeService.encryptData(JSON.stringify(id));
         this.TrimestrecrudService.DeleteTrimestreService(encryptedID).subscribe(respuesta => {
-          // console.log(encryptedID);
           this.GetAllTrimestresService();
           this.flasher.success(this.encodeService.decryptData(respuesta).resultado?.data);
         });
@@ -135,7 +134,7 @@ export class ListTrimestresComponent {
   }
   mostrar(elemento: any): void {
     // Verifica si el elemento recibido es un botón
-    if (elemento.tagName.toLowerCase() === 'button') {
+    if (elemento.tagName.toLowerCase() === 'button' || elemento.tagName.toLowerCase() === 'a' ) {
       const tooltipElement = elemento.querySelector('.hs-tooltip');
       if (tooltipElement) {
         tooltipElement.classList.toggle('show');

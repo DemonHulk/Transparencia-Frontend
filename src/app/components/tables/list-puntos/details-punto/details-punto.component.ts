@@ -457,7 +457,7 @@ export class DetailsPuntoComponent {
 
   mostrar(elemento: any): void {
     // Verifica si el elemento recibido es un botón
-    if (elemento.tagName.toLowerCase() === 'button') {
+    if (elemento.tagName.toLowerCase() === 'button' || elemento.tagName.toLowerCase() === 'a' ) {
       const tooltipElement = elemento.querySelector('.hs-tooltip');
       if (tooltipElement) {
         tooltipElement.classList.toggle('show');
