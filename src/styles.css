@@ -39,6 +39,25 @@
  @tailwind utilities;
  }
 
+ .bg-image {
+  background-image: url('/assets/img/banner-utc.webp');
+  background-size: cover;
+  background-position: center;
+  min-height: 400px;
+  max-height: 400px;
+  width: 100%;
+  margin-top: 0;
+  /* Lazy loading configuration */
+  /* background-image: none; (initially) */
+}
+
+.blackout {
+  background-color: rgba(0, 0, 0, 0.6);
+  min-height: 400px;
+  max-height: 400px;
+}
+
+
 
 /* Colores */
 :root {
