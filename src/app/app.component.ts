@@ -20,8 +20,8 @@ export class AppComponent {
   ngOnInit() {
     this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
+        window.scrollTo(0, 0);
         setTimeout(() => {
-          window.scrollTo(0, 0);
           window.HSStaticMethods.autoInit();
         }, 1000);
       }

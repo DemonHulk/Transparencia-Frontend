@@ -459,3 +459,8 @@ table{
   max-height: calc(100vh - 57px); /* Altura total de la ventana menos la altura del encabezado */
   overflow-y: auto;
 }
+
+.hs-tooltip-content{
+  height: auto !important;
+  width: auto !important;
+}
