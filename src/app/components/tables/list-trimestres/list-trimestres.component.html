@@ -334,7 +334,13 @@
                         </p>
                       </td>
                       <td class="px-3 py-2 text-sm text-gray-800">
-                        {{ trimestre.ejercicio }}
+                        <p *ngIf="trimestre.ejercicio_estado">
+                          {{ trimestre.ejercicio }}
+                        </p>
+                        <p *ngIf="!trimestre.ejercicio_estado" title="El ejercicio esta desactivado"
+                          class=" rounded-full  bg-opacity-10 px-3 py-1 text-sm font-medium bg-red-500 text-red-500">
+                          {{ trimestre.ejercicio }}
+                        </p>
                       </td>
                       <td class="px-3 py-2 text-sm text-gray-800">
                         {{ trimestre.fecha_string }}
@@ -651,7 +657,13 @@
                       </p>
                     </td>
                     <td class="px-3 py-2 text-sm text-gray-800">
-                      {{ trimestre.ejercicio }}
+                      <p *ngIf="trimestre.ejercicio_estado">
+                        {{ trimestre.ejercicio }}
+                      </p>
+                      <p *ngIf="!trimestre.ejercicio_estado" title="El ejercicio esta desactivado"
+                        class=" rounded-full  bg-opacity-10 px-3 py-1 text-sm font-medium bg-red-500 text-red-500">
+                        {{ trimestre.ejercicio }}
+                      </p>
                     </td>
                     <td class="px-3 py-2 text-sm text-gray-800">
                       {{ trimestre.fecha_string }}

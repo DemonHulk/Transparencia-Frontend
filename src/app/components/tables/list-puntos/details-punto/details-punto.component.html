@@ -319,7 +319,7 @@
         <div class="w-12/12">
           <div class="flex flex-col">
             <div class="-m-1.5 overflow-x-auto">
-              <div class="p-1.5 min-w-full inline-block align-middle">
+              <div class="p-1.5 container-prev">
                 <div class="border overflow-hidden">
                   <table class="min-w-full divide-y divide-gray-200 ">
                     <thead>
@@ -591,7 +591,13 @@
                                           </div>
                                         </td>
                                         <td class="px-3 py-2 text-sm text-gray-800">
-                                          {{ pdf?.trimestre }}
+                                          <p *ngIf="pdf.trimestre_estado">
+                                            {{ pdf.trimestre }}
+                                          </p>
+                                          <p *ngIf="!pdf.trimestre_estado" title="El trimestre esta desactivado"
+                                            class=" rounded-full  bg-opacity-10 px-3 py-1 text-sm font-medium bg-red-500 text-red-500">
+                                            {{ pdf.trimestre }}
+                                          </p>
                                         </td>
                                         <td class="px-3 py-2 text-sm text-gray-800">
                                           {{pdf?.fecha_string}}
@@ -1027,7 +1033,13 @@
                                           </div>
                                         </td>
                                         <td class="px-3 py-2 text-sm text-gray-800">
-                                          {{ pdf?.trimestre }}
+                                          <p *ngIf="pdf.trimestre_estado">
+                                            {{ pdf.trimestre }}
+                                          </p>
+                                          <p *ngIf="!pdf.trimestre_estado" title="El trimestre esta desactivado"
+                                            class=" rounded-full  bg-opacity-10 px-3 py-1 text-sm font-medium bg-red-500 text-red-500">
+                                            {{ pdf.trimestre }}
+                                          </p>
                                         </td>
                                         <td class="px-3 py-2 text-sm text-gray-800">
                                           {{ pdf?.fecha_string }}
@@ -1253,10 +1265,10 @@
       </ng-container>
 
       <ng-container *ngIf="tema?.tipo_contenido === 1">
-        <div class="w-12/12 ">
+        <div class="w-12/12 my-2">
           <div class="flex flex-col">
             <div class="-m-1.5 overflow-x-auto">
-              <div class="p-1.5 min-w-full inline-block align-middle">
+              <div class="p-1.5 container-prev">
                 <div class="border overflow-hidden ">
                   <table class="min-w-full divide-y divide-gray-200">
                     <thead>

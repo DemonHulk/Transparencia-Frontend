@@ -140,6 +140,8 @@ td > label .text-ellipsis {
 }
 
 /* Requerimientos del equipo principal */
+
+
 h1 {
   font-size: 2.25rem !important;
   line-height: 2.5rem !important;
@@ -168,6 +170,18 @@ h5 {
 h6 {
   font-size: 1rem !important;
   line-height: 1.5rem !important;
+}
+
+@media (max-width: 768px) {
+  h1 {
+    font-size: 1.5rem !important;
+    line-height: 2rem !important;
+  }
+
+  h3 {
+    font-size: 1.125rem !important;
+  line-height: 1.75rem !important;
+  }
 }
 
 .button-secondary,  .button-back, .button-reload  {

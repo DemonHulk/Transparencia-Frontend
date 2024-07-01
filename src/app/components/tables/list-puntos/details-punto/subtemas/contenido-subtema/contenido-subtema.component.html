@@ -307,8 +307,14 @@
                                         </div>
                                       </td>
                                       <td class="px-3 py-2 text-sm text-gray-800">
-                                        {{ pdf?.trimestre }}
-                                      </td>
+                                          <p *ngIf="pdf.trimestre_estado">
+                                            {{ pdf.trimestre }}
+                                          </p>
+                                          <p *ngIf="!pdf.trimestre_estado" title="El trimestre esta desactivado"
+                                            class=" rounded-full  bg-opacity-10 px-3 py-1 text-sm font-medium bg-red-500 text-red-500">
+                                            {{ pdf.trimestre }}
+                                          </p>
+                                        </td>
                                       <td class="px-3 py-2 text-sm text-gray-800">
                                         {{FormatearDate(pdf?.fecha_actualizado)}}
                                       </td>
@@ -743,8 +749,14 @@
                                         </div>
                                       </td>
                                       <td class="px-3 py-2 text-sm text-gray-800">
-                                        {{ pdf?.trimestre }}
-                                      </td>
+                                          <p *ngIf="pdf.trimestre_estado">
+                                            {{ pdf.trimestre }}
+                                          </p>
+                                          <p *ngIf="!pdf.trimestre_estado" title="El trimestre esta desactivado"
+                                            class=" rounded-full  bg-opacity-10 px-3 py-1 text-sm font-medium bg-red-500 text-red-500">
+                                            {{ pdf.trimestre }}
+                                          </p>
+                                        </td>
                                       <td class="px-3 py-2 text-sm text-gray-800">
                                         {{ pdf?.fecha_string }}
                                       </td>

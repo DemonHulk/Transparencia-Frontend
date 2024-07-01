@@ -112,7 +112,7 @@ ngOnInit(): void {
             this.FormAltaUsuario.patchValue({
               id_usuario: this.data_user.id_usuario,
               correo: this.data_user.correo,
-              id_area: this.data_user.id_area,
+              id_area: this.data_user.area_estado ? this.data_user.id_area : '',
               nombre_area: this.data_user.nombre_area
             });
           } else {
