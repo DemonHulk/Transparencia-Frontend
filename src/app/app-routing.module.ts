@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './components/login/login.component';
 import { Articulo33Component } from './components/articulo33/articulo33.component';
 import { NewPdfComponent } from './components/forms/new-pdf/new-pdf.component';
@@ -85,7 +85,10 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [
+    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
+
+  ],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
