@@ -33,8 +33,40 @@ export class CryptoServiceService {
     return null;
   }
 
+  static getDataUsuarioToken() {
+    const datosEncriptados = localStorage.getItem('user');
+    if (datosEncriptados) {
+      const clave = 'UZ4"(fa$P9g4ñ';
+      const bytes = CryptoJS.AES.decrypt(datosEncriptados, clave);
+      const datosDesencriptados = bytes.toString(CryptoJS.enc.Utf8);
+      try {
+        const datosJSON = JSON.stringify(JSON.parse(datosDesencriptados));
+        // Regresa los datos con el formato de JSON
+        try {
+          const iv = CryptoJS.lib.WordArray.random(16); // Genera un IV aleatorio
+          const encrypted = CryptoJS.AES.encrypt(datosJSON, CryptoJS.enc.Utf8.parse("ea2df1a3c1540005189bb447bd15e80f"), {
+            iv: iv,
+            mode: CryptoJS.mode.CBC,
+            padding: CryptoJS.pad.Pkcs7
+          });
+          // Concatenar IV y datos cifrados, ambos en base64
+          const ivBase64 = CryptoJS.enc.Base64.stringify(iv);
+          const encryptedBase64 = encrypted.ciphertext.toString(CryptoJS.enc.Base64);
+          return ivBase64 + ':' + encryptedBase64; // Usa ':' como delimitador
+        } catch (error) {
+          return null;
+        }
+      } catch (e) {
+        return null;
+      }
+    }
+    return null;
+  }
+
+
+
   // La sal y la longitud mínima del hash
-   hashids: Hashids = new Hashids('chichantastico', 5);
+  hashids: Hashids = new Hashids('chichantastico', 5);
 
   encodeID(id: number): string {
     return this.hashids.encode(id);
@@ -61,7 +93,7 @@ export class CryptoServiceService {
     const encryptedBase64 = encrypted.ciphertext.toString(CryptoJS.enc.Base64);
     return ivBase64 + ':' + encryptedBase64; // Usa ':' como delimitador
   }
-  
+
   // Metodo de desencriptación (PHP->Angular)
   decryptData(encryptedData: string): any {
     const [ivBase64, encryptedBase64] = encryptedData.split(':'); // Separa el IV y los datos cifrados

@@ -93,7 +93,12 @@ export class ListAreasComponent {
         const encryptedID = this.encodeService.encryptData(JSON.stringify(id));
         this.AreaCrudService.DeleteAreaService(encryptedID).subscribe(respuesta => {
           this.GetAllAreaService();
-          this.flasher.success(this.encodeService.decryptData(respuesta).resultado?.data?.data);
+          const dataDecrypt = this.encodeService.decryptData(respuesta);
+          if(dataDecrypt.estado){
+            this.flasher.success(dataDecrypt.resultado?.data?.data);
+          }else{
+            this.flasher.error(dataDecrypt.resultado?.data);
+          }
         });
       }
     });

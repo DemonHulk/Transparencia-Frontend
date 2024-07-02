@@ -38,6 +38,9 @@ export class TooltipManager {
   }
 }
 
+// export const token = localStorage.getItem('user') ? localStorage.getItem('user') : null;
+export let token  = CryptoServiceService.getDataUsuarioToken();
+
 export  interface Item {
   nombre: string;
   edad: string;
@@ -150,6 +153,7 @@ export class Historial {
 }
 
 import { AbstractControl, FormGroup, ValidationErrors, ValidatorFn } from '@angular/forms';
+import { CryptoServiceService } from './cryptoService/crypto-service.service';
 
 export function validarTextoNormal(): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {

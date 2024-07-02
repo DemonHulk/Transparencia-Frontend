@@ -1,6 +1,6 @@
-import { HttpClient, HttpRequest } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { API_URL } from '../api-config';
+import { API_URL, token } from '../api-config';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -10,16 +10,25 @@ export class EjerciciocrudService {
 
   constructor(private clientHttp:HttpClient) { }
 
-  GetAllEjercicioService(){
-    return this.clientHttp.get(API_URL+"ejercicio", { responseType: 'text' })
+  private createHeaders(): HttpHeaders {
+    return new HttpHeaders({
+      'Authorization': `${token}`
+    });
+  }
+  GetAllEjercicioService() {
+    const headers = this.createHeaders();
+    return this.clientHttp.get(API_URL + "ejercicio", { headers: headers, responseType: 'text' });
   }
 
-  GetOneEjercicioService(id:any){
-    return this.clientHttp.get(API_URL+"ejercicio/"+id, { responseType: 'text' });
+  GetOneEjercicioService(id: any) {
+    const headers = this.createHeaders();
+    return this.clientHttp.get(API_URL + "ejercicio/" + id, { headers: headers, responseType: 'text' });
   }
 
   InsertEjercicioService(formulario: any): Observable<any> {
-    const req = new HttpRequest('POST',API_URL + "ejercicio", formulario, {
+    const headers = this.createHeaders();
+    const req = new HttpRequest('POST', API_URL + "ejercicio", formulario, {
+      headers: headers,
       reportProgress: true,
       responseType: 'text'
     });
@@ -27,7 +36,9 @@ export class EjerciciocrudService {
   }
 
   UpdateEjercicioService(formulario: any, id: any): Observable<any> {
-    const req = new HttpRequest('PUT',API_URL + "ejercicio/"+ id, formulario, {
+    const headers = this.createHeaders();
+    const req = new HttpRequest('PUT', API_URL + "ejercicio/" + id, formulario, {
+      headers: headers,
       reportProgress: true,
       responseType: 'text'
     });
@@ -35,10 +46,13 @@ export class EjerciciocrudService {
   }
 
   DeleteEjercicioService(id: any): Observable<any> {
-    return this.clientHttp.delete(API_URL + "ejercicio/" + id, { responseType: 'text' });
+    const headers = this.createHeaders();
+    return this.clientHttp.delete(API_URL + "ejercicio/" + id, { headers: headers, responseType: 'text' });
   }
 
   ActivateEjercicioService(id: any): Observable<any> {
-    return this.clientHttp.get(API_URL + "ejercicioAct/" + id, { responseType: 'text' });
+    const headers = this.createHeaders();
+    return this.clientHttp.get(API_URL + "ejercicioAct/" + id, { headers: headers, responseType: 'text' });
   }
+
 }
