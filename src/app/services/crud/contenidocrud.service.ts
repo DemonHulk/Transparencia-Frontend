@@ -1,6 +1,6 @@
-import { HttpClient, HttpErrorResponse, HttpRequest } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { API_URL } from '../api-config';
+import { API_URL, token } from '../api-config';
 import { Observable, catchError, map, throwError } from 'rxjs';
 import { CryptoServiceService } from '../cryptoService/crypto-service.service';
 import { AlertsServiceService } from '../alerts/alerts-service.service';
@@ -11,20 +11,30 @@ import { AlertsServiceService } from '../alerts/alerts-service.service';
 export class ContenidocrudService {
 
   constructor(private clientHttp:HttpClient, private encodeService: CryptoServiceService, private flasher: AlertsServiceService) { }
+
+  private createHeaders(): HttpHeaders {
+    return new HttpHeaders({
+      'Authorization': `${token}`
+    });
+  }
 /***************************************************************************************************
 *  CONTENIDO DINAMICO                                                                               *
 ***************************************************************************************************/
   /**EXTRAE TODO EL CONTENIDO DINAMICO ESTE ACTIVO O INACTIVO */
-  GetAllContenidoDinamicoService(id:any){
-    return this.clientHttp.get(API_URL+"contenidoDinamico/"+id, { responseType: 'text' })
+  GetAllContenidoDinamicoService(id: any): Observable<any> {
+    const headers = this.createHeaders();
+    return this.clientHttp.get(API_URL + "contenidoDinamico/" + id, { headers: headers, responseType: 'text' });
   }
 
-  GetOneContenidoDinamicoService(id:any){
-    return this.clientHttp.get(API_URL+"onecontenidoDinamico/"+id, { responseType: 'text' });
+  GetOneContenidoDinamicoService(id: any): Observable<any> {
+    const headers = this.createHeaders();
+    return this.clientHttp.get(API_URL + "onecontenidoDinamico/" + id, { headers: headers, responseType: 'text' });
   }
 
   InsertContenidoDinamicoService(formData: FormData): Observable<any> {
+    const headers = this.createHeaders();
     const req = new HttpRequest('POST', API_URL + 'contenidoDinamico', formData, {
+      headers: headers,
       reportProgress: true,
       responseType: 'text'
     });
@@ -32,7 +42,9 @@ export class ContenidocrudService {
   }
 
   UpdateContenidoDinamicoService(formData: FormData, id: any): Observable<any> {
-    const req = new HttpRequest('POST', API_URL + "UpdatecontentDinamico/"+ id, formData, {
+    const headers = this.createHeaders();
+    const req = new HttpRequest('POST', API_URL + "UpdatecontentDinamico/" + id, formData, {
+      headers: headers,
       reportProgress: true,
       responseType: 'text'
     });
@@ -40,28 +52,35 @@ export class ContenidocrudService {
   }
 
   DeleteContenidoDinamicoService(id: any): Observable<any> {
-    return this.clientHttp.delete(API_URL + "contenidoDinamico/" + id, { responseType: 'text' });
+    const headers = this.createHeaders();
+    return this.clientHttp.delete(API_URL + "contenidoDinamico/" + id, { headers: headers, responseType: 'text' });
   }
 
   ActivateContenidoDinamicoService(id: any): Observable<any> {
-    return this.clientHttp.get(API_URL + "contenidoDinamicoAct/" + id, { responseType: 'text' });
+    const headers = this.createHeaders();
+    return this.clientHttp.get(API_URL + "contenidoDinamicoAct/" + id, { headers: headers, responseType: 'text' });
   }
+
 
 
   /***************************************************************************************************
   *  CONTENIDO ESTATICO                                                                              *
   ***************************************************************************************************/
 
-  GetAllContenidoEstaticoService(id:any){
-    return this.clientHttp.get(API_URL+"contenidoEstatico/"+id, { responseType: 'text' })
+  GetAllContenidoEstaticoService(id: any): Observable<any> {
+    const headers = this.createHeaders();
+    return this.clientHttp.get(API_URL + "contenidoEstatico/" + id, { headers: headers, responseType: 'text' });
   }
 
-  GetOneContenidoEstaticoService(id:any){
-    return this.clientHttp.get(API_URL+"oneContenidoEstatico/"+id, { responseType: 'text' });
+  GetOneContenidoEstaticoService(id: any): Observable<any> {
+    const headers = this.createHeaders();
+    return this.clientHttp.get(API_URL + "oneContenidoEstatico/" + id, { headers: headers, responseType: 'text' });
   }
 
   InsertContenidoEstaticoService(formulario: any): Observable<any> {
-    const req = new HttpRequest('POST',API_URL + "contenidoEstatico", formulario, {
+    const headers = this.createHeaders();
+    const req = new HttpRequest('POST', API_URL + "contenidoEstatico", formulario, {
+      headers: headers,
       reportProgress: true,
       responseType: 'text'
     });
@@ -69,7 +88,9 @@ export class ContenidocrudService {
   }
 
   UpdateContenidoEstaticoService(formulario: any, id: any): Observable<any> {
-    const req = new HttpRequest('PUT', API_URL + "UpdatecontentEstatico/"+ id, formulario, {
+    const headers = this.createHeaders();
+    const req = new HttpRequest('PUT', API_URL + "UpdatecontentEstatico/" + id, formulario, {
+      headers: headers,
       reportProgress: true,
       responseType: 'text'
     });
@@ -77,35 +98,18 @@ export class ContenidocrudService {
   }
 
   DeleteContenidoEstaticoService(id: any): Observable<any> {
-    return this.clientHttp.delete(API_URL + "contenidoEstatico/" + id, { responseType: 'text' });
+    const headers = this.createHeaders();
+    return this.clientHttp.delete(API_URL + "contenidoEstatico/" + id, { headers: headers, responseType: 'text' });
   }
 
   ActivateContenidoEstaticoService(id: any): Observable<any> {
-    return this.clientHttp.get(API_URL + "contenidoEstaticoAct/" + id, { responseType: 'text' });
+    const headers = this.createHeaders();
+    return this.clientHttp.get(API_URL + "contenidoEstaticoAct/" + id, { headers: headers, responseType: 'text' });
   }
 
   /***************************************************************************************************
   *  Visualizar Documento                                                                            *
   ***************************************************************************************************/
-
-  getPDF(fileName: string): Observable<any> {
-    return this.clientHttp.get(API_URL + "getDocument/" + fileName, { responseType: 'text' })
-      .pipe(
-        map(response => {
-          const decryptedResponse = this.encodeService.decryptData(response);
-          if (decryptedResponse?.resultado?.res) {
-            return {
-              data: this.base64ToArrayBuffer(decryptedResponse.resultado.data),
-              mime: decryptedResponse.resultado.mime,
-              filename: decryptedResponse.resultado.filename
-            };
-          } else {
-            throw new Error(decryptedResponse?.resultado?.data || 'Respuesta inválida del servidor');
-          }
-        }),
-        catchError(error => this.handleError(error, fileName))
-      );
-  }
 
   private base64ToArrayBuffer(base64: string): ArrayBuffer {
     const binaryString = window.atob(base64);
@@ -131,11 +135,29 @@ export class ContenidocrudService {
     return throwError(() => new Error(errorMessage));
   }
 
-  /***************************************************************************************************
-  *  Descargar Documento                                                                             *
-  ***************************************************************************************************/
+  getPDF(fileName: string): Observable<any> {
+    const headers = this.createHeaders();
+    return this.clientHttp.get(API_URL + "getDocument/" + fileName, { headers: headers, responseType: 'text' })
+      .pipe(
+        map(response => {
+          const decryptedResponse = this.encodeService.decryptData(response);
+          if (decryptedResponse?.resultado?.res) {
+            return {
+              data: this.base64ToArrayBuffer(decryptedResponse.resultado.data),
+              mime: decryptedResponse.resultado.mime,
+              filename: decryptedResponse.resultado.filename
+            };
+          } else {
+            throw new Error(decryptedResponse?.resultado?.data || 'Respuesta inválida del servidor');
+          }
+        }),
+        catchError(error => this.handleError(error, fileName))
+      );
+  }
+
   getDowndloadPDF(fileName: any): Observable<Blob> {
-    return this.clientHttp.get(API_URL + "getDocument/" + fileName, { responseType: 'text' })
+    const headers = this.createHeaders();
+    return this.clientHttp.get(API_URL + "getDocument/" + fileName, { headers: headers, responseType: 'text' })
       .pipe(
         map(response => {
           let decryptedResponse = this.encodeService.decryptData(response);
@@ -155,14 +177,14 @@ export class ContenidocrudService {
       );
   }
 
+  searchPDF(data: any): Observable<any> {
+    const headers = this.createHeaders();
+    const req = new HttpRequest('POST', API_URL + "buscarPDF", data, {
+      headers: headers,
+      responseType: 'text'
+    });
+    return this.clientHttp.request(req);
+  }
 
-    /***************************************************************************************************
-  *  Buscar DOCUMENTO                                                                           *
-  ***************************************************************************************************/
-    searchPDF(data: any): Observable<any> {
-      const req = new HttpRequest('POST',API_URL + "buscarPDF", data, {
-        responseType: 'text'
-      });
-      return this.clientHttp.request(req);
-    }
+
 }

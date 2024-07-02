@@ -1,7 +1,7 @@
-import { HttpClient, HttpRequest } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { API_URL } from '../api-config';
+import { API_URL, token } from '../api-config';
 
 @Injectable({
   providedIn: 'root'
@@ -11,9 +11,16 @@ export class TituloscrudService {
   constructor(private clientHttp:HttpClient) { }
 
 
-    /**Inserta un titulo dentro de un punto que viene en el formulario*/
+  private createHeaders(): HttpHeaders {
+    return new HttpHeaders({
+      'Authorization': `${token}`
+    });
+  }
+
   InsertTitulosService(formulario: any): Observable<any> {
+    const headers = this.createHeaders();
     const req = new HttpRequest('POST', API_URL + 'titulos', formulario, {
+      headers: headers,
       reportProgress: true,
       responseType: 'text'
     });
@@ -21,7 +28,9 @@ export class TituloscrudService {
   }
 
   InsertSubtituloService(formulario: any): Observable<any> {
+    const headers = this.createHeaders();
     const req = new HttpRequest('POST', API_URL + 'subtitulo', formulario, {
+      headers: headers,
       reportProgress: true,
       responseType: 'text'
     });
@@ -29,36 +38,41 @@ export class TituloscrudService {
   }
 
   /**extrae los titulos de un punto*/
-  GetTitulosPunto(id:any): Observable<any> {
-    return this.clientHttp.get(API_URL+"titulosdepunto/" + id, { responseType: 'text' })
+  GetTitulosPunto(id: any): Observable<any> {
+    const headers = this.createHeaders();
+    return this.clientHttp.get(API_URL + "titulosdepunto/" + id, { headers: headers, responseType: 'text' });
   }
 
-  GetTitulosPadre(id:any): Observable<any> {
-    return this.clientHttp.get(API_URL+"tituloPadre/" + id, { responseType: 'text' })
+  GetTitulosPadre(id: any): Observable<any> {
+    const headers = this.createHeaders();
+    return this.clientHttp.get(API_URL + "tituloPadre/" + id, { headers: headers, responseType: 'text' });
   }
 
-  GetSubtituloData(id:any): Observable<any> {
-    return this.clientHttp.get(API_URL+"subtituloData/" + id, { responseType: 'text' })
+  GetSubtituloData(id: any): Observable<any> {
+    const headers = this.createHeaders();
+    return this.clientHttp.get(API_URL + "subtituloData/" + id, { headers: headers, responseType: 'text' });
   }
 
   /**extrae los datos de un titulo + nombre del punto a que pertenece e id*/
-  GettitulosmaspuntoService(id:any): Observable<any> {
-    return this.clientHttp.get(API_URL+"titulosmaspunto/" + id, { responseType: 'text' })
+  GettitulosmaspuntoService(id: any): Observable<any> {
+    const headers = this.createHeaders();
+    return this.clientHttp.get(API_URL + "titulosmaspunto/" + id, { headers: headers, responseType: 'text' });
   }
-
-
 
   DeleteTituloService(id: any): Observable<any> {
-    return this.clientHttp.delete(API_URL + "titulos/" + id, { responseType: 'text' });
+    const headers = this.createHeaders();
+    return this.clientHttp.delete(API_URL + "titulos/" + id, { headers: headers, responseType: 'text' });
   }
 
-
   ActivateTituloService(id: any): Observable<any> {
-    return this.clientHttp.get(API_URL + "titulosAct/" + id, { responseType: 'text' });
+    const headers = this.createHeaders();
+    return this.clientHttp.get(API_URL + "titulosAct/" + id, { headers: headers, responseType: 'text' });
   }
 
   UpdateTituloService(formulario: any, id: any): Observable<any> {
-    const req = new HttpRequest('PUT', API_URL + "titulos/"+ id, formulario, {
+    const headers = this.createHeaders();
+    const req = new HttpRequest('PUT', API_URL + "titulos/" + id, formulario, {
+      headers: headers,
       reportProgress: true,
       responseType: 'text'
     });
@@ -66,7 +80,9 @@ export class TituloscrudService {
   }
 
   UpdateSubtituloService(formulario: any, id: any): Observable<any> {
-    const req = new HttpRequest('PUT', API_URL + "subtitulo/"+ id, formulario, {
+    const headers = this.createHeaders();
+    const req = new HttpRequest('PUT', API_URL + "subtitulo/" + id, formulario, {
+      headers: headers,
       reportProgress: true,
       responseType: 'text'
     });
@@ -74,17 +90,22 @@ export class TituloscrudService {
   }
 
   GetTitulosByPunto(id: any): Observable<any> {
-    return this.clientHttp.get(API_URL + "titulosCompletos/" + id, { responseType: 'text' });
+    const headers = this.createHeaders();
+    return this.clientHttp.get(API_URL + "titulosCompletos/" + id, { headers: headers, responseType: 'text' });
   }
 
   GetSubtitulosByTitulo(id: any): Observable<any> {
-    return this.clientHttp.get(API_URL + "subtitulosPorTema/" + id, { responseType: 'text' });
+    const headers = this.createHeaders();
+    return this.clientHttp.get(API_URL + "subtitulosPorTema/" + id, { headers: headers, responseType: 'text' });
+  }
+
+  GetTituloById(id: any): Observable<any> {
+    const headers = this.createHeaders();
+    return this.clientHttp.get(API_URL + "titulo/" + id, { headers: headers, responseType: 'text' });
   }
 
 
-  GetTituloById(id:any): Observable<any> {
-    return this.clientHttp.get(API_URL+"titulo/" + id, { responseType: 'text' })
-  }
+    /**Inserta un titulo dentro de un punto que viene en el formulario*/
 
 
 }
