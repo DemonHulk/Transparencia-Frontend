@@ -51,5 +51,11 @@ export class UsuariocrudService {
       return this.clientHttp.request(req);
     }
 
+    VerifySesion(data: any): Observable<any> {
+      const req = new HttpRequest('POST',API_URL + "VerifySesion", data, {
+        responseType: 'text'
+      });
+      return this.clientHttp.request(req);
+    }
 
 }
