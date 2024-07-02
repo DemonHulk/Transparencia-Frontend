@@ -11,3 +11,9 @@
   max-width: auto; /* Establece el ancho máximo automáticamente */
   flex-wrap: wrap; /* Permite que el contenido se ajuste al contenedor */
 }
+
+.hs-tooltip-toggle  > p{
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  text-wrap: nowrap !important;
+}

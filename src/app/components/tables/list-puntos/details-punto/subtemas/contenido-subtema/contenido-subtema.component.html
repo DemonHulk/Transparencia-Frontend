@@ -285,17 +285,17 @@
                                   </ng-template>
                                   <ng-template pTemplate="body" let-pdf>
                                     <tr class="divide-x divide-gray-200 max-h-[20px]">
-                                      <td class="px-3 py-2 text-sm text-gray-800 text-elipsis max-w-[300px] text-center">
+                                      <td class="px-3 py-2 text-sm text-elipsis text-gray-800 text-elipsis w-[300px] text-center">
 
                                         <button (mouseenter)="mostrar($event.target)" (mouseleave)="mostrar($event.target)"
-                                        class="hover:text-primary text-center">
+                                        class="hover:text-primary text-center  w-[300px]">
                                         <!-- User -->
                                         <div class="hs-tooltip [--trigger:hover] sm:[--placement:top] inline-block text-center">
-                                          <div class="hs-tooltip-toggle text-elipsis max-w-[300px] text-center">
-                                            <p class="font-medium text-black">
+                                          <div class="hs-tooltip-toggle text-elipsis w-[300px] text-center  w-[300px]">
+                                            <p class="font-medium text-black  w-[300px]">
                                               {{ pdf?.nombre_externo_documento }}
                                             </p>
-                                            <p class="text-sm">
+                                            <p class="text-sm  w-[300px]">
                                               {{ pdf?.nombre_interno_documento }}
                                             </p>
                                             <!-- Popover Content -->
@@ -304,12 +304,12 @@
                                               role="tooltip">
                                               <ul class="py-3 px-4 space-y-1">
                                                 <li>
-                                                  <div class="inline-flex gap-x-3 text-sm text-gray-800 text-wrap">
-                                                    <p class=" text-black font-bold">
+                                                  <div class="inline-flex gap-x-3 text-sm text-gray-800 text-wrap  max-w-[300px]">
+                                                    <p class=" text-black font-bold  max-w-[300px]">
                                                       {{ pdf?.nombre_externo_documento }}
                                                     </p>
                                                     <hr>
-                                                    <p class="text-sm">
+                                                    <p class="text-sm  max-w-[300px]">
                                                       {{ pdf?.nombre_interno_documento }}
                                                     </p>
                                                   </div>
@@ -769,17 +769,17 @@
                                   </ng-template>
                                   <ng-template pTemplate="body" let-pdf>
                                     <tr class="divide-x divide-gray-200">
-                                      <td class="px-3 py-2 text-sm text-gray-800 text-elipsis max-w-[300px] text-center">
+                                      <td class="px-3 py-2 text-sm text-elipsis text-gray-800 text-elipsis w-[300px] text-center">
 
                                         <button (mouseenter)="mostrar($event.target)" (mouseleave)="mostrar($event.target)"
-                                        class="hover:text-primary text-center">
+                                        class="hover:text-primary text-center  w-[300px]">
                                         <!-- User -->
                                         <div class="hs-tooltip [--trigger:hover] sm:[--placement:top] inline-block text-center">
-                                          <div class="hs-tooltip-toggle text-elipsis max-w-[300px] text-center">
-                                            <p class="font-medium text-black">
+                                          <div class="hs-tooltip-toggle text-elipsis w-[300px] text-center  w-[300px]">
+                                            <p class="font-medium text-black  w-[300px]">
                                               {{ pdf?.nombre_externo_documento }}
                                             </p>
-                                            <p class="text-sm">
+                                            <p class="text-sm  w-[300px]">
                                               {{ pdf?.nombre_interno_documento }}
                                             </p>
                                             <!-- Popover Content -->
@@ -788,12 +788,12 @@
                                               role="tooltip">
                                               <ul class="py-3 px-4 space-y-1">
                                                 <li>
-                                                  <div class="inline-flex gap-x-3 text-sm text-gray-800 text-wrap">
-                                                    <p class=" text-black font-bold">
+                                                  <div class="inline-flex gap-x-3 text-sm text-gray-800 text-wrap  max-w-[300px]">
+                                                    <p class=" text-black font-bold  max-w-[300px]">
                                                       {{ pdf?.nombre_externo_documento }}
                                                     </p>
                                                     <hr>
-                                                    <p class="text-sm">
+                                                    <p class="text-sm  max-w-[300px]">
                                                       {{ pdf?.nombre_interno_documento }}
                                                     </p>
                                                   </div>
